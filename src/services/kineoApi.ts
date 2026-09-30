@@ -54,6 +54,48 @@ export type DailyChallengeStart = {
   status: 'ready' | 'in_progress' | 'completed'
 }
 
+export type GamificationSummaryV2 = {
+  xp_total: number
+  level: {
+    number: number
+    name: string
+    icon: string
+    required_xp: number
+    next_level: number | null
+    next_name: string | null
+    next_icon: string | null
+    next_required_xp: number | null
+    xp_to_next: number
+    progress_percent: number
+  }
+  streak: { current: number; longest: number }
+  badges: { earned: number; total: number }
+}
+
+export type BadgeProgressV2 = {
+  id: string
+  name: string
+  description: string
+  icon: string
+  condition_type: string
+  earned: boolean
+  earned_at: string | null
+  current_value: number
+  target_value: number
+  progress_percent: number
+}
+
+export type BadgesV2 = {
+  badges: BadgeProgressV2[]
+  stats: {
+    completed_quizzes: number
+    correct_answers: number
+    current_streak: number
+    daily_challenges: number
+    daily_perfect: boolean
+  }
+}
+
 export async function getDashboardV2() {
   const { data, error } = await supabase.rpc('get_user_dashboard_v2')
   if (error) throw error
@@ -64,6 +106,18 @@ export async function getUserStatsV2(days = 30) {
   const { data, error } = await supabase.rpc('get_user_stats_v2', { p_days: days })
   if (error) throw error
   return data as UserStatsV2
+}
+
+export async function getGamificationSummaryV2() {
+  const { data, error } = await supabase.rpc('get_gamification_summary_v2')
+  if (error) throw error
+  return data as GamificationSummaryV2
+}
+
+export async function getBadgesV2() {
+  const { data, error } = await supabase.rpc('get_badges_v2')
+  if (error) throw error
+  return data as BadgesV2
 }
 
 export async function startSmartRevisionV2(questionCount = 10) {

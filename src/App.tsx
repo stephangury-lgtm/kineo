@@ -2,6 +2,7 @@ import { NavLink, Route, Routes } from 'react-router-dom'
 import AuthGate from './auth/AuthGate'
 import { supabase } from './lib/supabase'
 import DashboardPage from './pages/DashboardPage'
+import GamificationPage from './pages/GamificationPage'
 import RevisionPage from './pages/RevisionPage'
 import StatisticsPage from './pages/StatisticsPage'
 
@@ -22,6 +23,7 @@ export default function App() {
             <Route path="/" element={<DashboardPage />} />
             <Route path="/revision" element={<RevisionPage />} />
             <Route path="/stats" element={<StatisticsPage />} />
+            <Route path="/rewards" element={<GamificationPage />} />
           </Routes>
         </main>
 
@@ -29,6 +31,7 @@ export default function App() {
           <NavLink to="/" end>Accueil</NavLink>
           <NavLink to="/revision">Réviser</NavLink>
           <NavLink to="/stats">Stats</NavLink>
+          <NavLink to="/rewards">Récompenses</NavLink>
         </nav>
       </div>
     </AuthGate>
