@@ -28,10 +28,51 @@ export type QuizQuestionV3 = {
   display_order: number
 }
 
+export type UserStatsV2 = {
+  period_days: number
+  summary: {
+    attempts: number
+    correct_answers: number
+    incorrect_answers: number
+    accuracy_percent: number
+    avg_response_ms: number
+    completed_sessions: number
+    xp_total: number
+    level: number
+    attempted_questions: number
+    mastered_questions: number
+    fragile_questions: number
+    reviews_due: number
+    mastery_percent: number
+  }
+  daily_activity: Array<{ date: string; attempts: number; correct: number; accuracy_percent: number; xp: number }>
+  subjects: Array<{
+    id: string
+    name: string
+    year_number: number
+    published_questions: number
+    attempted_questions: number
+    coverage_percent: number
+    attempts: number
+    accuracy_percent: number
+    mastery_percent: number
+    mastered_questions: number
+    fragile_questions: number
+  }>
+  modes: Array<{ mode: string; sessions: number; questions: number; correct: number; accuracy_percent: number; xp: number }>
+  weak_questions: Array<{ question_id: string; question_text: string; subject_name: string; accuracy_percent: number; mastery_percent: number }>
+}
+
 export async function getDashboardV2() {
   const { data, error } = await supabase.rpc('get_user_dashboard_v2')
   if (error) throw error
   return data as DashboardV2
+}
+
+export async function getUserStatsV2(days = 30) {
+  const { data, error } = await supabase.rpc('get_user_stats_v2', { p_days: days })
+  if (error) throw error
+  return data as UserStatsV2
 }
 
 export async function startSmartRevisionV2(questionCount = 10) {
