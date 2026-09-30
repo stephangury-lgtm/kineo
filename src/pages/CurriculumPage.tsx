@@ -24,6 +24,15 @@ export default function CurriculumPage() {
     [selectedYear, years],
   )
 
+  const totalSubjects = visibleYears.reduce((sum, year) => sum + year.subjects.length, 0)
+  const totalQuestions = visibleYears.reduce(
+    (sum, year) => sum + year.subjects.reduce(
+      (subjectSum, subject) => subjectSum + subject.chapters.reduce((chapterSum, chapter) => chapterSum + chapter.published_questions, 0),
+      0,
+    ),
+    0,
+  )
+
   async function launchLesson(lessonId: string) {
     setBusyLesson(lessonId)
     setError(null)
@@ -41,15 +50,37 @@ export default function CurriculumPage() {
   }
 
   if (years.length === 0) {
-    return <section className="card"><p>Chargement du parcours pédagogique…</p></section>
+    return <section className="card skeleton-card"><p>Chargement du parcours pédagogique…</p></section>
   }
 
   return (
     <div className="stack">
+      <section className="stats-hero">
+        <div>
+          <p className="eyebrow light">Ton parcours Kineo</p>
+          <h1>Apprends dans l’ordre, révise au bon moment.</h1>
+          <p>Retrouve les contenus publiés de ton année, suis ta maîtrise et lance un quiz ciblé en un geste.</p>
+        </div>
+        <div className="stats-hero-score">
+          <span>Année</span>
+          <strong>{selectedYear === 'all' ? 'K1–K4' : `K${selectedYear}`}</strong>
+        </div>
+      </section>
+
+      <section className="stats-grid">
+        <article className="card score-card"><span>📚 Matières</span><strong>{totalSubjects}</strong><small>dans la sélection</small></article>
+        <article className="card score-card"><span>❓ Questions</span><strong>{totalQuestions}</strong><small>contenus publiés</small></article>
+        <article className="card score-card"><span>🎓 Années</span><strong>{visibleYears.length}</strong><small>{selectedYear === 'all' ? 'parcours complet' : 'année active'}</small></article>
+        <article className="card score-card"><span>🧠 Objectif</span><strong>90%</strong><small>maîtrise solide</small></article>
+      </section>
+
       <section className="card">
-        <p className="eyebrow">Parcours pédagogique</p>
-        <h1>Réviser par année et par thème</h1>
-        <p>Le contenu affiché provient uniquement des éléments publiés dans Kineo. Ton année d’étude est sélectionnée automatiquement.</p>
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Filtrer</p>
+            <h2>Choisis ton année</h2>
+          </div>
+        </div>
         <label className="text-answer-wrap">
           <span>Année affichée</span>
           <select className="text-answer" value={selectedYear} onChange={(event) => setSelectedYear(event.target.value === 'all' ? 'all' : Number(event.target.value))}>
@@ -61,8 +92,13 @@ export default function CurriculumPage() {
 
       {visibleYears.map((year) => (
         <section className="card" key={year.id}>
-          <p className="eyebrow">Année {year.number}</p>
-          <h2>{year.name}</h2>
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">Année {year.number}</p>
+              <h2>K{year.number} · {year.name}</h2>
+            </div>
+            <strong>{year.subjects.length} matière{year.subjects.length > 1 ? 's' : ''}</strong>
+          </div>
           {year.description && <p>{year.description}</p>}
 
           {year.subjects.length === 0 ? (
@@ -76,35 +112,48 @@ export default function CurriculumPage() {
                       <strong>{subject.icon ? `${subject.icon} ` : ''}{subject.name}</strong>
                       <span>{subject.chapter_count} chapitre{subject.chapter_count > 1 ? 's' : ''}</span>
                     </div>
+                    <span>Voir</span>
                   </summary>
 
                   <div className="stack">
                     {subject.chapters.map((chapter) => (
                       <article key={chapter.id} className="card">
-                        <h3>{chapter.name}</h3>
+                        <div className="section-heading">
+                          <div>
+                            <p className="eyebrow">Chapitre</p>
+                            <h3>{chapter.name}</h3>
+                          </div>
+                          <strong>{chapter.published_questions}</strong>
+                        </div>
                         {chapter.description && <p>{chapter.description}</p>}
                         <p>{chapter.published_questions} question{chapter.published_questions > 1 ? 's' : ''} publiée{chapter.published_questions > 1 ? 's' : ''}</p>
 
                         {chapter.lessons.length === 0 ? (
                           <p>Les questions de ce chapitre ne sont pas encore regroupées en leçons publiées.</p>
                         ) : chapter.lessons.map((lesson) => (
-                          <div className="subject-row" key={lesson.id}>
-                            <div>
-                              <strong>{lesson.title}</strong>
-                              {lesson.summary && <span>{lesson.summary}</span>}
-                              <span>{lesson.published_questions} questions · maîtrise {lesson.mastery_percent}%</span>
-                              <div className="progress-track">
-                                <div className="progress-fill" style={{ width: `${Math.min(100, lesson.mastery_percent)}%` }} />
+                          <div className="subject-progress" key={lesson.id}>
+                            <div className="subject-row">
+                              <div>
+                                <strong>{lesson.title}</strong>
+                                {lesson.summary && <span>{lesson.summary}</span>}
+                                <span>{lesson.published_questions} questions · couverture {lesson.coverage_percent}%</span>
+                              </div>
+                              <div className="subject-score">
+                                <strong>{lesson.mastery_percent}%</strong>
+                                <span>maîtrise</span>
                               </div>
                             </div>
-                            <div className="stack">
-                              <button className="secondary-button" onClick={() => navigate(`/lesson/${lesson.id}`)}>Cours</button>
+                            <div className="progress-track small">
+                              <div className="progress-fill" style={{ width: `${Math.min(100, lesson.mastery_percent)}%` }} />
+                            </div>
+                            <div className="quick-grid">
+                              <button className="secondary-button" onClick={() => navigate(`/lesson/${lesson.id}`)}>Lire le cours</button>
                               <button
                                 className="primary-button"
                                 onClick={() => launchLesson(lesson.id)}
                                 disabled={busyLesson === lesson.id || lesson.published_questions === 0}
                               >
-                                {busyLesson === lesson.id ? 'Préparation…' : 'Quiz'}
+                                {busyLesson === lesson.id ? 'Préparation…' : 'Lancer le quiz'}
                               </button>
                             </div>
                           </div>

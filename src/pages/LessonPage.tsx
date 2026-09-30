@@ -35,47 +35,78 @@ export default function LessonPage() {
   }
 
   if (error && !lesson) return <section className="card"><h1>Leçon indisponible</h1><p>{error}</p><Link className="secondary-button" to="/parcours">Retour au parcours</Link></section>
-  if (!lesson) return <section className="card"><p>Chargement de la leçon…</p></section>
+  if (!lesson) return <section className="card skeleton-card"><p>Chargement de la leçon…</p></section>
 
   return (
     <div className="stack">
-      <section className="card">
-        <p className="eyebrow">K{lesson.year.number} · {lesson.subject.icon ? `${lesson.subject.icon} ` : ''}{lesson.subject.name}</p>
-        <h1>{lesson.title}</h1>
-        <p>{lesson.chapter.name}</p>
-        {lesson.image_url && <img className="question-image" src={lesson.image_url} alt="Illustration de la leçon" />}
-        {lesson.summary && <p><strong>À retenir :</strong> {lesson.summary}</p>}
-        <div className="progress-track"><div className="progress-fill" style={{ width: `${Math.min(100, lesson.mastery_percent)}%` }} /></div>
-        <p>Maîtrise actuelle : <strong>{lesson.mastery_percent}%</strong> · {lesson.question_count} question{lesson.question_count > 1 ? 's' : ''}</p>
+      <section className="stats-hero">
+        <div>
+          <p className="eyebrow light">K{lesson.year.number} · {lesson.subject.icon ? `${lesson.subject.icon} ` : ''}{lesson.subject.name}</p>
+          <h1>{lesson.title}</h1>
+          <p>{lesson.chapter.name}{lesson.summary ? ` · ${lesson.summary}` : ''}</p>
+        </div>
+        <div className="stats-hero-score">
+          <span>Maîtrise</span>
+          <strong>{lesson.mastery_percent}%</strong>
+        </div>
       </section>
+
+      <section className="stats-grid">
+        <article className="card score-card"><span>❓ Questions</span><strong>{lesson.question_count}</strong><small>dans cette leçon</small></article>
+        <article className="card score-card"><span>🧠 Maîtrise</span><strong>{lesson.mastery_percent}%</strong><small>progression actuelle</small></article>
+        <article className="card score-card"><span>🎯 Quiz</span><strong>{Math.min(10, lesson.question_count)}</strong><small>questions proposées</small></article>
+        <article className="card score-card"><span>📚 Niveau</span><strong>K{lesson.year.number}</strong><small>{lesson.year.name}</small></article>
+      </section>
+
+      {lesson.image_url && (
+        <section className="card centered">
+          <img className="question-image" src={lesson.image_url} alt="Illustration de la leçon" />
+        </section>
+      )}
 
       {lesson.content && (
         <section className="card">
-          <p className="eyebrow">Cours</p>
-          <div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.65 }}>{lesson.content}</div>
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">Cours</p>
+              <h2>Comprendre l’essentiel</h2>
+            </div>
+          </div>
+          <div style={{ whiteSpace: 'pre-wrap', lineHeight: 1.75 }}>{lesson.content}</div>
         </section>
       )}
 
       {lesson.key_points.length > 0 && (
-        <section className="card">
-          <p className="eyebrow">Points clés</p>
-          <ul>{lesson.key_points.map(renderListItem)}</ul>
+        <section className="card focus-card">
+          <div>
+            <p className="eyebrow">Points clés</p>
+            <h2>À retenir</h2>
+            <ul>{lesson.key_points.map(renderListItem)}</ul>
+          </div>
+          <div className="focus-bubble">✓</div>
         </section>
       )}
 
       {lesson.sources.length > 0 && (
         <section className="card">
-          <p className="eyebrow">Sources</p>
+          <div className="section-heading">
+            <div>
+              <p className="eyebrow">Sources</p>
+              <h2>Références du contenu</h2>
+            </div>
+          </div>
           <ul>{lesson.sources.map(renderListItem)}</ul>
         </section>
       )}
 
       <section className="card centered">
+        <p className="eyebrow">Passage à l’action</p>
         <h2>Vérifie ce que tu as retenu</h2>
-        <button className="primary-button" disabled={busy || lesson.question_count === 0} onClick={launchQuiz}>
+        <p>Une courte série ciblée pour transformer la lecture en mémorisation active.</p>
+        <button className="primary-button wide" disabled={busy || lesson.question_count === 0} onClick={launchQuiz}>
           {busy ? 'Préparation…' : `Lancer le quiz (${Math.min(10, lesson.question_count)} questions)`}
         </button>
-        <Link className="secondary-button" to="/parcours">Retour au parcours</Link>
+        <Link className="secondary-button wide" to="/parcours">Retour au parcours</Link>
         {error && <p className="feedback">{error}</p>}
       </section>
     </div>
