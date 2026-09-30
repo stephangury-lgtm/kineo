@@ -11,12 +11,7 @@ export type DashboardV2 = {
   [key: string]: unknown
 }
 
-export type QuizOptionV3 = {
-  id: string
-  option_text: string
-  display_order: number
-}
-
+export type QuizOptionV3 = { id: string; option_text: string; display_order: number }
 export type QuizQuestionV3 = {
   id: string
   type: string
@@ -31,33 +26,16 @@ export type QuizQuestionV3 = {
 export type UserStatsV2 = {
   period_days: number
   summary: {
-    attempts: number
-    correct_answers: number
-    incorrect_answers: number
-    accuracy_percent: number
-    avg_response_ms: number
-    completed_sessions: number
-    xp_total: number
-    level: number
-    attempted_questions: number
-    mastered_questions: number
-    fragile_questions: number
-    reviews_due: number
-    mastery_percent: number
+    attempts: number; correct_answers: number; incorrect_answers: number; accuracy_percent: number
+    avg_response_ms: number; completed_sessions: number; xp_total: number; level: number
+    attempted_questions: number; mastered_questions: number; fragile_questions: number
+    reviews_due: number; mastery_percent: number
   }
   daily_activity: Array<{ date: string; attempts: number; correct: number; accuracy_percent: number; xp: number }>
   subjects: Array<{
-    id: string
-    name: string
-    year_number: number
-    published_questions: number
-    attempted_questions: number
-    coverage_percent: number
-    attempts: number
-    accuracy_percent: number
-    mastery_percent: number
-    mastered_questions: number
-    fragile_questions: number
+    id: string; name: string; year_number: number; published_questions: number; attempted_questions: number
+    coverage_percent: number; attempts: number; accuracy_percent: number; mastery_percent: number
+    mastered_questions: number; fragile_questions: number
   }>
   modes: Array<{ mode: string; sessions: number; questions: number; correct: number; accuracy_percent: number; xp: number }>
   weak_questions: Array<{ question_id: string; question_text: string; subject_name: string; accuracy_percent: number; mastery_percent: number }>
@@ -89,35 +67,24 @@ export async function getUserStatsV2(days = 30) {
 }
 
 export async function startSmartRevisionV2(questionCount = 10) {
-  const { data, error } = await supabase.rpc('start_smart_revision_v2', {
-    p_question_count: questionCount,
-  })
+  const { data, error } = await supabase.rpc('start_smart_revision_v2', { p_question_count: questionCount })
   if (error) throw error
   return data as string
 }
 
 export async function startDailyChallengeV2() {
-  const { data, error } = await supabase.rpc('start_daily_challenge_v2', {
-    p_challenge_date: new Date().toISOString().slice(0, 10),
-  })
+  const { data, error } = await supabase.rpc('start_daily_challenge_v2', { p_challenge_date: new Date().toISOString().slice(0, 10) })
   if (error) throw error
   return data as DailyChallengeStart
 }
 
-export async function getQuizQuestionsV3(sessionId: string) {
-  const { data, error } = await supabase.rpc('get_quiz_questions_v3', {
-    p_session_id: sessionId,
-  })
+export async function getQuizQuestionsV4(sessionId: string) {
+  const { data, error } = await supabase.rpc('get_quiz_questions_v4', { p_session_id: sessionId })
   if (error) throw error
   return (data ?? []) as QuizQuestionV3[]
 }
 
-export async function submitQuizAnswerV3(params: {
-  sessionId: string
-  questionId: string
-  answer: unknown
-  responseTimeMs: number
-}) {
+export async function submitQuizAnswerV3(params: { sessionId: string; questionId: string; answer: unknown; responseTimeMs: number }) {
   const { data, error } = await supabase.rpc('submit_quiz_answer_v3', {
     p_session_id: params.sessionId,
     p_question_id: params.questionId,
