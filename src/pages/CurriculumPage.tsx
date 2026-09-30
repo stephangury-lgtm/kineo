@@ -97,13 +97,16 @@ export default function CurriculumPage() {
                                 <div className="progress-fill" style={{ width: `${Math.min(100, lesson.mastery_percent)}%` }} />
                               </div>
                             </div>
-                            <button
-                              className="primary-button"
-                              onClick={() => launchLesson(lesson.id)}
-                              disabled={busyLesson === lesson.id || lesson.published_questions === 0}
-                            >
-                              {busyLesson === lesson.id ? 'Préparation…' : 'Quiz'}
-                            </button>
+                            <div className="stack">
+                              <button className="secondary-button" onClick={() => navigate(`/lesson/${lesson.id}`)}>Cours</button>
+                              <button
+                                className="primary-button"
+                                onClick={() => launchLesson(lesson.id)}
+                                disabled={busyLesson === lesson.id || lesson.published_questions === 0}
+                              >
+                                {busyLesson === lesson.id ? 'Préparation…' : 'Quiz'}
+                              </button>
+                            </div>
                           </div>
                         ))}
                       </article>

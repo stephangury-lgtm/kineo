@@ -4,6 +4,7 @@ import { supabase } from './lib/supabase'
 import CurriculumPage from './pages/CurriculumPage'
 import DashboardPage from './pages/DashboardPage'
 import GamificationPage from './pages/GamificationPage'
+import LessonPage from './pages/LessonPage'
 import RevisionPage from './pages/RevisionPage'
 import StatisticsPage from './pages/StatisticsPage'
 
@@ -23,6 +24,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<DashboardPage />} />
             <Route path="/parcours" element={<CurriculumPage />} />
+            <Route path="/lesson/:lessonId" element={<LessonPage />} />
             <Route path="/revision" element={<RevisionPage />} />
             <Route path="/stats" element={<StatisticsPage />} />
             <Route path="/rewards" element={<GamificationPage />} />
