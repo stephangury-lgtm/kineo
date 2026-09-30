@@ -26,8 +26,12 @@ const ACTIVE_SMART_SESSION = 'kineo_active_smart_session'
 
 export default function RevisionPage() {
   const [searchParams] = useSearchParams()
-  const isDaily = searchParams.get('mode') === 'daily'
+  const mode = searchParams.get('mode')
+  const externalSession = searchParams.get('session')
+  const isDaily = mode === 'daily'
+  const isLesson = mode === 'lesson' && Boolean(externalSession)
   const resumeChecked = useRef(false)
+  const externalChecked = useRef(false)
 
   const [sessionId, setSessionId] = useState<string | null>(null)
   const [questions, setQuestions] = useState<QuizQuestionV3[]>([])
@@ -47,7 +51,27 @@ export default function RevisionPage() {
   const rightItems = (current?.metadata?.right_items ?? []) as string[]
 
   useEffect(() => {
-    if (isDaily || resumeChecked.current) return
+    if (!externalSession || externalChecked.current) return
+    externalChecked.current = true
+    setBusy(true)
+    getQuizQuestionsV4(externalSession)
+      .then(async (qs) => {
+        if (qs.length === 0) {
+          await finishQuizSessionV2(externalSession)
+          setMessage('Ce quiz ciblé est déjà terminé.')
+          return
+        }
+        setSessionId(externalSession)
+        setQuestions(qs)
+        setIndex(0)
+        setStartedAt(Date.now())
+      })
+      .catch((err: Error) => setMessage(err.message))
+      .finally(() => setBusy(false))
+  }, [externalSession])
+
+  useEffect(() => {
+    if (isDaily || externalSession || resumeChecked.current) return
     resumeChecked.current = true
     const savedSession = localStorage.getItem(ACTIVE_SMART_SESSION)
     if (!savedSession) return
@@ -68,7 +92,7 @@ export default function RevisionPage() {
       })
       .catch(() => localStorage.removeItem(ACTIVE_SMART_SESSION))
       .finally(() => setBusy(false))
-  }, [isDaily])
+  }, [externalSession, isDaily])
 
   const canValidate = useMemo(() => {
     if (!current || result) return false
@@ -88,6 +112,7 @@ export default function RevisionPage() {
   }
 
   async function start() {
+    if (isLesson && externalSession) return
     setBusy(true)
     setMessage(null)
     setSummary(null)
@@ -160,8 +185,8 @@ export default function RevisionPage() {
           setMessage(`Challenge terminé 🔥 ${done.score ?? 0}% · +${done.xp_earned ?? 0} XP`)
         } else {
           await finishQuizSessionV2(sessionId)
-          localStorage.removeItem(ACTIVE_SMART_SESSION)
-          setMessage('Session terminée 🎉 Ta progression a été mise à jour.')
+          if (!externalSession) localStorage.removeItem(ACTIVE_SMART_SESSION)
+          setMessage(isLesson ? 'Quiz de leçon terminé 🎉 Ta progression a été mise à jour.' : 'Session terminée 🎉 Ta progression a été mise à jour.')
         }
         setQuestions([])
         setSessionId(null)
@@ -211,11 +236,16 @@ export default function RevisionPage() {
   }
 
   if (!current) {
+    const eyebrow = isDaily ? 'Challenge du jour' : isLesson ? 'Quiz de leçon' : 'Révision intelligente'
+    const title = isDaily ? '10 questions pour garder ta flamme 🔥' : isLesson ? 'Quiz ciblé sur cette leçon' : '10 questions adaptées à ta progression'
+    const description = isDaily ? 'Termine le challenge du jour pour gagner le bonus quotidien.' : isLesson ? 'Les questions sont choisies uniquement dans la leçon sélectionnée.' : 'Le moteur choisit les révisions dues, erreurs récentes et notions fragiles.'
+
     return <section className="card centered">
-      <p className="eyebrow">{isDaily ? 'Challenge du jour' : 'Révision intelligente'}</p>
-      <h1>{isDaily ? '10 questions pour garder ta flamme 🔥' : '10 questions adaptées à ta progression'}</h1>
-      <p>{isDaily ? 'Termine le challenge du jour pour gagner le bonus quotidien.' : 'Le moteur choisit les révisions dues, erreurs récentes et notions fragiles.'}</p>
-      <button className="primary-button" onClick={start} disabled={busy}>{busy ? 'Préparation…' : isDaily ? 'Lancer le challenge' : 'Commencer'}</button>
+      <p className="eyebrow">{eyebrow}</p>
+      <h1>{title}</h1>
+      <p>{description}</p>
+      {!isLesson && <button className="primary-button" onClick={start} disabled={busy}>{busy ? 'Préparation…' : isDaily ? 'Lancer le challenge' : 'Commencer'}</button>}
+      {isLesson && busy && <p>Préparation du quiz…</p>}
       {message && <p className="feedback">{message}</p>}
       {summary?.current_streak !== undefined && <p>🔥 Série actuelle : <strong>{summary.current_streak} jour{summary.current_streak > 1 ? 's' : ''}</strong></p>}
     </section>
@@ -224,7 +254,7 @@ export default function RevisionPage() {
   return <div className="stack">
     <div className="progress-track"><div className="progress-fill" style={{ width: `${progress}%` }} /></div>
     <section className="card quiz-card">
-      <p className="eyebrow">{isDaily ? 'Challenge · ' : ''}Question {index + 1} / {questions.length}</p>
+      <p className="eyebrow">{isDaily ? 'Challenge · ' : isLesson ? 'Leçon · ' : ''}Question {index + 1} / {questions.length}</p>
       <h1>{current.question_text}</h1>
       {current.image_url && <img className="question-image" src={current.image_url} alt="Illustration de la question" />}
       {renderAnswerInput()}
