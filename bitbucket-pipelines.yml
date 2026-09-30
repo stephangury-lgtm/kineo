@@ -1,0 +1,14 @@
+image: node:22
+
+pipelines:
+  branches:
+    "kineo/frontend-v2":
+      - step:
+          name: Build Kineo
+          caches:
+            - node
+          script:
+            - npm install
+            - npm run build
+          artifacts:
+            - dist/**

@@ -1,10 +1,9 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined
-const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined
+const DEFAULT_SUPABASE_URL = 'https://kimtiyuytikyseuzmjbv.supabase.co'
+const DEFAULT_SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_ANuwDKjYwbR2LF629eqK9Q_izXQUycB'
 
-if (!supabaseUrl || !supabaseKey) {
-  console.warn('Configuration Supabase manquante. Renseigner VITE_SUPABASE_URL et VITE_SUPABASE_PUBLISHABLE_KEY.')
-}
+const supabaseUrl = (import.meta.env.VITE_SUPABASE_URL as string | undefined) ?? DEFAULT_SUPABASE_URL
+const supabaseKey = (import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined) ?? DEFAULT_SUPABASE_PUBLISHABLE_KEY
 
-export const supabase = createClient(supabaseUrl ?? '', supabaseKey ?? '')
+export const supabase = createClient(supabaseUrl, supabaseKey)
