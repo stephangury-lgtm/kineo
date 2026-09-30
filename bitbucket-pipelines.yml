@@ -1,3 +1,4 @@
+# Kineo CI
 image: node:22
 
 pipelines:
