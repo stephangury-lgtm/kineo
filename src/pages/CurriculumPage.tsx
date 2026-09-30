@@ -1,16 +1,28 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getCurriculumV2, startLessonQuizV2, type CurriculumYear } from '../services/curriculumApi'
+import { getCurrentProfile } from '../services/profileApi'
 
 export default function CurriculumPage() {
   const navigate = useNavigate()
   const [years, setYears] = useState<CurriculumYear[]>([])
+  const [selectedYear, setSelectedYear] = useState<number | 'all'>('all')
   const [busyLesson, setBusyLesson] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    getCurriculumV2().then(setYears).catch((err: Error) => setError(err.message))
+    Promise.all([getCurriculumV2(), getCurrentProfile()])
+      .then(([curriculum, profile]) => {
+        setYears(curriculum)
+        if (profile?.study_year) setSelectedYear(profile.study_year)
+      })
+      .catch((err: Error) => setError(err.message))
   }, [])
+
+  const visibleYears = useMemo(
+    () => selectedYear === 'all' ? years : years.filter((year) => year.number === selectedYear),
+    [selectedYear, years],
+  )
 
   async function launchLesson(lessonId: string) {
     setBusyLesson(lessonId)
@@ -37,10 +49,17 @@ export default function CurriculumPage() {
       <section className="card">
         <p className="eyebrow">Parcours pédagogique</p>
         <h1>Réviser par année et par thème</h1>
-        <p>Le contenu affiché ici provient uniquement des éléments publiés dans Kineo. Les quiz de leçon utilisent le même moteur sécurisé que les révisions intelligentes.</p>
+        <p>Le contenu affiché provient uniquement des éléments publiés dans Kineo. Ton année d’étude est sélectionnée automatiquement.</p>
+        <label className="text-answer-wrap">
+          <span>Année affichée</span>
+          <select className="text-answer" value={selectedYear} onChange={(event) => setSelectedYear(event.target.value === 'all' ? 'all' : Number(event.target.value))}>
+            {years.map((year) => <option key={year.id} value={year.number}>K{year.number} · {year.name}</option>)}
+            <option value="all">Toutes les années</option>
+          </select>
+        </label>
       </section>
 
-      {years.map((year) => (
+      {visibleYears.map((year) => (
         <section className="card" key={year.id}>
           <p className="eyebrow">Année {year.number}</p>
           <h2>{year.name}</h2>
