@@ -10,7 +10,7 @@ export default function DashboardPage() {
     getDashboardV2().then(setDashboard).catch((err: Error) => setError(err.message))
   }, [])
 
-  if (error) return <section className="card"><h1>Connexion nécessaire</h1><p>{error}</p></section>
+  if (error) return <section className="card"><h1>Progression indisponible</h1><p>{error}</p></section>
   if (!dashboard) return <section className="card"><p>Chargement de ta progression…</p></section>
 
   const xp = dashboard.profile?.xp ?? 0
@@ -18,6 +18,7 @@ export default function DashboardPage() {
   const streak = dashboard.streak?.current ?? 0
   const mastery = dashboard.mastery?.overall_percent ?? 0
   const badges = dashboard.badges?.earned ?? 0
+  const dailyDone = dashboard.daily?.completed === true || dashboard.daily?.status === 'completed'
 
   return (
     <div className="stack">
@@ -28,6 +29,15 @@ export default function DashboardPage() {
           <p>Le moteur choisit en priorité tes révisions dues, erreurs récentes et notions fragiles.</p>
         </div>
         <Link className="primary-button" to="/revision">Lancer une révision</Link>
+      </section>
+
+      <section className="card challenge-card">
+        <div>
+          <p className="eyebrow">Challenge du jour</p>
+          <h2>{dailyDone ? 'Challenge terminé 🔥' : '10 questions · bonus quotidien'}</h2>
+          <p>{dailyDone ? 'Reviens demain pour prolonger ta série.' : 'Une seule récompense par jour. Termine les 10 questions pour entretenir ta flamme.'}</p>
+        </div>
+        {!dailyDone && <Link className="secondary-button" to="/revision?mode=daily">Relever le challenge</Link>}
       </section>
 
       <section className="stats-grid">

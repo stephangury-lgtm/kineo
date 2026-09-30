@@ -1,7 +1,10 @@
 import { useMemo, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import {
+  finishDailyChallengeV2,
   finishQuizSessionV2,
   getQuizQuestionsV3,
+  startDailyChallengeV2,
   startSmartRevisionV2,
   submitQuizAnswerV3,
   type QuizQuestionV3,
@@ -18,7 +21,18 @@ type AnswerResult = {
   }
 }
 
+type ChallengeFinish = {
+  score?: number
+  xp_earned?: number
+  bonus_xp?: number
+  current_streak?: number
+  new_badges_count?: number
+}
+
 export default function RevisionPage() {
+  const [searchParams] = useSearchParams()
+  const isDaily = searchParams.get('mode') === 'daily'
+
   const [sessionId, setSessionId] = useState<string | null>(null)
   const [questions, setQuestions] = useState<QuizQuestionV3[]>([])
   const [index, setIndex] = useState(0)
@@ -27,6 +41,7 @@ export default function RevisionPage() {
   const [matching, setMatching] = useState<Record<string, string>>({})
   const [result, setResult] = useState<AnswerResult | null>(null)
   const [message, setMessage] = useState<string | null>(null)
+  const [summary, setSummary] = useState<ChallengeFinish | null>(null)
   const [busy, setBusy] = useState(false)
   const [startedAt, setStartedAt] = useState<number>(Date.now())
 
@@ -43,9 +58,7 @@ export default function RevisionPage() {
     if (!current || result) return false
     if (current.type === 'mcq' || current.type === 'true_false') return Boolean(selected)
     if (current.type === 'fill_blank') return textAnswer.trim().length > 0
-    if (current.type === 'matching') {
-      return leftItems.length > 0 && leftItems.every((left) => Boolean(matching[left]))
-    }
+    if (current.type === 'matching') return leftItems.length > 0 && leftItems.every((left) => Boolean(matching[left]))
     return false
   }, [current, leftItems, matching, result, selected, textAnswer])
 
@@ -61,8 +74,11 @@ export default function RevisionPage() {
   async function start() {
     setBusy(true)
     setMessage(null)
+    setSummary(null)
     try {
-      const session = await startSmartRevisionV2(10)
+      const session = isDaily
+        ? (await startDailyChallengeV2()).session_id
+        : await startSmartRevisionV2(10)
       const qs = await getQuizQuestionsV3(session)
       setSessionId(session)
       setQuestions(qs)
@@ -77,21 +93,11 @@ export default function RevisionPage() {
 
   function buildAnswer() {
     if (!current) return {}
-
-    if (current.type === 'mcq' || current.type === 'true_false') {
-      return { option_id: selected }
-    }
-
-    if (current.type === 'fill_blank') {
-      return { text: textAnswer.trim() }
-    }
-
+    if (current.type === 'mcq' || current.type === 'true_false') return { option_id: selected }
+    if (current.type === 'fill_blank') return { text: textAnswer.trim() }
     if (current.type === 'matching') {
-      return {
-        pairs: leftItems.map((left) => ({ left, right: matching[left] })),
-      }
+      return { pairs: leftItems.map((left) => ({ left, right: matching[left] })) }
     }
-
     return {}
   }
 
@@ -106,7 +112,6 @@ export default function RevisionPage() {
         answer: buildAnswer(),
         responseTimeMs: Date.now() - startedAt,
       }) as AnswerResult
-
       setResult(answerResult)
     } catch (err) {
       setMessage(err instanceof Error ? err.message : 'Impossible de valider la réponse.')
@@ -121,10 +126,16 @@ export default function RevisionPage() {
     if (index + 1 >= questions.length) {
       setBusy(true)
       try {
-        await finishQuizSessionV2(sessionId)
+        if (isDaily) {
+          const dailySummary = await finishDailyChallengeV2(sessionId) as ChallengeFinish
+          setSummary(dailySummary)
+          setMessage(`Challenge terminé 🔥 ${dailySummary.score ?? 0}% · +${dailySummary.xp_earned ?? 0} XP`)
+        } else {
+          await finishQuizSessionV2(sessionId)
+          setMessage('Session terminée 🎉 Ta progression a été mise à jour.')
+        }
         setQuestions([])
         setSessionId(null)
-        setMessage('Session terminée 🎉 Ta progression a été mise à jour.')
         setResult(null)
       } catch (err) {
         setMessage(err instanceof Error ? err.message : 'Impossible de terminer la session.')
@@ -146,23 +157,15 @@ export default function RevisionPage() {
         <div className="answers">
           {current.question_options.map((option) => {
             const correctIds = result?.correction?.correct_option_ids ?? []
-            const isCorrectOption = result && correctIds.includes(option.id)
+            const isCorrectOption = Boolean(result && correctIds.includes(option.id))
             const isSelected = selected === option.id
-
             const className = [
-              'answer',
-              isSelected ? 'selected' : '',
-              isCorrectOption ? 'correct' : '',
+              'answer', isSelected ? 'selected' : '', isCorrectOption ? 'correct' : '',
               result && isSelected && !isCorrectOption ? 'incorrect' : '',
             ].filter(Boolean).join(' ')
 
             return (
-              <button
-                key={option.id}
-                className={className}
-                onClick={() => !result && setSelected(option.id)}
-                disabled={busy || Boolean(result)}
-              >
+              <button key={option.id} className={className} onClick={() => !result && setSelected(option.id)} disabled={busy || Boolean(result)}>
                 {option.option_text}
               </button>
             )
@@ -175,17 +178,8 @@ export default function RevisionPage() {
       return (
         <div className="text-answer-wrap">
           <label htmlFor="fill-answer">Ta réponse</label>
-          <input
-            id="fill-answer"
-            className="text-answer"
-            value={textAnswer}
-            onChange={(event) => setTextAnswer(event.target.value)}
-            disabled={busy || Boolean(result)}
-            autoComplete="off"
-          />
-          {result?.correction?.correct_answer && (
-            <p className="correction-line">Réponse attendue : <strong>{result.correction.correct_answer}</strong></p>
-          )}
+          <input id="fill-answer" className="text-answer" value={textAnswer} onChange={(event) => setTextAnswer(event.target.value)} disabled={busy || Boolean(result)} autoComplete="off" />
+          {result?.correction?.correct_answer && <p className="correction-line">Réponse attendue : <strong>{result.correction.correct_answer}</strong></p>}
         </div>
       )
     }
@@ -196,24 +190,16 @@ export default function RevisionPage() {
           {leftItems.map((left) => (
             <label className="matching-row" key={left}>
               <span>{left}</span>
-              <select
-                value={matching[left] ?? ''}
-                onChange={(event) => setMatching((value) => ({ ...value, [left]: event.target.value }))}
-                disabled={busy || Boolean(result)}
-              >
+              <select value={matching[left] ?? ''} onChange={(event) => setMatching((value) => ({ ...value, [left]: event.target.value }))} disabled={busy || Boolean(result)}>
                 <option value="">Choisir…</option>
-                {rightItems.map((right) => (
-                  <option key={right} value={right}>{right}</option>
-                ))}
+                {rightItems.map((right) => <option key={right} value={right}>{right}</option>)}
               </select>
             </label>
           ))}
           {result?.correction?.correct_pairs && (
             <div className="correction-box">
               <strong>Associations correctes</strong>
-              {result.correction.correct_pairs.map((pair) => (
-                <span key={`${pair.left}-${pair.right}`}>{pair.left} → {pair.right}</span>
-              ))}
+              {result.correction.correct_pairs.map((pair) => <span key={`${pair.left}-${pair.right}`}>{pair.left} → {pair.right}</span>)}
             </div>
           )}
         </div>
@@ -226,46 +212,35 @@ export default function RevisionPage() {
   if (!current) {
     return (
       <section className="card centered">
-        <p className="eyebrow">Révision intelligente</p>
-        <h1>10 questions adaptées à ta progression</h1>
-        <p>Le moteur choisit les révisions dues, erreurs récentes et notions fragiles. Les corrections ne sont envoyées qu’après ta réponse.</p>
-        <button className="primary-button" onClick={start} disabled={busy}>
-          {busy ? 'Préparation…' : 'Commencer'}
-        </button>
+        <p className="eyebrow">{isDaily ? 'Challenge du jour' : 'Révision intelligente'}</p>
+        <h1>{isDaily ? '10 questions pour garder ta flamme 🔥' : '10 questions adaptées à ta progression'}</h1>
+        <p>{isDaily ? 'Termine le challenge du jour pour gagner le bonus quotidien.' : 'Le moteur choisit les révisions dues, erreurs récentes et notions fragiles.'}</p>
+        <button className="primary-button" onClick={start} disabled={busy}>{busy ? 'Préparation…' : isDaily ? 'Lancer le challenge' : 'Commencer'}</button>
         {message && <p className="feedback">{message}</p>}
+        {summary?.current_streak !== undefined && <p>🔥 Série actuelle : <strong>{summary.current_streak} jour{summary.current_streak > 1 ? 's' : ''}</strong></p>}
       </section>
     )
   }
 
   return (
     <div className="stack">
-      <div className="progress-track">
-        <div className="progress-fill" style={{ width: `${progress}%` }} />
-      </div>
-
+      <div className="progress-track"><div className="progress-fill" style={{ width: `${progress}%` }} /></div>
       <section className="card quiz-card">
-        <p className="eyebrow">Question {index + 1} / {questions.length}</p>
+        <p className="eyebrow">{isDaily ? 'Challenge · ' : ''}Question {index + 1} / {questions.length}</p>
         <h1>{current.question_text}</h1>
-
         {current.image_url && <img className="question-image" src={current.image_url} alt="Illustration de la question" />}
-
         {renderAnswerInput()}
 
         {!result ? (
-          <button className="primary-button" onClick={validate} disabled={!canValidate || busy}>
-            {busy ? 'Validation…' : 'Valider'}
-          </button>
+          <button className="primary-button" onClick={validate} disabled={!canValidate || busy}>{busy ? 'Validation…' : 'Valider'}</button>
         ) : (
           <div className={result.correct ? 'result-box success' : 'result-box retry'}>
             <strong>{result.correct ? 'Bonne réponse ✅' : 'À revoir 💡'}</strong>
             {typeof result.xp_earned === 'number' && result.xp_earned > 0 && <span>+{result.xp_earned} XP</span>}
             {result.correction?.explanation && <p>{result.correction.explanation}</p>}
-            <button className="primary-button" onClick={next} disabled={busy}>
-              {index + 1 >= questions.length ? 'Terminer la session' : 'Question suivante'}
-            </button>
+            <button className="primary-button" onClick={next} disabled={busy}>{index + 1 >= questions.length ? (isDaily ? 'Terminer le challenge' : 'Terminer la session') : 'Question suivante'}</button>
           </div>
         )}
-
         {message && <p className="feedback">{message}</p>}
       </section>
     </div>

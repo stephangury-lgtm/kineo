@@ -18,11 +18,14 @@ button, input, select { font: inherit; }
 .content { width: min(760px, calc(100% - 28px)); margin: 22px auto; }
 .stack { display: grid; gap: 16px; }
 .card { background: white; border: 1px solid #e5e7eb; border-radius: 22px; padding: 20px; box-shadow: 0 8px 30px rgba(17,24,39,.05); }
-.hero { display: grid; gap: 18px; }
+.hero, .challenge-card { display: grid; gap: 18px; }
 .hero h1, .quiz-card h1, .auth-card h1 { margin: 4px 0 10px; line-height: 1.15; }
 .eyebrow { margin: 0; color: #6d28d9; font-weight: 800; font-size: .78rem; text-transform: uppercase; letter-spacing: .08em; }
-.primary-button { display: inline-flex; justify-content: center; align-items: center; border: 0; border-radius: 14px; padding: 14px 18px; background: #6d28d9; color: white; font-weight: 800; cursor: pointer; }
+.primary-button, .secondary-button { display: inline-flex; justify-content: center; align-items: center; border: 0; border-radius: 14px; padding: 14px 18px; font-weight: 800; cursor: pointer; }
+.primary-button { background: #6d28d9; color: white; }
+.secondary-button { background: #fff7ed; color: #c2410c; border: 1px solid #fed7aa; }
 .primary-button:disabled { opacity: .45; cursor: not-allowed; }
+.challenge-card { background: linear-gradient(135deg, #fff7ed, #ffffff); border-color: #fed7aa; }
 .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 .stat, .mini-stat { display: grid; gap: 6px; }
 .stat span, .mini-stat span { color: #6b7280; }
@@ -67,12 +70,9 @@ button, input, select { font: inherit; }
 .bottom-nav a { text-align: center; padding: 10px; border-radius: 12px; color: #6b7280; font-weight: 700; }
 .bottom-nav a.active { color: #6d28d9; background: #f5f3ff; }
 
-@media (max-width: 520px) {
-  .tagline { display: none; }
-}
-
+@media (max-width: 520px) { .tagline { display: none; } }
 @media (min-width: 720px) {
   .stats-grid { grid-template-columns: repeat(4, 1fr); }
-  .hero { grid-template-columns: 1fr auto; align-items: center; }
+  .hero, .challenge-card { grid-template-columns: 1fr auto; align-items: center; }
   .matching-row { grid-template-columns: 1fr 1fr; align-items: center; }
 }

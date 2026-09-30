@@ -7,7 +7,7 @@ export type DashboardV2 = {
   mastery?: { overall_percent?: number; mastered?: number; fragile?: number; due?: number }
   activity?: { completed_sessions?: number; last_session?: unknown }
   badges?: { earned?: number; total?: number }
-  daily?: { ready?: boolean; question_count?: number }
+  daily?: { ready?: boolean; question_count?: number; completed?: boolean; status?: string }
   [key: string]: unknown
 }
 
@@ -63,6 +63,19 @@ export type UserStatsV2 = {
   weak_questions: Array<{ question_id: string; question_text: string; subject_name: string; accuracy_percent: number; mastery_percent: number }>
 }
 
+export type DailyChallengeStart = {
+  challenge_id: string
+  challenge_date: string
+  session_id: string
+  question_count: number
+  answered_count: number
+  remaining_count: number
+  completed: boolean
+  score: number | null
+  xp_earned: number | null
+  status: 'ready' | 'in_progress' | 'completed'
+}
+
 export async function getDashboardV2() {
   const { data, error } = await supabase.rpc('get_user_dashboard_v2')
   if (error) throw error
@@ -81,6 +94,14 @@ export async function startSmartRevisionV2(questionCount = 10) {
   })
   if (error) throw error
   return data as string
+}
+
+export async function startDailyChallengeV2() {
+  const { data, error } = await supabase.rpc('start_daily_challenge_v2', {
+    p_challenge_date: new Date().toISOString().slice(0, 10),
+  })
+  if (error) throw error
+  return data as DailyChallengeStart
 }
 
 export async function getQuizQuestionsV3(sessionId: string) {
@@ -109,6 +130,15 @@ export async function submitQuizAnswerV3(params: {
 
 export async function finishQuizSessionV2(sessionId: string) {
   const { data, error } = await supabase.rpc('finish_quiz_session_v2', {
+    p_session_id: sessionId,
+    p_activity_date: new Date().toISOString().slice(0, 10),
+  })
+  if (error) throw error
+  return data
+}
+
+export async function finishDailyChallengeV2(sessionId: string) {
+  const { data, error } = await supabase.rpc('finish_daily_challenge_v2', {
     p_session_id: sessionId,
     p_activity_date: new Date().toISOString().slice(0, 10),
   })
