@@ -1,22 +1,26 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
-import { getCurrentProfile, updateStudyProfile, type StudentProfile } from '../services/profileApi'
+import { getCurrentProfile, updateStudyProfile, uploadProfilePhoto, type StudentProfile } from '../services/profileApi'
 
 export default function ProfilePage() {
   const [profile, setProfile] = useState<StudentProfile | null>(null)
   const [email, setEmail] = useState('')
   const [firstName, setFirstName] = useState('')
   const [username, setUsername] = useState('')
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
   const [studyYear, setStudyYear] = useState(1)
   const [busy, setBusy] = useState(false)
+  const [photoBusy, setPhotoBusy] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     void Promise.all([getCurrentProfile(), supabase.auth.getUser()]).then(([nextProfile, auth]) => {
       setProfile(nextProfile)
       setFirstName(nextProfile?.first_name ?? '')
       setUsername(nextProfile?.username ?? '')
+      setAvatarUrl(nextProfile?.avatar_url ?? null)
       setStudyYear(nextProfile?.study_year ?? 1)
       setEmail(auth.data.user?.email ?? '')
     })
@@ -29,6 +33,7 @@ export default function ProfilePage() {
       const updated = await updateStudyProfile({ firstName, username, studyYear })
       setProfile(updated)
       setUsername(updated.username ?? '')
+      window.dispatchEvent(new Event('kineo-profile-updated'))
       setMessage('Profil mis à jour ✓')
     } catch (err) {
       setMessage(err instanceof Error ? err.message : 'Impossible de mettre à jour le profil.')
@@ -37,7 +42,25 @@ export default function ProfilePage() {
     }
   }
 
+  async function changePhoto(file?: File) {
+    if (!file) return
+    setPhotoBusy(true)
+    setMessage(null)
+    try {
+      const nextUrl = await uploadProfilePhoto(file)
+      setAvatarUrl(nextUrl)
+      setMessage('Photo de profil mise à jour ✓')
+    } catch (err) {
+      setMessage(err instanceof Error ? err.message : 'Impossible d’envoyer la photo.')
+    } finally {
+      setPhotoBusy(false)
+      if (fileInputRef.current) fileInputRef.current.value = ''
+    }
+  }
+
   if (!profile) return <section className="card"><p>Chargement du profil…</p></section>
+
+  const fallback = (firstName || username || '?').slice(0, 1).toUpperCase()
 
   return (
     <div className="stack profile-stack">
@@ -48,6 +71,15 @@ export default function ProfilePage() {
           <p>Personnalise Kineo pour garder des révisions adaptées à ton année d’étude.</p>
         </div>
         <div className="hero-orbit" aria-hidden="true"><span>🎓</span></div>
+      </section>
+
+      <section className="card profile-photo-card">
+        <div className="profile-photo-wrap">
+          <div className="profile-photo-large">{avatarUrl ? <img src={avatarUrl} alt="Ma photo de profil" /> : <span>{fallback}</span>}</div>
+          <div><p className="eyebrow">Photo de profil</p><h2>Personnalise ton avatar</h2><p>Ta photo apparaîtra aussi en haut à droite de Kineo.</p></div>
+        </div>
+        <input ref={fileInputRef} className="visually-hidden" type="file" accept="image/jpeg,image/png,image/webp" onChange={(event) => void changePhoto(event.target.files?.[0])} />
+        <button className="secondary-button" onClick={() => fileInputRef.current?.click()} disabled={photoBusy}>{photoBusy ? 'Envoi de la photo…' : avatarUrl ? 'Changer ma photo' : 'Ajouter ma photo'}</button>
       </section>
 
       <section className="card">
@@ -63,7 +95,7 @@ export default function ProfilePage() {
       </section>
 
       <section className="card social-entry-card">
-        <div><p className="eyebrow">Social</p><h2>Mes amis</h2><p>Retrouve tes camarades et prépare les futurs défis entre amis.</p></div>
+        <div><p className="eyebrow">Social</p><h2>Amis & défis</h2><p>Retrouve tes camarades, puis lance des duels de 10 questions.</p></div>
         <Link className="secondary-button" to="/amis">Ouvrir mes amis</Link>
       </section>
 

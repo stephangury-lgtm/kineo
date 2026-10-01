@@ -1,5 +1,6 @@
 import { NavLink, Route, Routes } from 'react-router-dom'
 import AuthGate from './auth/AuthGate'
+import HeaderProfileButton from './components/HeaderProfileButton'
 import CurriculumPage from './pages/CurriculumPage'
 import DashboardPage from './pages/DashboardPage'
 import FriendsPage from './pages/FriendsPage'
@@ -26,7 +27,7 @@ export default function App() {
             <span className="brand-mark">K</span>
             <div><strong className="brand">Kineo</strong><span className="tagline">Réviser. Progresser. Retenir.</span></div>
           </div>
-          <NavLink className="icon-button profile-button" aria-label="Mon profil" to="/profil">●</NavLink>
+          <HeaderProfileButton />
         </header>
 
         <main className="content">
