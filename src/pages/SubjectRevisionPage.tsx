@@ -13,7 +13,7 @@ export default function SubjectRevisionPage(){
   if(!subjectId){setError('Matière introuvable.');return}
   let cancelled=false
   startSubjectRevisionV1(subjectId,10).then(session=>{
-   if(!cancelled)navigate(`/revision?mode=subject&session=${encodeURIComponent(session)}&subject=${encodeURIComponent(subject)}`,{replace:true})
+   if(!cancelled)navigate(`/revision?mode=subject&session=${encodeURIComponent(session)}&subjectId=${encodeURIComponent(subjectId)}&subject=${encodeURIComponent(subject)}`,{replace:true})
   }).catch((e:Error)=>{if(!cancelled)setError(e.message)})
   return()=>{cancelled=true}
  },[navigate,subjectId,subject])
