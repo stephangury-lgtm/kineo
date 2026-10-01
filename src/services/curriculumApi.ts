@@ -40,6 +40,13 @@ export type CurriculumYear = {
   subjects: CurriculumSubject[]
 }
 
+export type LessonSourceDocument = {
+  title: string
+  validation_status: string | null
+  page_start: number | null
+  page_end: number | null
+}
+
 export type LessonV2 = {
   id: string
   title: string
@@ -49,10 +56,14 @@ export type LessonV2 = {
   key_points: unknown[]
   sources: unknown[]
   image_url: string | null
+  validation_status: string | null
+  source_document: string | null
+  source_documents: LessonSourceDocument[]
   chapter: { id: string; name: string; slug: string }
   subject: { id: string; name: string; slug: string; icon: string | null }
   year: { number: number; name: string }
   question_count: number
+  attempted_questions: number
   mastery_percent: number
 }
 
