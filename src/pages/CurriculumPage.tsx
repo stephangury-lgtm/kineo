@@ -8,6 +8,7 @@ export default function CurriculumPage() {
   const [years, setYears] = useState<CurriculumYear[]>([])
   const [selectedYear, setSelectedYear] = useState<number | 'all'>('all')
   const [busyLesson, setBusyLesson] = useState<string | null>(null)
+  const [busySubject, setBusySubject] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -45,6 +46,11 @@ export default function CurriculumPage() {
     }
   }
 
+  function launchSubject(subjectId: string, subjectName: string) {
+    setBusySubject(subjectId)
+    navigate(`/revision-matiere?subjectId=${encodeURIComponent(subjectId)}&subject=${encodeURIComponent(subjectName)}`)
+  }
+
   if (error && years.length === 0) {
     return <section className="card"><h1>Parcours indisponible</h1><p>{error}</p></section>
   }
@@ -76,10 +82,7 @@ export default function CurriculumPage() {
 
       <section className="card">
         <div className="section-heading">
-          <div>
-            <p className="eyebrow">Filtrer</p>
-            <h2>Choisis ton année</h2>
-          </div>
+          <div><p className="eyebrow">Filtrer</p><h2>Choisis ton année</h2></div>
         </div>
         <label className="text-answer-wrap">
           <span>Année affichée</span>
@@ -93,81 +96,45 @@ export default function CurriculumPage() {
       {visibleYears.map((year) => (
         <section className="card" key={year.id}>
           <div className="section-heading">
-            <div>
-              <p className="eyebrow">Année {year.number}</p>
-              <h2>K{year.number} · {year.name}</h2>
-            </div>
+            <div><p className="eyebrow">Année {year.number}</p><h2>K{year.number} · {year.name}</h2></div>
             <strong>{year.subjects.length} matière{year.subjects.length > 1 ? 's' : ''}</strong>
           </div>
           {year.description && <p>{year.description}</p>}
 
-          {year.subjects.length === 0 ? (
-            <p>Aucun contenu publié pour cette année pour le moment.</p>
-          ) : (
+          {year.subjects.length === 0 ? <p>Aucun contenu publié pour cette année pour le moment.</p> : (
             <div className="subject-list">
-              {year.subjects.map((subject) => (
-                <details key={subject.id}>
+              {year.subjects.map((subject) => {
+                const subjectQuestions = subject.chapters.reduce((sum, chapter) => sum + chapter.published_questions, 0)
+                return <details key={subject.id}>
                   <summary className="subject-row">
-                    <div>
-                      <strong>{subject.icon ? `${subject.icon} ` : ''}{subject.name}</strong>
-                      <span>{subject.chapter_count} chapitre{subject.chapter_count > 1 ? 's' : ''}</span>
-                    </div>
+                    <div><strong>{subject.icon ? `${subject.icon} ` : ''}{subject.name}</strong><span>{subject.chapter_count} chapitre{subject.chapter_count > 1 ? 's' : ''} · {subjectQuestions} questions</span></div>
                     <span>Voir</span>
                   </summary>
-
+                  <div className="quick-grid">
+                    <button className="primary-button" onClick={() => launchSubject(subject.id, subject.name)} disabled={busySubject === subject.id || subjectQuestions === 0}>{busySubject === subject.id ? 'Préparation…' : 'Réviser cette matière'}</button>
+                  </div>
                   <div className="stack">
                     {subject.chapters.map((chapter) => (
                       <article key={chapter.id} className="card">
-                        <div className="section-heading">
-                          <div>
-                            <p className="eyebrow">Chapitre</p>
-                            <h3>{chapter.name}</h3>
-                          </div>
-                          <strong>{chapter.published_questions}</strong>
-                        </div>
+                        <div className="section-heading"><div><p className="eyebrow">Chapitre</p><h3>{chapter.name}</h3></div><strong>{chapter.published_questions}</strong></div>
                         {chapter.description && <p>{chapter.description}</p>}
                         <p>{chapter.published_questions} question{chapter.published_questions > 1 ? 's' : ''} publiée{chapter.published_questions > 1 ? 's' : ''}</p>
-
-                        {chapter.lessons.length === 0 ? (
-                          <p>Les questions de ce chapitre ne sont pas encore regroupées en leçons publiées.</p>
-                        ) : chapter.lessons.map((lesson) => (
+                        {chapter.lessons.length === 0 ? <p>Les questions de ce chapitre ne sont pas encore regroupées en leçons publiées.</p> : chapter.lessons.map((lesson) => (
                           <div className="subject-progress" key={lesson.id}>
-                            <div className="subject-row">
-                              <div>
-                                <strong>{lesson.title}</strong>
-                                {lesson.summary && <span>{lesson.summary}</span>}
-                                <span>{lesson.published_questions} questions · couverture {lesson.coverage_percent}%</span>
-                              </div>
-                              <div className="subject-score">
-                                <strong>{lesson.mastery_percent}%</strong>
-                                <span>maîtrise</span>
-                              </div>
-                            </div>
-                            <div className="progress-track small">
-                              <div className="progress-fill" style={{ width: `${Math.min(100, lesson.mastery_percent)}%` }} />
-                            </div>
-                            <div className="quick-grid">
-                              <button className="secondary-button" onClick={() => navigate(`/lesson/${lesson.id}`)}>Lire le cours</button>
-                              <button
-                                className="primary-button"
-                                onClick={() => launchLesson(lesson.id)}
-                                disabled={busyLesson === lesson.id || lesson.published_questions === 0}
-                              >
-                                {busyLesson === lesson.id ? 'Préparation…' : 'Lancer le quiz'}
-                              </button>
-                            </div>
+                            <div className="subject-row"><div><strong>{lesson.title}</strong>{lesson.summary && <span>{lesson.summary}</span>}<span>{lesson.published_questions} questions · couverture {lesson.coverage_percent}%</span></div><div className="subject-score"><strong>{lesson.mastery_percent}%</strong><span>maîtrise</span></div></div>
+                            <div className="progress-track small"><div className="progress-fill" style={{ width: `${Math.min(100, lesson.mastery_percent)}%` }} /></div>
+                            <div className="quick-grid"><button className="secondary-button" onClick={() => navigate(`/lesson/${lesson.id}`)}>Lire le cours</button><button className="primary-button" onClick={() => launchLesson(lesson.id)} disabled={busyLesson === lesson.id || lesson.published_questions === 0}>{busyLesson === lesson.id ? 'Préparation…' : 'Lancer le quiz'}</button></div>
                           </div>
                         ))}
                       </article>
                     ))}
                   </div>
                 </details>
-              ))}
+              })}
             </div>
           )}
         </section>
       ))}
-
       {error && <section className="card"><p className="feedback">{error}</p></section>}
     </div>
   )
