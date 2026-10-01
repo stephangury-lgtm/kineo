@@ -64,10 +64,10 @@ export default function AtlasTimedPage() {
   }, [sessionId])
 
   useEffect(() => {
-    if (final || busy || !questions.length) return
+    if (final || !questions.length) return
     const timer = window.setInterval(() => setElapsed(Date.now() - sessionStarted.current), 250)
     return () => window.clearInterval(timer)
-  }, [final, busy, questions.length])
+  }, [final, questions.length])
 
   function point(event: React.MouseEvent<HTMLElement> | React.DragEvent<HTMLElement>) {
     const rect = event.currentTarget.getBoundingClientRect()
@@ -82,12 +82,14 @@ export default function AtlasTimedPage() {
     setLabelPlacements({})
     setSelectedLabel(null)
     setResult(null)
+    setError(null)
     questionStarted.current = Date.now()
   }
 
   async function validate() {
     if (!sessionId || !current || !canValidate) return
     setBusy(true)
+    setError(null)
     try {
       const answer = current.type === 'hotspot'
         ? hotspot
@@ -121,6 +123,7 @@ export default function AtlasTimedPage() {
       return
     }
     setBusy(true)
+    setError(null)
     try {
       const atlas = await finishAtlasSessionV1(sessionId)
       await finishQuizSessionV2(sessionId)
@@ -147,9 +150,9 @@ export default function AtlasTimedPage() {
     </div>
   }
 
-  if (busy && !current) return <section className="card"><p>Préparation de l’Atlas…</p></section>
-  if (error && !current) return <section className="card"><h1>Atlas indisponible</h1><p>{error}</p><Link className="secondary-button" to="/atlas">Retour</Link></section>
-  if (!current) return <section className="card"><p>Aucun exercice disponible.</p></section>
+  if (busy && !current) return <section className="card skeleton-card"><p>Préparation de l’Atlas…</p></section>
+  if (error && !current) return <section className="card centered"><h1>Atlas indisponible</h1><p>{error}</p><Link className="secondary-button" to="/atlas">Retour</Link></section>
+  if (!current) return <section className="card centered"><h1>Aucun exercice disponible</h1><p>Cette zone ne contient pas encore d’exercice visuel utilisable.</p><Link className="secondary-button" to="/atlas">Retour à l’Atlas</Link></section>
 
   const correctHotspot = result?.correction?.correct_hotspot
   const correctLabels = result?.correction?.correct_labels ?? []

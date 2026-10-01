@@ -1,0 +1,126 @@
+:root {
+  --text: var(--ink);
+}
+
+/* App-wide audit fixes: layout safety, accessibility and consistent controls */
+img,
+video,
+canvas {
+  max-width: 100%;
+}
+img {
+  height: auto;
+}
+
+.card,
+.hero-card,
+.stats-hero,
+.quick-card,
+.metric-card,
+.library-doc,
+.atlas-card,
+.quiz-card,
+.section-heading > *,
+.library-doc-head > *,
+.challenge-copy,
+.progress-copy {
+  min-width: 0;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid rgba(20,184,166,.28);
+  outline-offset: 2px;
+}
+
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+.auth-form select {
+  width: 100%;
+  min-height: 48px;
+  padding: 13px 14px;
+  border: 1.5px solid #d7e4e2;
+  border-radius: 14px;
+  background: #fbfdfd;
+  color: var(--ink);
+  outline: none;
+}
+.auth-form select:focus {
+  border-color: #14b8a6;
+  box-shadow: 0 0 0 4px rgba(20,184,166,.09);
+}
+
+.question-image,
+.hotspot-stage,
+.label-stage {
+  width: 100%;
+}
+.question-image {
+  background: #f8fbfa;
+  border: 1px solid #e1ebe9;
+}
+.hotspot-stage img,
+.label-stage img {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  object-fit: initial;
+}
+
+/* Keep percentage-based anatomy coordinates aligned with the actual SVG box. */
+@media (max-width: 520px) {
+  .label-stage,
+  .label-stage img {
+    min-height: 0 !important;
+  }
+  .label-stage img {
+    height: auto !important;
+    object-fit: initial !important;
+  }
+}
+
+/* The app header is sticky; keep the Atlas HUD below it instead of underneath it. */
+.atlas-live-bar {
+  top: calc(66px + env(safe-area-inset-top));
+  z-index: 9;
+}
+
+/* Prevent long pedagogical labels from stretching cards or controls. */
+.match-chip,
+.match-dropzone,
+.library-lesson-link,
+.primary-button,
+.secondary-button {
+  overflow-wrap: anywhere;
+}
+
+.library-doc-head h3,
+.atlas-card h2,
+.quiz-card h1 {
+  overflow-wrap: anywhere;
+}
+
+/* Better mobile touch spacing without changing desktop density. */
+@media (max-width: 520px) {
+  .library-results-head {
+    align-items: flex-start;
+  }
+  .library-count {
+    white-space: nowrap;
+  }
+  .auth-form input,
+  .auth-form select,
+  .library-search input,
+  .library-filter {
+    min-height: 50px;
+  }
+  .atlas-live-bar {
+    top: calc(62px + env(safe-area-inset-top));
+  }
+}
