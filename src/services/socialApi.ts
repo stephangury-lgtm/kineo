@@ -6,6 +6,7 @@ export type SocialStudent = {
   first_name: string | null
   study_year: number | null
   level: number | null
+  avatar_url: string | null
 }
 
 export type FriendshipStudent = SocialStudent & {
@@ -22,13 +23,13 @@ export type FriendshipsSummary = {
 export async function searchStudents(query: string) {
   const normalized = query.trim()
   if (normalized.length < 2) return []
-  const { data, error } = await supabase.rpc('search_students_v1', { p_query: normalized })
+  const { data, error } = await supabase.rpc('search_students_v2', { p_query: normalized })
   if (error) throw error
   return (data ?? []) as SocialStudent[]
 }
 
 export async function getFriendships() {
-  const { data, error } = await supabase.rpc('get_friendships_v1')
+  const { data, error } = await supabase.rpc('get_friendships_v2')
   if (error) throw error
   const result = (data ?? {}) as Partial<FriendshipsSummary>
   return {
