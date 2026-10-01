@@ -122,10 +122,7 @@ export async function uploadProfilePhoto(originalFile: File) {
 
   const { data: publicData } = supabase.storage.from('avatars').getPublicUrl(path)
   const avatarUrl = publicData.publicUrl
-
-  const { data: savedUrl, error: saveError } = await supabase.rpc('set_profile_avatar_v1', {
-    p_avatar_url: avatarUrl,
-  })
+  const { data: savedUrl, error: saveError } = await supabase.rpc('set_profile_avatar_v1', { p_avatar_url: avatarUrl })
 
   if (saveError || !savedUrl) {
     await supabase.storage.from('avatars').remove([path])
@@ -135,4 +132,30 @@ export async function uploadProfilePhoto(originalFile: File) {
   const displayUrl = `${String(savedUrl)}?v=${Date.now()}`
   window.dispatchEvent(new CustomEvent('kineo-profile-updated', { detail: { avatarUrl: displayUrl } }))
   return displayUrl
+}
+
+export async function removeProfilePhoto(currentUrl?: string | null) {
+  const { data: userData, error: userError } = await supabase.auth.getUser()
+  if (userError) throw userError
+  const user = userData.user
+  if (!user) throw new Error('Utilisateur non authentifié')
+
+  const { error: clearError } = await supabase.rpc('set_profile_avatar_v1', { p_avatar_url: '' })
+  if (clearError) throw clearError
+
+  if (currentUrl) {
+    try {
+      const clean = currentUrl.split('?')[0]
+      const marker = '/storage/v1/object/public/avatars/'
+      const index = clean.indexOf(marker)
+      if (index >= 0) {
+        const path = decodeURIComponent(clean.slice(index + marker.length))
+        if (path.startsWith(`${user.id}/`)) await supabase.storage.from('avatars').remove([path])
+      }
+    } catch {
+      // Le profil est déjà nettoyé : un éventuel ancien fichier orphelin n'empêche pas l'utilisateur de continuer.
+    }
+  }
+
+  window.dispatchEvent(new CustomEvent('kineo-profile-updated', { detail: { avatarUrl: null } }))
 }
