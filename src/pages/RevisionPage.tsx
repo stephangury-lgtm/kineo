@@ -239,31 +239,52 @@ export default function RevisionPage() {
     const eyebrow = isDaily ? 'Challenge du jour' : isLesson ? 'Quiz de leçon' : 'Révision intelligente'
     const title = isDaily ? '10 questions pour garder ta flamme 🔥' : isLesson ? 'Quiz ciblé sur cette leçon' : '10 questions adaptées à ta progression'
     const description = isDaily ? 'Termine le challenge du jour pour gagner le bonus quotidien.' : isLesson ? 'Les questions sont choisies uniquement dans la leçon sélectionnée.' : 'Le moteur choisit les révisions dues, erreurs récentes et notions fragiles.'
+    const icon = isDaily ? '🔥' : isLesson ? '🎯' : '🧠'
 
-    return <section className="card centered">
-      <p className="eyebrow">{eyebrow}</p>
-      <h1>{title}</h1>
-      <p>{description}</p>
-      {!isLesson && <button className="primary-button" onClick={start} disabled={busy}>{busy ? 'Préparation…' : isDaily ? 'Lancer le challenge' : 'Commencer'}</button>}
-      {isLesson && busy && <p>Préparation du quiz…</p>}
-      {message && <p className="feedback">{message}</p>}
-      {summary?.current_streak !== undefined && <p>🔥 Série actuelle : <strong>{summary.current_streak} jour{summary.current_streak > 1 ? 's' : ''}</strong></p>}
-    </section>
+    return <div className="stack">
+      <section className="hero-card">
+        <div className="hero-copy">
+          <p className="eyebrow light">{eyebrow}</p>
+          <h1>{title}</h1>
+          <p>{description}</p>
+          {!isLesson && <button className="primary-button hero-action" onClick={start} disabled={busy}>{busy ? 'Préparation…' : isDaily ? 'Lancer le challenge' : 'Commencer'}</button>}
+          {isLesson && busy && <p>Préparation du quiz…</p>}
+        </div>
+        <div className="hero-orbit" aria-hidden="true">{icon}</div>
+      </section>
+
+      <section className="quick-grid">
+        <article className="quick-card"><span>10</span><strong>Questions</strong><small>Session courte</small></article>
+        <article className="quick-card"><span>⚡</span><strong>XP</strong><small>Progression immédiate</small></article>
+      </section>
+
+      {message && <section className="card centered"><p className="feedback">{message}</p>{summary?.current_streak !== undefined && <p>🔥 Série actuelle : <strong>{summary.current_streak} jour{summary.current_streak > 1 ? 's' : ''}</strong></p>}</section>}
+    </div>
   }
 
   return <div className="stack">
-    <div className="progress-track"><div className="progress-fill" style={{ width: `${progress}%` }} /></div>
+    <section className="card">
+      <div className="section-heading">
+        <div>
+          <p className="eyebrow">{isDaily ? 'Challenge du jour' : isLesson ? 'Quiz de leçon' : 'Révision intelligente'}</p>
+          <h2>Question {index + 1} sur {questions.length}</h2>
+        </div>
+        <strong>{Math.round(progress)}%</strong>
+      </div>
+      <div className="progress-track"><div className="progress-fill" style={{ width: `${progress}%` }} /></div>
+    </section>
+
     <section className="card quiz-card">
-      <p className="eyebrow">{isDaily ? 'Challenge · ' : isLesson ? 'Leçon · ' : ''}Question {index + 1} / {questions.length}</p>
+      <p className="eyebrow">{current.type === 'mcq' ? 'QCM' : current.type === 'true_false' ? 'Vrai / Faux' : current.type === 'fill_blank' ? 'Texte à compléter' : current.type === 'matching' ? 'Association' : 'Question'}</p>
       <h1>{current.question_text}</h1>
       {current.image_url && <img className="question-image" src={current.image_url} alt="Illustration de la question" />}
       {renderAnswerInput()}
-      {!result ? <button className="primary-button" onClick={validate} disabled={!canValidate || busy}>{busy ? 'Validation…' : 'Valider'}</button> :
+      {!result ? <button className="primary-button wide" onClick={validate} disabled={!canValidate || busy}>{busy ? 'Validation…' : 'Valider ma réponse'}</button> :
         <div className={result.correct ? 'result-box success' : 'result-box retry'}>
           <strong>{result.correct ? 'Bonne réponse ✅' : 'À revoir 💡'}</strong>
           {typeof result.xp_earned === 'number' && result.xp_earned > 0 && <span>+{result.xp_earned} XP</span>}
           {result.correction?.explanation && <p>{result.correction.explanation}</p>}
-          <button className="primary-button" onClick={next} disabled={busy}>{index + 1 >= questions.length ? (isDaily ? 'Terminer le challenge' : 'Terminer la session') : 'Question suivante'}</button>
+          <button className="primary-button wide" onClick={next} disabled={busy}>{index + 1 >= questions.length ? (isDaily ? 'Terminer le challenge' : 'Terminer la session') : 'Question suivante'}</button>
         </div>}
       {message && <p className="feedback">{message}</p>}
     </section>
