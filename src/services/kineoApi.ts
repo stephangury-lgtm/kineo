@@ -9,6 +9,8 @@ export type SessionReviewItem={display_order:number;question_id:string;question_
 export type QuizOptionV3={id:string;option_text:string;display_order:number}
 export type QuizQuestionV3={id:string;type:string;question_text:string;difficulty:number;image_url:string|null;metadata:Record<string,unknown>;question_options:QuizOptionV3[];display_order:number}
 export type UserStatsV2={period_days:number;summary:{attempts:number;correct_answers:number;incorrect_answers:number;accuracy_percent:number;avg_response_ms:number;completed_sessions:number;xp_total:number;level:number;attempted_questions:number;mastered_questions:number;fragile_questions:number;reviews_due:number;mastery_percent:number};daily_activity:Array<{date:string;attempts:number;correct:number;accuracy_percent:number;xp:number}>;subjects:Array<{id:string;name:string;year_number:number;published_questions:number;attempted_questions:number;coverage_percent:number;attempts:number;accuracy_percent:number;mastery_percent:number;mastered_questions:number;fragile_questions:number}>;modes:Array<{mode:string;sessions:number;questions:number;correct:number;accuracy_percent:number;xp:number}>;weak_questions:Array<{question_id:string;question_text:string;subject_name:string;accuracy_percent:number;mastery_percent:number}>}
+export type StudyPriorityItem={subject_id:string;name:string;icon:string|null;published_questions:number;attempted_questions:number;coverage_percent:number;mastery_percent:number;fragile_questions:number;due_questions:number;reason:string}
+export type StudyPrioritiesV1={study_year:number|null;items:StudyPriorityItem[]}
 export type DailyChallengeStart={challenge_id:string;challenge_date:string;session_id:string;question_count:number;answered_count:number;remaining_count:number;completed:boolean;score:number|null;xp_earned:number|null;status:'ready'|'in_progress'|'completed'}
 export type GamificationSummaryV2={xp_total:number;level:{number:number;name:string;icon:string;required_xp:number;next_level:number|null;next_name:string|null;next_icon:string|null;next_required_xp:number|null;xp_to_next:number;progress_percent:number};streak:{current:number;longest:number};badges:{earned:number;total:number}}
 export type BadgeProgressV2={id:string;name:string;description:string;icon:string;condition_type:string;earned:boolean;earned_at:string|null;current_value:number;target_value:number;progress_percent:number}
@@ -17,6 +19,7 @@ export type BadgesV2={badges:BadgeProgressV2[];stats:{completed_quizzes:number;c
 async function rpc<T>(name:string,params?:Record<string,unknown>){const {data,error}=await supabase.rpc(name,params);if(error)throw error;return data as T}
 export const getDashboardV2=()=>rpc<DashboardV2>('get_user_dashboard_v2')
 export const getRevisionModeAvailabilityV1=()=>rpc<RevisionModeAvailability>('get_revision_mode_availability_v1')
+export const getStudyPrioritiesV1=()=>rpc<StudyPrioritiesV1>('get_study_priorities_v1')
 export const getActiveRevisionSessionV1=()=>rpc<ActiveRevisionSession|null>('get_active_revision_session_v1')
 export const abandonRevisionSessionV1=(sessionId:string)=>rpc<boolean>('abandon_revision_session_v1',{p_session_id:sessionId})
 export const getRevisionSessionMetaV1=(sessionId:string)=>rpc<RevisionSessionMeta>('get_revision_session_meta_v1',{p_session_id:sessionId})
