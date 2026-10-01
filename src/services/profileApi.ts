@@ -122,18 +122,17 @@ export async function uploadProfilePhoto(originalFile: File) {
 
   const { data: publicData } = supabase.storage.from('avatars').getPublicUrl(path)
   const avatarUrl = publicData.publicUrl
-  const { data: updated, error: updateError } = await supabase
-    .from('profiles')
-    .update({ avatar_url: avatarUrl, updated_at: new Date().toISOString() })
-    .eq('id', user.id)
-    .select('avatar_url')
-    .single()
 
-  if (updateError || !updated?.avatar_url) {
+  const { data: savedUrl, error: saveError } = await supabase.rpc('set_profile_avatar_v1', {
+    p_avatar_url: avatarUrl,
+  })
+
+  if (saveError || !savedUrl) {
     await supabase.storage.from('avatars').remove([path])
-    throw new Error(`Photo envoyée mais profil non enregistré : ${updateError?.message ?? 'réponse invalide'}`)
+    throw new Error(`Photo envoyée mais profil non enregistré : ${saveError?.message ?? 'réponse invalide'}`)
   }
 
-  window.dispatchEvent(new CustomEvent('kineo-profile-updated', { detail: { avatarUrl } }))
-  return `${updated.avatar_url}?v=${Date.now()}`
+  const displayUrl = `${String(savedUrl)}?v=${Date.now()}`
+  window.dispatchEvent(new CustomEvent('kineo-profile-updated', { detail: { avatarUrl: displayUrl } }))
+  return displayUrl
 }
