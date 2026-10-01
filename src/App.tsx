@@ -12,6 +12,7 @@ import ProfilePage from './pages/ProfilePage'
 import RevisionPage from './pages/RevisionPage'
 import StatisticsPage from './pages/StatisticsPage'
 import VisualRevisionPage from './pages/VisualRevisionPage'
+import WeakRevisionPage from './pages/WeakRevisionPage'
 
 const navItems = [
   { to: '/', label: 'Accueil', icon: '⌂', end: true },
@@ -43,6 +44,7 @@ export default function App() {
             <Route path="/lesson/:lessonId" element={<LessonPage />} />
             <Route path="/revision" element={<RevisionPage />} />
             <Route path="/anatomie" element={<VisualRevisionPage />} />
+            <Route path="/mes-erreurs" element={<WeakRevisionPage />} />
             <Route path="/stats" element={<StatisticsPage />} />
             <Route path="/rewards" element={<GamificationPage />} />
             <Route path="/profil" element={<ProfilePage />} />
