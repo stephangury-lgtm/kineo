@@ -20,6 +20,22 @@ export type RevisionModeAvailability = {
   can_exam: boolean
 }
 
+export type RevisionSessionMeta = {
+  id: string
+  mode: string
+  question_count: number
+  correct_count: number
+  xp_earned: number
+  started_at: string
+  completed_at: string | null
+  elapsed_seconds: number
+}
+
+export type RevisionHistoryItem = RevisionSessionMeta & {
+  score_percent: number
+  duration_seconds: number
+}
+
 export type QuizOptionV3 = { id: string; option_text: string; display_order: number }
 export type QuizQuestionV3 = {
   id: string
@@ -115,6 +131,18 @@ export async function getRevisionModeAvailabilityV1() {
   const { data, error } = await supabase.rpc('get_revision_mode_availability_v1')
   if (error) throw error
   return data as RevisionModeAvailability
+}
+
+export async function getRevisionSessionMetaV1(sessionId: string) {
+  const { data, error } = await supabase.rpc('get_revision_session_meta_v1', { p_session_id: sessionId })
+  if (error) throw error
+  return data as RevisionSessionMeta
+}
+
+export async function getRecentRevisionSessionsV1(limit = 20) {
+  const { data, error } = await supabase.rpc('get_recent_revision_sessions_v1', { p_limit: limit })
+  if (error) throw error
+  return (data ?? []) as RevisionHistoryItem[]
 }
 
 export async function getUserStatsV2(days = 30) {

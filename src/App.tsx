@@ -1,5 +1,6 @@
 import { NavLink, Route, Routes } from 'react-router-dom'
 import AuthGate from './auth/AuthGate'
+import ExamTimerBar from './components/ExamTimerBar'
 import HeaderProfileButton from './components/HeaderProfileButton'
 import NotificationBell from './components/NotificationBell'
 import CurriculumPage from './pages/CurriculumPage'
@@ -37,6 +38,7 @@ export default function App() {
             <HeaderProfileButton />
           </div>
         </header>
+        <ExamTimerBar />
 
         <main className="content">
           <Routes>
