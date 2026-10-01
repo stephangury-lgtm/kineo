@@ -34,8 +34,8 @@ export const startSubjectRevisionV1=(subjectId:string,questionCount=10)=>rpc<str
 export const startVisualRevisionV1=(questionCount=10)=>rpc<string>('start_visual_revision_v1',{p_question_count:questionCount})
 export const startWeakRevisionV1=(questionCount=10)=>rpc<string>('start_weak_revision_v1',{p_question_count:questionCount})
 export const startMockExamV1=(questionCount=20)=>rpc<string>('start_mock_exam_v1',{p_question_count:questionCount})
-export const startDailyChallengeV2=()=>rpc<DailyChallengeStart>('start_daily_challenge_v2',{p_challenge_date:new Date().toISOString().slice(0,10)})
+export const startDailyChallengeV2=()=>rpc<DailyChallengeStart>('start_daily_challenge_v2')
 export const getQuizQuestionsV4=async(sessionId:string)=>(await rpc<QuizQuestionV3[]>('get_quiz_questions_v4',{p_session_id:sessionId}))??[]
 export const submitQuizAnswerV3=(params:{sessionId:string;questionId:string;answer:unknown;responseTimeMs:number})=>rpc('submit_quiz_answer_v4',{p_session_id:params.sessionId,p_question_id:params.questionId,p_answer:params.answer,p_response_time_ms:params.responseTimeMs})
-export const finishQuizSessionV2=(sessionId:string)=>rpc('finish_quiz_session_v2',{p_session_id:sessionId,p_activity_date:new Date().toISOString().slice(0,10)})
-export const finishDailyChallengeV2=(sessionId:string)=>rpc('finish_daily_challenge_v2',{p_session_id:sessionId,p_activity_date:new Date().toISOString().slice(0,10)})
+export const finishQuizSessionV2=(sessionId:string)=>rpc('finish_quiz_session_v2',{p_session_id:sessionId})
+export const finishDailyChallengeV2=(sessionId:string)=>rpc('finish_daily_challenge_v2',{p_session_id:sessionId})
