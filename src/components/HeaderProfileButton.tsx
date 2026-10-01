@@ -7,19 +7,31 @@ export default function HeaderProfileButton() {
   const [initial, setInitial] = useState('')
 
   useEffect(() => {
-    void getCurrentProfile().then((profile) => {
-      setAvatarUrl(profile?.avatar_url ?? null)
-      setInitial((profile?.first_name || profile?.username || '').slice(0, 1).toUpperCase())
-    }).catch(() => undefined)
-
-    const refresh = () => {
+    const loadProfile = () => {
       void getCurrentProfile().then((profile) => {
-        setAvatarUrl(profile?.avatar_url ?? null)
+        setAvatarUrl(profile?.avatar_url ? `${profile.avatar_url}${profile.avatar_url.includes('?') ? '&' : '?'}v=${Date.now()}` : null)
         setInitial((profile?.first_name || profile?.username || '').slice(0, 1).toUpperCase())
       }).catch(() => undefined)
     }
+
+    loadProfile()
+
+    const refresh = (event: Event) => {
+      const detail = (event as CustomEvent<{ avatarUrl?: string | null }>).detail
+      if (detail && Object.prototype.hasOwnProperty.call(detail, 'avatarUrl')) {
+        setAvatarUrl(detail.avatarUrl ?? null)
+      }
+      loadProfile()
+    }
+
     window.addEventListener('kineo-profile-updated', refresh)
-    return () => window.removeEventListener('kineo-profile-updated', refresh)
+    window.addEventListener('focus', loadProfile)
+    document.addEventListener('visibilitychange', loadProfile)
+    return () => {
+      window.removeEventListener('kineo-profile-updated', refresh)
+      window.removeEventListener('focus', loadProfile)
+      document.removeEventListener('visibilitychange', loadProfile)
+    }
   }, [])
 
   return (

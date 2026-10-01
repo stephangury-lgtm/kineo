@@ -1,4 +1,4 @@
-const CACHE = 'kineo-shell-v3'
+const CACHE = 'kineo-shell-v4'
 const SHELL = ['/', '/manifest.webmanifest', '/kineo-icon.svg']
 
 self.addEventListener('install', (event) => {
@@ -20,7 +20,7 @@ self.addEventListener('fetch', (event) => {
 
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      fetch(event.request)
+      fetch(event.request, { cache: 'no-store' })
         .then((response) => {
           if (response.ok) caches.open(CACHE).then((cache) => cache.put('/', response.clone()))
           return response
@@ -32,7 +32,7 @@ self.addEventListener('fetch', (event) => {
 
   if (['script', 'style'].includes(event.request.destination)) {
     event.respondWith(
-      fetch(event.request)
+      fetch(event.request, { cache: 'no-store' })
         .then((response) => {
           if (response.ok) caches.open(CACHE).then((cache) => cache.put(event.request, response.clone()))
           return response
