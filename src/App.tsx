@@ -5,6 +5,7 @@ import CurriculumPage from './pages/CurriculumPage'
 import DashboardPage from './pages/DashboardPage'
 import GamificationPage from './pages/GamificationPage'
 import LessonPage from './pages/LessonPage'
+import ProfilePage from './pages/ProfilePage'
 import RevisionPage from './pages/RevisionPage'
 import StatisticsPage from './pages/StatisticsPage'
 
@@ -23,12 +24,9 @@ export default function App() {
         <header className="topbar">
           <div className="brand-lockup">
             <span className="brand-mark">K</span>
-            <div>
-              <strong className="brand">Kineo</strong>
-              <span className="tagline">Réviser. Progresser. Retenir.</span>
-            </div>
+            <div><strong className="brand">Kineo</strong><span className="tagline">Réviser. Progresser. Retenir.</span></div>
           </div>
-          <button className="icon-button" aria-label="Se déconnecter" onClick={() => supabase.auth.signOut()}>↪</button>
+          <NavLink className="icon-button profile-button" aria-label="Mon profil" to="/profil">●</NavLink>
         </header>
 
         <main className="content">
@@ -39,16 +37,12 @@ export default function App() {
             <Route path="/revision" element={<RevisionPage />} />
             <Route path="/stats" element={<StatisticsPage />} />
             <Route path="/rewards" element={<GamificationPage />} />
+            <Route path="/profil" element={<ProfilePage />} />
           </Routes>
         </main>
 
         <nav className="bottom-nav" aria-label="Navigation principale">
-          {navItems.map((item) => (
-            <NavLink key={item.to} to={item.to} end={item.end}>
-              <span className="nav-icon" aria-hidden="true">{item.icon}</span>
-              <span>{item.label}</span>
-            </NavLink>
-          ))}
+          {navItems.map((item) => <NavLink key={item.to} to={item.to} end={item.end}><span className="nav-icon" aria-hidden="true">{item.icon}</span><span>{item.label}</span></NavLink>)}
         </nav>
       </div>
     </AuthGate>
