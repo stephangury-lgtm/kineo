@@ -153,6 +153,25 @@ h2 { letter-spacing:-.02em; }
 .nav-icon { display:grid; place-items:center; width:27px; height:27px; font-size:1rem; font-weight:900; }
 .bottom-nav a.active { color:var(--brand); background:#eaf8f5; }
 .skeleton-card { min-height:120px; display:grid; place-items:center; }
+
+/* Dashboard + quiz UI refinement */
+.dashboard-stack { gap:12px; }
+.dashboard-stack .hero-card { min-height:205px; }
+.dashboard-stack .progress-card { background:linear-gradient(145deg,#ffffff,#f8fcfb); }
+.dashboard-stack .quick-card { min-height:118px; align-content:start; }
+.dashboard-stack .quick-card strong { font-size:1rem; }
+.dashboard-stack .quick-card small { line-height:1.3; }
+.quiz-card { padding:22px; }
+.quiz-card h1 { margin:8px 0 4px; font-size:clamp(1.45rem,5.8vw,2rem); line-height:1.16; }
+.quiz-card .answers { margin:18px 0; }
+.quiz-card .answer { min-height:54px; display:flex; align-items:center; line-height:1.35; font-weight:700; }
+.quiz-card .result-box { margin-top:16px; padding:16px; border-radius:18px; }
+.quiz-card .result-box strong { font-size:1.05rem; }
+.quiz-card .result-box p { margin:4px 0 8px; line-height:1.55; }
+.quiz-card .correction-line { margin:0; padding:10px 12px; border-radius:12px; background:#f6faf9; color:#385150; }
+.quiz-card .matching-row { background:#fbfdfd; }
+.stats-grid > .stat { min-width:0; }
+
 @media (min-width:720px) {
   .auth-shell { grid-template-columns:1.08fr .92fr; align-items:stretch; }
   .auth-visual,.auth-card { min-height:540px; align-content:center; }
@@ -164,16 +183,50 @@ h2 { letter-spacing:-.02em; }
 }
 @media (max-width:520px) {
   .tagline { display:none; }
-  .hero-card { grid-template-columns:1fr; min-height:245px; }
-  .hero-orbit { position:absolute; right:20px; top:20px; width:56px; height:56px; border-radius:18px; font-size:1.45rem; }
-  .hero-copy { padding-top:44px; }
+  .content { width:calc(100% - 18px); margin-top:10px; }
+  .stack { gap:10px; }
+  .card { border-radius:18px; padding:15px; box-shadow:0 8px 24px rgba(16,42,42,.06); }
+  .hero-card { grid-template-columns:1fr; min-height:220px; padding:20px; border-radius:22px; }
+  .hero-card h1 { font-size:clamp(1.65rem,8vw,2.25rem); line-height:1.04; }
+  .hero-card p { font-size:.92rem; line-height:1.45; }
+  .hero-orbit { position:absolute; right:16px; top:16px; width:50px; height:50px; border-radius:16px; font-size:1.3rem; }
+  .hero-copy { padding-top:36px; }
+  .hero-action { width:100%; }
   .dashboard-metrics { gap:6px; }
-  .metric-card { display:grid; justify-items:center; text-align:center; gap:5px; padding:10px 5px; }
-  .metric-icon { width:30px; height:30px; }
-  .progress-card { grid-template-columns:auto 1fr; }
-  .challenge-card { grid-template-columns:auto 1fr; }
-  .challenge-card .secondary-button { grid-column:1/-1; }
-  .stats-hero { grid-template-columns:1fr; align-items:start; }
-  .stats-hero-score { justify-self:start; }
+  .metric-card { display:grid; justify-items:center; text-align:center; gap:4px; padding:10px 4px; border-radius:15px; }
+  .metric-icon { width:29px; height:29px; }
+  .metric-card strong { font-size:.98rem; }
+  .progress-card { grid-template-columns:72px 1fr; gap:12px; }
+  .progress-card .section-heading { align-items:center; }
+  .mastery-ring { width:72px; height:72px; }
+  .mastery-ring::after { inset:8px; }
+  .mastery-ring span { font-size:1rem; }
+  .progress-copy strong { font-size:.95rem; }
+  .progress-copy span { font-size:.76rem; line-height:1.35; }
+  .challenge-card { grid-template-columns:42px 1fr; gap:10px; }
+  .challenge-icon { width:42px; height:42px; border-radius:14px; }
+  .challenge-copy h2 { font-size:.98rem; }
+  .challenge-card .secondary-button { grid-column:1/-1; width:100%; }
+  .quick-grid { gap:8px; }
+  .quick-card { padding:13px; border-radius:16px; min-height:104px; }
+  .quick-card>span { width:34px; height:34px; border-radius:11px; }
+  .stats-hero { grid-template-columns:1fr; align-items:start; padding:18px; border-radius:22px; }
+  .stats-hero h1 { font-size:1.55rem; }
+  .stats-hero-score { justify-self:start; min-width:92px; padding:10px 12px; border-radius:16px; }
+  .stats-hero-score strong { font-size:1.45rem; }
+  .stats-grid { gap:7px; }
+  .score-card { padding:12px; border-radius:16px; }
+  .score-card strong { font-size:1.28rem; }
+  .score-card>span,.score-card small { font-size:.72rem; }
+  .quiz-card { padding:17px; }
+  .quiz-card h1 { font-size:1.35rem; line-height:1.2; }
+  .quiz-card .answer { min-height:52px; padding:13px 14px; border-radius:13px; font-size:.94rem; }
+  .quiz-card .result-box { padding:14px; }
+  .text-answer-wrap,.matching-grid { margin:15px 0; }
+  .matching-row { padding:10px; }
+  .section-heading { align-items:center; }
+  .section-heading h2 { font-size:1.12rem; }
   .activity-chart { gap:4px; overflow-x:auto; }
+  .bottom-nav { padding-left:5px; padding-right:5px; }
+  .bottom-nav a { font-size:.62rem; padding-left:1px; padding-right:1px; }
 }
