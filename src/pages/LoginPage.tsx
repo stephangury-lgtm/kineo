@@ -28,6 +28,26 @@ export default function LoginPage() {
     }
   }
 
+  async function requestPasswordReset() {
+    if (!email.trim()) {
+      setMessage('Saisis d’abord ton adresse e-mail.')
+      return
+    }
+    setBusy(true)
+    setMessage(null)
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+        redirectTo: window.location.origin,
+      })
+      if (error) throw error
+      setMessage('E-mail de récupération envoyé. Vérifie ta boîte de réception et tes courriers indésirables.')
+    } catch (err) {
+      setMessage(err instanceof Error ? err.message : 'Impossible d’envoyer l’e-mail de récupération.')
+    } finally {
+      setBusy(false)
+    }
+  }
+
   return (
     <main className="auth-shell">
       <section className="auth-visual">
@@ -50,6 +70,12 @@ export default function LoginPage() {
           <label>Mot de passe<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} minLength={6} required autoComplete={mode === 'login' ? 'current-password' : 'new-password'} placeholder="••••••••" /></label>
           <button className="primary-button wide" disabled={busy} type="submit">{busy ? 'Patiente…' : mode === 'login' ? 'Se connecter' : 'Créer mon compte'}</button>
         </form>
+
+        {mode === 'login' && (
+          <button className="link-button" type="button" onClick={requestPasswordReset} disabled={busy}>
+            Mot de passe oublié ?
+          </button>
+        )}
 
         {message && <p className="feedback">{message}</p>}
         <button className="link-button" type="button" onClick={() => setMode(mode === 'login' ? 'signup' : 'login')}>

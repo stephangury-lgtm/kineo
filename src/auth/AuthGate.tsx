@@ -3,6 +3,7 @@ import type { Session } from '@supabase/supabase-js'
 import { supabase } from '../lib/supabase'
 import LoginPage from '../pages/LoginPage'
 import ProfileSetupPage from '../pages/ProfileSetupPage'
+import ResetPasswordPage from '../pages/ResetPasswordPage'
 import { getCurrentProfile, type StudentProfile } from '../services/profileApi'
 
 type Props = { children: ReactNode }
@@ -12,6 +13,7 @@ export default function AuthGate({ children }: Props) {
   const [profile, setProfile] = useState<StudentProfile | null>(null)
   const [loading, setLoading] = useState(true)
   const [profileError, setProfileError] = useState<string | null>(null)
+  const [passwordRecovery, setPasswordRecovery] = useState(false)
 
   async function loadProfile(nextSession: Session | null) {
     setSession(nextSession)
@@ -34,7 +36,13 @@ export default function AuthGate({ children }: Props) {
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => loadProfile(data.session))
 
-    const { data } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+    const { data } = supabase.auth.onAuthStateChange((event, nextSession) => {
+      if (event === 'PASSWORD_RECOVERY') {
+        setPasswordRecovery(true)
+        setSession(nextSession)
+        setLoading(false)
+        return
+      }
       setLoading(true)
       void loadProfile(nextSession)
     })
@@ -44,6 +52,10 @@ export default function AuthGate({ children }: Props) {
 
   if (loading) {
     return <main className="auth-shell"><section className="card centered"><p>Ouverture de Kineo…</p></section></main>
+  }
+
+  if (passwordRecovery && session) {
+    return <ResetPasswordPage onDone={() => setPasswordRecovery(false)} />
   }
 
   if (!session) return <LoginPage />
