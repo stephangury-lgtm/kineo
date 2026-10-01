@@ -1,0 +1,37 @@
+.library-page { display:grid; gap:14px; }
+.library-toolbar { display:grid; gap:12px; }
+.library-search { display:grid; gap:7px; }
+.library-search span { font-size:.78rem; font-weight:850; color:var(--muted); }
+.library-search input,.library-filter { width:100%; min-height:48px; padding:12px 14px; border:1.5px solid var(--line); border-radius:15px; background:#fff; color:var(--ink); outline:none; }
+.library-search input:focus,.library-filter:focus { border-color:var(--brand-2); box-shadow:0 0 0 4px rgba(20,184,166,.09); }
+.library-filters { display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+.library-results-head { display:flex; justify-content:space-between; align-items:center; gap:10px; }
+.library-results-head h2 { margin:3px 0 0; }
+.library-count { flex:0 0 auto; padding:7px 10px; border-radius:999px; background:var(--brand-soft); color:var(--brand); font-weight:900; font-size:.78rem; }
+.library-list { display:grid; gap:11px; }
+.library-doc { display:grid; gap:13px; padding:17px; border:1px solid var(--line); border-radius:20px; background:#fff; box-shadow:0 8px 24px rgba(16,42,42,.05); }
+.library-doc-head { display:grid; grid-template-columns:44px 1fr; gap:12px; align-items:start; }
+.library-doc-icon { width:44px; height:44px; display:grid; place-items:center; border-radius:14px; background:var(--brand-soft); font-size:1.25rem; }
+.library-doc h3 { margin:1px 0 5px; font-size:1.03rem; line-height:1.25; }
+.library-meta { margin:0; color:var(--muted); font-size:.8rem; }
+.library-badges { display:flex; flex-wrap:wrap; gap:6px; }
+.library-badge { display:inline-flex; align-items:center; min-height:27px; padding:5px 8px; border-radius:999px; background:#f3f7f6; color:#526563; font-size:.72rem; font-weight:800; }
+.library-badge.validated { background:#eafaf4; color:#147a58; }
+.library-stats { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+.library-stat { padding:10px 12px; border-radius:14px; background:#f7faf9; }
+.library-stat small { display:block; color:var(--muted); font-size:.68rem; }
+.library-stat strong { display:block; margin-top:2px; font-size:.98rem; }
+.library-lessons { display:flex; flex-wrap:wrap; gap:7px; }
+.library-lesson-link { padding:7px 9px; border-radius:10px; background:#f0f8f6; color:var(--brand); font-size:.76rem; font-weight:800; }
+.library-actions { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.library-empty { text-align:center; padding:28px 18px; }
+.library-empty strong { display:block; margin-bottom:6px; }
+@media (min-width:720px) {
+  .library-toolbar { grid-template-columns:1.5fr 1fr; align-items:end; }
+  .library-list { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media (max-width:520px) {
+  .library-filters { grid-template-columns:1fr; }
+  .library-actions { grid-template-columns:1fr; }
+  .library-doc { padding:15px; border-radius:18px; }
+}

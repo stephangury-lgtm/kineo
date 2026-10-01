@@ -1,6 +1,7 @@
 import { Link, NavLink, Route, Routes } from 'react-router-dom'
 import AuthGate from './auth/AuthGate'
 import ContentReviewPage from './pages/ContentReviewPage'
+import CourseLibraryPage from './pages/CourseLibraryPage'
 import CurriculumPage from './pages/CurriculumPage'
 import DashboardPage from './pages/DashboardPage'
 import GamificationPage from './pages/GamificationPage'
@@ -11,10 +12,10 @@ import StatisticsPage from './pages/StatisticsPage'
 
 const navItems = [
   { to: '/', label: 'Accueil', icon: '⌂', end: true },
+  { to: '/cours', label: 'Cours', icon: '▤' },
   { to: '/parcours', label: 'Parcours', icon: '▦' },
   { to: '/revision', label: 'Réviser', icon: '✦' },
   { to: '/stats', label: 'Stats', icon: '↗' },
-  { to: '/rewards', label: 'Badges', icon: '★' },
 ]
 
 export default function App() {
@@ -35,6 +36,7 @@ export default function App() {
         <main className="content">
           <Routes>
             <Route path="/" element={<DashboardPage />} />
+            <Route path="/cours" element={<CourseLibraryPage />} />
             <Route path="/parcours" element={<CurriculumPage />} />
             <Route path="/lesson/:lessonId" element={<LessonPage />} />
             <Route path="/revision" element={<RevisionPage />} />
