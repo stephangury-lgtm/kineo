@@ -8,6 +8,7 @@ import DashboardPage from './pages/DashboardPage'
 import FriendsPage from './pages/FriendsPage'
 import GamificationPage from './pages/GamificationPage'
 import LessonPage from './pages/LessonPage'
+import LibraryPage from './pages/LibraryPage'
 import MockExamPage from './pages/MockExamPage'
 import NotificationsPage from './pages/NotificationsPage'
 import ProfilePage from './pages/ProfilePage'
@@ -25,42 +26,5 @@ const navItems = [
 ]
 
 export default function App() {
-  return (
-    <AuthGate>
-      <div className="app-shell">
-        <header className="topbar">
-          <div className="brand-lockup">
-            <span className="brand-mark">K</span>
-            <div><strong className="brand">Kineo</strong><span className="tagline">Réviser. Progresser. Retenir.</span></div>
-          </div>
-          <div className="topbar-actions">
-            <NotificationBell />
-            <HeaderProfileButton />
-          </div>
-        </header>
-        <ExamTimerBar />
-
-        <main className="content">
-          <Routes>
-            <Route path="/" element={<DashboardPage />} />
-            <Route path="/parcours" element={<CurriculumPage />} />
-            <Route path="/lesson/:lessonId" element={<LessonPage />} />
-            <Route path="/revision" element={<RevisionPage />} />
-            <Route path="/anatomie" element={<VisualRevisionPage />} />
-            <Route path="/mes-erreurs" element={<WeakRevisionPage />} />
-            <Route path="/examen" element={<MockExamPage />} />
-            <Route path="/stats" element={<StatisticsPage />} />
-            <Route path="/rewards" element={<GamificationPage />} />
-            <Route path="/profil" element={<ProfilePage />} />
-            <Route path="/amis" element={<FriendsPage />} />
-            <Route path="/notifications" element={<NotificationsPage />} />
-          </Routes>
-        </main>
-
-        <nav className="bottom-nav" aria-label="Navigation principale">
-          {navItems.map((item) => <NavLink key={item.to} to={item.to} end={item.end}><span className="nav-icon" aria-hidden="true">{item.icon}</span><span>{item.label}</span></NavLink>)}
-        </nav>
-      </div>
-    </AuthGate>
-  )
+  return <AuthGate><div className="app-shell"><header className="topbar"><div className="brand-lockup"><span className="brand-mark">K</span><div><strong className="brand">Kineo</strong><span className="tagline">Réviser. Progresser. Retenir.</span></div></div><div className="topbar-actions"><NotificationBell/><HeaderProfileButton/></div></header><ExamTimerBar/><main className="content"><Routes><Route path="/" element={<DashboardPage/>}/><Route path="/parcours" element={<CurriculumPage/>}/><Route path="/lesson/:lessonId" element={<LessonPage/>}/><Route path="/bibliotheque" element={<LibraryPage/>}/><Route path="/revision" element={<RevisionPage/>}/><Route path="/anatomie" element={<VisualRevisionPage/>}/><Route path="/mes-erreurs" element={<WeakRevisionPage/>}/><Route path="/examen" element={<MockExamPage/>}/><Route path="/stats" element={<StatisticsPage/>}/><Route path="/rewards" element={<GamificationPage/>}/><Route path="/profil" element={<ProfilePage/>}/><Route path="/amis" element={<FriendsPage/>}/><Route path="/notifications" element={<NotificationsPage/>}/></Routes></main><nav className="bottom-nav" aria-label="Navigation principale">{navItems.map(item=><NavLink key={item.to} to={item.to} end={item.end}><span className="nav-icon" aria-hidden="true">{item.icon}</span><span>{item.label}</span></NavLink>)}</nav></div></AuthGate>
 }
