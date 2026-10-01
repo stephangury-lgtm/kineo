@@ -50,22 +50,35 @@ export default function AuthGate({ children }: Props) {
     return () => data.subscription.unsubscribe()
   }, [])
 
+  async function finishPasswordRecovery() {
+    setPasswordRecovery(false)
+    setLoading(true)
+    await loadProfile(session)
+  }
+
+  async function signOut() {
+    await supabase.auth.signOut()
+    setProfile(null)
+    setSession(null)
+    setPasswordRecovery(false)
+  }
+
   if (loading) {
     return <main className="auth-shell"><section className="card centered"><p>Ouverture de Kineo…</p></section></main>
   }
 
   if (passwordRecovery && session) {
-    return <ResetPasswordPage onDone={() => setPasswordRecovery(false)} />
+    return <ResetPasswordPage onDone={() => void finishPasswordRecovery()} />
   }
 
   if (!session) return <LoginPage />
 
   if (profileError) {
-    return <main className="auth-shell"><section className="card centered"><h1>Profil indisponible</h1><p>{profileError}</p><button className="primary-button" onClick={() => void loadProfile(session)}>Réessayer</button></section></main>
+    return <main className="auth-shell"><section className="card centered"><h1>Profil indisponible</h1><p>{profileError}</p><div className="quick-grid"><button className="primary-button" onClick={() => void loadProfile(session)}>Réessayer</button><button className="secondary-button" onClick={() => void signOut()}>Se déconnecter</button></div></section></main>
   }
 
   if (!profile) {
-    return <main className="auth-shell"><section className="card centered"><h1>Profil introuvable</h1><p>Ton compte est connecté mais aucun profil Kineo n’est encore associé.</p></section></main>
+    return <main className="auth-shell"><section className="card centered"><h1>Profil introuvable</h1><p>Ton compte est connecté mais aucun profil Kineo n’est encore associé.</p><div className="quick-grid"><button className="primary-button" onClick={() => void loadProfile(session)}>Réessayer</button><button className="secondary-button" onClick={() => void signOut()}>Se déconnecter</button></div></section></main>
   }
 
   if (!profile.study_year) {

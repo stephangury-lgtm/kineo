@@ -48,6 +48,7 @@ export default function App() {
             <Route path="/rewards" element={<GamificationPage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/admin/review" element={<ContentReviewPage />} />
+            <Route path="*" element={<section className="card centered"><p className="eyebrow">Navigation</p><h1>Page introuvable</h1><p>Cette adresse n’existe pas ou n’est plus disponible dans Kineo.</p><Link className="primary-button" to="/">Retour à l’accueil</Link></section>} />
           </Routes>
         </main>
 

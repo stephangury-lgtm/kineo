@@ -106,6 +106,16 @@ button:disabled,
   overflow-wrap: anywhere;
 }
 
+/* Admin review: long questions and action buttons should wrap instead of overflow. */
+.weak-list .section-heading {
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.weak-list .section-heading > button,
+.weak-list .section-heading > .secondary-button {
+  flex: 0 0 auto;
+}
+
 /* Better mobile touch spacing without changing desktop density. */
 @media (max-width: 520px) {
   .library-results-head {
@@ -122,5 +132,9 @@ button:disabled,
   }
   .atlas-live-bar {
     top: calc(62px + env(safe-area-inset-top));
+  }
+  .weak-list .section-heading > button,
+  .weak-list .section-heading > .secondary-button {
+    width: 100%;
   }
 }
