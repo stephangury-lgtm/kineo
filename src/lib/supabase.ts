@@ -1,9 +1,9 @@
 import { createClient } from '@supabase/supabase-js'
 
-const DEFAULT_SUPABASE_URL = 'https://kimtiyuytikyseuzmjbv.supabase.co'
-const DEFAULT_SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_ANuwDKjYwbR2LF629eqK9Q_izXQUycB'
+const KINEO_SUPABASE_URL = 'https://kimtiyuytikyseuzmjbv.supabase.co'
+const KINEO_SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_ANuwDKjYwbR2LF629eqK9Q_izXQUycB'
 
-const supabaseUrl = (import.meta.env.VITE_SUPABASE_URL as string | undefined) ?? DEFAULT_SUPABASE_URL
-const supabaseKey = (import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string | undefined) ?? DEFAULT_SUPABASE_PUBLISHABLE_KEY
-
-export const supabase = createClient(supabaseUrl, supabaseKey)
+// Kineo v2 must always authenticate against the production Kineo Supabase project.
+// Keeping these public client credentials pinned prevents a stale Vercel environment
+// variable from silently sending sign-ups and logins to another Supabase project.
+export const supabase = createClient(KINEO_SUPABASE_URL, KINEO_SUPABASE_PUBLISHABLE_KEY)
