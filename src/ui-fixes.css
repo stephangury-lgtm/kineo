@@ -71,6 +71,17 @@
 .hotspot-marker.correct, .hotspot-marker.correct-target { background: rgba(12,145,102,.2); border-color: #0c9166; }
 .hotspot-marker.correct-target { width: 30px; height: 30px; box-shadow: 0 0 0 6px rgba(12,145,102,.11); }
 
+/* Atlas */
+.atlas-page { padding-bottom: 8px; }
+.atlas-hero { min-height: 190px; }
+.atlas-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+.atlas-card { display: grid; gap: 12px; align-content: start; }
+.atlas-card h2 { margin: 2px 0 6px; }
+.atlas-card p { margin: 0; color: var(--muted); line-height: 1.45; }
+.atlas-card-icon { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 15px; background: var(--brand-soft); color: var(--brand); font-size: 1.45rem; font-weight: 900; }
+.atlas-info { display: grid; gap: 6px; }
+.atlas-info p { margin: 0; color: var(--muted); line-height: 1.5; }
+
 /* Better metric density */
 .score-card { min-width: 0; }
 .score-card strong { line-height: 1; }
@@ -114,6 +125,8 @@
   .match-dropzone { min-height: 50px; }
   .match-chip { min-height: 44px; }
   .hotspot-marker { width: 28px; height: 28px; }
+  .atlas-grid { grid-template-columns: 1fr; }
+  .atlas-card { gap: 10px; }
 }
 
 @media (min-width: 521px) { .answer:not(:disabled):hover { border-color: #a9d9d2; background: #f8fdfc; } }

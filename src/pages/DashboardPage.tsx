@@ -68,6 +68,7 @@ export default function DashboardPage() {
 
       <section className="quick-grid">
         <Link className="quick-card" to="/parcours"><span>▦</span><strong>Parcours {studyYear ?? ''}</strong><small>Choisir une leçon</small></Link>
+        <Link className="quick-card" to="/atlas"><span>◉</span><strong>Atlas anatomique</strong><small>Pointer et légender</small></Link>
         <Link className="quick-card" to="/stats"><span>↗</span><strong>Statistiques</strong><small>Voir mes progrès</small></Link>
       </section>
     </div>

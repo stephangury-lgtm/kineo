@@ -1,5 +1,6 @@
 import { Link, NavLink, Route, Routes } from 'react-router-dom'
 import AuthGate from './auth/AuthGate'
+import AtlasPage from './pages/AtlasPage'
 import ContentReviewPage from './pages/ContentReviewPage'
 import CourseLibraryPage from './pages/CourseLibraryPage'
 import CurriculumPage from './pages/CurriculumPage'
@@ -37,6 +38,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<DashboardPage />} />
             <Route path="/cours" element={<CourseLibraryPage />} />
+            <Route path="/atlas" element={<AtlasPage />} />
             <Route path="/parcours" element={<CurriculumPage />} />
             <Route path="/lesson/:lessonId" element={<LessonPage />} />
             <Route path="/revision" element={<RevisionPage />} />

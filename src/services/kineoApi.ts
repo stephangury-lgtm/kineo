@@ -54,6 +54,8 @@ export type DailyChallengeStart = {
   status: 'ready' | 'in_progress' | 'completed'
 }
 
+export type AtlasSessionStart = { session_id: string; area: string; question_count: number }
+
 export type GamificationSummaryV2 = {
   xp_total: number
   level: {
@@ -126,6 +128,12 @@ export async function startSmartRevisionV2(questionCount = 10) {
   return data as string
 }
 
+export async function startAtlasSessionV1(area: string, questionCount = 8) {
+  const { data, error } = await supabase.rpc('start_atlas_session_v1', { p_area: area, p_question_count: questionCount })
+  if (error) throw error
+  return data as AtlasSessionStart
+}
+
 export async function startDailyChallengeV2() {
   const { data, error } = await supabase.rpc('start_daily_challenge_v2', { p_challenge_date: new Date().toISOString().slice(0, 10) })
   if (error) throw error
@@ -133,7 +141,7 @@ export async function startDailyChallengeV2() {
 }
 
 export async function getQuizQuestionsV4(sessionId: string) {
-  const { data, error } = await supabase.rpc('get_quiz_questions_v4', { p_session_id: sessionId })
+  const { data, error } = await supabase.rpc('get_quiz_questions_v5', { p_session_id: sessionId })
   if (error) throw error
   return (data ?? []) as QuizQuestionV3[]
 }
@@ -150,7 +158,7 @@ export async function submitQuizAnswerV3(params: { sessionId: string; questionId
 }
 
 export async function submitQuizAnswerV4(params: { sessionId: string; questionId: string; answer: unknown; responseTimeMs: number }) {
-  const { data, error } = await supabase.rpc('submit_quiz_answer_v4', {
+  const { data, error } = await supabase.rpc('submit_quiz_answer_v5', {
     p_session_id: params.sessionId,
     p_question_id: params.questionId,
     p_answer: params.answer,
