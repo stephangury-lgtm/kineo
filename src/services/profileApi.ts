@@ -56,10 +56,55 @@ export async function updateStudyProfile(params: { firstName?: string; username?
   return data as StudentProfile
 }
 
-export async function uploadProfilePhoto(file: File) {
-  const allowed = ['image/jpeg', 'image/png', 'image/webp']
-  if (!allowed.includes(file.type)) throw new Error('Choisis une image JPEG, PNG ou WebP.')
-  if (file.size > 5 * 1024 * 1024) throw new Error('La photo doit faire moins de 5 Mo.')
+function inferImageType(file: File) {
+  if (file.type) return file.type.toLowerCase()
+  const ext = file.name.split('.').pop()?.toLowerCase()
+  if (ext === 'jpg' || ext === 'jpeg') return 'image/jpeg'
+  if (ext === 'png') return 'image/png'
+  if (ext === 'webp') return 'image/webp'
+  if (ext === 'heic') return 'image/heic'
+  if (ext === 'heif') return 'image/heif'
+  return ''
+}
+
+async function convertToJpeg(file: File): Promise<File> {
+  try {
+    const bitmap = await createImageBitmap(file)
+    const maxSide = 1400
+    const ratio = Math.min(1, maxSide / Math.max(bitmap.width, bitmap.height))
+    const width = Math.max(1, Math.round(bitmap.width * ratio))
+    const height = Math.max(1, Math.round(bitmap.height * ratio))
+    const canvas = document.createElement('canvas')
+    canvas.width = width
+    canvas.height = height
+    const ctx = canvas.getContext('2d')
+    if (!ctx) throw new Error('Canvas indisponible')
+    ctx.drawImage(bitmap, 0, 0, width, height)
+    bitmap.close()
+    const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.88))
+    if (!blob) throw new Error('Conversion impossible')
+    return new File([blob], 'avatar.jpg', { type: 'image/jpeg', lastModified: Date.now() })
+  } catch {
+    throw new Error('Cette photo utilise un format que ton navigateur ne peut pas convertir. Essaie de la partager/exporter en JPG puis sélectionne-la à nouveau.')
+  }
+}
+
+export async function uploadProfilePhoto(originalFile: File) {
+  if (originalFile.size > 8 * 1024 * 1024) throw new Error('La photo doit faire moins de 8 Mo avant optimisation.')
+
+  const originalType = inferImageType(originalFile)
+  const directlySupported = ['image/jpeg', 'image/png', 'image/webp']
+  const convertibleMobile = ['image/heic', 'image/heif']
+
+  let file = originalFile
+  if (convertibleMobile.includes(originalType)) file = await convertToJpeg(originalFile)
+  else if (!directlySupported.includes(originalType)) {
+    if (!originalType.startsWith('image/')) throw new Error('Le fichier sélectionné n’est pas une image.')
+    file = await convertToJpeg(originalFile)
+  }
+
+  if (file.size > 5 * 1024 * 1024) file = await convertToJpeg(file)
+  if (file.size > 5 * 1024 * 1024) throw new Error('La photo reste trop volumineuse après optimisation. Choisis une image plus légère.')
 
   const { data: userData, error: userError } = await supabase.auth.getUser()
   if (userError) throw userError
@@ -70,15 +115,25 @@ export async function uploadProfilePhoto(file: File) {
   const path = `${user.id}/avatar-${Date.now()}.${extension}`
   const { error: uploadError } = await supabase.storage.from('avatars').upload(path, file, {
     cacheControl: '3600',
-    contentType: file.type,
+    contentType: file.type || 'image/jpeg',
     upsert: false,
   })
-  if (uploadError) throw uploadError
+  if (uploadError) throw new Error(`Envoi de la photo impossible : ${uploadError.message}`)
 
   const { data: publicData } = supabase.storage.from('avatars').getPublicUrl(path)
   const avatarUrl = publicData.publicUrl
-  const { error: updateError } = await supabase.from('profiles').update({ avatar_url: avatarUrl, updated_at: new Date().toISOString() }).eq('id', user.id)
-  if (updateError) throw updateError
-  window.dispatchEvent(new Event('kineo-profile-updated'))
-  return avatarUrl
+  const { data: updated, error: updateError } = await supabase
+    .from('profiles')
+    .update({ avatar_url: avatarUrl, updated_at: new Date().toISOString() })
+    .eq('id', user.id)
+    .select('avatar_url')
+    .single()
+
+  if (updateError || !updated?.avatar_url) {
+    await supabase.storage.from('avatars').remove([path])
+    throw new Error(`Photo envoyée mais profil non enregistré : ${updateError?.message ?? 'réponse invalide'}`)
+  }
+
+  window.dispatchEvent(new CustomEvent('kineo-profile-updated', { detail: { avatarUrl } }))
+  return `${updated.avatar_url}?v=${Date.now()}`
 }

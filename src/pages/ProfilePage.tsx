@@ -45,11 +45,13 @@ export default function ProfilePage() {
   async function changePhoto(file?: File) {
     if (!file) return
     setPhotoBusy(true)
-    setMessage(null)
+    setMessage('Préparation de la photo…')
     try {
       const nextUrl = await uploadProfilePhoto(file)
       setAvatarUrl(nextUrl)
-      setMessage('Photo de profil mise à jour ✓')
+      const refreshed = await getCurrentProfile()
+      if (refreshed) setProfile(refreshed)
+      setMessage('Photo de profil enregistrée ✓')
     } catch (err) {
       setMessage(err instanceof Error ? err.message : 'Impossible d’envoyer la photo.')
     } finally {
@@ -76,10 +78,11 @@ export default function ProfilePage() {
       <section className="card profile-photo-card">
         <div className="profile-photo-wrap">
           <div className="profile-photo-large">{avatarUrl ? <img src={avatarUrl} alt="Ma photo de profil" /> : <span>{fallback}</span>}</div>
-          <div><p className="eyebrow">Photo de profil</p><h2>Personnalise ton avatar</h2><p>Ta photo apparaîtra aussi en haut à droite de Kineo.</p></div>
+          <div><p className="eyebrow">Photo de profil</p><h2>Personnalise ton avatar</h2><p>Ta photo apparaîtra aussi en haut à droite de Kineo. Les photos HEIC/HEIF compatibles sont automatiquement converties.</p></div>
         </div>
-        <input ref={fileInputRef} className="visually-hidden" type="file" accept="image/jpeg,image/png,image/webp" onChange={(event) => void changePhoto(event.target.files?.[0])} />
-        <button className="secondary-button" onClick={() => fileInputRef.current?.click()} disabled={photoBusy}>{photoBusy ? 'Envoi de la photo…' : avatarUrl ? 'Changer ma photo' : 'Ajouter ma photo'}</button>
+        <input ref={fileInputRef} className="visually-hidden" type="file" accept="image/*,.heic,.heif" onChange={(event) => void changePhoto(event.target.files?.[0])} />
+        <button className="secondary-button" onClick={() => fileInputRef.current?.click()} disabled={photoBusy}>{photoBusy ? 'Enregistrement de la photo…' : avatarUrl ? 'Changer ma photo' : 'Ajouter ma photo'}</button>
+        {photoBusy && <p className="field-hint">La photo peut être redimensionnée automatiquement avant l’envoi.</p>}
       </section>
 
       <section className="card">
