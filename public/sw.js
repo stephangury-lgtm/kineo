@@ -1,5 +1,17 @@
-const CACHE = 'kineo-shell-v4'
-const SHELL = ['/', '/manifest.webmanifest', '/kineo-icon.svg']
+const CACHE = 'kineo-shell-v5'
+const SHELL = [
+  '/',
+  '/manifest.webmanifest',
+  '/kineo-icon.svg',
+  '/quiz-assets/hotspot-cheville-malleoles.svg',
+  '/quiz-assets/hotspot-cheville.svg',
+  '/quiz-assets/hotspot-genou-menisques.svg',
+  '/quiz-assets/hotspot-genou.svg',
+  '/quiz-assets/hotspot-hanche-proximal.svg',
+  '/quiz-assets/hotspot-hanche.svg',
+  '/quiz-assets/hotspot-pied-tarse-extended.svg',
+  '/quiz-assets/hotspot-pied.svg',
+]
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(CACHE).then((cache) => cache.addAll(SHELL)))
@@ -49,5 +61,13 @@ self.addEventListener('fetch', (event) => {
         return response
       })),
     )
+    return
   }
+
+  event.respondWith(
+    caches.match(event.request).then((cached) => cached || fetch(event.request).then((response) => {
+      if (response.ok) caches.open(CACHE).then((cache) => cache.put(event.request, response.clone()))
+      return response
+    })),
+  )
 })
