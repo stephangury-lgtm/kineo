@@ -20,6 +20,19 @@ export type FriendshipsSummary = {
   outgoing: FriendshipStudent[]
 }
 
+export type FriendLeaderboardRow={
+  id:string
+  username:string|null
+  first_name:string|null
+  avatar_url:string|null
+  level:number|null
+  xp_total:number
+  weekly_xp:number
+  weekly_answers:number
+  is_me:boolean
+  rank:number
+}
+
 export async function searchStudents(query: string) {
   const normalized = query.trim()
   if (normalized.length < 2) return []
@@ -37,6 +50,12 @@ export async function getFriendships() {
     incoming: result.incoming ?? [],
     outgoing: result.outgoing ?? [],
   } satisfies FriendshipsSummary
+}
+
+export async function getFriendLeaderboard(){
+  const {data,error}=await supabase.rpc('get_friend_leaderboard_v1')
+  if(error)throw error
+  return (data??[]) as FriendLeaderboardRow[]
 }
 
 export async function sendFriendRequest(addresseeId: string) {
