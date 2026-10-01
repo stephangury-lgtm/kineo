@@ -5,6 +5,7 @@ export type RevisionModeAvailability={total_questions:number;visual_questions:nu
 export type ActiveRevisionSession={id:string;mode:string;question_count:number;answered_count:number;started_at:string}
 export type RevisionSessionMeta={id:string;mode:string;question_count:number;correct_count:number;xp_earned:number;started_at:string;completed_at:string|null;elapsed_seconds:number}
 export type RevisionHistoryItem=RevisionSessionMeta&{score_percent:number;duration_seconds:number}
+export type SessionReviewItem={display_order:number;question_id:string;question_type:string;question_text:string;explanation:string|null;image_url:string|null;subject_name:string;is_correct:boolean;user_answer_display:string|null;correct_answer_display:string|null;response_time_ms:number|null;source_title:string|null;source_page:number|null}
 export type QuizOptionV3={id:string;option_text:string;display_order:number}
 export type QuizQuestionV3={id:string;type:string;question_text:string;difficulty:number;image_url:string|null;metadata:Record<string,unknown>;question_options:QuizOptionV3[];display_order:number}
 export type UserStatsV2={period_days:number;summary:{attempts:number;correct_answers:number;incorrect_answers:number;accuracy_percent:number;avg_response_ms:number;completed_sessions:number;xp_total:number;level:number;attempted_questions:number;mastered_questions:number;fragile_questions:number;reviews_due:number;mastery_percent:number};daily_activity:Array<{date:string;attempts:number;correct:number;accuracy_percent:number;xp:number}>;subjects:Array<{id:string;name:string;year_number:number;published_questions:number;attempted_questions:number;coverage_percent:number;attempts:number;accuracy_percent:number;mastery_percent:number;mastered_questions:number;fragile_questions:number}>;modes:Array<{mode:string;sessions:number;questions:number;correct:number;accuracy_percent:number;xp:number}>;weak_questions:Array<{question_id:string;question_text:string;subject_name:string;accuracy_percent:number;mastery_percent:number}>}
@@ -19,6 +20,8 @@ export const getRevisionModeAvailabilityV1=()=>rpc<RevisionModeAvailability>('ge
 export const getActiveRevisionSessionV1=()=>rpc<ActiveRevisionSession|null>('get_active_revision_session_v1')
 export const getRevisionSessionMetaV1=(sessionId:string)=>rpc<RevisionSessionMeta>('get_revision_session_meta_v1',{p_session_id:sessionId})
 export const getRecentRevisionSessionsV1=async(limit=20)=>(await rpc<RevisionHistoryItem[]>('get_recent_revision_sessions_v1',{p_limit:limit}))??[]
+export const getRevisionSessionReviewV2=async(sessionId:string)=>(await rpc<SessionReviewItem[]>('get_revision_session_review_v2',{p_session_id:sessionId}))??[]
+export const startMistakeRetryV1=(sessionId:string)=>rpc<string>('start_mistake_retry_v1',{p_source_session_id:sessionId})
 export const getUserStatsV2=(days=30)=>rpc<UserStatsV2>('get_user_stats_v2',{p_days:days})
 export const getGamificationSummaryV2=()=>rpc<GamificationSummaryV2>('get_gamification_summary_v2')
 export const getBadgesV2=()=>rpc<BadgesV2>('get_badges_v2')
