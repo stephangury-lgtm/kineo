@@ -47,6 +47,12 @@ export type LessonSourceDocument={
   page_end:number|null
 }
 
+export type LessonExternalSource={
+  title?:string
+  url?:string
+  label?:string
+}
+
 export type LessonV2 = {
   id: string
   title: string
@@ -54,7 +60,7 @@ export type LessonV2 = {
   summary: string | null
   content: string | null
   key_points: unknown[]
-  sources: unknown[]
+  sources: Array<string|LessonExternalSource>
   source_documents: LessonSourceDocument[]
   validation_status:string|null
   source_document:string|null
