@@ -26,7 +26,7 @@ export default function MockExamPage() {
         <div className="hero-copy">
           <span className="hero-kicker">Examen blanc</span>
           <h1>Teste-toi sur une session complète 📝</h1>
-          <p>20 questions équilibrées sur plusieurs chapitres et niveaux de difficulté de ton année.</p>
+          <p>20 questions équilibrées par format, chapitre et difficulté. Tes réponses sont enregistrées sans correction immédiate : le résultat est dévoilé à la fin.</p>
           <button className="primary-button hero-action" onClick={() => void start()} disabled={busy}>{busy ? 'Génération du sujet…' : 'Lancer l’examen · 20 questions'}</button>
         </div>
         <div className="hero-orbit" aria-hidden="true">📝</div>
@@ -34,7 +34,7 @@ export default function MockExamPage() {
       <section className="card">
         <p className="eyebrow">Simulation</p>
         <h2>Un sujet plus représentatif</h2>
-        <p>Le générateur diversifie les chapitres et les niveaux de difficulté afin de limiter les séries de questions trop proches.</p>
+        <p>Le générateur diversifie les formats, les chapitres et les niveaux de difficulté. Pendant l’épreuve, aucune bonne réponse ni explication n’est affichée avant la fin.</p>
       </section>
       {message && <section className="card feedback-card"><p className="feedback">{message}</p></section>}
     </div>
