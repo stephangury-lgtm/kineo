@@ -24,6 +24,9 @@ export default function CurriculumPage() {
     [selectedYear, years],
   )
 
+  const visibleLessons = visibleYears.flatMap((year) =>
+    year.subjects.flatMap((subject) => subject.chapters.flatMap((chapter) => chapter.lessons)),
+  )
   const totalSubjects = visibleYears.reduce((sum, year) => sum + year.subjects.length, 0)
   const totalQuestions = visibleYears.reduce(
     (sum, year) => sum + year.subjects.reduce(
@@ -32,6 +35,7 @@ export default function CurriculumPage() {
     ),
     0,
   )
+  const sourcedLessons = visibleLessons.filter((lesson) => lesson.has_validated_source).length
 
   async function launchLesson(lessonId: string) {
     setBusyLesson(lessonId)
@@ -59,7 +63,7 @@ export default function CurriculumPage() {
         <div>
           <p className="eyebrow light">Ton parcours Kineo</p>
           <h1>Apprends dans l’ordre, révise au bon moment.</h1>
-          <p>Retrouve les contenus publiés de ton année, suis ta maîtrise et lance un quiz ciblé en un geste.</p>
+          <p>Retrouve les contenus publiés de ton année, identifie les cours issus de supports IFMK et lance un quiz ciblé en un geste.</p>
         </div>
         <div className="stats-hero-score">
           <span>Année</span>
@@ -69,9 +73,9 @@ export default function CurriculumPage() {
 
       <section className="stats-grid">
         <article className="card score-card"><span>📚 Matières</span><strong>{totalSubjects}</strong><small>dans la sélection</small></article>
-        <article className="card score-card"><span>❓ Questions</span><strong>{totalQuestions}</strong><small>contenus publiés</small></article>
-        <article className="card score-card"><span>🎓 Années</span><strong>{visibleYears.length}</strong><small>{selectedYear === 'all' ? 'parcours complet' : 'année active'}</small></article>
-        <article className="card score-card"><span>🧠 Objectif</span><strong>90%</strong><small>maîtrise solide</small></article>
+        <article className="card score-card"><span>📖 Leçons</span><strong>{visibleLessons.length}</strong><small>contenus publiés</small></article>
+        <article className="card score-card"><span>❓ Questions</span><strong>{totalQuestions}</strong><small>pour s’entraîner</small></article>
+        <article className="card score-card"><span>✓ IFMK</span><strong>{sourcedLessons}</strong><small>leçons sourcées</small></article>
       </section>
 
       <section className="card">
@@ -137,6 +141,7 @@ export default function CurriculumPage() {
                                 <strong>{lesson.title}</strong>
                                 {lesson.summary && <span>{lesson.summary}</span>}
                                 <span>{lesson.published_questions} questions · couverture {lesson.coverage_percent}%</span>
+                                {lesson.has_validated_source && <span>✓ Support IFMK validé · {lesson.source_document_count} source{lesson.source_document_count > 1 ? 's' : ''}</span>}
                               </div>
                               <div className="subject-score">
                                 <strong>{lesson.mastery_percent}%</strong>

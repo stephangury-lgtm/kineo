@@ -10,6 +10,8 @@ export type CurriculumLesson = {
   attempted_questions: number
   mastery_percent: number
   coverage_percent: number
+  source_document_count: number
+  has_validated_source: boolean
 }
 
 export type CurriculumChapter = {
