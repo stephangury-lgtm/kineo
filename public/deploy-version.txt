@@ -1,0 +1,4 @@
+Kineo deployment trigger
+Date: 2026-10-01
+Branch: main
+Includes latest revision, review, library, exam, social and PWA updates.
