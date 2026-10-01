@@ -1,16 +1,17 @@
 import { supabase } from '../lib/supabase'
 
-export type StudentProfile={id:string;first_name:string|null;username:string|null;avatar_url:string|null;study_year:number|null}
+export type StudentProfile={id:string;first_name:string|null;username:string|null;avatar_url:string|null;study_year:number|null;role:'student'|'admin'}
 
-export async function getCurrentProfile(){const{data:userData,error:userError}=await supabase.auth.getUser();if(userError)throw userError;const user=userData.user;if(!user)return null;const{data,error}=await supabase.from('profiles').select('id, first_name, username, avatar_url, study_year').eq('id',user.id).maybeSingle();if(error)throw error;return data as StudentProfile|null}
+export async function getCurrentProfile(){const{data:userData,error:userError}=await supabase.auth.getUser();if(userError)throw userError;const user=userData.user;if(!user)return null;const{data,error}=await supabase.from('profiles').select('id, first_name, username, avatar_url, study_year, role').eq('id',user.id).maybeSingle();if(error)throw error;return data as StudentProfile|null}
 
 export async function updateStudyProfile(params:{firstName?:string;username?:string;studyYear:number}){
  const username=params.username?.trim()
  if(username&&!/^[a-zA-Z0-9._-]{3,24}$/.test(username))throw new Error('Le pseudo doit contenir 3 à 24 caractères : lettres, chiffres, point, tiret ou underscore.')
- const{data,error}=await supabase.rpc('update_study_profile_v1',{p_first_name:params.firstName?.trim()??'',p_username:username??'',p_study_year:params.studyYear})
+ const{error}=await supabase.rpc('update_study_profile_v1',{p_first_name:params.firstName?.trim()??'',p_username:username??'',p_study_year:params.studyYear})
  if(error)throw error
+ const refreshed=await getCurrentProfile();if(!refreshed)throw new Error('Profil introuvable après mise à jour.')
  window.dispatchEvent(new Event('kineo-profile-updated'))
- return data as StudentProfile
+ return refreshed
 }
 
 function inferImageType(file:File){if(file.type)return file.type.toLowerCase();const ext=file.name.split('.').pop()?.toLowerCase();if(ext==='jpg'||ext==='jpeg')return'image/jpeg';if(ext==='png')return'image/png';if(ext==='webp')return'image/webp';if(ext==='heic')return'image/heic';if(ext==='heif')return'image/heif';return''}
