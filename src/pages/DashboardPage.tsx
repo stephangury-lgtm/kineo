@@ -68,7 +68,7 @@ export default function DashboardPage() {
         <div className="progress-copy"><strong>{dashboard.mastery?.mastered ?? 0} notions maîtrisées</strong><span>{dashboard.mastery?.fragile ?? 0} fragiles · {due} à revoir</span></div>
       </section>
 
-      <section className="quick-grid"><Link className="quick-card" to="/parcours"><span>▦</span><strong>Parcours</strong><small>Choisir une leçon</small></Link><Link className="quick-card" to="/stats"><span>↗</span><strong>Statistiques</strong><small>Voir mes progrès</small></Link></section>
+      <section className="quick-grid"><Link className="quick-card" to="/parcours"><span>▦</span><strong>Parcours</strong><small>Choisir une leçon</small></Link><Link className="quick-card" to="/amis"><span>⚔️</span><strong>Amis & défis</strong><small>Défier un camarade</small></Link><Link className="quick-card" to="/stats"><span>↗</span><strong>Statistiques</strong><small>Voir mes progrès</small></Link></section>
     </div>
   )
 }
