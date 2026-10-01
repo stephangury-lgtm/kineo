@@ -149,6 +149,17 @@ export async function submitQuizAnswerV3(params: { sessionId: string; questionId
   return data
 }
 
+export async function submitQuizAnswerV4(params: { sessionId: string; questionId: string; answer: unknown; responseTimeMs: number }) {
+  const { data, error } = await supabase.rpc('submit_quiz_answer_v4', {
+    p_session_id: params.sessionId,
+    p_question_id: params.questionId,
+    p_answer: params.answer,
+    p_response_time_ms: params.responseTimeMs,
+  })
+  if (error) throw error
+  return data
+}
+
 export async function finishQuizSessionV2(sessionId: string) {
   const { data, error } = await supabase.rpc('finish_quiz_session_v2', {
     p_session_id: sessionId,

@@ -6,10 +6,11 @@ import {
   getQuizQuestionsV4,
   startDailyChallengeV2,
   startSmartRevisionV2,
-  submitQuizAnswerV3,
+  submitQuizAnswerV4,
   type QuizQuestionV3,
 } from '../services/kineoApi'
 
+type HotspotPoint = { x: number; y: number; radius?: number; label?: string }
 type AnswerResult = {
   correct?: boolean
   xp_earned?: number
@@ -18,6 +19,7 @@ type AnswerResult = {
     correct_option_ids?: string[]
     correct_answer?: string | null
     correct_pairs?: Array<{ left: string; right: string }>
+    correct_hotspot?: HotspotPoint | null
   }
 }
 
@@ -40,6 +42,8 @@ export default function RevisionPage() {
   const [selected, setSelected] = useState<string | null>(null)
   const [textAnswer, setTextAnswer] = useState('')
   const [matching, setMatching] = useState<Record<string, string>>({})
+  const [selectedMatch, setSelectedMatch] = useState<string | null>(null)
+  const [hotspot, setHotspot] = useState<{ x: number; y: number } | null>(null)
   const [result, setResult] = useState<AnswerResult | null>(null)
   const [message, setMessage] = useState<string | null>(null)
   const [summary, setSummary] = useState<ChallengeFinish | null>(null)
@@ -104,13 +108,16 @@ export default function RevisionPage() {
     if (current.type === 'mcq' || current.type === 'true_false') return Boolean(selected)
     if (current.type === 'fill_blank') return textAnswer.trim().length > 0
     if (current.type === 'matching') return leftItems.length > 0 && leftItems.every((left) => Boolean(matching[left]))
+    if (current.type === 'hotspot') return Boolean(hotspot)
     return false
-  }, [current, leftItems, matching, result, selected, textAnswer])
+  }, [current, hotspot, leftItems, matching, result, selected, textAnswer])
 
   function resetAnswerState() {
     setSelected(null)
     setTextAnswer('')
     setMatching({})
+    setSelectedMatch(null)
+    setHotspot(null)
     setResult(null)
     setMessage(null)
     setStartedAt(Date.now())
@@ -166,6 +173,7 @@ export default function RevisionPage() {
     if (current.type === 'mcq' || current.type === 'true_false') return { option_id: selected }
     if (current.type === 'fill_blank') return { text: textAnswer.trim() }
     if (current.type === 'matching') return { pairs: leftItems.map((left) => ({ left, right: matching[left] })) }
+    if (current.type === 'hotspot' && hotspot) return hotspot
     return {}
   }
 
@@ -174,7 +182,7 @@ export default function RevisionPage() {
     setBusy(true)
     setMessage(null)
     try {
-      const answerResult = await submitQuizAnswerV3({
+      const answerResult = await submitQuizAnswerV4({
         sessionId,
         questionId: current.id,
         answer: buildAnswer(),
@@ -227,6 +235,19 @@ export default function RevisionPage() {
     resetAnswerState()
   }
 
+  function assignMatch(left: string, right: string) {
+    if (result) return
+    setMatching((previous) => {
+      const next = { ...previous }
+      Object.keys(next).forEach((key) => {
+        if (next[key] === right) delete next[key]
+      })
+      next[left] = right
+      return next
+    })
+    setSelectedMatch(null)
+  }
+
   function renderAnswerInput() {
     if (!current) return null
     if (current.type === 'mcq' || current.type === 'true_false') {
@@ -246,15 +267,63 @@ export default function RevisionPage() {
       </div>
     }
     if (current.type === 'matching') {
-      return <div className="matching-grid">
-        {leftItems.map((left) => <label className="matching-row" key={left}>
-          <span>{left}</span>
-          <select value={matching[left] ?? ''} onChange={(e) => setMatching((value) => ({ ...value, [left]: e.target.value }))} disabled={busy || Boolean(result)}>
-            <option value="">Choisir…</option>
-            {rightItems.map((right) => <option key={right} value={right}>{right}</option>)}
-          </select>
-        </label>)}
+      return <div className="matching-dnd">
+        <div className="match-bank">
+          <strong>Étiquettes à placer</strong>
+          <div className="match-chips">{rightItems.map((right) => {
+            const used = Object.values(matching).includes(right)
+            return <button
+              key={right}
+              type="button"
+              className={['match-chip', used ? 'used' : '', selectedMatch === right ? 'active' : ''].filter(Boolean).join(' ')}
+              draggable={!result}
+              disabled={Boolean(result)}
+              onDragStart={(event) => event.dataTransfer.setData('text/plain', right)}
+              onClick={() => !result && setSelectedMatch(selectedMatch === right ? null : right)}
+            >{right}</button>
+          })}</div>
+          {!result && <small>Glisse une étiquette vers sa cible. Sur mobile, touche l’étiquette puis la cible.</small>}
+        </div>
+        <div className="match-targets">{leftItems.map((left) => <div className="matching-drop-row" key={left}>
+          <span className="match-left">{left}</span>
+          <button
+            type="button"
+            className={['match-dropzone', matching[left] ? 'filled' : ''].filter(Boolean).join(' ')}
+            disabled={Boolean(result)}
+            onDragOver={(event) => event.preventDefault()}
+            onDrop={(event) => {
+              event.preventDefault()
+              const right = event.dataTransfer.getData('text/plain')
+              if (right) assignMatch(left, right)
+            }}
+            onClick={() => selectedMatch && assignMatch(left, selectedMatch)}
+          >{matching[left] ?? 'Déposer ici'}</button>
+          {matching[left] && !result && <button className="match-clear" type="button" aria-label={`Retirer ${matching[left]}`} onClick={() => setMatching((previous) => { const next = { ...previous }; delete next[left]; return next })}>×</button>}
+        </div>)}</div>
         {result?.correction?.correct_pairs && <div className="correction-box"><strong>Associations correctes</strong>{result.correction.correct_pairs.map((pair) => <span key={`${pair.left}-${pair.right}`}>{pair.left} → {pair.right}</span>)}</div>}
+      </div>
+    }
+    if (current.type === 'hotspot' && current.image_url) {
+      const correct = result?.correction?.correct_hotspot
+      return <div className="hotspot-wrap">
+        <p className="hotspot-hint">Touchez directement la structure demandée sur le schéma.</p>
+        <div
+          className="hotspot-stage"
+          onClick={(event) => {
+            if (result || busy) return
+            const rect = event.currentTarget.getBoundingClientRect()
+            setHotspot({
+              x: Math.max(0, Math.min(100, ((event.clientX - rect.left) / rect.width) * 100)),
+              y: Math.max(0, Math.min(100, ((event.clientY - rect.top) / rect.height) * 100)),
+            })
+          }}
+        >
+          <img src={current.image_url} alt="Schéma anatomique interactif" />
+          {hotspot && <span className={['hotspot-marker', result ? (result.correct ? 'correct' : 'incorrect') : ''].filter(Boolean).join(' ')} style={{ left: `${hotspot.x}%`, top: `${hotspot.y}%` }} />}
+          {correct && <span className="hotspot-marker correct-target" style={{ left: `${correct.x}%`, top: `${correct.y}%` }} />}
+        </div>
+        {!result && hotspot && <small>Point sélectionné. Tu peux toucher ailleurs pour le déplacer.</small>}
+        {result && correct?.label && <p className="correction-line">Zone attendue : <strong>{correct.label}</strong></p>}
       </div>
     }
     return <p>Ce format de question sera bientôt disponible.</p>
@@ -319,6 +388,8 @@ export default function RevisionPage() {
     </div>
   }
 
+  const typeLabel = current.type === 'mcq' ? 'QCM' : current.type === 'true_false' ? 'Vrai / Faux' : current.type === 'fill_blank' ? 'Texte à compléter' : current.type === 'matching' ? 'Glisser-déposer' : current.type === 'hotspot' ? 'Zone à pointer' : 'Question'
+
   return <div className="stack">
     <section className="card">
       <div className="section-heading">
@@ -332,9 +403,9 @@ export default function RevisionPage() {
     </section>
 
     <section className="card quiz-card">
-      <p className="eyebrow">{current.type === 'mcq' ? 'QCM' : current.type === 'true_false' ? 'Vrai / Faux' : current.type === 'fill_blank' ? 'Texte à compléter' : current.type === 'matching' ? 'Association' : 'Question'}</p>
+      <p className="eyebrow">{typeLabel}</p>
       <h1>{current.question_text}</h1>
-      {current.image_url && <img className="question-image" src={current.image_url} alt="Illustration de la question" />}
+      {current.image_url && current.type !== 'hotspot' && <img className="question-image" src={current.image_url} alt="Illustration de la question" />}
       {renderAnswerInput()}
       {!result ? <button className="primary-button wide" onClick={validate} disabled={!canValidate || busy}>{busy ? 'Validation…' : 'Valider ma réponse'}</button> :
         <div className={result.correct ? 'result-box success' : 'result-box retry'}>
