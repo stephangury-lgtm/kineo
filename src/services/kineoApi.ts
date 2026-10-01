@@ -18,6 +18,7 @@ async function rpc<T>(name:string,params?:Record<string,unknown>){const {data,er
 export const getDashboardV2=()=>rpc<DashboardV2>('get_user_dashboard_v2')
 export const getRevisionModeAvailabilityV1=()=>rpc<RevisionModeAvailability>('get_revision_mode_availability_v1')
 export const getActiveRevisionSessionV1=()=>rpc<ActiveRevisionSession|null>('get_active_revision_session_v1')
+export const abandonRevisionSessionV1=(sessionId:string)=>rpc<boolean>('abandon_revision_session_v1',{p_session_id:sessionId})
 export const getRevisionSessionMetaV1=(sessionId:string)=>rpc<RevisionSessionMeta>('get_revision_session_meta_v1',{p_session_id:sessionId})
 export const getRecentRevisionSessionsV1=async(limit=20)=>(await rpc<RevisionHistoryItem[]>('get_recent_revision_sessions_v1',{p_limit:limit}))??[]
 export const getRevisionSessionReviewV2=async(sessionId:string)=>(await rpc<SessionReviewItem[]>('get_revision_session_review_v2',{p_session_id:sessionId}))??[]
