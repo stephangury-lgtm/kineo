@@ -1,20 +1,35 @@
 {
-  "name": "Kineo",
+  "name": "Kineo — Révisions Kiné",
   "short_name": "Kineo",
   "description": "Révision gamifiée pour étudiants en kinésithérapie",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#f4f7fb",
-  "theme_color": "#6d28d9",
+  "background_color": "#f5f8f6",
+  "theme_color": "#0f4c3a",
   "lang": "fr",
   "orientation": "portrait-primary",
+  "categories": ["education", "medical"],
   "icons": [
     {
       "src": "/kineo-icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Réviser maintenant",
+      "short_name": "Réviser",
+      "description": "Lancer une session de révision Kineo",
+      "url": "/revision"
+    },
+    {
+      "name": "Amis & défis",
+      "short_name": "Défis",
+      "description": "Voir mes amis et mes défis",
+      "url": "/amis"
     }
   ]
 }
