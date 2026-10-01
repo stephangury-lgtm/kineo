@@ -1,10 +1,10 @@
-import { NavLink, Route, Routes } from 'react-router-dom'
+import { Link, NavLink, Route, Routes } from 'react-router-dom'
 import AuthGate from './auth/AuthGate'
-import { supabase } from './lib/supabase'
 import CurriculumPage from './pages/CurriculumPage'
 import DashboardPage from './pages/DashboardPage'
 import GamificationPage from './pages/GamificationPage'
 import LessonPage from './pages/LessonPage'
+import ProfilePage from './pages/ProfilePage'
 import RevisionPage from './pages/RevisionPage'
 import StatisticsPage from './pages/StatisticsPage'
 
@@ -21,14 +21,14 @@ export default function App() {
     <AuthGate>
       <div className="app-shell">
         <header className="topbar">
-          <div className="brand-lockup">
+          <Link className="brand-lockup" to="/" aria-label="Accueil Kineo">
             <span className="brand-mark">K</span>
             <div>
               <strong className="brand">Kineo</strong>
               <span className="tagline">Réviser. Progresser. Retenir.</span>
             </div>
-          </div>
-          <button className="icon-button" aria-label="Se déconnecter" onClick={() => supabase.auth.signOut()}>↪</button>
+          </Link>
+          <Link className="icon-button" aria-label="Mon profil" to="/profile">👤</Link>
         </header>
 
         <main className="content">
@@ -39,6 +39,7 @@ export default function App() {
             <Route path="/revision" element={<RevisionPage />} />
             <Route path="/stats" element={<StatisticsPage />} />
             <Route path="/rewards" element={<GamificationPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
           </Routes>
         </main>
 
