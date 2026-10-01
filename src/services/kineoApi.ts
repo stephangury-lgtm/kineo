@@ -17,7 +17,7 @@ export type BadgeProgressV2={id:string;name:string;description:string;icon:strin
 export type BadgesV2={badges:BadgeProgressV2[];stats:{completed_quizzes:number;correct_answers:number;current_streak:number;daily_challenges:number;daily_perfect:boolean}}
 
 async function rpc<T>(name:string,params?:Record<string,unknown>){const {data,error}=await supabase.rpc(name,params);if(error)throw error;return data as T}
-export const getDashboardV2=()=>rpc<DashboardV2>('get_user_dashboard_v2')
+export const getDashboardV2=()=>rpc<DashboardV2>('get_user_dashboard_v3')
 export const getRevisionModeAvailabilityV1=()=>rpc<RevisionModeAvailability>('get_revision_mode_availability_v1')
 export const getStudyPrioritiesV1=()=>rpc<StudyPrioritiesV1>('get_study_priorities_v1')
 export const getActiveRevisionSessionV1=()=>rpc<ActiveRevisionSession|null>('get_active_revision_session_v1')
