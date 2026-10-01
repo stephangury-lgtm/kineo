@@ -7,6 +7,7 @@ import DashboardPage from './pages/DashboardPage'
 import FriendsPage from './pages/FriendsPage'
 import GamificationPage from './pages/GamificationPage'
 import LessonPage from './pages/LessonPage'
+import MockExamPage from './pages/MockExamPage'
 import NotificationsPage from './pages/NotificationsPage'
 import ProfilePage from './pages/ProfilePage'
 import RevisionPage from './pages/RevisionPage'
@@ -45,6 +46,7 @@ export default function App() {
             <Route path="/revision" element={<RevisionPage />} />
             <Route path="/anatomie" element={<VisualRevisionPage />} />
             <Route path="/mes-erreurs" element={<WeakRevisionPage />} />
+            <Route path="/examen" element={<MockExamPage />} />
             <Route path="/stats" element={<StatisticsPage />} />
             <Route path="/rewards" element={<GamificationPage />} />
             <Route path="/profil" element={<ProfilePage />} />

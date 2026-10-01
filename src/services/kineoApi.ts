@@ -138,6 +138,12 @@ export async function startWeakRevisionV1(questionCount = 10) {
   return data as string
 }
 
+export async function startMockExamV1(questionCount = 20) {
+  const { data, error } = await supabase.rpc('start_mock_exam_v1', { p_question_count: questionCount })
+  if (error) throw error
+  return data as string
+}
+
 export async function startDailyChallengeV2() {
   const { data, error } = await supabase.rpc('start_daily_challenge_v2', { p_challenge_date: new Date().toISOString().slice(0, 10) })
   if (error) throw error
