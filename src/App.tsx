@@ -2,6 +2,7 @@ import { NavLink, Route, Routes } from 'react-router-dom'
 import AuthGate from './auth/AuthGate'
 import HeaderProfileButton from './components/HeaderProfileButton'
 import NotificationBell from './components/NotificationBell'
+import OfflineStatus from './components/OfflineStatus'
 import CurriculumPage from './pages/CurriculumPage'
 import DashboardPage from './pages/DashboardPage'
 import FriendsPage from './pages/FriendsPage'
@@ -24,6 +25,7 @@ export default function App() {
   return (
     <AuthGate>
       <div className="app-shell">
+        <OfflineStatus />
         <header className="topbar">
           <div className="brand-lockup">
             <span className="brand-mark">K</span>
