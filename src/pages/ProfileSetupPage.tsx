@@ -8,6 +8,7 @@ type Props = {
 
 export default function ProfileSetupPage({ current, onSaved }: Props) {
   const [firstName, setFirstName] = useState(current.first_name ?? '')
+  const [username, setUsername] = useState(current.username ?? '')
   const [studyYear, setStudyYear] = useState<number>(current.study_year ?? 1)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -16,7 +17,7 @@ export default function ProfileSetupPage({ current, onSaved }: Props) {
     setBusy(true)
     setError(null)
     try {
-      onSaved(await updateStudyProfile({ firstName, studyYear }))
+      onSaved(await updateStudyProfile({ firstName, username, studyYear }))
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Impossible d’enregistrer ton profil.')
     } finally {
@@ -29,29 +30,15 @@ export default function ProfileSetupPage({ current, onSaved }: Props) {
       <section className="card auth-card">
         <div>
           <p className="eyebrow">Bienvenue sur Kineo</p>
-          <h1>Personnalise ton parcours</h1>
-          <p>Indique simplement ton année d’étude. Tu pourras ensuite réviser les contenus adaptés à ton niveau.</p>
+          <h1>Prépare ton parcours étudiant</h1>
+          <p>Ton année détermine les cours et quiz proposés. Le pseudo est facultatif, mais il permet d’utiliser les amis, défis et classements.</p>
         </div>
-
         <div className="auth-form">
-          <label>
-            Prénom (facultatif)
-            <input value={firstName} onChange={(event) => setFirstName(event.target.value)} placeholder="Ton prénom" />
-          </label>
-
-          <label>
-            Année d’étude
-            <select value={studyYear} onChange={(event) => setStudyYear(Number(event.target.value))}>
-              <option value={1}>K1 · 1re année</option>
-              <option value={2}>K2 · 2e année</option>
-              <option value={3}>K3 · 3e année</option>
-              <option value={4}>K4 · 4e année</option>
-            </select>
-          </label>
-
-          <button className="primary-button" onClick={save} disabled={busy}>
-            {busy ? 'Enregistrement…' : 'Continuer'}
-          </button>
+          <label>Prénom (facultatif)<input value={firstName} onChange={(event) => setFirstName(event.target.value)} placeholder="Ton prénom" /></label>
+          <label>Pseudo (facultatif)<input value={username} onChange={(event) => setUsername(event.target.value)} placeholder="ex. kineo.marie" autoCapitalize="none" autoCorrect="off" /></label>
+          <small className="field-hint">3 à 24 caractères : lettres, chiffres, point, tiret ou underscore. Tu pourras le modifier plus tard.</small>
+          <label>Année d’étude<select value={studyYear} onChange={(event) => setStudyYear(Number(event.target.value))}><option value={1}>K1 · 1re année</option><option value={2}>K2 · 2e année</option><option value={3}>K3 · 3e année</option><option value={4}>K4 · 4e année</option></select></label>
+          <button className="primary-button" onClick={save} disabled={busy}>{busy ? 'Enregistrement…' : 'Entrer dans Kineo'}</button>
           {error && <p className="feedback">{error}</p>}
         </div>
       </section>
