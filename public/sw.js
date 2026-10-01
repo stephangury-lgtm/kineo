@@ -1,4 +1,4 @@
-const CACHE = 'kineo-shell-v2'
+const CACHE = 'kineo-shell-v3'
 const SHELL = ['/', '/manifest.webmanifest', '/kineo-icon.svg']
 
 self.addEventListener('install', (event) => {
@@ -22,8 +22,7 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(event.request)
         .then((response) => {
-          const copy = response.clone()
-          caches.open(CACHE).then((cache) => cache.put('/', copy))
+          if (response.ok) caches.open(CACHE).then((cache) => cache.put('/', response.clone()))
           return response
         })
         .catch(() => caches.match(event.request).then((cached) => cached || caches.match('/'))),
@@ -31,15 +30,24 @@ self.addEventListener('fetch', (event) => {
     return
   }
 
-  if (['script', 'style', 'image', 'font'].includes(event.request.destination)) {
+  if (['script', 'style'].includes(event.request.destination)) {
     event.respondWith(
-      caches.match(event.request).then((cached) => {
-        const network = fetch(event.request).then((response) => {
+      fetch(event.request)
+        .then((response) => {
           if (response.ok) caches.open(CACHE).then((cache) => cache.put(event.request, response.clone()))
           return response
-        }).catch(() => cached)
-        return cached || network
-      }),
+        })
+        .catch(() => caches.match(event.request)),
+    )
+    return
+  }
+
+  if (['image', 'font'].includes(event.request.destination)) {
+    event.respondWith(
+      caches.match(event.request).then((cached) => cached || fetch(event.request).then((response) => {
+        if (response.ok) caches.open(CACHE).then((cache) => cache.put(event.request, response.clone()))
+        return response
+      })),
     )
   }
 })
