@@ -6,6 +6,15 @@ import { getFriendships, respondFriendRequest, searchStudents, sendFriendRequest
 
 const emptySummary: FriendshipsSummary = { friends: [], incoming: [], outgoing: [] }
 
+function duelOutcome(item: FriendChallenge) {
+  const myScore = item.direction === 'sent' ? item.challenger_score : item.challenged_score
+  const otherScore = item.direction === 'sent' ? item.challenged_score : item.challenger_score
+  if (myScore == null || otherScore == null) return { label: 'Terminé', icon: '✓', className: 'neutral' }
+  if (myScore > otherScore) return { label: 'Victoire', icon: '🏆', className: 'win' }
+  if (myScore < otherScore) return { label: 'Défaite', icon: '💪', className: 'loss' }
+  return { label: 'Égalité', icon: '🤝', className: 'draw' }
+}
+
 export default function FriendsPage() {
   const navigate = useNavigate()
   const [summary, setSummary] = useState<FriendshipsSummary>(emptySummary)
@@ -42,7 +51,7 @@ export default function FriendsPage() {
 
   async function answer(friendshipId: string, accept: boolean) {
     setBusyId(friendshipId); setMessage(null)
-    try { await respondFriendRequest(friendshipId, accept); setMessage(accept ? 'Invitation acceptée ✓' : 'Invitation refusée.'); await refresh() }
+    try { await respondFriendRequest(friendshipId, accept); setMessage(accept ? 'Invitation acceptée ✓' : 'Invitation refusée.'); window.dispatchEvent(new Event('kineo-notifications-updated')); await refresh() }
     catch (err) { setMessage(err instanceof Error ? err.message : 'Impossible de traiter l’invitation.') }
     finally { setBusyId(null) }
   }
@@ -56,7 +65,7 @@ export default function FriendsPage() {
 
   async function answerChallenge(challengeId: string, accept: boolean) {
     setBusyId(challengeId); setMessage(null)
-    try { await respondFriendChallenge(challengeId, accept); setMessage(accept ? 'Défi accepté. À toi de jouer !' : 'Défi refusé.'); await refresh() }
+    try { await respondFriendChallenge(challengeId, accept); setMessage(accept ? 'Défi accepté. À toi de jouer !' : 'Défi refusé.'); window.dispatchEvent(new Event('kineo-notifications-updated')); await refresh() }
     catch (err) { setMessage(err instanceof Error ? err.message : 'Impossible de traiter le défi.') }
     finally { setBusyId(null) }
   }
@@ -86,7 +95,7 @@ export default function FriendsPage() {
       {activeChallenges.length > 0 && <section className="card challenge-hub-card"><div className="section-heading"><div><p className="eyebrow">Duels</p><h2>Défis en cours</h2></div><strong>{activeChallenges.length}</strong></div><div className="people-list">{activeChallenges.map((item) => {
         const awaitingMe = item.direction === 'received' && item.status === 'pending'
         const playable = item.status === 'accepted' || item.status === 'in_progress'
-        return <article className="person-row challenge-row" key={item.id}><div className="person-avatar duel-avatar">{item.opponent.avatar_url ? <img src={item.opponent.avatar_url} alt="" /> : (item.opponent.first_name || item.opponent.username || '?').slice(0,1).toUpperCase()}</div><div className="person-copy"><strong>{item.opponent.first_name || item.opponent.username}</strong><span>{item.status === 'pending' ? (awaitingMe ? 'te défie sur 10 questions' : 'invitation envoyée') : 'même quiz · 10 questions'}</span></div>{awaitingMe ? <div className="friend-actions"><button className="primary-button compact-button" onClick={() => void answerChallenge(item.id, true)} disabled={busyId===item.id}>Accepter</button><button className="secondary-button compact-button" onClick={() => void answerChallenge(item.id, false)} disabled={busyId===item.id}>Refuser</button></div> : playable ? <button className="primary-button compact-button" onClick={() => void playChallenge(item.id)} disabled={busyId===item.id}>{busyId===item.id?'…':'Jouer'}</button> : <span className="pending-chip">En attente</span>}</article>
+        return <article className="person-row challenge-row" key={item.id}><div className="person-avatar duel-avatar">{item.opponent.avatar_url ? <img src={item.opponent.avatar_url} alt="" /> : (item.opponent.first_name || item.opponent.username || '?').slice(0,1).toUpperCase()}</div><div className="person-copy"><strong>{item.opponent.first_name || item.opponent.username}</strong><span>{item.status === 'pending' ? (awaitingMe ? 'te défie sur 10 questions' : 'invitation envoyée') : item.status === 'in_progress' ? 'duel en cours · même quiz' : 'même quiz · 10 questions'}</span></div>{awaitingMe ? <div className="friend-actions"><button className="primary-button compact-button" onClick={() => void answerChallenge(item.id, true)} disabled={busyId===item.id}>Accepter</button><button className="secondary-button compact-button" onClick={() => void answerChallenge(item.id, false)} disabled={busyId===item.id}>Refuser</button></div> : playable ? <button className="primary-button compact-button" onClick={() => void playChallenge(item.id)} disabled={busyId===item.id}>{busyId===item.id?'…':'Jouer'}</button> : <span className="pending-chip">En attente</span>}</article>
       })}</div></section>}
 
       <section className="card"><div className="section-heading"><div><p className="eyebrow">Trouver un camarade</p><h2>Ajouter un ami</h2></div></div><form className="friend-search" onSubmit={runSearch}><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Pseudo ou prénom" minLength={2}/><button className="primary-button" type="submit" disabled={query.trim().length<2}>Rechercher</button></form>{results.length>0&&<div className="people-list">{results.map((student)=><article className="person-row" key={student.id}><div className="person-avatar">{(student.first_name||student.username||'?').slice(0,1).toUpperCase()}</div><div className="person-copy"><strong>{student.first_name||student.username}</strong><span>@{student.username} · K{student.study_year??'?'} · niv. {student.level??1}</span></div><button className="secondary-button compact-button" onClick={()=>void invite(student)} disabled={busyId===student.id}>{busyId===student.id?'…':'Ajouter'}</button></article>)}</div>}</section>
@@ -95,7 +104,7 @@ export default function FriendsPage() {
 
       <section className="card"><div className="section-heading"><div><p className="eyebrow">Mon groupe</p><h2>Mes amis</h2></div><strong>{summary.friends.length}</strong></div>{summary.friends.length===0?<div className="empty-social"><span>👋</span><strong>Ta liste est encore vide</strong><p>Recherche un camarade avec son pseudo pour l’ajouter.</p></div>:<div className="people-list">{summary.friends.map((student)=><article className="person-row" key={student.friendship_id}><div className="person-avatar">{(student.first_name||student.username||'?').slice(0,1).toUpperCase()}</div><div className="person-copy"><strong>{student.first_name||student.username}</strong><span>@{student.username} · K{student.study_year??'?'} · niv. {student.level??1}</span></div><button className="duel-button" onClick={()=>void challenge(student.id)} disabled={busyId===student.id}>⚔️ Défier</button></article>)}</div>}</section>
 
-      {completedChallenges.length>0&&<section className="card"><div className="section-heading"><div><p className="eyebrow">Historique</p><h2>Derniers duels</h2></div></div><div className="people-list">{completedChallenges.map((item)=>{const myScore=item.direction==='sent'?item.challenger_score:item.challenged_score;const otherScore=item.direction==='sent'?item.challenged_score:item.challenger_score;return <article className="duel-result" key={item.id}><div><strong>{item.opponent.first_name||item.opponent.username}</strong><span>@{item.opponent.username}</span></div><div className="duel-score"><strong>{myScore??'-'}%</strong><span>—</span><strong>{otherScore??'-'}%</strong></div></article>})}</div></section>}
+      {completedChallenges.length>0&&<section className="card"><div className="section-heading"><div><p className="eyebrow">Historique</p><h2>Derniers duels</h2></div></div><div className="people-list">{completedChallenges.map((item)=>{const myScore=item.direction==='sent'?item.challenger_score:item.challenged_score;const otherScore=item.direction==='sent'?item.challenged_score:item.challenger_score;const outcome=duelOutcome(item);return <article className={`duel-result duel-${outcome.className}`} key={item.id}><div><strong>{outcome.icon} {outcome.label} · {item.opponent.first_name||item.opponent.username}</strong><span>@{item.opponent.username}</span></div><div className="duel-score"><strong>{myScore??'-'}%</strong><span>—</span><strong>{otherScore??'-'}%</strong></div></article>})}</div></section>}
 
       {summary.outgoing.length>0&&<section className="card muted-card"><p className="eyebrow">En attente</p><h2>Invitations envoyées</h2><div className="people-list">{summary.outgoing.map((student)=><article className="person-row" key={student.friendship_id}><div className="person-avatar">{(student.first_name||student.username||'?').slice(0,1).toUpperCase()}</div><div className="person-copy"><strong>{student.first_name||student.username}</strong><span>@{student.username}</span></div><span className="pending-chip">En attente</span></article>)}</div></section>}
 

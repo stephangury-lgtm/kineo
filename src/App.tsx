@@ -1,11 +1,13 @@
 import { NavLink, Route, Routes } from 'react-router-dom'
 import AuthGate from './auth/AuthGate'
 import HeaderProfileButton from './components/HeaderProfileButton'
+import NotificationBell from './components/NotificationBell'
 import CurriculumPage from './pages/CurriculumPage'
 import DashboardPage from './pages/DashboardPage'
 import FriendsPage from './pages/FriendsPage'
 import GamificationPage from './pages/GamificationPage'
 import LessonPage from './pages/LessonPage'
+import NotificationsPage from './pages/NotificationsPage'
 import ProfilePage from './pages/ProfilePage'
 import RevisionPage from './pages/RevisionPage'
 import StatisticsPage from './pages/StatisticsPage'
@@ -27,7 +29,10 @@ export default function App() {
             <span className="brand-mark">K</span>
             <div><strong className="brand">Kineo</strong><span className="tagline">Réviser. Progresser. Retenir.</span></div>
           </div>
-          <HeaderProfileButton />
+          <div className="topbar-actions">
+            <NotificationBell />
+            <HeaderProfileButton />
+          </div>
         </header>
 
         <main className="content">
@@ -40,6 +45,7 @@ export default function App() {
             <Route path="/rewards" element={<GamificationPage />} />
             <Route path="/profil" element={<ProfilePage />} />
             <Route path="/amis" element={<FriendsPage />} />
+            <Route path="/notifications" element={<NotificationsPage />} />
           </Routes>
         </main>
 
