@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getNotifications, markAllNotificationsRead, markNotificationRead, type KineoNotification } from '../services/notificationApi'
+import { getNotifications, markAllNotificationsRead, markNotificationRead, subscribeToNotificationChanges, type KineoNotification } from '../services/notificationApi'
 import './NotificationsPage.css'
 
 function iconFor(type: string) {
@@ -42,6 +42,10 @@ export default function NotificationsPage() {
 
   useEffect(() => {
     void refresh().catch((err: Error) => setMessage(err.message)).finally(() => setLoading(false))
+    const unsubscribe = subscribeToNotificationChanges(() => {
+      void refresh().catch(() => undefined)
+    })
+    return unsubscribe
   }, [])
 
   async function markOne(item: KineoNotification) {

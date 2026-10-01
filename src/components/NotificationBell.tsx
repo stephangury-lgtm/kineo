@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getUnreadNotificationCount } from '../services/notificationApi'
+import { getUnreadNotificationCount, subscribeToNotificationChanges } from '../services/notificationApi'
 import './NotificationBell.css'
 
 export default function NotificationBell() {
@@ -15,15 +15,18 @@ export default function NotificationBell() {
     }
 
     refresh()
+    const unsubscribeRealtime = subscribeToNotificationChanges(() => {
+      refresh()
+      window.dispatchEvent(new Event('kineo-notifications-updated'))
+    })
     window.addEventListener('kineo-notifications-updated', refresh)
     window.addEventListener('focus', refresh)
-    const timer = window.setInterval(refresh, 60000)
 
     return () => {
       active = false
+      unsubscribeRealtime()
       window.removeEventListener('kineo-notifications-updated', refresh)
       window.removeEventListener('focus', refresh)
-      window.clearInterval(timer)
     }
   }, [])
 

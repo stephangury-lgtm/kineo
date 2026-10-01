@@ -51,3 +51,26 @@ export async function markAllNotificationsRead() {
   if (error) throw error
   window.dispatchEvent(new Event('kineo-notifications-updated'))
 }
+
+export function subscribeToNotificationChanges(onChange: () => void) {
+  let active = true
+  let channel: ReturnType<typeof supabase.channel> | null = null
+
+  void supabase.auth.getUser().then(({ data }) => {
+    if (!active || !data.user) return
+    channel = supabase
+      .channel(`kineo-notifications-${data.user.id}`)
+      .on('postgres_changes', {
+        event: '*',
+        schema: 'public',
+        table: 'notifications',
+        filter: `user_id=eq.${data.user.id}`,
+      }, () => onChange())
+      .subscribe()
+  }).catch(() => undefined)
+
+  return () => {
+    active = false
+    if (channel) void supabase.removeChannel(channel)
+  }
+}
