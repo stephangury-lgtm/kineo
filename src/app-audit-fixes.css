@@ -116,6 +116,30 @@ button:disabled,
   flex: 0 0 auto;
 }
 
+/* Matching questions: Android is more reliable with tap -> target than native HTML drag. */
+@media (hover: none), (pointer: coarse) {
+  .match-chip {
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  .match-bank small {
+    font-size: 0;
+  }
+  .match-bank small::after {
+    content: 'Sur mobile : 1. touche une étiquette, puis 2. touche la case correspondante. Une même catégorie peut être utilisée plusieurs fois si elle est proposée plusieurs fois.';
+    display: block;
+    font-size: .82rem;
+    line-height: 1.45;
+    color: var(--muted);
+  }
+  .match-chip.active {
+    box-shadow: 0 0 0 4px rgba(15,118,110,.12);
+  }
+  .match-dropzone {
+    touch-action: manipulation;
+  }
+}
+
 /* Better mobile touch spacing without changing desktop density. */
 @media (max-width: 520px) {
   .library-results-head {
