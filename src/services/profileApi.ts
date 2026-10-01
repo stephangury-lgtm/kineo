@@ -4,6 +4,7 @@ export type StudentProfile = {
   id: string
   first_name: string | null
   study_year: number | null
+  role: 'student' | 'admin'
 }
 
 export async function getCurrentProfile() {
@@ -14,7 +15,7 @@ export async function getCurrentProfile() {
 
   const { data, error } = await supabase
     .from('profiles')
-    .select('id, first_name, study_year')
+    .select('id, first_name, study_year, role')
     .eq('id', user.id)
     .maybeSingle()
 
@@ -36,7 +37,7 @@ export async function updateStudyProfile(params: { firstName?: string; studyYear
     .from('profiles')
     .update(payload)
     .eq('id', user.id)
-    .select('id, first_name, study_year')
+    .select('id, first_name, study_year, role')
     .single()
 
   if (error) throw error

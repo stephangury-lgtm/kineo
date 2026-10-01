@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { getCurrentProfile, updateStudyProfile } from '../services/profileApi'
 
@@ -8,6 +8,7 @@ export default function ProfilePage() {
   const [email, setEmail] = useState('')
   const [firstName, setFirstName] = useState('')
   const [studyYear, setStudyYear] = useState(1)
+  const [role, setRole] = useState<'student' | 'admin'>('student')
   const [loading, setLoading] = useState(true)
   const [busy, setBusy] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
@@ -19,6 +20,7 @@ export default function ProfilePage() {
         setEmail(userResult.data.user?.email ?? '')
         setFirstName(profile?.first_name ?? '')
         setStudyYear(profile?.study_year ?? 1)
+        setRole(profile?.role ?? 'student')
       })
       .catch((err: Error) => setMessage(err.message))
       .finally(() => setLoading(false))
@@ -31,6 +33,7 @@ export default function ProfilePage() {
       const updated = await updateStudyProfile({ firstName, studyYear })
       setFirstName(updated.first_name ?? '')
       setStudyYear(updated.study_year ?? studyYear)
+      setRole(updated.role)
       setMessage('Profil mis à jour ✓')
     } catch (err) {
       setMessage(err instanceof Error ? err.message : 'Impossible de mettre à jour le profil.')
@@ -82,6 +85,18 @@ export default function ProfilePage() {
         <article className="card score-card"><span>🧠 Révision</span><strong>SRS</strong><small>adaptée à ta progression</small></article>
         <article className="card score-card"><span>🔥 Objectif</span><strong>Régulier</strong><small>quelques minutes par jour</small></article>
       </section>
+
+      {role === 'admin' && (
+        <section className="card challenge-card done">
+          <div className="challenge-icon">✓</div>
+          <div className="challenge-copy">
+            <p className="eyebrow">Administration</p>
+            <h2>Revue du contenu pédagogique</h2>
+            <p>Relis les leçons, leurs sources et les questions avant publication.</p>
+          </div>
+          <Link className="secondary-button" to="/admin/review">Ouvrir la revue</Link>
+        </section>
+      )}
 
       <section className="card">
         <div className="section-heading">

@@ -1,5 +1,6 @@
 import { Link, NavLink, Route, Routes } from 'react-router-dom'
 import AuthGate from './auth/AuthGate'
+import ContentReviewPage from './pages/ContentReviewPage'
 import CurriculumPage from './pages/CurriculumPage'
 import DashboardPage from './pages/DashboardPage'
 import GamificationPage from './pages/GamificationPage'
@@ -40,6 +41,7 @@ export default function App() {
             <Route path="/stats" element={<StatisticsPage />} />
             <Route path="/rewards" element={<GamificationPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/admin/review" element={<ContentReviewPage />} />
           </Routes>
         </main>
 
