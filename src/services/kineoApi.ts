@@ -30,6 +30,7 @@ export const getUserStatsV2=(days=30)=>rpc<UserStatsV2>('get_user_stats_v2',{p_d
 export const getGamificationSummaryV2=()=>rpc<GamificationSummaryV2>('get_gamification_summary_v2')
 export const getBadgesV2=()=>rpc<BadgesV2>('get_badges_v2')
 export const startSmartRevisionV2=(questionCount=10)=>rpc<string>('start_smart_revision_v2',{p_question_count:questionCount})
+export const startSubjectRevisionV1=(subjectId:string,questionCount=10)=>rpc<string>('start_subject_revision_v1',{p_subject_id:subjectId,p_question_count:questionCount})
 export const startVisualRevisionV1=(questionCount=10)=>rpc<string>('start_visual_revision_v1',{p_question_count:questionCount})
 export const startWeakRevisionV1=(questionCount=10)=>rpc<string>('start_weak_revision_v1',{p_question_count:questionCount})
 export const startMockExamV1=(questionCount=20)=>rpc<string>('start_mock_exam_v1',{p_question_count:questionCount})
