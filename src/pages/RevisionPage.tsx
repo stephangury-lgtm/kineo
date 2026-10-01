@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import {
   finishDailyChallengeV2,
   finishQuizSessionV2,
@@ -22,6 +22,7 @@ type AnswerResult = {
 }
 
 type ChallengeFinish = { score?: number; xp_earned?: number; bonus_xp?: number; current_streak?: number; new_badges_count?: number }
+type SessionSummary = { answered: number; correct: number; xp: number; score: number; streak?: number; badges?: number; isDaily: boolean; isLesson: boolean }
 const ACTIVE_SMART_SESSION = 'kineo_active_smart_session'
 
 export default function RevisionPage() {
@@ -42,6 +43,10 @@ export default function RevisionPage() {
   const [result, setResult] = useState<AnswerResult | null>(null)
   const [message, setMessage] = useState<string | null>(null)
   const [summary, setSummary] = useState<ChallengeFinish | null>(null)
+  const [sessionSummary, setSessionSummary] = useState<SessionSummary | null>(null)
+  const [answeredCount, setAnsweredCount] = useState(0)
+  const [correctCount, setCorrectCount] = useState(0)
+  const [earnedXp, setEarnedXp] = useState(0)
   const [busy, setBusy] = useState(false)
   const [startedAt, setStartedAt] = useState<number>(Date.now())
 
@@ -111,11 +116,19 @@ export default function RevisionPage() {
     setStartedAt(Date.now())
   }
 
+  function resetSessionStats() {
+    setAnsweredCount(0)
+    setCorrectCount(0)
+    setEarnedXp(0)
+    setSessionSummary(null)
+  }
+
   async function start() {
     if (isLesson && externalSession) return
     setBusy(true)
     setMessage(null)
     setSummary(null)
+    resetSessionStats()
     try {
       if (isDaily) {
         const daily = await startDailyChallengeV2()
@@ -161,12 +174,16 @@ export default function RevisionPage() {
     setBusy(true)
     setMessage(null)
     try {
-      setResult(await submitQuizAnswerV3({
+      const answerResult = await submitQuizAnswerV3({
         sessionId,
         questionId: current.id,
         answer: buildAnswer(),
         responseTimeMs: Date.now() - startedAt,
-      }) as AnswerResult)
+      }) as AnswerResult
+      setResult(answerResult)
+      setAnsweredCount((value) => value + 1)
+      if (answerResult.correct) setCorrectCount((value) => value + 1)
+      if (typeof answerResult.xp_earned === 'number') setEarnedXp((value) => value + answerResult.xp_earned!)
     } catch (err) {
       setMessage(err instanceof Error ? err.message : 'Impossible de valider la réponse.')
     } finally {
@@ -179,18 +196,26 @@ export default function RevisionPage() {
     if (index + 1 >= questions.length) {
       setBusy(true)
       try {
+        let finalXp = earnedXp
+        let finalScore = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0
+        let streak: number | undefined
+        let badges: number | undefined
         if (isDaily) {
           const done = await finishDailyChallengeV2(sessionId) as ChallengeFinish
           setSummary(done)
-          setMessage(`Challenge terminé 🔥 ${done.score ?? 0}% · +${done.xp_earned ?? 0} XP`)
+          finalXp = done.xp_earned ?? finalXp
+          finalScore = done.score ?? finalScore
+          streak = done.current_streak
+          badges = done.new_badges_count
         } else {
           await finishQuizSessionV2(sessionId)
           if (!externalSession) localStorage.removeItem(ACTIVE_SMART_SESSION)
-          setMessage(isLesson ? 'Quiz de leçon terminé 🎉 Ta progression a été mise à jour.' : 'Session terminée 🎉 Ta progression a été mise à jour.')
         }
+        setSessionSummary({ answered: answeredCount, correct: correctCount, xp: finalXp, score: finalScore, streak, badges, isDaily, isLesson })
         setQuestions([])
         setSessionId(null)
         setResult(null)
+        setMessage(null)
       } catch (err) {
         setMessage(err instanceof Error ? err.message : 'Impossible de terminer la session.')
       } finally {
@@ -236,6 +261,38 @@ export default function RevisionPage() {
   }
 
   if (!current) {
+    if (sessionSummary) {
+      const verdict = sessionSummary.score >= 80 ? 'Très solide 👏' : sessionSummary.score >= 60 ? 'Bonne progression 💪' : 'Encore un tour et ça rentre 🧠'
+      return <div className="stack">
+        <section className="hero-card">
+          <div className="hero-copy">
+            <p className="eyebrow light">Session terminée</p>
+            <h1>{verdict}</h1>
+            <p>{sessionSummary.isDaily ? 'Challenge du jour validé.' : sessionSummary.isLesson ? 'Ta leçon vient d’être consolidée.' : 'Ta progression et tes prochaines révisions ont été mises à jour.'}</p>
+            <Link className="primary-button hero-action" to="/">Retour à l’accueil</Link>
+          </div>
+          <div className="hero-orbit" aria-hidden="true">🏁</div>
+        </section>
+
+        <section className="stats-grid">
+          <article className="card stat"><span>Score</span><strong>{sessionSummary.score}%</strong></article>
+          <article className="card stat"><span>Bonnes réponses</span><strong>{sessionSummary.correct}/{sessionSummary.answered}</strong></article>
+          <article className="card stat"><span>XP gagnés</span><strong>+{sessionSummary.xp}</strong></article>
+          <article className="card stat"><span>Objectif</span><strong>{sessionSummary.score >= 90 ? 'Solide' : '90%'}</strong></article>
+        </section>
+
+        {(sessionSummary.streak !== undefined || (sessionSummary.badges ?? 0) > 0) && <section className="card centered">
+          {sessionSummary.streak !== undefined && <p>🔥 Série actuelle : <strong>{sessionSummary.streak} jour{sessionSummary.streak > 1 ? 's' : ''}</strong></p>}
+          {(sessionSummary.badges ?? 0) > 0 && <p>🏆 Nouveau badge débloqué !</p>}
+        </section>}
+
+        <section className="quick-grid">
+          {!sessionSummary.isLesson && <button className="quick-card" type="button" onClick={start}><span>↻</span><strong>Nouvelle session</strong><small>Continuer à progresser</small></button>}
+          <Link className="quick-card" to="/stats"><span>↗</span><strong>Voir mes stats</strong><small>Suivre ma progression</small></Link>
+        </section>
+      </div>
+    }
+
     const eyebrow = isDaily ? 'Challenge du jour' : isLesson ? 'Quiz de leçon' : 'Révision intelligente'
     const title = isDaily ? '10 questions pour garder ta flamme 🔥' : isLesson ? 'Quiz ciblé sur cette leçon' : '10 questions adaptées à ta progression'
     const description = isDaily ? 'Termine le challenge du jour pour gagner le bonus quotidien.' : isLesson ? 'Les questions sont choisies uniquement dans la leçon sélectionnée.' : 'Le moteur choisit les révisions dues, erreurs récentes et notions fragiles.'
@@ -254,7 +311,7 @@ export default function RevisionPage() {
       </section>
 
       <section className="quick-grid">
-        <article className="quick-card"><span>10</span><strong>Questions</strong><small>Session courte</small></article>
+        <article className="quick-card"><span>{isLesson ? '🎯' : '10'}</span><strong>{isLesson ? 'Quiz ciblé' : 'Questions'}</strong><small>{isLesson ? 'Selon le contenu disponible' : 'Session courte'}</small></article>
         <article className="quick-card"><span>⚡</span><strong>XP</strong><small>Progression immédiate</small></article>
       </section>
 
@@ -284,7 +341,7 @@ export default function RevisionPage() {
           <strong>{result.correct ? 'Bonne réponse ✅' : 'À revoir 💡'}</strong>
           {typeof result.xp_earned === 'number' && result.xp_earned > 0 && <span>+{result.xp_earned} XP</span>}
           {result.correction?.explanation && <p>{result.correction.explanation}</p>}
-          <button className="primary-button wide" onClick={next} disabled={busy}>{index + 1 >= questions.length ? (isDaily ? 'Terminer le challenge' : 'Terminer la session') : 'Question suivante'}</button>
+          <button className="primary-button wide" onClick={next} disabled={busy}>{index + 1 >= questions.length ? (isDaily ? 'Voir mon résultat' : 'Voir mon bilan') : 'Question suivante'}</button>
         </div>}
       {message && <p className="feedback">{message}</p>}
     </section>
