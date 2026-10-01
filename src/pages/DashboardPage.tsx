@@ -1,21 +1,22 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getBadgesV2, getDashboardV2, getGamificationSummaryV2, type BadgesV2, type DashboardV2, type GamificationSummaryV2 } from '../services/kineoApi'
+import { getBadgesV2, getDashboardV2, getGamificationSummaryV2, getRevisionModeAvailabilityV1, type BadgesV2, type DashboardV2, type GamificationSummaryV2, type RevisionModeAvailability } from '../services/kineoApi'
 
 export default function DashboardPage() {
   const [dashboard, setDashboard] = useState<DashboardV2 | null>(null)
   const [game, setGame] = useState<GamificationSummaryV2 | null>(null)
   const [badges, setBadges] = useState<BadgesV2 | null>(null)
+  const [modes, setModes] = useState<RevisionModeAvailability | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    Promise.all([getDashboardV2(), getGamificationSummaryV2(), getBadgesV2()])
-      .then(([dashboardData, gameData, badgeData]) => { setDashboard(dashboardData); setGame(gameData); setBadges(badgeData) })
+    Promise.all([getDashboardV2(), getGamificationSummaryV2(), getBadgesV2(), getRevisionModeAvailabilityV1()])
+      .then(([dashboardData, gameData, badgeData, modeData]) => { setDashboard(dashboardData); setGame(gameData); setBadges(badgeData); setModes(modeData) })
       .catch((err: Error) => setError(err.message))
   }, [])
 
   if (error) return <section className="card"><h1>Progression indisponible</h1><p>{error}</p></section>
-  if (!dashboard || !game || !badges) return <section className="card skeleton-card"><p>Chargement de ta progression…</p></section>
+  if (!dashboard || !game || !badges || !modes) return <section className="card skeleton-card"><p>Chargement de ta progression…</p></section>
 
   const xp = game.xp_total ?? dashboard.profile?.xp ?? 0
   const level = game.level.number ?? dashboard.profile?.level ?? 1
@@ -68,7 +69,14 @@ export default function DashboardPage() {
         <div className="progress-copy"><strong>{dashboard.mastery?.mastered ?? 0} notions maîtrisées</strong><span>{dashboard.mastery?.fragile ?? 0} fragiles · {due} à revoir</span></div>
       </section>
 
-      <section className="quick-grid"><Link className="quick-card" to="/parcours"><span>▦</span><strong>Parcours</strong><small>Choisir une leçon</small></Link><Link className="quick-card" to="/mes-erreurs"><span>🎯</span><strong>Mes points faibles</strong><small>Revoir mes erreurs</small></Link><Link className="quick-card" to="/anatomie"><span>🦴</span><strong>Anatomie visuelle</strong><small>Repérer sur les schémas</small></Link><Link className="quick-card" to="/examen"><span>📝</span><strong>Examen blanc</strong><small>20 questions équilibrées</small></Link><Link className="quick-card" to="/amis"><span>⚔️</span><strong>Amis & défis</strong><small>Défier un camarade</small></Link><Link className="quick-card" to="/stats"><span>↗</span><strong>Statistiques</strong><small>Voir mes progrès</small></Link></section>
+      <section className="quick-grid">
+        <Link className="quick-card" to="/parcours"><span>▦</span><strong>Parcours</strong><small>Choisir une leçon</small></Link>
+        {modes.can_weak ? <Link className="quick-card" to="/mes-erreurs"><span>🎯</span><strong>Mes points faibles</strong><small>{modes.weak_questions} notion{modes.weak_questions > 1 ? 's' : ''} à retravailler</small></Link> : <div className="quick-card"><span>✅</span><strong>Points faibles</strong><small>Rien d’urgent à retravailler</small></div>}
+        {modes.can_visual ? <Link className="quick-card" to="/anatomie"><span>🦴</span><strong>Anatomie visuelle</strong><small>{modes.visual_questions} exercices disponibles</small></Link> : <div className="quick-card"><span>🦴</span><strong>Anatomie visuelle</strong><small>Contenu à venir pour ton année</small></div>}
+        {modes.can_exam && <Link className="quick-card" to="/examen"><span>📝</span><strong>Examen blanc</strong><small>20 questions équilibrées</small></Link>}
+        <Link className="quick-card" to="/amis"><span>⚔️</span><strong>Amis & défis</strong><small>Défier un camarade</small></Link>
+        <Link className="quick-card" to="/stats"><span>↗</span><strong>Statistiques</strong><small>Voir mes progrès</small></Link>
+      </section>
     </div>
   )
 }

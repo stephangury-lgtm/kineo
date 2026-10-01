@@ -11,6 +11,15 @@ export type DashboardV2 = {
   [key: string]: unknown
 }
 
+export type RevisionModeAvailability = {
+  total_questions: number
+  visual_questions: number
+  weak_questions: number
+  can_visual: boolean
+  can_weak: boolean
+  can_exam: boolean
+}
+
 export type QuizOptionV3 = { id: string; option_text: string; display_order: number }
 export type QuizQuestionV3 = {
   id: string
@@ -100,6 +109,12 @@ export async function getDashboardV2() {
   const { data, error } = await supabase.rpc('get_user_dashboard_v2')
   if (error) throw error
   return data as DashboardV2
+}
+
+export async function getRevisionModeAvailabilityV1() {
+  const { data, error } = await supabase.rpc('get_revision_mode_availability_v1')
+  if (error) throw error
+  return data as RevisionModeAvailability
 }
 
 export async function getUserStatsV2(days = 30) {
