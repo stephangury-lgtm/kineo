@@ -2,7 +2,6 @@ import { NavLink, Route, Routes } from 'react-router-dom'
 import AuthGate from './auth/AuthGate'
 import HeaderProfileButton from './components/HeaderProfileButton'
 import NotificationBell from './components/NotificationBell'
-import OfflineStatus from './components/OfflineStatus'
 import CurriculumPage from './pages/CurriculumPage'
 import DashboardPage from './pages/DashboardPage'
 import FriendsPage from './pages/FriendsPage'
@@ -12,6 +11,7 @@ import NotificationsPage from './pages/NotificationsPage'
 import ProfilePage from './pages/ProfilePage'
 import RevisionPage from './pages/RevisionPage'
 import StatisticsPage from './pages/StatisticsPage'
+import VisualRevisionPage from './pages/VisualRevisionPage'
 
 const navItems = [
   { to: '/', label: 'Accueil', icon: '⌂', end: true },
@@ -25,7 +25,6 @@ export default function App() {
   return (
     <AuthGate>
       <div className="app-shell">
-        <OfflineStatus />
         <header className="topbar">
           <div className="brand-lockup">
             <span className="brand-mark">K</span>
@@ -43,6 +42,7 @@ export default function App() {
             <Route path="/parcours" element={<CurriculumPage />} />
             <Route path="/lesson/:lessonId" element={<LessonPage />} />
             <Route path="/revision" element={<RevisionPage />} />
+            <Route path="/anatomie" element={<VisualRevisionPage />} />
             <Route path="/stats" element={<StatisticsPage />} />
             <Route path="/rewards" element={<GamificationPage />} />
             <Route path="/profil" element={<ProfilePage />} />

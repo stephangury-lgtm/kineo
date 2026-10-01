@@ -126,6 +126,12 @@ export async function startSmartRevisionV2(questionCount = 10) {
   return data as string
 }
 
+export async function startVisualRevisionV1(questionCount = 10) {
+  const { data, error } = await supabase.rpc('start_visual_revision_v1', { p_question_count: questionCount })
+  if (error) throw error
+  return data as string
+}
+
 export async function startDailyChallengeV2() {
   const { data, error } = await supabase.rpc('start_daily_challenge_v2', { p_challenge_date: new Date().toISOString().slice(0, 10) })
   if (error) throw error
