@@ -10,6 +10,9 @@ export type FriendChallenge = {
   challenged_score: number | null
   created_at: string
   completed_at: string | null
+  my_session_id: string | null
+  has_played: boolean
+  opponent_has_played: boolean
   opponent: {
     id: string
     username: string | null
@@ -21,7 +24,7 @@ export type FriendChallenge = {
 }
 
 export async function getFriendChallenges() {
-  const { data, error } = await supabase.rpc('get_friend_challenges_v1')
+  const { data, error } = await supabase.rpc('get_friend_challenges_v2')
   if (error) throw error
   return (data ?? []) as FriendChallenge[]
 }
