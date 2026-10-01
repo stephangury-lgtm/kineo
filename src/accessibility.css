@@ -1,0 +1,8 @@
+button,a,input,select,textarea{outline-offset:3px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid rgba(15,118,110,.35);box-shadow:0 0 0 3px rgba(255,255,255,.95)}
+.icon-button,.header-avatar-button{min-width:44px;min-height:44px}
+.compact-button{min-height:44px}
+.text-link{min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding-inline:6px}
+.quick-card,.bottom-nav a{-webkit-tap-highlight-color:transparent}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.answer:not(:disabled):hover{transform:none}}
+@media (pointer:coarse){button,a{touch-action:manipulation}.bottom-nav a{min-height:52px}.person-row .text-link{min-height:44px}}

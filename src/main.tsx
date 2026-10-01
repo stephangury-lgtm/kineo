@@ -6,6 +6,7 @@ import AppErrorBoundary from './components/AppErrorBoundary'
 import './styles.css'
 import './social.css'
 import './visual-quiz.css'
+import './accessibility.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
