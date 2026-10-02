@@ -1,4 +1,4 @@
-const CACHE = 'kineo-shell-v8'
+const CACHE = 'kineo-shell-v9'
 const SHELL = [
   '/',
   '/manifest.webmanifest',
