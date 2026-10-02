@@ -1,8 +1,13 @@
-const CACHE = 'kineo-shell-v7'
+const CACHE = 'kineo-shell-v8'
 const SHELL = [
   '/',
   '/manifest.webmanifest',
   '/kineo-icon.svg',
+  '/icons/kineo-192.png',
+  '/icons/kineo-512.png',
+  '/icons/kineo-maskable-512.png',
+  '/icons/apple-touch-icon-180.png',
+  '/icons/favicon-32.png',
 ]
 
 self.addEventListener('install', (event) => {

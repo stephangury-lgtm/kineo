@@ -1,5 +1,5 @@
 Kineo deployment trigger
 Date: 2026-10-02
 Branch: main
-Release: KINEO-V2-2026.10.02-D
-Includes latest revision, review, library, exam, social, auth and mobile PWA hardening updates.
+Release: KINEO-V2-2026.10.02-E
+Includes finalized Android/iOS PWA icon assets and service worker v8.
