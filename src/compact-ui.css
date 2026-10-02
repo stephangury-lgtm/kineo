@@ -1,0 +1,56 @@
+/* Compact UI normalization: chips, badges and small actions */
+.profile-chip,.pending-chip,.admin-ok,.admin-alert,.feedback-badge,.review-type,.visual-review-targets span,.app-version-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  min-height:28px;
+  max-width:100%;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:.75rem;
+  line-height:1;
+  font-weight:850;
+  letter-spacing:0;
+  white-space:nowrap;
+  vertical-align:middle;
+}
+.profile-chip,.pending-chip,.admin-ok,.admin-alert,.feedback-badge,.review-type{overflow:hidden;text-overflow:ellipsis}
+.compact-button,.duel-button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:40px;
+  max-width:100%;
+  padding:9px 13px;
+  border-radius:12px;
+  font-size:.79rem;
+  line-height:1.15;
+  font-weight:850;
+  text-align:center;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+.admin-filters button{
+  min-height:38px;
+  padding:8px 12px;
+  font-size:.78rem;
+  line-height:1.15;
+  white-space:nowrap;
+}
+.review-head>div,.admin-feedback-head>div{min-width:0}
+.review-head strong,.admin-feedback-head strong{min-width:0;overflow-wrap:anywhere}
+.visual-review-targets span{justify-content:flex-start;white-space:normal;line-height:1.25;border-radius:12px}
+.visual-review-targets strong{flex:0 0 auto}
+.friend-actions{align-items:stretch;flex-wrap:wrap}
+.friend-actions>*{min-width:0}
+@media(max-width:520px){
+  .profile-chip,.pending-chip,.admin-ok,.admin-alert,.feedback-badge,.review-type{font-size:.72rem;min-height:26px;padding:5px 9px}
+  .compact-button,.duel-button{width:100%;min-height:42px;font-size:.8rem;padding:10px 12px}
+  .admin-filters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .admin-filters button{width:100%;white-space:normal;min-height:42px}
+  .section-heading{align-items:flex-start}
+  .section-heading>.admin-ok,.section-heading>.admin-alert{flex:0 0 auto;max-width:46%;white-space:normal;text-align:center;line-height:1.15}
+  .review-head>div{min-width:0;max-width:100%}
+  .review-head{align-items:flex-start}
+}

@@ -7,6 +7,7 @@ import './styles.css'
 import './social.css'
 import './visual-quiz.css'
 import './accessibility.css'
+import './compact-ui.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
