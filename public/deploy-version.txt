@@ -1,4 +1,5 @@
 Kineo deployment trigger
-Date: 2026-10-01
+Date: 2026-10-02
 Branch: main
-Includes latest revision, review, library, exam, social and PWA updates.
+Release: KINEO-V2-2026.10.02-D
+Includes latest revision, review, library, exam, social, auth and mobile PWA hardening updates.
