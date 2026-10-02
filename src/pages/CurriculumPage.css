@@ -1,0 +1,18 @@
+.curriculum-page{display:grid;gap:16px}
+.curriculum-page .stats-hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;padding:28px;border-radius:28px;background:linear-gradient(145deg,#0b5f59,#0f766e 58%,#2dd4bf 140%);color:#fff;box-shadow:0 20px 44px rgba(15,118,110,.18)}
+.curriculum-page .stats-hero h1{margin:8px 0 12px;font-size:clamp(2rem,5vw,3.35rem);line-height:1.04;max-width:900px}
+.curriculum-page .stats-hero p:last-child{margin:0;max-width:900px;color:#e4fffb;font-size:1rem;line-height:1.55}
+.curriculum-page .stats-hero-score{min-width:130px;display:grid;gap:5px;justify-items:end;align-self:center;padding:14px 16px;border:1px solid rgba(255,255,255,.25);border-radius:18px;background:rgba(255,255,255,.11)}
+.curriculum-page .stats-hero-score span{font-size:.74rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:#c9fff5}
+.curriculum-page .stats-hero-score strong{font-size:1.65rem;line-height:1;color:#fff}
+.curriculum-page .stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.curriculum-page .score-card{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:7px;min-height:150px;padding:20px}
+.curriculum-page .score-card>span,.curriculum-page .score-card>strong,.curriculum-page .score-card>small{display:block;width:100%}
+.curriculum-page .score-card>span{font-size:1rem;font-weight:800;line-height:1.25}
+.curriculum-page .score-card>strong{font-size:2rem;line-height:1.05;color:var(--brand);letter-spacing:-.035em}
+.curriculum-page .score-card>small{margin-top:auto;color:var(--muted);font-size:.82rem;line-height:1.35}
+.curriculum-page .section-heading{align-items:center}
+.curriculum-page .subject-row>div{min-width:0;display:grid;gap:4px}
+.curriculum-page .subject-row strong,.curriculum-page .subject-row span{line-height:1.35}
+@media(max-width:900px){.curriculum-page .stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.curriculum-page .stats-hero{grid-template-columns:1fr}.curriculum-page .stats-hero-score{justify-items:start;width:max-content}}
+@media(max-width:520px){.curriculum-page{gap:12px}.curriculum-page .stats-hero{padding:22px 18px}.curriculum-page .stats-hero h1{font-size:2rem}.curriculum-page .stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.curriculum-page .score-card{min-height:132px;padding:15px;gap:5px}.curriculum-page .score-card>span{font-size:.86rem}.curriculum-page .score-card>strong{font-size:1.65rem}.curriculum-page .score-card>small{font-size:.75rem}}
