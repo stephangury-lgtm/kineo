@@ -1,4 +1,4 @@
-const CACHE = 'kineo-shell-v6'
+const CACHE = 'kineo-shell-v7'
 const SHELL = [
   '/',
   '/manifest.webmanifest',
@@ -30,6 +30,18 @@ self.addEventListener('fetch', (event) => {
           return response
         })
         .catch(() => caches.match(event.request).then((cached) => cached || caches.match('/'))),
+    )
+    return
+  }
+
+  if (url.pathname === '/manifest.webmanifest' || url.pathname === '/version.json') {
+    event.respondWith(
+      fetch(event.request, { cache: 'no-store' })
+        .then((response) => {
+          if (response.ok) caches.open(CACHE).then((cache) => cache.put(event.request, response.clone()))
+          return response
+        })
+        .catch(() => caches.match(event.request)),
     )
     return
   }
