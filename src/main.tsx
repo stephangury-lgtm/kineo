@@ -8,6 +8,7 @@ import './social.css'
 import './visual-quiz.css'
 import './accessibility.css'
 import './compact-ui.css'
+import './pwa-mobile.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
