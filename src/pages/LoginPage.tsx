@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { supabase } from '../lib/supabase'
+import './LoginPage.css'
 
 function translateAuthError(error: unknown) {
   const message = error instanceof Error ? error.message.toLowerCase() : ''
