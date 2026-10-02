@@ -7,7 +7,7 @@ function translateAuthError(error: unknown) {
   if (message.includes('invalid login credentials')) return 'E-mail ou mot de passe incorrect.'
   if (message.includes('email not confirmed')) return 'Ton adresse e-mail n’est pas encore confirmée.'
   if (message.includes('user already registered')) return 'Un compte existe déjà avec cette adresse e-mail.'
-  if (message.includes('password should be at least')) return 'Le mot de passe doit contenir au moins 6 caractères.'
+  if (message.includes('password should be at least')) return 'Le mot de passe doit contenir au moins 8 caractères.'
   if (message.includes('rate limit')) return 'Trop de tentatives. Réessaie dans quelques instants.'
   return 'Une erreur est survenue. Réessaie dans un instant.'
 }
@@ -87,7 +87,7 @@ export default function LoginPage() {
         <div className="auth-logo">K</div>
         <p className="eyebrow light">Kineo · Révision kiné</p>
         <h1>Progresse un peu chaque jour.</h1>
-        <p>Des sessions courtes, un parcours K1–K4 et une révision qui s’adapte à tes erreurs.</p>
+        <p>Des sessions courtes, un parcours K2–K5 et une révision qui s’adapte à tes erreurs.</p>
         <div className="auth-pills"><span>🔥 Séries</span><span>🧠 SRS</span><span>🏆 Badges</span></div>
       </section>
 
@@ -118,7 +118,7 @@ export default function LoginPage() {
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => { setPassword(e.target.value); clearFeedback() }}
-                minLength={6}
+                minLength={8}
                 required
                 autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
                 placeholder="••••••••"
