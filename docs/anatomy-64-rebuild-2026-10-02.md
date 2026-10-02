@@ -13,11 +13,15 @@ Date: 2026-10-02
 - 64/64 questions avec page source dans les CM validés
 - 50 QCM visuels, tous avec au moins 3 propositions et exactement 1 bonne réponse
 - 14 exercices d'association
-- 0 ancien SVG parmi les 64 fiches illustrées
+- 0 ancien SVG parmi les 64 fiches illustrées publiées
+- 64 anciens hotspots/labelings SVG retirés de la file de revue et archivés comme legacy
+- 0 question publiée utilisant un ancien asset `/quiz-assets/*.svg` ou un SVG embarqué
 
 ## Principe de reconstruction
 
 Les anciens schémas simplifiés ne sont plus utilisés pour les fiches anatomiques publiées. Les nouvelles fiches reposent sur des visuels anatomiques réalistes de type atlas médical et réutilisent uniquement du contenu déjà publié et sourcé dans les CM IFMK présents dans Kineo.
+
+Les anciennes questions interactives basées sur les SVG simplifiés sont conservées uniquement comme historique archivé et ne doivent pas être remises en publication sans reconstruction complète sur un visuel réaliste.
 
 ## Vues maîtres utilisées
 
@@ -54,3 +58,4 @@ Les anciens schémas simplifiés ne sont plus utilisés pour les fiches anatomiq
 4. Préférer une identification anatomique directe ou un QCM contextuel quand le hotspot n'apporte pas de valeur.
 5. Pour les QCM, conserver une seule bonne réponse.
 6. Les nouveaux visuels doivent rester lisibles sur mobile et correspondre précisément à la structure interrogée.
+7. Les anciens hotspots SVG archivés sont considérés comme legacy et ne doivent pas revenir dans la file de revue standard.
