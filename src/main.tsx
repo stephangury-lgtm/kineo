@@ -20,6 +20,33 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   </React.StrictMode>,
 )
 
+// Friend challenges are score-based duels, not corrective exercises.
+// Once an answer has been submitted (right or wrong), keep the selected state
+// visible briefly, then move on automatically. Wrong answers simply score 0.
+const challengeRoot = document.getElementById('root')
+if (challengeRoot && 'MutationObserver' in window) {
+  let advanceTimer: number | null = null
+  const maybeAdvanceChallenge = () => {
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('mode') !== 'challenge') return
+
+    const resultBox = document.querySelector<HTMLElement>('.quiz-card .result-box')
+    if (!resultBox || resultBox.dataset.challengeAdvance === 'scheduled') return
+    const nextButton = resultBox.querySelector<HTMLButtonElement>('button.primary-button')
+    if (!nextButton || nextButton.disabled) return
+
+    resultBox.dataset.challengeAdvance = 'scheduled'
+    if (advanceTimer !== null) window.clearTimeout(advanceTimer)
+    advanceTimer = window.setTimeout(() => {
+      if (document.contains(nextButton) && !nextButton.disabled) nextButton.click()
+      advanceTimer = null
+    }, 900)
+  }
+
+  const challengeObserver = new MutationObserver(maybeAdvanceChallenge)
+  challengeObserver.observe(challengeRoot, { childList: true, subtree: true })
+}
+
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js').then((registration) => {
