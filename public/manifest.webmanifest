@@ -1,4 +1,5 @@
 {
+  "id": "/",
   "name": "Kineo — Révisions Kiné",
   "short_name": "Kineo",
   "description": "Révision gamifiée pour étudiants en kinésithérapie",
@@ -8,8 +9,10 @@
   "background_color": "#f5f8f6",
   "theme_color": "#0f4c3a",
   "lang": "fr",
+  "dir": "ltr",
   "orientation": "portrait-primary",
   "categories": ["education", "medical"],
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/kineo-icon.svg",
