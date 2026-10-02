@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getCurriculumV2, startLessonQuizV2, type CurriculumYear } from '../services/curriculumApi'
 import { getCurrentProfile } from '../services/profileApi'
+import './CurriculumPage.css'
 
 export default function CurriculumPage() {
   const navigate = useNavigate()
@@ -40,7 +41,7 @@ export default function CurriculumPage() {
   if (error && years.length === 0) return <section className="card"><h1>Parcours indisponible</h1><p>{error}</p></section>
   if (years.length === 0) return <section className="card skeleton-card"><p>Chargement du parcours pédagogique…</p></section>
 
-  return <div className="stack">
+  return <div className="curriculum-page">
     <section className="stats-hero"><div><p className="eyebrow light">Ton parcours Kineo</p><h1>Apprends dans l’ordre, révise au bon moment.</h1><p>Retrouve les contenus publiés de ton année, suis ta maîtrise et lance un quiz ciblé en un geste.</p></div><div className="stats-hero-score"><span>Année</span><strong>{selectedYear === 'all' ? 'K1–K4' : `K${selectedYear}`}</strong></div></section>
     <section className="stats-grid"><article className="card score-card"><span>📚 Matières</span><strong>{totalSubjects}</strong><small>dans la sélection</small></article><article className="card score-card"><span>❓ Questions</span><strong>{totalQuestions}</strong><small>{totalQuestions>0?'validées et jouables':'contenus en préparation'}</small></article><article className="card score-card"><span>🎓 Années</span><strong>{visibleYears.length}</strong><small>{selectedYear === 'all' ? 'parcours complet' : 'année active'}</small></article><article className="card score-card"><span>🧠 Objectif</span><strong>90%</strong><small>maîtrise solide</small></article></section>
     <section className="card"><div className="section-heading"><div><p className="eyebrow">Filtrer</p><h2>Choisis ton année</h2></div></div><label className="text-answer-wrap"><span>Année affichée</span><select className="text-answer" value={selectedYear} onChange={(event) => setSelectedYear(event.target.value === 'all' ? 'all' : Number(event.target.value))}>{years.map((year) => <option key={year.id} value={year.number}>K{year.number} · {year.name}</option>)}<option value="all">Toutes les années</option></select></label>{selectedYear==='all'&&profileYear&&<p className="field-hint">Tu peux consulter K1–K4, mais les quiz restent limités à ton année active K{profileYear}.</p>}</section>
