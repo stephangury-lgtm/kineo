@@ -33,6 +33,14 @@ export default function AuthGate({ children }: Props) {
     }
   }
 
+  async function signOut() {
+    setLoading(true)
+    await supabase.auth.signOut()
+    setProfile(null)
+    setSession(null)
+    setLoading(false)
+  }
+
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => loadProfile(data.session))
 
@@ -61,11 +69,11 @@ export default function AuthGate({ children }: Props) {
   if (!session) return <LoginPage />
 
   if (profileError) {
-    return <main className="auth-shell"><section className="card centered"><h1>Profil indisponible</h1><p>{profileError}</p><button className="primary-button" onClick={() => void loadProfile(session)}>Réessayer</button></section></main>
+    return <main className="auth-shell"><section className="card centered"><h1>Profil indisponible</h1><p>Impossible de charger ton profil Kineo pour le moment.</p><div className="completion-actions"><button className="primary-button" onClick={() => void loadProfile(session)}>Réessayer</button><button className="secondary-button" onClick={() => void signOut()}>Se déconnecter</button></div></section></main>
   }
 
   if (!profile) {
-    return <main className="auth-shell"><section className="card centered"><h1>Profil introuvable</h1><p>Ton compte est connecté mais aucun profil Kineo n’est encore associé.</p></section></main>
+    return <main className="auth-shell"><section className="card centered"><h1>Profil introuvable</h1><p>Ton compte est connecté mais le profil Kineo associé n’a pas pu être chargé.</p><div className="completion-actions"><button className="primary-button" onClick={() => void loadProfile(session)}>Réessayer</button><button className="secondary-button" onClick={() => void signOut()}>Se déconnecter</button></div></section></main>
   }
 
   if (!profile.study_year) {
