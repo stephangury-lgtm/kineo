@@ -1,0 +1,47 @@
+{
+  "generated_at": "2026-10-02",
+  "scope": "published questions with images",
+  "current_published_image_questions": 20,
+  "master_visuals": [
+    "anatomy-cheville-lateral-osseux.webp",
+    "anatomy-cheville-medial-osseux.webp",
+    "anatomy-cheville-ligaments-lateraux.webp",
+    "anatomy-cheville-tendons-mediaux.webp",
+    "anatomy-genou-osseux-anterieur.webp",
+    "anatomy-genou-croises.webp",
+    "anatomy-genou-menisques.webp",
+    "anatomy-genou-quadriceps.webp",
+    "anatomy-hanche-osseuse-anterieure.webp",
+    "anatomy-hanche-osseuse-laterale.webp",
+    "anatomy-hanche-profonde.webp",
+    "anatomy-hanche-sartorius.webp",
+    "anatomy-pied-dorsal.webp",
+    "anatomy-pied-lateral.webp",
+    "anatomy-pied-medial.webp",
+    "anatomy-pied-avant-pied.webp"
+  ],
+  "question_mapping": {
+    "dc098a09-a33a-49ec-bc89-f043c4bae31f": "anatomy-cheville-tendons-mediaux.webp",
+    "e6c2a882-adc6-4a4a-bffd-2da83e89bffc": "anatomy-cheville-tendons-mediaux.webp",
+    "f2f50477-c2d1-4c4b-a3ca-6ce6144a31ec": "anatomy-cheville-ligaments-lateraux.webp",
+    "efdb560f-1459-48fa-8376-e94d10d04511": "anatomy-genou-croises.webp",
+    "8a6d73b8-c8e2-4be0-a711-56e63a75c690": "anatomy-genou-menisques.webp",
+    "3b93e6fb-7504-40fa-a5b2-e167ef8e8186": "anatomy-genou-quadriceps.webp",
+    "2fe396d7-4902-45e2-bd7d-d725391d08c0": "anatomy-hanche-osseuse-anterieure.webp",
+    "768a4dff-693c-480a-b085-ade851be5dab": "anatomy-hanche-profonde.webp",
+    "d47e561e-577c-4346-bd54-6ad6f7a09d32": "anatomy-hanche-profonde.webp",
+    "8d453a09-1c0f-4205-8363-62308852fea9": "anatomy-hanche-sartorius.webp",
+    "dcafe7e7-3354-4f1a-bcf3-5e11cedf7d83": "anatomy-pied-avant-pied.webp",
+    "f7231f36-0a3b-4246-b4cc-5c609da0b0fd": "anatomy-pied-dorsal.webp",
+    "dfb33ec6-6fd5-40cd-8950-64b8f7bf3048": "anatomy-pied-dorsal.webp"
+  },
+  "dedicated_visuals_still_needed": {
+    "7a89e92e-2f4d-4a3c-95f9-bf9c1aa58ea8": "coupe de jambe / loge anterieure",
+    "74a2e9ba-6386-435f-b875-af68cce8bcd9": "ligament pubo-femoral",
+    "75013e10-d904-4627-a623-bfba0d70bf30": "muscles intrinseques de l hallux",
+    "f845b42b-3fc6-49ba-bb25-7efb7a5774bc": "groupes musculaires intrinseques plantaires",
+    "3f5f8a09-e9fb-467c-92bc-2b442ec182ed": "fosse poplitee",
+    "757d2b10-f69c-44d6-9c96-7a1a224f488b": "face posterieure de la patella",
+    "a92cf1d7-1f64-4c01-9c9d-cab93f984ba4": "talus vue superieure"
+  }
+}
