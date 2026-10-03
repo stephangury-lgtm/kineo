@@ -3,6 +3,22 @@ import { Link } from 'react-router-dom'
 import { getUnreadNotificationCount, subscribeToNotificationChanges } from '../services/notificationApi'
 import './NotificationBell.css'
 
+type BadgeNavigator = Navigator & {
+  setAppBadge?: (contents?: number) => Promise<void>
+  clearAppBadge?: () => Promise<void>
+}
+
+function syncAppBadge(count: number) {
+  const badgeNavigator = navigator as BadgeNavigator
+  if (count > 0 && badgeNavigator.setAppBadge) {
+    void badgeNavigator.setAppBadge(count).catch(() => undefined)
+    return
+  }
+  if (count === 0 && badgeNavigator.clearAppBadge) {
+    void badgeNavigator.clearAppBadge().catch(() => undefined)
+  }
+}
+
 export default function NotificationBell() {
   const [count, setCount] = useState(0)
 
@@ -10,7 +26,11 @@ export default function NotificationBell() {
     let active = true
     const refresh = () => {
       void getUnreadNotificationCount()
-        .then((value) => { if (active) setCount(value) })
+        .then((value) => {
+          if (!active) return
+          setCount(value)
+          syncAppBadge(value)
+        })
         .catch(() => undefined)
     }
 
@@ -21,12 +41,14 @@ export default function NotificationBell() {
     })
     window.addEventListener('kineo-notifications-updated', refresh)
     window.addEventListener('focus', refresh)
+    document.addEventListener('visibilitychange', refresh)
 
     return () => {
       active = false
       unsubscribeRealtime()
       window.removeEventListener('kineo-notifications-updated', refresh)
       window.removeEventListener('focus', refresh)
+      document.removeEventListener('visibilitychange', refresh)
     }
   }, [])
 
