@@ -28,6 +28,31 @@ export type ProgramCatalogTopic={
  translation_mode:'none'|'vocabulary'|'bilingual'
 }
 
+export type CurriculumLesson={
+ id:string
+ topic_id:string
+ title:string
+ summary:string|null
+ content:string
+ key_points:unknown
+ source_files:unknown
+ display_order:number
+ validation_status:string
+ is_published:boolean
+}
+
+export type CurriculumQuizOption={text:string;correct:boolean}
+export type CurriculumQuizQuestion={
+ id:string
+ topic_id:string
+ question_text:string
+ explanation:string|null
+ options:CurriculumQuizOption[]
+ difficulty:number
+ source_label:string|null
+ display_order:number
+}
+
 export async function getProgramUnits(programId:ProgramId,levelId?:string){
  let query=supabase.from('curriculum_units').select('*').eq('program_id',programId).order('display_order',{ascending:true})
  if(levelId) query=query.eq('academic_level_id',levelId)
@@ -40,6 +65,24 @@ export async function getUnitTopics(unitId:string){
  const {data,error}=await supabase.from('curriculum_topics').select('*').eq('unit_id',unitId).order('display_order',{ascending:true})
  if(error) throw error
  return (data??[]) as ProgramCatalogTopic[]
+}
+
+export async function getTopic(topicId:string){
+ const {data,error}=await supabase.from('curriculum_topics').select('*').eq('id',topicId).single()
+ if(error) throw error
+ return data as ProgramCatalogTopic
+}
+
+export async function getTopicLessons(topicId:string){
+ const {data,error}=await supabase.from('curriculum_lessons').select('*').eq('topic_id',topicId).eq('is_published',true).order('display_order',{ascending:true})
+ if(error) throw error
+ return (data??[]) as CurriculumLesson[]
+}
+
+export async function getTopicQuiz(topicId:string){
+ const {data,error}=await supabase.from('curriculum_quiz_questions').select('*').eq('topic_id',topicId).eq('is_published',true).order('display_order',{ascending:true})
+ if(error) throw error
+ return (data??[]) as CurriculumQuizQuestion[]
 }
 
 export async function getAcademicLevelId(programId:ProgramId,code:string){
