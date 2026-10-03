@@ -30,7 +30,7 @@ export default function CurriculumTopicPage(){
  },0),[quiz,answers,checked])
  const checkedCount=Object.keys(checked).filter(id=>checked[id]).length
 
- if(loading)return <div className="card"><p>Chargement du cours…</p></div>
+ if(loading)return <div className="card"><p>Chargement de la fiche…</p></div>
  if(error||!topic)return <div className="card"><p>{error??'Chapitre introuvable.'}</p><Link className="primary-button" to="/parcours">Retour au parcours</Link></div>
 
  return <div className="stack curriculum-learning-page">
@@ -39,11 +39,12 @@ export default function CurriculumTopicPage(){
    <p className="eyebrow">Chapitre IFSI</p>
    <h1>{topic.name}</h1>
    {topic.description&&<p>{topic.description}</p>}
+   <div className="curriculum-learning-actions"><a className="secondary-button" href="#fiche">📖 Lire la fiche</a><a className="primary-button" href="#qcm">✅ Faire le QCM</a></div>
   </section>
 
-  <section className="card">
-   <div className="section-heading"><div><p className="eyebrow">Cours</p><h2>Fiche de révision</h2></div><span className="program-status live">{lessons.length} fiche{lessons.length>1?'s':''}</span></div>
-   {lessons.length===0?<p>Aucune fiche publiée pour ce chapitre.</p>:lessons.map(lesson=><article className="curriculum-lesson" key={lesson.id}>
+  <section className="card" id="fiche">
+   <div className="section-heading"><div><p className="eyebrow">Fiche de révision</p><h2>Comprendre et retenir l’essentiel</h2></div><span className="program-status live">{lessons.length} fiche{lessons.length>1?'s':''}</span></div>
+   {lessons.length===0?<div className="admin-empty"><span>📚</span><div><strong>Fiche en attente de contenu.</strong><p>Le chapitre est identifié mais aucun support exploitable n’a encore été publié pour cette UE.</p></div></div>:lessons.map(lesson=><article className="curriculum-lesson" key={lesson.id}>
     <h3>{lesson.title}</h3>
     {lesson.summary&&<p className="curriculum-summary">{lesson.summary}</p>}
     <div className="curriculum-course-content">{lesson.content.split(/\n{2,}/).map((part,i)=><p key={i}>{part}</p>)}</div>
@@ -51,9 +52,9 @@ export default function CurriculumTopicPage(){
    </article>)}
   </section>
 
-  <section className="card">
-   <div className="section-heading"><div><p className="eyebrow">QCM</p><h2>Teste tes acquis</h2></div>{quiz.length>0&&<span className="program-status foundation">{checkedCount}/{quiz.length} répondu{quiz.length>1?'s':''}</span>}</div>
-   {quiz.length===0?<p>Le QCM de ce chapitre n’est pas encore publié.</p>:<div className="curriculum-quiz-list">{quiz.map((q,index)=>{
+  <section className="card" id="qcm">
+   <div className="section-heading"><div><p className="eyebrow">Révision active</p><h2>Teste tes acquis</h2></div>{quiz.length>0&&<span className="program-status foundation">{checkedCount}/{quiz.length} répondu{quiz.length>1?'s':''}</span>}</div>
+   {quiz.length===0?<div className="admin-empty"><span>❓</span><div><strong>QCM en préparation.</strong><p>La fiche est consultable mais les questions de ce chapitre ne sont pas encore publiées.</p></div></div>:<div className="curriculum-quiz-list">{quiz.map((q,index)=>{
     const selected=answers[q.id]
     const isChecked=!!checked[q.id]
     const correct=q.options.find((o:CurriculumQuizOption)=>o.correct)?.text
