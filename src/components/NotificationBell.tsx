@@ -53,9 +53,9 @@ export default function NotificationBell() {
   }, [])
 
   return (
-    <Link className="notification-bell" to="/notifications" aria-label={count > 0 ? `${count} notification${count > 1 ? 's' : ''} non lue${count > 1 ? 's' : ''}` : 'Notifications'}>
+    <Link className={`notification-bell${count > 0 ? ' has-unread' : ''}`} to="/notifications" aria-label={count > 0 ? `${count} notification${count > 1 ? 's' : ''} non lue${count > 1 ? 's' : ''}` : 'Notifications'} title={count > 0 ? `${count} notification${count > 1 ? 's' : ''} non lue${count > 1 ? 's' : ''}` : 'Notifications'}>
       <span aria-hidden="true">🔔</span>
-      {count > 0 && <strong>{count > 9 ? '9+' : count}</strong>}
+      {count > 0 && <strong aria-live="polite">{count > 9 ? '9+' : count}</strong>}
     </Link>
   )
 }
