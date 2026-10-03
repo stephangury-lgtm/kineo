@@ -8,12 +8,13 @@ function iconFor(type: string) {
   if (type.includes('friend')) return '👥'
   if (type.includes('badge')) return '🏅'
   if (type.includes('streak')) return '🔥'
+  if (type.includes('level')) return '🎉'
   return '🔔'
 }
 
 function destination(notification: KineoNotification) {
   if (notification.type.includes('challenge') || notification.type.includes('friend')) return '/amis'
-  if (notification.type.includes('badge')) return '/rewards'
+  if (notification.type.includes('badge') || notification.type.includes('streak') || notification.type.includes('level')) return '/rewards'
   return '/'
 }
 
@@ -76,7 +77,7 @@ export default function NotificationsPage() {
   return (
     <div className="stack notification-page">
       <section className="hero-card notification-hero">
-        <div className="hero-copy"><span className="hero-kicker">Rester dans le rythme</span><h1>Notifications 🔔</h1><p>Retrouve tes défis, demandes d’amis et récompenses au même endroit.</p></div>
+        <div className="hero-copy"><span className="hero-kicker">Rester dans le rythme</span><h1>Notifications 🔔</h1><p>Retrouve tes défis, demandes d’amis, badges, séries et passages de niveau au même endroit.</p></div>
         <div className="notification-counter"><strong>{unread}</strong><span>non lue{unread > 1 ? 's' : ''}</span></div>
       </section>
 
