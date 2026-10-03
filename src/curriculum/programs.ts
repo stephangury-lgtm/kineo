@@ -19,10 +19,10 @@ export type Program={
 
 export const PROGRAM_STORAGE_KEY='healthapp_program'
 
-const yearLevels=(prefix:string,count:number,language:string,secondaryLanguage?:string):ProgramLevel[]=>Array.from({length:count},(_,index)=>({
- id:`${prefix}-${index+1}`,
- label:`${index+1}${index===0?'re':'e'} année`,
- shortLabel:`${prefix.toUpperCase()}${index+1}`,
+const numberedYearLevels=(prefix:string,numbers:number[],language:string,secondaryLanguage?:string):ProgramLevel[]=>numbers.map((year,index)=>({
+ id:`${prefix}-${year}`,
+ label:`${year}${year===1?'re':'e'} année`,
+ shortLabel:`${prefix.toUpperCase()}${year}`,
  order:index+1,
  kind:'year',
  language,
@@ -41,13 +41,13 @@ const semesterLevels=(count:number,language:string):ProgramLevel[]=>Array.from({
 export const programs:Program[]=[
  {
   id:'kineo-fr',name:'Kineo France',shortName:'Kineo',country:'France',flag:'🇫🇷',
-  subtitle:'Kinésithérapie · K1 à K4',accent:'K',status:'live',levelKind:'year',primaryLanguage:'fr',
-  levels:yearLevels('k',4,'fr')
+  subtitle:'Kinésithérapie · K2 à K5',accent:'K',status:'live',levelKind:'year',primaryLanguage:'fr',
+  levels:numberedYearLevels('k',[2,3,4,5],'fr')
  },
  {
   id:'kineo-es',name:'Kineo España',shortName:'Kineo España',country:'Espagne',flag:'🇪🇸',
   subtitle:'Fisioterapia · 4 años · FR/ES',accent:'E',status:'foundation',levelKind:'year',primaryLanguage:'es',secondaryLanguage:'fr',
-  levels:yearLevels('es',4,'es','fr')
+  levels:numberedYearLevels('es',[1,2,3,4],'es','fr')
  },
  {
   id:'ifsi-fr',name:'IFSI',shortName:'IFSI',country:'France',flag:'🩺',
