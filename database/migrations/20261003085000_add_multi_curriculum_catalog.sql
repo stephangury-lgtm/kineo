@@ -96,10 +96,10 @@ on conflict (id) do update set
 
 insert into public.academic_levels (program_id,code,label,level_number,display_order,language,secondary_language)
 values
-  ('kineo-fr','K1','K1',1,1,'fr',null),
-  ('kineo-fr','K2','K2',2,2,'fr',null),
-  ('kineo-fr','K3','K3',3,3,'fr',null),
-  ('kineo-fr','K4','K4',4,4,'fr',null),
+  ('kineo-fr','K2','K2',2,1,'fr',null),
+  ('kineo-fr','K3','K3',3,2,'fr',null),
+  ('kineo-fr','K4','K4',4,3,'fr',null),
+  ('kineo-fr','K5','K5',5,4,'fr',null),
   ('kineo-es','ES1','1re année',1,1,'es','fr'),
   ('kineo-es','ES2','2e année',2,2,'es','fr'),
   ('kineo-es','ES3','3e année',3,3,'es','fr'),
