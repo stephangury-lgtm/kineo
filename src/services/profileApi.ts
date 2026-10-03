@@ -6,6 +6,7 @@ export async function getCurrentProfile(){const{data:userData,error:userError}=a
 
 export async function updateStudyProfile(params:{firstName?:string;username?:string;studyYear:number}){
  const username=params.username?.trim()
+ if(params.studyYear<2||params.studyYear>5)throw new Error('Choisis une année comprise entre K2 et K5.')
  if(username&&!/^[a-zA-Z0-9._-]{3,24}$/.test(username))throw new Error('Le pseudo doit contenir 3 à 24 caractères : lettres, chiffres, point, tiret ou underscore.')
  const{error}=await supabase.rpc('update_study_profile_v1',{p_first_name:params.firstName?.trim()??'',p_username:username??'',p_study_year:params.studyYear})
  if(error)throw error
