@@ -1,6 +1,23 @@
 -- A student account belongs to one curriculum. Existing historical secondary rows
 -- are kept for rollback/audit, but authenticated users cannot activate or change them.
 
+-- Backfill legacy Kineo accounts that predate profile_programs so existing users
+-- keep their current K2-K5 path and are not sent back through onboarding.
+insert into public.profile_programs(user_id,program_id,academic_level_id,is_primary,updated_at)
+select p.id,'kineo-fr',al.id,true,now()
+from public.profiles p
+join public.academic_levels al
+  on al.program_id='kineo-fr'
+ and al.code=('K' || greatest(2,least(5,coalesce(p.study_year,2)))::text)
+where not exists (
+  select 1 from public.profile_programs pp
+  where pp.user_id=p.id and pp.is_primary=true
+)
+and not exists (
+  select 1 from public.profile_programs pp
+  where pp.user_id=p.id and pp.program_id='kineo-fr'
+);
+
 create or replace function public.lock_student_curriculum_assignment()
 returns trigger
 language plpgsql
