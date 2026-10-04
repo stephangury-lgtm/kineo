@@ -1,0 +1,100 @@
+{
+  "generated_at": "2026-10-04",
+  "policy": {
+    "preferred_licenses": ["Public Domain", "CC0", "CC BY", "CC BY-SA"],
+    "avoid": ["NC", "ND", "unclear license", "unreviewed license when a reviewed alternative exists"],
+    "requirements": ["source URL", "author", "license", "attribution", "modification note", "question mapping"]
+  },
+  "hip_candidates": [
+    {
+      "family": "hip_bones_acetabulum",
+      "title": "Hip anatomy.svg",
+      "author": "InjuryMap",
+      "source": "https://commons.wikimedia.org/wiki/File:Hip_anatomy.svg",
+      "license": "CC BY-SA 4.0",
+      "status": "approved_candidate",
+      "notes": "Medical illustration of human hip bones. Good candidate for os coxal/acetabulum and proximal bony context; crop per question and avoid labels that reveal answers."
+    },
+    {
+      "family": "hip_joint_labrum",
+      "title": "Ball and Socket Joint (Hip joint).svg",
+      "author": "Kcotton15",
+      "source": "https://commons.wikimedia.org/wiki/File:Ball_and_Socket_Joint_(Hip_joint).svg",
+      "license": "CC BY-SA 4.0",
+      "status": "approved_candidate",
+      "notes": "Shows femur, femoral neck/head, acetabulum, acetabular labrum and pelvis."
+    },
+    {
+      "family": "hip_ligaments",
+      "title": "Ligaments of hip-bone and femur (thigh-bone). Ink and waterc Wellcome V0008217EL.jpg",
+      "author": "Wellcome Library, London; after William Cheselden",
+      "source": "https://commons.wikimedia.org/wiki/File:Ligaments_of_hip-bone_and_femur_(thigh-bone)._Ink_and_waterc_Wellcome_V0008217EL.jpg",
+      "license": "CC BY 4.0",
+      "status": "approved_candidate",
+      "notes": "Explicit CC BY 4.0. Suitable as a ligament reference after checking that the requested ligament is unambiguous at mobile size."
+    },
+    {
+      "family": "hip_ligaments_anterior",
+      "title": "202109 anterior view of hip joint ligament.svg",
+      "author": "DataBase Center for Life Science (DBCLS)",
+      "source": "https://commons.wikimedia.org/wiki/File:202109_anterior_view_of_hip_joint_ligament.svg",
+      "license": "CC BY 4.0",
+      "status": "hold_license_review",
+      "notes": "Commons page is marked license review needed. Do not ship while a reviewed alternative exists."
+    },
+    {
+      "family": "hip_piriformis",
+      "title": "Piriformis.jpg",
+      "author": "Johannes Sobotta",
+      "source": "https://commons.wikimedia.org/wiki/File:Piriformis.jpg",
+      "license": "Public Domain Mark 1.0",
+      "status": "approved_candidate",
+      "notes": "1911 Sobotta plate, 1767x2079. Strong candidate for piriformis/deep gluteal region."
+    },
+    {
+      "family": "hip_sartorius",
+      "title": "Muscle sartorius.png",
+      "author": "Berichard",
+      "source": "https://commons.wikimedia.org/wiki/File:Muscle_sartorius.png",
+      "license": "CC BY-SA 3.0 (also GFDL)",
+      "status": "approved_candidate",
+      "notes": "Prefer CC BY-SA 3.0 route and include attribution. Useful for full sartorius path; IFMK source remains preferred for femoral-triangle-specific questions."
+    },
+    {
+      "family": "hip_gluteals_deep",
+      "title": "Posterior Hip Muscles 1.svg",
+      "author": "Beth O'Hara; vector Offnfopt",
+      "source": "https://commons.wikimedia.org/wiki/File:Posterior_Hip_Muscles_1.svg",
+      "license": "to_verify_before_use",
+      "status": "pending_license_verification",
+      "notes": "Excellent anatomical fit for gluteus minimus and small posterior hip muscles, but do not integrate until the exact license block is recorded."
+    },
+    {
+      "family": "hip_adductors_pectineus",
+      "title": "1122 Gluteal Muscles that Move the Femur b.png",
+      "author": "OpenStax-derived Wikimedia asset (verify page attribution before use)",
+      "source": "https://upload.wikimedia.org/wikipedia/commons/0/08/1122_Gluteal_Muscles_that_Move_the_Femur_b.png",
+      "license": "to_verify_before_use",
+      "status": "pending_license_verification",
+      "notes": "Visually clear for pectineus/adductor group, but source page/license must be captured before shipping."
+    },
+    {
+      "family": "hip_tfl",
+      "title": "Tensor fasciae latae.png",
+      "author": "modified by Uwe Gille from Gray's Anatomy",
+      "source": "https://commons.wikimedia.org/wiki/File:Tensor_fasciae_latae.png",
+      "license": "Public domain claim with territorial warning",
+      "status": "avoid_if_better_alternative",
+      "notes": "Commons warns public-domain status may differ outside the US. Prefer IFMK or an unambiguous CC BY/CC BY-SA alternative for France."
+    },
+    {
+      "family": "hip_rectus_femoris",
+      "title": "Rectus femoris.png",
+      "author": "modified by Uwe Gille from Gray's Anatomy",
+      "source": "https://commons.wikimedia.org/wiki/File:Rectus_femoris.png",
+      "license": "Public domain claim with territorial warning",
+      "status": "avoid_if_better_alternative",
+      "notes": "Same territorial caution as other Gray plates; use IFMK or an unambiguous CC asset if possible."
+    }
+  ]
+}
