@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { getCurrentProgram, programs, selectProgram, type ProgramId } from '../curriculum/programs'
 import { supabase } from '../lib/supabase'
 import { getCurrentProfile, removeProfilePhoto, updateStudyProfile, uploadProfilePhoto, type StudentProfile } from '../services/profileApi'
 import './ProfilePage.css'
@@ -15,6 +16,7 @@ export default function ProfilePage() {
   const [photoBusy, setPhotoBusy] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const activeProgram=getCurrentProgram()
 
   useEffect(() => {
     void Promise.all([getCurrentProfile(), supabase.auth.getUser()]).then(([nextProfile, auth]) => {
@@ -62,12 +64,20 @@ export default function ProfilePage() {
     finally { setPhotoBusy(false) }
   }
 
+  function switchAdminProgram(programId:ProgramId){
+    selectProgram(programId)
+    window.location.assign('/')
+  }
+
   if (!profile) return <section className="card"><p>Chargement du profil…</p></section>
   const fallback = (firstName || username || '?').slice(0, 1).toUpperCase()
 
   return <div className="stack profile-stack">
     <section className="hero-card profile-hero"><div className="hero-copy"><span className="hero-kicker">Mon espace</span><h1>{firstName ? `Salut ${firstName} 👋` : 'Mon profil étudiant'}</h1><p>Personnalise Kineo pour garder des révisions adaptées à ton année d’étude.</p></div><div className="hero-orbit" aria-hidden="true"><span>🎓</span></div></section>
-    {profile.role==='admin'&&<section className="card social-entry-card"><div><p className="eyebrow">Administration</p><h2>Qualité pédagogique & retours</h2><p>Contrôle les contenus publiés, la traçabilité des CM, les schémas anatomiques et les signalements de test.</p></div><div className="friend-actions"><Link className="secondary-button" to="/admin">Centre admin</Link><Link className="secondary-button" to="/admin/visuels">Valider les visuels</Link></div></section>}
+    {profile.role==='admin'&&<>
+      <section className="card social-entry-card"><div><p className="eyebrow">Administration</p><h2>Qualité pédagogique & retours</h2><p>Contrôle les contenus publiés, la traçabilité des CM, les schémas anatomiques et les signalements de test.</p></div><div className="friend-actions"><Link className="secondary-button" to="/admin">Centre admin</Link><Link className="secondary-button" to="/admin/visuels">Valider les visuels</Link></div></section>
+      <section className="card social-entry-card"><div><p className="eyebrow">Accès administrateur</p><h2>Changer de base pédagogique</h2><p>Ces trois environnements sont visibles uniquement depuis ton profil administrateur. Base active : <strong>{activeProgram.name}</strong>.</p></div><div className="friend-actions">{programs.map(program=><button key={program.id} className={program.id===activeProgram.id?'primary-button':'secondary-button'} onClick={()=>switchAdminProgram(program.id)} disabled={program.id===activeProgram.id}>{program.flag} {program.name}{program.id===activeProgram.id?' · active':''}</button>)}</div></section>
+    </>}
     <section className="card profile-photo-card"><div className="profile-photo-wrap"><div className="profile-photo-large">{avatarUrl ? <img src={avatarUrl} alt="Ma photo de profil" /> : <span>{fallback}</span>}</div><div><p className="eyebrow">Photo de profil</p><h2>Personnalise ton avatar</h2><p>Ta photo apparaît aussi dans les défis et en haut à droite de Kineo.</p></div></div><input ref={fileInputRef} className="visually-hidden" type="file" accept="image/*,.heic,.heif" onChange={(event) => void changePhoto(event.target.files?.[0])} /><div className="friend-actions"><button className="secondary-button" onClick={() => fileInputRef.current?.click()} disabled={photoBusy}>{photoBusy ? 'Traitement…' : avatarUrl ? 'Changer ma photo' : 'Ajouter ma photo'}</button>{avatarUrl&&<button className="text-link" onClick={()=>void removePhoto()} disabled={photoBusy}>Supprimer</button>}</div>{photoBusy&&<p className="field-hint">La photo peut être redimensionnée automatiquement avant l’envoi.</p>}</section>
     <section className="card"><div className="section-heading"><div><p className="eyebrow">Études</p><h2>Profil étudiant</h2></div><span className="profile-chip">K{studyYear}</span></div><div className="auth-form"><label>Prénom<input value={firstName} onChange={(event) => setFirstName(event.target.value)} placeholder="Ton prénom" /></label><label>Pseudo public<input value={username} onChange={(event) => setUsername(event.target.value)} placeholder="ex. kineo.stephan" autoCapitalize="none" /></label><small className="field-hint">Ton pseudo permet à tes amis de te retrouver. 3 à 24 caractères, sans espace.</small><label>Année d’étude<select value={studyYear} onChange={(event) => setStudyYear(Number(event.target.value))}><option value={2}>K2 · 1re année IFMK</option><option value={3}>K3 · 2e année IFMK</option><option value={4}>K4 · 3e année IFMK</option><option value={5}>K5 · 4e année IFMK</option></select></label><button className="primary-button" onClick={save} disabled={busy}>{busy ? 'Enregistrement…' : 'Enregistrer les modifications'}</button>{message&&<p className="feedback">{message}</p>}</div></section>
     <section className="card revision-summary"><div className="revision-summary-heading"><div><p className="eyebrow">Révisions</p><h2>Paramètres d’apprentissage</h2></div><span className="revision-summary-year">K{studyYear}</span></div><div className="revision-summary-grid"><div className="revision-summary-item"><span>Année active</span><strong>K{studyYear}</strong></div><div className="revision-summary-item"><span>Parcours accessible</span><strong>K2 → K5</strong></div><div className="revision-summary-item"><span>Méthode</span><strong>SRS espacé</strong></div><div className="revision-summary-item"><span>Rythme</span><strong>Régulier</strong></div></div></section>
