@@ -12,11 +12,13 @@ function translateAuthError(error: unknown) {
   return 'Une erreur est survenue. Réessaie dans un instant.'
 }
 
+type AuthMode='login'|'signup'|'reset'
+
 export default function LoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
-  const [mode, setMode] = useState<'login' | 'signup'>('login')
+  const [mode, setMode] = useState<AuthMode>('login')
   const [message, setMessage] = useState<string | null>(null)
   const [messageType, setMessageType] = useState<'error' | 'success' | null>(null)
   const [busy, setBusy] = useState(false)
@@ -26,16 +28,33 @@ export default function LoginPage() {
     setMessageType(null)
   }
 
+  function validateCredentials(){
+    const normalizedEmail=email.trim()
+    if(!normalizedEmail){setMessageType('error');setMessage('Saisis ton adresse e-mail.');return false}
+    if(!/^\S+@\S+\.\S+$/.test(normalizedEmail)){setMessageType('error');setMessage('Saisis une adresse e-mail valide.');return false}
+    if(mode!=='reset'&&!password){setMessageType('error');setMessage('Saisis ton mot de passe.');return false}
+    if(mode==='signup'&&password.length<8){setMessageType('error');setMessage('Le mot de passe doit contenir au moins 8 caractères.');return false}
+    return true
+  }
+
   async function submit(event: FormEvent) {
     event.preventDefault()
-    setBusy(true)
     clearFeedback()
+    if(!validateCredentials())return
+    setBusy(true)
     try {
+      if (mode === 'reset') {
+        const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo: window.location.origin })
+        if (error) throw error
+        setMessageType('success')
+        setMessage('Lien de réinitialisation envoyé. Ouvre l’e-mail reçu puis choisis ton nouveau mot de passe.')
+        return
+      }
       if (mode === 'login') {
-        const { error } = await supabase.auth.signInWithPassword({ email, password })
+        const { error } = await supabase.auth.signInWithPassword({ email:email.trim(), password })
         if (error) throw error
       } else {
-        const { data, error } = await supabase.auth.signUp({ email, password })
+        const { data, error } = await supabase.auth.signUp({ email:email.trim(), password })
         if (error) throw error
         if (!data.session) {
           setMessageType('success')
@@ -50,36 +69,17 @@ export default function LoginPage() {
     }
   }
 
-  async function requestPasswordReset() {
-    if (!email.trim()) {
-      setMessageType('error')
-      setMessage('Saisis d’abord ton adresse e-mail.')
-      return
-    }
-    setBusy(true)
-    clearFeedback()
-    try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-        redirectTo: window.location.origin,
-      })
-      if (error) throw error
-      setMessageType('success')
-      setMessage('E-mail de récupération envoyé. Vérifie ta boîte de réception et tes courriers indésirables.')
-    } catch (err) {
-      setMessageType('error')
-      setMessage(translateAuthError(err))
-    } finally {
-      setBusy(false)
-    }
-  }
-
-  function switchMode() {
-    setMode(current => current === 'login' ? 'signup' : 'login')
+  function switchMode(next:AuthMode) {
+    setMode(next)
+    setPassword('')
     setShowPassword(false)
     clearFeedback()
   }
 
   const hasError = messageType === 'error'
+  const isReset=mode==='reset'
+  const title=mode==='login'?'Content de te revoir 👋':mode==='signup'?'Créer mon compte':'Réinitialiser mon mot de passe'
+  const intro=mode==='login'?'Reprends ta progression là où tu l’as laissée.':mode==='signup'?'Quelques secondes suffisent pour commencer.':'Saisis ton e-mail. Nous t’enverrons un lien sécurisé pour choisir un nouveau mot de passe.'
 
   return (
     <main className="auth-shell">
@@ -93,33 +93,31 @@ export default function LoginPage() {
 
       <section className="card auth-card">
         <div>
-          <p className="eyebrow">{mode === 'login' ? 'Connexion' : 'Inscription'}</p>
-          <h2>{mode === 'login' ? 'Content de te revoir 👋' : 'Créer mon compte'}</h2>
-          <p>{mode === 'login' ? 'Reprends ta progression là où tu l’as laissée.' : 'Quelques secondes suffisent pour commencer.'}</p>
+          <p className="eyebrow">{mode === 'login' ? 'Connexion' : mode==='signup'?'Inscription':'Récupération'}</p>
+          <h2>{title}</h2>
+          <p>{intro}</p>
         </div>
 
-        <form className="auth-form" onSubmit={submit}>
+        <form className="auth-form" onSubmit={submit} noValidate>
           <label>
             E-mail
             <input
               type="email"
               value={email}
               onChange={(e) => { setEmail(e.target.value); clearFeedback() }}
-              required
               autoComplete="email"
+              inputMode="email"
               placeholder="prenom@email.fr"
               aria-invalid={hasError}
             />
           </label>
-          <label>
+          {!isReset&&<label>
             Mot de passe
             <div className="password-field">
               <input
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => { setPassword(e.target.value); clearFeedback() }}
-                minLength={8}
-                required
                 autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
                 placeholder="••••••••"
                 aria-invalid={hasError}
@@ -134,21 +132,19 @@ export default function LoginPage() {
                 {showPassword ? '🙈' : '👁️'}
               </button>
             </div>
-          </label>
-          <button className="primary-button wide" disabled={busy} type="submit">{busy ? 'Patiente…' : mode === 'login' ? 'Se connecter' : 'Créer mon compte'}</button>
+          </label>}
+          <button className="primary-button wide" disabled={busy} type="submit">{busy ? 'Patiente…' : mode === 'login' ? 'Se connecter' : mode==='signup' ? 'Créer mon compte':'Envoyer le lien de réinitialisation'}</button>
         </form>
 
         {mode === 'login' && (
-          <button className="link-button auth-secondary-action" type="button" onClick={requestPasswordReset} disabled={busy}>
+          <button className="link-button auth-secondary-action" type="button" onClick={()=>switchMode('reset')} disabled={busy}>
             Mot de passe oublié ?
           </button>
         )}
 
         {message && <p className={`auth-feedback ${messageType ?? ''}`} role={messageType === 'error' ? 'alert' : 'status'}>{message}</p>}
 
-        <button className="link-button auth-account-action" type="button" onClick={switchMode}>
-          {mode === 'login' ? 'Je n’ai pas encore de compte' : 'J’ai déjà un compte'}
-        </button>
+        {mode==='login'?<button className="link-button auth-account-action" type="button" onClick={()=>switchMode('signup')}>Je n’ai pas encore de compte</button>:<button className="link-button auth-account-action" type="button" onClick={()=>switchMode('login')}>{mode==='reset'?'← Retour à la connexion':'J’ai déjà un compte'}</button>}
       </section>
     </main>
   )
