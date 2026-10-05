@@ -21,7 +21,7 @@ export const PROGRAM_STORAGE_KEY='healthapp_program'
 
 const numberedYearLevels=(prefix:string,numbers:number[],language:string,secondaryLanguage?:string):ProgramLevel[]=>numbers.map((year,index)=>({
  id:`${prefix}-${year}`,
- label:`${year}${year===1?'re':'e'} année`,
+ label:language==='es'?`${year}.º año`:`${year}${year===1?'re':'e'} année`,
  shortLabel:`${prefix.toUpperCase()}${year}`,
  order:index+1,
  kind:'year',
