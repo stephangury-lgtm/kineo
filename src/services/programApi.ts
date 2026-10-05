@@ -87,11 +87,9 @@ export async function saveProgramLevel(programId:ProgramId,levelCode:string){
  const {data:{user},error:userError}=await supabase.auth.getUser()
  if(userError) throw userError
  if(!user) return
- const primary=await getPrimaryProgram()
- if(primary&&primary.program_id!==programId) throw new Error('Ce niveau appartient à un autre cursus.')
  const {data:level,error:levelError}=await supabase.from('academic_levels').select('id').eq('program_id',programId).eq('code',levelCode).single()
  if(levelError) throw levelError
- const {error}=await supabase.from('profile_programs').update({academic_level_id:level.id,is_primary:true,updated_at:new Date().toISOString()}).eq('user_id',user.id).eq('program_id',programId)
+ const {error}=await supabase.from('profile_programs').update({academic_level_id:level.id,updated_at:new Date().toISOString()}).eq('user_id',user.id).eq('program_id',programId)
  if(error) throw error
 }
 
