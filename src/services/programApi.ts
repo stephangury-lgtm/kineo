@@ -1,6 +1,8 @@
 import { supabase } from '../lib/supabase'
 import type { ProgramId } from '../curriculum/programs'
 
+export type CurriculumVersion='default'|'2009'|'2026'
+
 export type ProgramCatalogRow={
  id:string
  name:string
@@ -21,7 +23,7 @@ export type ProgramCatalogRow={
  }>
 }
 
-export type PrimaryProgram={program_id:ProgramId;academic_level_id:string|null;level_code:string|null}
+export type PrimaryProgram={program_id:ProgramId;academic_level_id:string|null;level_code:string|null;curriculum_version:CurriculumVersion}
 export type AccessibleProgram=PrimaryProgram&{is_primary:boolean}
 
 export async function getProgramCatalog(){
@@ -40,7 +42,7 @@ export async function getAccessiblePrograms():Promise<AccessibleProgram[]>{
  if(!user) return []
  const {data,error}=await supabase
   .from('profile_programs')
-  .select('program_id,academic_level_id,is_primary,academic_levels(code)')
+  .select('program_id,academic_level_id,is_primary,curriculum_version,academic_levels(code)')
   .eq('user_id',user.id)
   .order('is_primary',{ascending:false})
  if(error) throw error
@@ -50,6 +52,7 @@ export async function getAccessiblePrograms():Promise<AccessibleProgram[]>{
    program_id:row.program_id as ProgramId,
    academic_level_id:row.academic_level_id,
    level_code:relation?.code??null,
+   curriculum_version:(row.curriculum_version??'default') as CurriculumVersion,
    is_primary:Boolean(row.is_primary)
   }
  })
@@ -59,7 +62,7 @@ export async function getPrimaryProgram():Promise<PrimaryProgram|null>{
  const programs=await getAccessiblePrograms()
  const primary=programs.find(program=>program.is_primary)
  if(!primary) return null
- return {program_id:primary.program_id,academic_level_id:primary.academic_level_id,level_code:primary.level_code}
+ return {program_id:primary.program_id,academic_level_id:primary.academic_level_id,level_code:primary.level_code,curriculum_version:primary.curriculum_version}
 }
 
 export async function savePrimaryProgram(programId:ProgramId,levelCode?:string){
@@ -75,7 +78,8 @@ export async function savePrimaryProgram(programId:ProgramId,levelCode?:string){
   if(levelError) throw levelError
   academicLevelId=level.id
  }
- const {error}=await supabase.from('profile_programs').insert({user_id:user.id,program_id:programId,academic_level_id:academicLevelId,is_primary:true,updated_at:new Date().toISOString()})
+ const curriculumVersion:CurriculumVersion=programId==='ifsi-fr'?'2009':'default'
+ const {error}=await supabase.from('profile_programs').insert({user_id:user.id,program_id:programId,academic_level_id:academicLevelId,is_primary:true,curriculum_version:curriculumVersion,updated_at:new Date().toISOString()})
  if(error) throw error
 }
 
@@ -88,5 +92,14 @@ export async function saveProgramLevel(programId:ProgramId,levelCode:string){
  const {data:level,error:levelError}=await supabase.from('academic_levels').select('id').eq('program_id',programId).eq('code',levelCode).single()
  if(levelError) throw levelError
  const {error}=await supabase.from('profile_programs').update({academic_level_id:level.id,is_primary:true,updated_at:new Date().toISOString()}).eq('user_id',user.id).eq('program_id',programId)
+ if(error) throw error
+}
+
+export async function saveProgramCurriculumVersion(programId:ProgramId,version:CurriculumVersion){
+ const {data:{user},error:userError}=await supabase.auth.getUser()
+ if(userError) throw userError
+ if(!user) return
+ if(programId!=='ifsi-fr'&&version!=='default') throw new Error('Ce référentiel est réservé au cursus IFSI France.')
+ const {error}=await supabase.from('profile_programs').update({curriculum_version:version,updated_at:new Date().toISOString()}).eq('user_id',user.id).eq('program_id',programId)
  if(error) throw error
 }
