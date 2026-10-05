@@ -22,6 +22,7 @@ export type ProgramCatalogRow={
 }
 
 export type PrimaryProgram={program_id:ProgramId;academic_level_id:string|null;level_code:string|null}
+export type AccessibleProgram=PrimaryProgram&{is_primary:boolean}
 
 export async function getProgramCatalog(){
  const {data,error}=await supabase
@@ -33,20 +34,32 @@ export async function getProgramCatalog(){
  return ((data??[]) as ProgramCatalogRow[]).map(program=>({...program,academic_levels:[...(program.academic_levels??[])].sort((a,b)=>a.display_order-b.display_order)}))
 }
 
-export async function getPrimaryProgram():Promise<PrimaryProgram|null>{
+export async function getAccessiblePrograms():Promise<AccessibleProgram[]>{
  const {data:{user},error:userError}=await supabase.auth.getUser()
  if(userError) throw userError
- if(!user) return null
+ if(!user) return []
  const {data,error}=await supabase
   .from('profile_programs')
-  .select('program_id,academic_level_id,academic_levels(code)')
+  .select('program_id,academic_level_id,is_primary,academic_levels(code)')
   .eq('user_id',user.id)
-  .eq('is_primary',true)
-  .maybeSingle()
+  .order('is_primary',{ascending:false})
  if(error) throw error
- if(!data) return null
- const relation=data.academic_levels as {code?:string}|null
- return {program_id:data.program_id as ProgramId,academic_level_id:data.academic_level_id,level_code:relation?.code??null}
+ return (data??[]).map(row=>{
+  const relation=row.academic_levels as {code?:string}|null
+  return {
+   program_id:row.program_id as ProgramId,
+   academic_level_id:row.academic_level_id,
+   level_code:relation?.code??null,
+   is_primary:Boolean(row.is_primary)
+  }
+ })
+}
+
+export async function getPrimaryProgram():Promise<PrimaryProgram|null>{
+ const programs=await getAccessiblePrograms()
+ const primary=programs.find(program=>program.is_primary)
+ if(!primary) return null
+ return {program_id:primary.program_id,academic_level_id:primary.academic_level_id,level_code:primary.level_code}
 }
 
 export async function savePrimaryProgram(programId:ProgramId,levelCode?:string){
