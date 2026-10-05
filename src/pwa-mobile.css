@@ -1,7 +1,25 @@
 html,body,#root{min-height:100%;min-height:100dvh}
-body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right);overscroll-behavior-y:none}
+button,a,input,textarea,select{touch-action:manipulation}
+button,a{ -webkit-tap-highlight-color:transparent }
 .app-shell{min-height:100dvh;padding-bottom:calc(92px + env(safe-area-inset-bottom))}
 .topbar{padding-top:calc(12px + env(safe-area-inset-top));padding-left:calc(16px + env(safe-area-inset-left));padding-right:calc(16px + env(safe-area-inset-right))}
 .auth-shell{min-height:100dvh;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
-.bottom-nav{padding-left:calc(8px + env(safe-area-inset-left));padding-right:calc(8px + env(safe-area-inset-right))}
+.bottom-nav{padding-left:calc(8px + env(safe-area-inset-left));padding-right:calc(8px + env(safe-area-inset-right));padding-bottom:max(8px,env(safe-area-inset-bottom))}
+@media(max-width:719px){
+ .primary-button,.secondary-button,.duel-button,.answer,.bottom-nav a,.text-link{min-height:44px}
+ .primary-button,.secondary-button,.duel-button{display:inline-flex;align-items:center;justify-content:center}
+ input,textarea,select{font-size:16px}
+ textarea{min-height:120px}
+ .card,.hero-card,.stats-hero{scroll-margin-top:82px}
+ .person-row{align-items:flex-start}
+ .friend-actions{flex-wrap:wrap;justify-content:flex-end}
+ .friend-actions button{min-width:92px}
+ .answers{gap:.7rem}
+ .answer{padding:.9rem 1rem;line-height:1.35;text-align:left}
+ .lesson-course-card,.lesson-key-points-card,.lesson-note-card{padding-left:1rem;padding-right:1rem}
+ .lesson-reference-strip .person-row{align-items:center}
+ details summary{min-height:38px;display:flex;align-items:center}
+}
 @media(min-width:720px){.app-shell{padding-bottom:calc(110px + env(safe-area-inset-bottom))}}
