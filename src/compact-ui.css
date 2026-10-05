@@ -96,6 +96,19 @@
 .feature-grid article strong{font-size:.82rem;line-height:1.15}
 .feature-grid article small{font-size:.7rem;line-height:1.2}
 
+/* Dashboard: less empty space and faster scanning */
+.dashboard-stack>.hero-card{min-height:0;padding:20px 22px;grid-template-columns:1fr}
+.dashboard-stack>.hero-card .hero-copy{align-self:auto;max-width:none}
+.dashboard-stack>.hero-card .hero-orbit{display:none}
+.dashboard-stack>.hero-card h1{font-size:clamp(1.65rem,7vw,2.45rem)}
+.dashboard-stack>.hero-card p{margin-bottom:14px}
+.dashboard-stack>.quick-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.dashboard-stack>.quick-grid>.quick-card{min-height:112px;padding:13px;border-radius:16px}
+.dashboard-stack>.quick-grid>.quick-card>span{width:34px;height:34px;border-radius:11px}
+.dashboard-stack>.quick-grid>.quick-card strong{font-size:.88rem;line-height:1.15}
+.dashboard-stack>.quick-grid>.quick-card small{font-size:.72rem;line-height:1.25}
+.program-home-actions{grid-template-columns:repeat(2,minmax(0,1fr))}
+
 /* Rewards: denser cards so the collection is easy to scan */
 .badge-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .badge-card{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:center;min-height:0;padding:12px 13px;border:1px solid var(--line);border-radius:16px;background:#fbfdfd}
@@ -126,6 +139,9 @@
   .challenge-card .friend-actions button.text-link,.profile-photo-card .friend-actions button.text-link{width:100%;min-height:42px}
   .dashboard-stack .challenge-card{grid-template-columns:auto minmax(0,1fr)}
   .dashboard-stack .challenge-card .friend-actions{grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;min-width:0}
+  .dashboard-stack>.hero-card{padding:18px;grid-template-columns:1fr}
+  .dashboard-stack>.hero-card .hero-copy{padding-top:0}
+  .dashboard-stack>.quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .feature-grid article{padding:.58rem .62rem!important}
   .feature-grid article small{display:none}
   .badge-grid{grid-template-columns:1fr;gap:7px}
