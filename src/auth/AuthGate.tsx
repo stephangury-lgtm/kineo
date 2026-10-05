@@ -1,12 +1,12 @@
 import { useEffect, useState, type ReactNode } from 'react'
 import type { Session } from '@supabase/supabase-js'
 import { supabase } from '../lib/supabase'
-import { PROGRAM_STORAGE_KEY, selectProgram } from '../curriculum/programs'
+import { PROGRAM_STORAGE_KEY, selectProgram, type ProgramId } from '../curriculum/programs'
 import LoginPage from '../pages/LoginPage'
 import ProfileSetupPage from '../pages/ProfileSetupPage'
 import ResetPasswordPage from '../pages/ResetPasswordPage'
 import { getCurrentProfile, type StudentProfile } from '../services/profileApi'
-import { getPrimaryProgram, type PrimaryProgram } from '../services/programApi'
+import { getAccessiblePrograms, type PrimaryProgram } from '../services/programApi'
 
 type Props = { children: ReactNode }
 
@@ -29,14 +29,22 @@ export default function AuthGate({ children }: Props) {
     }
 
     try {
-      const [nextProfile,nextProgram]=await Promise.all([getCurrentProfile(),getPrimaryProgram()])
+      const [nextProfile,accessiblePrograms]=await Promise.all([getCurrentProfile(),getAccessiblePrograms()])
+      const primary=accessiblePrograms.find(program=>program.is_primary)??null
+      const nextProgram=primary
+        ? {program_id:primary.program_id,academic_level_id:primary.academic_level_id,level_code:primary.level_code}
+        : null
       setProfile(nextProfile)
       setPrimaryProgram(nextProgram)
       if(nextProgram){
-        const stored=localStorage.getItem(PROGRAM_STORAGE_KEY)
-        selectProgram(nextProgram.program_id)
-        if(nextProgram.level_code)localStorage.setItem(`healthapp_level_${nextProgram.program_id}`,nextProgram.level_code)
-        if(stored&&stored!==nextProgram.program_id){window.location.reload();return}
+        const stored=localStorage.getItem(PROGRAM_STORAGE_KEY) as ProgramId|null
+        const adminSelection=nextProfile?.role==='admin'&&stored&&accessiblePrograms.some(program=>program.program_id===stored)
+          ? stored
+          : nextProgram.program_id
+        const selectedAccess=accessiblePrograms.find(program=>program.program_id===adminSelection)
+        selectProgram(adminSelection)
+        if(selectedAccess?.level_code)localStorage.setItem(`healthapp_level_${adminSelection}`,selectedAccess.level_code)
+        if(stored&&stored!==adminSelection){window.location.reload();return}
       }
     } catch (err) {
       setProfileError(err instanceof Error ? err.message : 'Profil indisponible')
