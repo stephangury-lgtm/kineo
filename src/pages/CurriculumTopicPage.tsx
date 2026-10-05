@@ -3,6 +3,7 @@ import { Link,useParams } from 'react-router-dom'
 import { CompactReferences,ReadableCourseContent } from '../components/ReadableCourseContent'
 import { getCurrentProgram } from '../curriculum/programs'
 import { getTopic,getTopicLessons,getTopicQuiz,type CurriculumHotspot,type CurriculumLesson,type CurriculumQuizQuestion,type CurriculumQuizOption,type ProgramCatalogTopic } from '../services/programCatalogApi'
+import type { CurriculumVersion } from '../services/programApi'
 import '../course-reading.css'
 
 function normalizeAnswer(value:string){
@@ -44,6 +45,7 @@ export default function CurriculumTopicPage(){
  const {topicId}=useParams()
  const program=getCurrentProgram()
  const isEs=program.id==='kineo-es'
+ const curriculumVersion:CurriculumVersion=program.id==='ifsi-fr'?((localStorage.getItem(`healthapp_curriculum_${program.id}`) as CurriculumVersion|null)??'2009'):'default'
  const [topic,setTopic]=useState<ProgramCatalogTopic|null>(null)
  const [lessons,setLessons]=useState<CurriculumLesson[]>([])
  const [quiz,setQuiz]=useState<CurriculumQuizQuestion[]>([])
@@ -56,16 +58,16 @@ export default function CurriculumTopicPage(){
   if(!topicId)return
   let cancelled=false
   setLoading(true);setError(null);setTopic(null);setLessons([]);setQuiz([])
-  getTopic(topicId,program.id)
+  getTopic(topicId,program.id,curriculumVersion)
    .then(async t=>{
     const [l,q]=await Promise.all([getTopicLessons(t.id),getTopicQuiz(t.id)])
     if(cancelled)return
     setTopic(t);setLessons(l);setQuiz(q)
    })
-   .catch(()=>{if(!cancelled)setError(isEs?'Este tema no pertenece al plan de estudios activo o no está disponible.':'Ce chapitre n’appartient pas au cursus actif ou n’est pas disponible.')})
+   .catch(()=>{if(!cancelled)setError(isEs?'Este tema no pertenece al plan de estudios activo o no está disponible.':'Ce chapitre n’appartient pas au cursus ou au référentiel actif.')})
    .finally(()=>{if(!cancelled)setLoading(false)})
   return()=>{cancelled=true}
- },[topicId,isEs,program.id])
+ },[topicId,isEs,program.id,curriculumVersion])
 
  const score=useMemo(()=>quiz.reduce((total,q)=>checked[q.id]&&isCorrect(q,answers[q.id]??'')?total+1:total,0),[quiz,answers,checked])
  const checkedCount=Object.keys(checked).filter(id=>checked[id]).length
