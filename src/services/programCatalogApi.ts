@@ -42,6 +42,8 @@ export type CurriculumLesson={
 }
 
 export type CurriculumQuizOption={text:string;correct:boolean}
+export type CurriculumQuestionType='mcq'|'fill_blank'|'visual_hotspot'|'clinical_case'
+export type CurriculumHotspot={id:string;label?:string;x:number;y:number;correct?:boolean}
 export type CurriculumQuizQuestion={
  id:string
  topic_id:string
@@ -51,10 +53,14 @@ export type CurriculumQuizQuestion={
  difficulty:number
  source_label:string|null
  display_order:number
+ question_type:CurriculumQuestionType
+ accepted_answers:unknown
+ image_url:string|null
+ metadata:unknown
 }
 
 export async function getProgramUnits(programId:ProgramId,levelId?:string){
- let query=supabase.from('curriculum_units').select('*').eq('program_id',programId).order('display_order',{ascending:true})
+ let query=supabase.from('curriculum_units').select('*').eq('program_id',programId).eq('is_active',true).order('display_order',{ascending:true})
  if(levelId) query=query.eq('academic_level_id',levelId)
  const {data,error}=await query
  if(error) throw error
@@ -62,13 +68,13 @@ export async function getProgramUnits(programId:ProgramId,levelId?:string){
 }
 
 export async function getUnitTopics(unitId:string){
- const {data,error}=await supabase.from('curriculum_topics').select('*').eq('unit_id',unitId).order('display_order',{ascending:true})
+ const {data,error}=await supabase.from('curriculum_topics').select('*').eq('unit_id',unitId).eq('is_active',true).order('display_order',{ascending:true})
  if(error) throw error
  return (data??[]) as ProgramCatalogTopic[]
 }
 
 export async function getTopic(topicId:string){
- const {data,error}=await supabase.from('curriculum_topics').select('*').eq('id',topicId).single()
+ const {data,error}=await supabase.from('curriculum_topics').select('*').eq('id',topicId).eq('is_active',true).single()
  if(error) throw error
  return data as ProgramCatalogTopic
 }
