@@ -73,10 +73,11 @@ export async function getUnitTopics(unitId:string){
  return (data??[]) as ProgramCatalogTopic[]
 }
 
-export async function getTopic(topicId:string){
- const {data,error}=await supabase.from('curriculum_topics').select('*').eq('id',topicId).eq('is_active',true).single()
+export async function getTopic(topicId:string,programId:ProgramId){
+ const {data,error}=await supabase.from('curriculum_topics').select('*, curriculum_units!inner(program_id)').eq('id',topicId).eq('is_active',true).eq('curriculum_units.program_id',programId).single()
  if(error) throw error
- return data as ProgramCatalogTopic
+ const {curriculum_units:_,...topic}=data as ProgramCatalogTopic&{curriculum_units:{program_id:ProgramId}}
+ return topic as ProgramCatalogTopic
 }
 
 export async function getTopicLessons(topicId:string){
