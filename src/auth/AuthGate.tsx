@@ -32,7 +32,7 @@ export default function AuthGate({ children }: Props) {
       const [nextProfile,accessiblePrograms]=await Promise.all([getCurrentProfile(),getAccessiblePrograms()])
       const primary=accessiblePrograms.find(program=>program.is_primary)??null
       const nextProgram=primary
-        ? {program_id:primary.program_id,academic_level_id:primary.academic_level_id,level_code:primary.level_code}
+        ? {program_id:primary.program_id,academic_level_id:primary.academic_level_id,level_code:primary.level_code,curriculum_version:primary.curriculum_version}
         : null
       setProfile(nextProfile)
       setPrimaryProgram(nextProgram)
@@ -43,6 +43,7 @@ export default function AuthGate({ children }: Props) {
         const selectedAccess=accessiblePrograms.find(program=>program.program_id===selectedProgram)
         selectProgram(selectedProgram)
         if(selectedAccess?.level_code)localStorage.setItem(`healthapp_level_${selectedProgram}`,selectedAccess.level_code)
+        if(selectedAccess?.curriculum_version)localStorage.setItem(`healthapp_curriculum_${selectedProgram}`,selectedAccess.curriculum_version)
         if(stored&&stored!==selectedProgram){window.location.reload();return}
       }
     } catch (err) {
