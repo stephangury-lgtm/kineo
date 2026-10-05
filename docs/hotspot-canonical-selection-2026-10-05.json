@@ -1,0 +1,45 @@
+{
+  "generated_at": "2026-10-05",
+  "branch": "visuals-anatomy-refactor-2026-10-04",
+  "production_published_state_changed": false,
+  "selection": {
+    "canonical_exercises": 32,
+    "superseded_duplicates": 31,
+    "published": 0
+  },
+  "rules": [
+    "Keep one canonical interactive exercise per anatomical target and source view.",
+    "Prefer the clinically framed exercise when a simple duplicate exists.",
+    "Keep label-placement exercises only when they add a distinct learning objective.",
+    "Do not publish until target_visual_v2 exists, pixel coordinates are recalibrated on that exact asset and mobile QA passes."
+  ],
+  "calibration": {
+    "calibrated_candidates": [
+      {
+        "question_id": "f0e5803c-1efc-4403-bde7-d6b68972e4c9",
+        "target": "Naviculaire",
+        "visual": "anatomy-pied-naviculaire-medial-v2.webp",
+        "hotspot_v2": {"x":42,"y":50,"radius":15},
+        "status": "candidate_requires_mobile_qa"
+      },
+      {
+        "question_id": "379c9492-4d75-45cf-9950-7b67f32a1e5f",
+        "target": "Hallux",
+        "visual": "anatomy-pied-avant-pied-phalanges-v2.webp",
+        "hotspot_v2": {"x":25,"y":50,"radius":18},
+        "status": "candidate_requires_mobile_qa"
+      }
+    ],
+    "remaining_status": "pending_pixel_qa_on_exact_v2_asset"
+  },
+  "database_metadata": [
+    "canonical_visual_exercise",
+    "target_visual_v2",
+    "hotspot_calibration_status",
+    "hotspot_v2",
+    "visual_review_required",
+    "mobile_hotspot_qa_required",
+    "superseded_visual_exercise",
+    "superseded_by"
+  ]
+}
