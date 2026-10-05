@@ -1,7 +1,9 @@
 import { useEffect,useMemo,useState } from 'react'
 import { Link,useParams } from 'react-router-dom'
+import { CompactReferences,ReadableCourseContent } from '../components/ReadableCourseContent'
 import { getCurrentProgram } from '../curriculum/programs'
 import { getTopic,getTopicLessons,getTopicQuiz,type CurriculumHotspot,type CurriculumLesson,type CurriculumQuizQuestion,type CurriculumQuizOption,type ProgramCatalogTopic } from '../services/programCatalogApi'
+import '../course-reading.css'
 
 function normalizeAnswer(value:string){
  return value.trim().toLocaleLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ')
@@ -77,13 +79,14 @@ export default function CurriculumTopicPage(){
   </section>
 
   <section className="card" id="fiche">
-   <div className="section-heading"><div><p className="eyebrow">{isEs?'Ficha de repaso':'Fiche de révision'}</p><h2>{isEs?'Comprender y retener lo esencial':'Comprendre et retenir l’essentiel'}</h2></div><span className="program-status live">{lessons.length} {isEs?(lessons.length>1?'fichas':'ficha'):`fiche${lessons.length>1?'s':''}`}</span></div>
-   {lessons.length===0?<div className="admin-empty"><span>📚</span><div><strong>{isEs?'Ficha pendiente de contenido.':'Fiche en attente de contenu.'}</strong><p>{isEs?'El tema está identificado, pero todavía no hay material validado publicado.':'Le chapitre est identifié mais aucun support exploitable n’a encore été publié.'}</p></div></div>:lessons.map(lesson=><article className="curriculum-lesson" key={lesson.id}>
+   <div className="section-heading"><div><p className="eyebrow">{isEs?'Curso':'Cours'}</p><h2>{isEs?'Comprender, aplicar y recordar':'Comprendre, appliquer et retenir'}</h2></div><span className="program-status live">{lessons.length} {isEs?(lessons.length>1?'fichas':'ficha'):`fiche${lessons.length>1?'s':''}`}</span></div>
+   {lessons.length===0?<div className="admin-empty"><span>📚</span><div><strong>{isEs?'Ficha pendiente de contenido.':'Fiche en attente de contenu.'}</strong><p>{isEs?'El tema está identificado, pero todavía no hay material validado publicado.':'Le chapitre est identifié mais aucun support exploitable n’a encore été publié.'}</p></div></div>:<div className="course-reading-shell">{lessons.map(lesson=><article className="curriculum-lesson course-reading-card" key={lesson.id}>
     <h3>{lesson.title}</h3>
     {lesson.summary&&<p className="curriculum-summary">{lesson.summary}</p>}
-    <div className="curriculum-course-content">{lesson.content.split(/\n{2,}/).map((part,i)=><p key={i}>{part}</p>)}</div>
-    {Array.isArray(lesson.key_points)&&lesson.key_points.length>0&&<div className="curriculum-key-points"><strong>{isEs?'Puntos clave':'À retenir'}</strong><ul>{(lesson.key_points as unknown[]).map((point,i)=><li key={i}>{String(point)}</li>)}</ul></div>}
-   </article>)}
+    <ReadableCourseContent content={lesson.content}/>
+    {Array.isArray(lesson.key_points)&&lesson.key_points.length>0&&<div className="course-key-points-compact"><strong>{isEs?'Puntos clave':'À retenir'}</strong><ul>{(lesson.key_points as unknown[]).map((point,i)=><li key={i}>{String(point)}</li>)}</ul></div>}
+    <CompactReferences sources={lesson.source_files} label={isEs?'Referencias':'Références'}/>
+   </article>)}</div>}
   </section>
 
   <section className="card" id="qcm">
