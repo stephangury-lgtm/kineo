@@ -55,13 +55,17 @@ export default function CurriculumTopicPage(){
  useEffect(()=>{
   if(!topicId)return
   let cancelled=false
-  setLoading(true);setError(null)
-  Promise.all([getTopic(topicId),getTopicLessons(topicId),getTopicQuiz(topicId)])
-   .then(([t,l,q])=>{if(cancelled)return;setTopic(t);setLessons(l);setQuiz(q)})
-   .catch(()=>{if(!cancelled)setError(isEs?'No se puede cargar este tema ahora mismo.':'Impossible de charger ce chapitre pour le moment.')})
+  setLoading(true);setError(null);setTopic(null);setLessons([]);setQuiz([])
+  getTopic(topicId,program.id)
+   .then(async t=>{
+    const [l,q]=await Promise.all([getTopicLessons(t.id),getTopicQuiz(t.id)])
+    if(cancelled)return
+    setTopic(t);setLessons(l);setQuiz(q)
+   })
+   .catch(()=>{if(!cancelled)setError(isEs?'Este tema no pertenece al plan de estudios activo o no está disponible.':'Ce chapitre n’appartient pas au cursus actif ou n’est pas disponible.')})
    .finally(()=>{if(!cancelled)setLoading(false)})
   return()=>{cancelled=true}
- },[topicId,isEs])
+ },[topicId,isEs,program.id])
 
  const score=useMemo(()=>quiz.reduce((total,q)=>checked[q.id]&&isCorrect(q,answers[q.id]??'')?total+1:total,0),[quiz,answers,checked])
  const checkedCount=Object.keys(checked).filter(id=>checked[id]).length
