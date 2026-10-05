@@ -1,0 +1,25 @@
+{
+  "generated_at": "2026-10-05",
+  "source_courses": ["CM8 Ostéologie et arthrologie du pied", "CM9 Myologie du pied"],
+  "production_mutated": false,
+  "assets": [
+    {"file":"anatomy-pied-naviculaire-medial-v2.webp","bytes":8292,"sha256":"08be56e930dcdea4e6e2dd0ee931905e2903d8080bf84287ab9f05455baabb54","width":195,"height":378},
+    {"file":"anatomy-pied-cuneiformes-v2.webp","bytes":17670,"sha256":"f17805ff1441104a2c0142582620aadf78a5ee825544d1a8d46a82b32855a023","width":472,"height":280},
+    {"file":"anatomy-pied-lisfranc-capsules-v2.webp","bytes":10684,"sha256":"dc6841b964c2c4eaa5ec6c6af23b2a9ada25a7f6be1229589b70fc155ef2534c","width":320,"height":248},
+    {"file":"anatomy-pied-mtp-v2.webp","bytes":17150,"sha256":"f16faf22694a86a1038199d9edd8456534370b3c534a9acce2b9c76e6dd93117","width":364,"height":346},
+    {"file":"anatomy-pied-avant-pied-phalanges-v2.webp","bytes":17216,"sha256":"c13003669a4515c43ff06473c4cf88af96089990d9222e35262223e0a22f95e2","width":476,"height":346},
+    {"file":"anatomy-pied-m5-styloide-v2.webp","bytes":12824,"sha256":"ee130e39531a1e3bb966eb885f9333b625afcb6831558460657d513b0404599b","width":250,"height":510},
+    {"file":"anatomy-pied-hallux-p2-insertions-v2.webp","bytes":10254,"sha256":"787389100b02e6550f526e5cff2a5a9ac601205ebb5974e6877245363c375442","width":250,"height":440},
+    {"file":"anatomy-pied-interosseux-dorsaux-v2.webp","bytes":24974,"sha256":"19cd27e26eb9abcd077bc543b966573b4caf586ffedec0230f71d511a371c0fb","width":318,"height":360},
+    {"file":"anatomy-pied-abducteur-hallux-v2.webp","bytes":17504,"sha256":"54d2603c84cad371459a8c1dca9401b49f16da8e2e204488ca735cca3ea074e1","width":248,"height":439},
+    {"file":"anatomy-pied-court-flechisseur-hallux-v2.webp","bytes":17670,"sha256":"0eea74ef6741e32702ccff5d86743ebc4cd294025d576aa49267ad961cbb54f8","width":247,"height":440},
+    {"file":"anatomy-pied-intrinseques-hallux-v2.webp","bytes":51134,"sha256":"2370d46c058801ad8039d51917fa1a7f47671bf4378b4511f02f791bebbc13e0","width":759,"height":440},
+    {"file":"anatomy-pied-intrinseques-overview-v2.webp","bytes":60070,"sha256":"766c378d4401d6e43b52a09a675d9ba1ad2d06f51e7dd0f768765b30d0791c55","width":853,"height":440}
+  ],
+  "qa_notes": [
+    "Figures extracted from the validated course PDFs, not generated anatomy.",
+    "Question-specific crops remove explanatory paragraphs where possible.",
+    "Numeric callouts are retained only where they do not reveal the answer text.",
+    "Final mobile QA and hotspot placement remain required before publication."
+  ]
+}

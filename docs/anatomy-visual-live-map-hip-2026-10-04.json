@@ -1,0 +1,143 @@
+{
+  "generated_at": "2026-10-04",
+  "database_scope": "published questions with image_url and source_document containing hanche",
+  "live_counts": {
+    "published_image_questions": 14,
+    "unique_current_visuals": 3
+  },
+  "status": "mapping_ready_assets_not_published",
+  "rules": [
+    "Do not optimize for an artificial image count.",
+    "Map each question to the anatomical figure that best supports the tested structure.",
+    "Do not publish an image that visibly states the correct answer.",
+    "Keep production unchanged until visual QA and mobile QA are complete."
+  ],
+  "questions": [
+    {
+      "id": "74a2e9ba-6386-435f-b875-af68cce8bcd9",
+      "question": "Quel ligament est représenté en vert sur ce schéma ?",
+      "correct_answer": "Ligament pubo-fémoral",
+      "source_page": 52,
+      "asset": "anatomy-hanche-ligament-pubofemoral-v2.webp",
+      "source": "CM1 Ostéologie et arthrologie de la hanche",
+      "reason": "Dedicated pubofemoral ligament figure from the validated IFMK source."
+    },
+    {
+      "id": "34d3e248-0bd2-4701-bfeb-11ac8fa58268",
+      "question": "Quel relief est décrit comme grossièrement cubique avec cinq faces ?",
+      "correct_answer": "Grand trochanter",
+      "source_page": 37,
+      "asset": "anatomy-hanche-femur-proximal-v2.webp",
+      "source": "CM1 Ostéologie et arthrologie de la hanche",
+      "reason": "Proximal femur view makes the greater trochanter anatomically identifiable without displaying its name."
+    },
+    {
+      "id": "2fe396d7-4902-45e2-bd7d-d725391d08c0",
+      "question": "Quelle structure sphérique du fémur proximal s’articule avec l’acétabulum ?",
+      "correct_answer": "Tête fémorale",
+      "source_page": 34,
+      "asset": "anatomy-hanche-femur-proximal-v2.webp",
+      "source": "CM1 Ostéologie et arthrologie de la hanche",
+      "reason": "Validated proximal femur figure."
+    },
+    {
+      "id": "bd193d3c-4e0b-44ff-9823-0a073509ad46",
+      "question": "À quelle surface la tête fémorale répond-elle ?",
+      "correct_answer": "Surface semi-lunaire de l'acétabulum",
+      "source_page": 35,
+      "asset": "anatomy-hanche-os-coxal-acetabulum-v2.webp",
+      "source": "CM1 Ostéologie et arthrologie de la hanche",
+      "reason": "Acetabular view is more relevant than the generic proximal femur image currently reused."
+    },
+    {
+      "id": "d4e1cdff-a98f-4486-b9f3-b2e3f2c88c35",
+      "question": "Combien de faisceaux le ligament ilio-fémoral présente-t-il ?",
+      "correct_answer": "Deux",
+      "source_page": 50,
+      "asset": "anatomy-hanche-ligament-iliofemoral-v2.webp",
+      "source": "CM1 Ostéologie et arthrologie de la hanche",
+      "reason": "Fixes the current mismatch where this question reuses the pubofemoral master visual."
+    },
+    {
+      "id": "ce2f3cc9-5e08-4a87-9fdd-7d85df7e140f",
+      "question": "Quel angle cervico-diaphysaire est indiqué ?",
+      "correct_answer": "130°",
+      "source_page": 36,
+      "asset": "anatomy-hanche-angle-cervico-diaphysaire-v2.webp",
+      "source": "CM1 Ostéologie et arthrologie de la hanche",
+      "reason": "Dedicated crop of the validated IFMK angle figure; the numeric 130° label is removed from the quiz asset so the answer is not revealed."
+    },
+    {
+      "id": "3e59239f-ad59-4934-b317-79eb9bad2241",
+      "question": "Quel muscle est indiqué comme renforçant le ligament pubo-fémoral ?",
+      "correct_answer": "Pectiné",
+      "source_page": 61,
+      "asset": "anatomy-hanche-pectine-v2.webp",
+      "source": "CM1 Ostéologie et arthrologie de la hanche / CM2 Myologie de la hanche",
+      "reason": "Uses a validated anatomical view of the pectineus/adductor region instead of the generic ligament master."
+    },
+    {
+      "id": "76a7d1d4-02a9-4dbb-b5fe-234f907d2892",
+      "question": "Quel muscle figure parmi les fléchisseurs de hanche ?",
+      "correct_answer": "Ilio-psoas",
+      "source_page": 13,
+      "asset": "anatomy-hanche-psoas-v2.webp",
+      "source": "CM2 Myologie de la hanche",
+      "reason": "Fixes the current mismatch where an ilio-psoas question reuses a sartorius visual."
+    },
+    {
+      "id": "c611e5b9-994b-4d52-ae92-3d65009aeab4",
+      "question": "Quelle proportion de sphère est indiquée pour la tête fémorale ?",
+      "correct_answer": "Deux tiers",
+      "source_page": 35,
+      "asset": "anatomy-hanche-femur-proximal-v2.webp",
+      "source": "CM1 Ostéologie et arthrologie de la hanche",
+      "reason": "The femoral head is clearly visible while no numeric answer is printed in the asset."
+    },
+    {
+      "id": "9673872e-90cb-4392-9f47-589b46132436",
+      "question": "Cas clinique · Étape 2/2 — Dans le même bilan, on cherche le muscle glutéal situé en profondeur du moyen fessier sur le schéma. Lequel ?",
+      "correct_answer": "Petit glutéal",
+      "source_page": 37,
+      "asset": "anatomy-hanche-petit-fessier-v2.webp",
+      "source": "CM2 Myologie de la hanche",
+      "reason": "Dedicated deep gluteal figure."
+    },
+    {
+      "id": "58dd6044-dbfb-420a-9a61-10cee174e30f",
+      "question": "Quel muscle constitue la limite latérale du trigone fémoral ?",
+      "correct_answer": "Sartorius",
+      "source_page": 13,
+      "asset": "anatomy-hanche-sartorius-trigone-v2.webp",
+      "source": "CM2 Myologie de la hanche",
+      "reason": "Femoral triangle-specific figure rather than a generic sartorius image."
+    },
+    {
+      "id": "d47e561e-577c-4346-bd54-6ad6f7a09d32",
+      "question": "Quel muscle glutéal profond est situé sous le moyen fessier et se termine sur le grand trochanter ?",
+      "correct_answer": "Petit glutéal",
+      "source_page": 37,
+      "asset": "anatomy-hanche-petit-fessier-v2.webp",
+      "source": "CM2 Myologie de la hanche",
+      "reason": "Dedicated small gluteal muscle figure."
+    },
+    {
+      "id": "8d453a09-1c0f-4205-8363-62308852fea9",
+      "question": "Quel muscle long et superficiel traverse obliquement la face antérieure de la cuisse depuis l’EIAS ?",
+      "correct_answer": "Sartorius",
+      "source_page": 14,
+      "asset": "anatomy-hanche-sartorius-v2.webp",
+      "source": "CM2 Myologie de la hanche",
+      "reason": "Dedicated full sartorius path."
+    },
+    {
+      "id": "768a4dff-693c-480a-b085-ade851be5dab",
+      "question": "Quel muscle profond de la région glutéale est visible au-dessus des muscles pelvi-trochantériens ?",
+      "correct_answer": "Piriforme",
+      "source_page": 58,
+      "asset": "anatomy-hanche-piriforme-v2.webp",
+      "source": "CM2 Myologie de la hanche",
+      "reason": "Dedicated posterior deep-hip/piriformis figure."
+    }
+  ]
+}
