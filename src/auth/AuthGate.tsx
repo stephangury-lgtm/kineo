@@ -38,13 +38,12 @@ export default function AuthGate({ children }: Props) {
       setPrimaryProgram(nextProgram)
       if(nextProgram){
         const stored=localStorage.getItem(PROGRAM_STORAGE_KEY) as ProgramId|null
-        const adminSelection=nextProfile?.role==='admin'&&stored&&accessiblePrograms.some(program=>program.program_id===stored)
-          ? stored
-          : nextProgram.program_id
-        const selectedAccess=accessiblePrograms.find(program=>program.program_id===adminSelection)
-        selectProgram(adminSelection)
-        if(selectedAccess?.level_code)localStorage.setItem(`healthapp_level_${adminSelection}`,selectedAccess.level_code)
-        if(stored&&stored!==adminSelection){window.location.reload();return}
+        const storedIsAccessible=Boolean(stored&&accessiblePrograms.some(program=>program.program_id===stored))
+        const selectedProgram=storedIsAccessible&&stored ? stored : nextProgram.program_id
+        const selectedAccess=accessiblePrograms.find(program=>program.program_id===selectedProgram)
+        selectProgram(selectedProgram)
+        if(selectedAccess?.level_code)localStorage.setItem(`healthapp_level_${selectedProgram}`,selectedAccess.level_code)
+        if(stored&&stored!==selectedProgram){window.location.reload();return}
       }
     } catch (err) {
       setProfileError(err instanceof Error ? err.message : 'Profil indisponible')
