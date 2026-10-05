@@ -1,5 +1,6 @@
 import { supabase } from '../lib/supabase'
 import type { ProgramId } from '../curriculum/programs'
+import type { CurriculumVersion } from './programApi'
 
 export type ProgramCatalogUnit={
  id:string
@@ -14,6 +15,7 @@ export type ProgramCatalogUnit={
  content_language:string
  translation_language:string|null
  translation_mode:'none'|'vocabulary'|'bilingual'
+ curriculum_version:CurriculumVersion
 }
 
 export type ProgramCatalogTopic={
@@ -59,9 +61,10 @@ export type CurriculumQuizQuestion={
  metadata:unknown
 }
 
-export async function getProgramUnits(programId:ProgramId,levelId?:string){
+export async function getProgramUnits(programId:ProgramId,levelId?:string,curriculumVersion?:CurriculumVersion){
  let query=supabase.from('curriculum_units').select('*').eq('program_id',programId).eq('is_active',true).order('display_order',{ascending:true})
  if(levelId) query=query.eq('academic_level_id',levelId)
+ if(curriculumVersion) query=query.eq('curriculum_version',curriculumVersion)
  const {data,error}=await query
  if(error) throw error
  return (data??[]) as ProgramCatalogUnit[]
@@ -73,10 +76,12 @@ export async function getUnitTopics(unitId:string){
  return (data??[]) as ProgramCatalogTopic[]
 }
 
-export async function getTopic(topicId:string,programId:ProgramId){
- const {data,error}=await supabase.from('curriculum_topics').select('*, curriculum_units!inner(program_id)').eq('id',topicId).eq('is_active',true).eq('curriculum_units.program_id',programId).single()
+export async function getTopic(topicId:string,programId:ProgramId,curriculumVersion?:CurriculumVersion){
+ let query=supabase.from('curriculum_topics').select('*, curriculum_units!inner(program_id,curriculum_version)').eq('id',topicId).eq('is_active',true).eq('curriculum_units.program_id',programId)
+ if(curriculumVersion) query=query.eq('curriculum_units.curriculum_version',curriculumVersion)
+ const {data,error}=await query.single()
  if(error) throw error
- const {curriculum_units:_,...topic}=data as ProgramCatalogTopic&{curriculum_units:{program_id:ProgramId}}
+ const {curriculum_units:_,...topic}=data as ProgramCatalogTopic&{curriculum_units:{program_id:ProgramId;curriculum_version:CurriculumVersion}}
  return topic as ProgramCatalogTopic
 }
 
