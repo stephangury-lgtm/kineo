@@ -1,0 +1,29 @@
+{
+  "generated_at": "2026-10-05",
+  "scope": "published image questions sourced from CM6/CM7 ankle courses",
+  "baseline": {"published_questions": 15, "unique_visuals": 5},
+  "rules": [
+    "Keep production unchanged until mobile visual QA and hotspot QA are complete.",
+    "Use a dedicated framing when the question targets a different bone, ligament, compartment or tendon path.",
+    "Prefer validated IFMK figures; supplement only with clearly reusable open-license web anatomy if required."
+  ],
+  "mapping": [
+    {"question_id":"f2f50477-c2d1-4c4b-a3ca-6ce6144a31ec","target_visual":"anatomy-cheville-collateraux-comparaison-v2.webp","family":"collateral_ligaments","source":"CM6 p49/p51"},
+    {"question_id":"dc098a09-a33a-49ec-bc89-f043c4bae31f","target_visual":"anatomy-cheville-pilon-sillons-v2.webp","family":"posterior_tibial_grooves","source":"CM6 p12"},
+    {"question_id":"37dede7d-b037-4df8-a011-c21316794eae","target_visual":"anatomy-cheville-pilon-talus-v2.webp","family":"tibial_plafond_talus","source":"CM6 p13"},
+    {"question_id":"1dd8c863-0ceb-4e6c-a012-dfc864949081","target_visual":"anatomy-cheville-lcf-v2.webp","family":"lateral_collateral_ligament","source":"CM6 p49"},
+    {"question_id":"ce78506c-d530-4cf7-a894-a36019bc9ac2","target_visual":"anatomy-cheville-lcf-faisceaux-v2.webp","family":"lateral_collateral_fascicles","source":"CM6 p49"},
+    {"question_id":"2f74d5ec-303c-4adf-999b-682992eaf074","target_visual":"anatomy-cheville-talo-crurale-v2.webp","family":"talocrural_joint","source":"CM6 p44"},
+    {"question_id":"b884586e-4bae-4a14-b151-127fd53ac004","target_visual":"anatomy-cheville-malleole-laterale-v2.webp","family":"distal_fibula","source":"CM6 p20"},
+    {"question_id":"8c055d79-44d5-4b27-9d54-639b4327df11","target_visual":"anatomy-cheville-subtalaire-v2.webp","family":"subtalar_joint","source":"CM6 p64"},
+    {"question_id":"a92cf1d7-1f64-4c01-9c9d-cab93f984ba4","target_visual":"anatomy-talus-vue-superieure-v2.webp","family":"talus_superior","source":"CM6 p27"},
+    {"question_id":"7a89e92e-2f4d-4a3c-95f9-bf9c1aa58ea8","target_visual":"anatomy-jambe-loges-coupe-v2.webp","family":"leg_compartments","source":"CM7 p6"},
+    {"question_id":"e6c2a882-adc6-4a4a-bffd-2da83e89bffc","target_visual":"anatomy-cheville-pilon-sillons-v2.webp","family":"posterior_tibial_grooves","source":"CM7 p26"},
+    {"question_id":"ac089384-1b17-41d3-927b-34f345e7119c","target_visual":"anatomy-tibial-anterieur-trajet-v2.webp","family":"tibialis_anterior","source":"CM7 p7"},
+    {"question_id":"7c31c00c-dc36-4035-a17d-9279e9506dd2","target_visual":"anatomy-jambe-loges-coupe-v2.webp","family":"leg_compartments","source":"CM7 p6"},
+    {"question_id":"44899c7b-947c-4ffd-b865-8b8a0714a7e6","target_visual":"anatomy-tibial-anterieur-trajet-v2.webp","family":"tibialis_anterior","source":"CM7 p7"},
+    {"question_id":"d014de0b-e424-4380-8db5-abb1fc220959","target_visual":"anatomy-tibial-anterieur-insertion-v2.webp","family":"tibialis_anterior_insertion","source":"CM7 p7"}
+  ],
+  "target_unique_visual_families": 11,
+  "production_mutated": false
+}
