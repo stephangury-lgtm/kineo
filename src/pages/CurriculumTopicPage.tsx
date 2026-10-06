@@ -2,7 +2,7 @@ import { useEffect,useMemo,useState } from 'react'
 import { Link,useParams } from 'react-router-dom'
 import { CompactReferences,ReadableCourseContent } from '../components/ReadableCourseContent'
 import { getCurrentProgram } from '../curriculum/programs'
-import { getTopic,getTopicLessons,getTopicQuiz,type CurriculumHotspot,type CurriculumLesson,type CurriculumQuizQuestion,type CurriculumQuizOption,type ProgramCatalogTopic } from '../services/programCatalogApi'
+import { getTopic,getTopicLessons,getTopicQuiz,submitCurriculumTopicAnswer,type CurriculumAnswerPayload,type CurriculumAnswerResult,type CurriculumHotspot,type CurriculumLesson,type CurriculumMatchPair,type CurriculumQuizQuestion,type CurriculumQuizOption,type ProgramCatalogTopic } from '../services/programCatalogApi'
 import type { CurriculumVersion } from '../services/programApi'
 import '../course-reading.css'
 
@@ -24,12 +24,20 @@ function hotspots(q:CurriculumQuizQuestion):CurriculumHotspot[]{
  return Array.isArray(raw)?raw.filter((item):item is CurriculumHotspot=>Boolean(item&&typeof item==='object'&&'id' in item&&'x' in item&&'y' in item)):[]
 }
 
-function isCorrect(q:CurriculumQuizQuestion,answer:string){
+function matchingPairs(q:CurriculumQuizQuestion):CurriculumMatchPair[]{
+ const meta=q.metadata
+ if(!meta||typeof meta!=='object'||!('pairs' in meta))return[]
+ const raw=(meta as {pairs?:unknown}).pairs
+ return Array.isArray(raw)?raw.filter((item):item is CurriculumMatchPair=>Boolean(item&&typeof item==='object'&&'left' in item&&'right' in item)):[]
+}
+
+function isLocallyCorrect(q:CurriculumQuizQuestion,answer:string,matching:Record<string,string>){
  if(q.question_type==='fill_blank'){
   const normalized=normalizeAnswer(answer)
   return acceptedAnswers(q).some(candidate=>normalizeAnswer(candidate)===normalized)
  }
  if(q.question_type==='visual_hotspot')return hotspots(q).some(point=>point.correct&&point.id===answer)
+ if(q.question_type==='matching')return matchingPairs(q).every(pair=>normalizeAnswer(matching[pair.left]??'')===normalizeAnswer(pair.right))
  const correct=q.options.find((o:CurriculumQuizOption)=>o.correct)?.text
  return answer===correct
 }
@@ -38,6 +46,7 @@ function formatLabel(type:CurriculumQuizQuestion['question_type'],isEs:boolean){
  if(type==='fill_blank')return isEs?'Completar':'Texte à trous'
  if(type==='visual_hotspot')return isEs?'Zona anatómica':'Zone anatomique'
  if(type==='clinical_case')return isEs?'Caso clínico':'Cas clinique'
+ if(type==='matching')return isEs?'Asociar':'Association'
  return isEs?'QCM':'QCM'
 }
 
@@ -52,12 +61,16 @@ export default function CurriculumTopicPage(){
  const [loading,setLoading]=useState(true)
  const [error,setError]=useState<string|null>(null)
  const [answers,setAnswers]=useState<Record<string,string>>({})
+ const [matchingAnswers,setMatchingAnswers]=useState<Record<string,Record<string,string>>>({})
  const [checked,setChecked]=useState<Record<string,boolean>>({})
+ const [results,setResults]=useState<Record<string,CurriculumAnswerResult>>({})
+ const [submitting,setSubmitting]=useState<string|null>(null)
+ const [quizError,setQuizError]=useState<string|null>(null)
 
  useEffect(()=>{
   if(!topicId)return
   let cancelled=false
-  setLoading(true);setError(null);setTopic(null);setLessons([]);setQuiz([])
+  setLoading(true);setError(null);setTopic(null);setLessons([]);setQuiz([]);setAnswers({});setMatchingAnswers({});setChecked({});setResults({});setQuizError(null)
   getTopic(topicId,program.id,curriculumVersion)
    .then(async t=>{
     const [l,q]=await Promise.all([getTopicLessons(t.id),getTopicQuiz(t.id)])
@@ -69,8 +82,41 @@ export default function CurriculumTopicPage(){
   return()=>{cancelled=true}
  },[topicId,isEs,program.id,curriculumVersion])
 
- const score=useMemo(()=>quiz.reduce((total,q)=>checked[q.id]&&isCorrect(q,answers[q.id]??'')?total+1:total,0),[quiz,answers,checked])
+ const score=useMemo(()=>quiz.reduce((total,q)=>{
+  if(!checked[q.id])return total
+  const server=results[q.id]
+  const local=isLocallyCorrect(q,answers[q.id]??'',matchingAnswers[q.id]??{})
+  return total+(server?.correct??local?1:0)
+ },0),[quiz,answers,matchingAnswers,checked,results])
  const checkedCount=Object.keys(checked).filter(id=>checked[id]).length
+
+ function buildPayload(q:CurriculumQuizQuestion):CurriculumAnswerPayload{
+  if(q.question_type==='visual_hotspot')return {hotspot_id:answers[q.id]??''}
+  if(q.question_type==='matching')return {pairs:matchingPairs(q).map(pair=>({left:pair.left,right:matchingAnswers[q.id]?.[pair.left]??''}))}
+  return {text:answers[q.id]??''}
+ }
+
+ function canSubmit(q:CurriculumQuizQuestion){
+  if(checked[q.id]||submitting===q.id)return false
+  if(q.question_type==='matching'){
+   const pairs=matchingPairs(q)
+   return pairs.length>0&&pairs.every(pair=>Boolean(matchingAnswers[q.id]?.[pair.left]))
+  }
+  return Boolean((answers[q.id]??'').trim())
+ }
+
+ async function validateQuestion(q:CurriculumQuizQuestion){
+  if(!canSubmit(q))return
+  setSubmitting(q.id);setQuizError(null)
+  try{
+   const result=await submitCurriculumTopicAnswer(q.id,buildPayload(q))
+   setResults(current=>({...current,[q.id]:result}))
+   setChecked(current=>({...current,[q.id]:true}))
+   window.dispatchEvent(new Event('kineo-progress-updated'))
+  }catch(e){
+   setQuizError(e instanceof Error?e.message:(isEs?'No se pudo validar la respuesta.':'Impossible de valider la réponse.'))
+  }finally{setSubmitting(null)}
+ }
 
  if(loading)return <div className="card"><p>{isEs?'Cargando la ficha…':'Chargement de la fiche…'}</p></div>
  if(error||!topic)return <div className="card"><p>{error??(isEs?'Tema no encontrado.':'Chapitre introuvable.')}</p><Link className="primary-button" to="/parcours">{isEs?'Volver al itinerario':'Retour au parcours'}</Link></div>
@@ -97,13 +143,17 @@ export default function CurriculumTopicPage(){
 
   <section className="card" id="qcm">
    <div className="section-heading"><div><p className="eyebrow">{isEs?'Repaso activo':'Révision active'}</p><h2>{isEs?'Pon a prueba tus conocimientos':'Teste tes acquis'}</h2></div>{quiz.length>0&&<span className="program-status foundation">{checkedCount}/{quiz.length} {isEs?'respondidas':`répondu${quiz.length>1?'s':''}`}</span>}</div>
+   {quizError&&<p className="form-error">{quizError}</p>}
    {quiz.length===0?<div className="admin-empty"><span>❓</span><div><strong>{isEs?'Ejercicios en preparación.':'Exercices en préparation.'}</strong><p>{isEs?'La ficha se puede consultar, pero los ejercicios todavía no están publicados.':'La fiche est consultable mais les exercices de ce chapitre ne sont pas encore publiés.'}</p></div></div>:<div className="curriculum-quiz-list">{quiz.map((q,index)=>{
     const selected=answers[q.id]??''
     const isChecked=!!checked[q.id]
-    const correct=isCorrect(q,selected)
+    const localCorrect=isLocallyCorrect(q,selected,matchingAnswers[q.id]??{})
+    const correct=results[q.id]?.correct??localCorrect
     const accepted=acceptedAnswers(q)
     const points=hotspots(q)
     const correctPoint=points.find(point=>point.correct)
+    const pairs=matchingPairs(q)
+    const rightItems=[...new Set(pairs.map(pair=>pair.right))]
     return <article className="curriculum-quiz-card" key={q.id}>
      <div style={{display:'flex',justifyContent:'space-between',gap:12,alignItems:'center'}}><strong>{isEs?'Pregunta':'Question'} {index+1}</strong><span className="program-status foundation">{formatLabel(q.question_type,isEs)}</span></div>
      <p>{q.question_text}</p>
@@ -113,9 +163,9 @@ export default function CurriculumTopicPage(){
       const revealWrong=isChecked&&selectedPoint&&!point.correct
       return <button key={point.id} type="button" aria-label={point.label??(isEs?'Zona anatómica':'Zone anatomique')} disabled={isChecked} onClick={()=>setAnswers(current=>({...current,[q.id]:point.id}))} style={{position:'absolute',left:`${point.x}%`,top:`${point.y}%`,transform:'translate(-50%,-50%)',width:46,height:46,borderRadius:'50%',border:selectedPoint?'4px solid currentColor':'2px solid currentColor',background:revealCorrect?'rgba(195,255,205,.94)':revealWrong?'rgba(255,205,205,.94)':'rgba(255,255,255,.90)',cursor:isChecked?'default':'pointer',display:'grid',placeItems:'center',fontWeight:800}}>{selectedPoint?'✓':revealCorrect?'●':''}</button>
      })}</div>}
-     {q.question_type==='fill_blank'?<input className="text-input" type="text" value={selected} disabled={isChecked} placeholder={isEs?'Escribe tu respuesta':'Écris ta réponse'} onChange={event=>setAnswers(current=>({...current,[q.id]:event.target.value}))}/>:q.question_type!=='visual_hotspot'?<div className="curriculum-options">{q.options.map((option:CurriculumQuizOption)=><label className={`curriculum-option ${isChecked&&option.correct?'correct':''} ${isChecked&&selected===option.text&&!option.correct?'incorrect':''}`} key={option.text}><input type="radio" name={q.id} value={option.text} checked={selected===option.text} disabled={isChecked} onChange={()=>setAnswers(current=>({...current,[q.id]:option.text}))}/><span>{option.text}</span></label>)}</div>:null}
-     <button className="primary-button" type="button" disabled={!selected||isChecked} onClick={()=>setChecked(current=>({...current,[q.id]:true}))}>{isEs?'Validar':'Valider'}</button>
-     {isChecked&&<div className={`curriculum-feedback ${correct?'success':'error'}`}><strong>{correct?(isEs?'Respuesta correcta':'Bonne réponse'):(isEs?'Para revisar':'À revoir')}</strong>{!correct&&q.question_type==='fill_blank'&&accepted.length>0&&<p>{isEs?'Respuesta esperada':'Réponse attendue'} : {accepted[0]}</p>}{!correct&&q.question_type==='visual_hotspot'&&correctPoint?.label&&<p>{isEs?'Zona correcta':'Bonne zone'} : {correctPoint.label}</p>}{q.explanation&&<p>{q.explanation}</p>}{q.source_label&&<small>{q.source_label}</small>}</div>}
+     {q.question_type==='fill_blank'?<input className="text-input" type="text" value={selected} disabled={isChecked} placeholder={isEs?'Escribe tu respuesta':'Écris ta réponse'} onChange={event=>setAnswers(current=>({...current,[q.id]:event.target.value}))}/>:q.question_type==='matching'?<div className="matching-grid">{pairs.map(pair=><label className="matching-row" key={pair.left}><span>{pair.left}</span><select value={matchingAnswers[q.id]?.[pair.left]??''} disabled={isChecked} onChange={event=>setMatchingAnswers(current=>({...current,[q.id]:{...(current[q.id]??{}),[pair.left]:event.target.value}}))}><option value="">{isEs?'Elegir…':'Choisir…'}</option>{rightItems.map(right=><option key={right} value={right}>{right}</option>)}</select></label>)}</div>:q.question_type!=='visual_hotspot'?<div className="curriculum-options">{q.options.map((option:CurriculumQuizOption)=><label className={`curriculum-option ${isChecked&&option.correct?'correct':''} ${isChecked&&selected===option.text&&!option.correct?'incorrect':''}`} key={option.text}><input type="radio" name={q.id} value={option.text} checked={selected===option.text} disabled={isChecked} onChange={()=>setAnswers(current=>({...current,[q.id]:option.text}))}/><span>{option.text}</span></label>)}</div>:null}
+     <button className="primary-button" type="button" disabled={!canSubmit(q)} onClick={()=>void validateQuestion(q)}>{submitting===q.id?(isEs?'Validando…':'Validation…'):(isEs?'Validar':'Valider')}</button>
+     {isChecked&&<div className={`curriculum-feedback ${correct?'success':'error'}`}><strong>{correct?(isEs?'Respuesta correcta':'Bonne réponse'):(isEs?'Para revisar':'À revoir')}</strong>{!correct&&q.question_type==='fill_blank'&&accepted.length>0&&<p>{isEs?'Respuesta esperada':'Réponse attendue'} : {results[q.id]?.correct_answer??accepted[0]}</p>}{!correct&&q.question_type==='visual_hotspot'&&correctPoint?.label&&<p>{isEs?'Zona correcta':'Bonne zone'} : {correctPoint.label}</p>}{!correct&&q.question_type==='matching'&&pairs.length>0&&<ul>{pairs.map(pair=><li key={pair.left}>{pair.left} → {pair.right}</li>)}</ul>}{q.explanation&&<p>{q.explanation}</p>}{results[q.id]?.xp_earned!=null&&<small>+{results[q.id].xp_earned} XP</small>}{q.source_label&&<small>{q.source_label}</small>}</div>}
     </article>
    })}</div>}
    {checkedCount>0&&<p className="curriculum-score">{isEs?'Puntuación actual':'Score actuel'} : <strong>{score}/{checkedCount}</strong></p>}
