@@ -11,7 +11,8 @@ import './ProfilePage.css'
 
 function levelLabel(programId:ProgramId,access:AccessibleProgram|undefined,studyYear:number){
   if(programId==='kineo-fr') return `K${studyYear}`
-  return access?.level_code ?? 'Niveau attribué'
+  if(access?.level_code)return access.level_code
+  return programId==='kineo-es'?'Nivel asignado':'Niveau attribué'
 }
 
 export default function ProfilePage() {
@@ -50,7 +51,7 @@ export default function ProfilePage() {
       setProfile(updated); setUsername(updated.username ?? '')
       window.dispatchEvent(new Event('kineo-profile-updated'))
       setMessage(activeProgram.id==='kineo-es'?'Perfil actualizado ✓':'Profil mis à jour ✓')
-    } catch (err) { setMessage(err instanceof Error ? err.message : 'Impossible de mettre à jour le profil.') }
+    } catch (err) { setMessage(err instanceof Error ? err.message : (activeProgram.id==='kineo-es'?'No se pudo actualizar el perfil.':'Impossible de mettre à jour le profil.')) }
     finally { setBusy(false) }
   }
 
@@ -68,14 +69,15 @@ export default function ProfilePage() {
 
   async function changePhoto(file?: File) {
     if (!file) return
-    setPhotoBusy(true); setMessage('Préparation de la photo…')
+    setPhotoBusy(true); setMessage(activeProgram.id==='kineo-es'?'Preparando la foto…':'Préparation de la photo…')
     try {
       const nextUrl = await uploadProfilePhoto(file)
       setAvatarUrl(nextUrl)
       const refreshed = await getCurrentProfile()
       if (refreshed) setProfile(refreshed)
-      setMessage('Photo de profil enregistrée ✓')
-    } catch (err) { setMessage(err instanceof Error ? err.message : 'Impossible d’envoyer la photo.') }
+      window.dispatchEvent(new CustomEvent('kineo-profile-updated',{detail:{avatarUrl:nextUrl}}))
+      setMessage(activeProgram.id==='kineo-es'?'Foto de perfil guardada ✓':'Photo de profil enregistrée ✓')
+    } catch (err) { setMessage(err instanceof Error ? err.message : (activeProgram.id==='kineo-es'?'No se pudo enviar la foto.':'Impossible d’envoyer la photo.')) }
     finally { setPhotoBusy(false); if (fileInputRef.current) fileInputRef.current.value = '' }
   }
 
@@ -85,14 +87,15 @@ export default function ProfilePage() {
       await removeProfilePhoto(avatarUrl)
       setAvatarUrl(null)
       setProfile(current => current ? { ...current, avatar_url: null } : current)
-      setMessage('Photo de profil supprimée ✓')
-    } catch (err) { setMessage(err instanceof Error ? err.message : 'Impossible de supprimer la photo.') }
+      window.dispatchEvent(new CustomEvent('kineo-profile-updated',{detail:{avatarUrl:null}}))
+      setMessage(activeProgram.id==='kineo-es'?'Foto de perfil eliminada ✓':'Photo de profil supprimée ✓')
+    } catch (err) { setMessage(err instanceof Error ? err.message : (activeProgram.id==='kineo-es'?'No se pudo eliminar la foto.':'Impossible de supprimer la photo.')) }
     finally { setPhotoBusy(false) }
   }
 
   function switchProgram(programId:ProgramId){selectProgram(programId);window.location.assign('/')}
 
-  if (!profile) return <section className="card"><p>Chargement du profil…</p></section>
+  if (!profile) return <section className="card"><p>{activeProgram.id==='kineo-es'?'Cargando el perfil…':'Chargement du profil…'}</p></section>
   const fallback = (firstName || username || '?').slice(0, 1).toUpperCase()
   const visiblePrograms=profile.role==='admin'?programs:programs.filter(program=>accessiblePrograms.some(access=>access.program_id===program.id))
   const activeAccess=accessiblePrograms.find(access=>access.program_id===activeProgram.id)
