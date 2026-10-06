@@ -27,4 +27,14 @@ if(!sw.includes('version.json')) throw new Error('Service worker does not handle
 const html=fs.readFileSync(path.join(dist,'index.html'),'utf8')
 if(!html.includes('<div id="root"></div>')) throw new Error('Production index is missing React root')
 
-console.log(`Build smoke checks passed for ${version.version}`)
+const assets=path.join(dist,'assets')
+const jsFiles=fs.readdirSync(assets).filter(file=>file.endsWith('.js'))
+const maxChunkBytes=320*1024
+const maxEntryBytes=100*1024
+for(const file of jsFiles){
+ const size=fs.statSync(path.join(assets,file)).size
+ if(size>maxChunkBytes) throw new Error(`JavaScript chunk budget exceeded: ${file} is ${(size/1024).toFixed(1)} kB (limit 320 kB)`)
+ if(file.startsWith('index-')&&size>maxEntryBytes) throw new Error(`Initial app bundle budget exceeded: ${file} is ${(size/1024).toFixed(1)} kB (limit 100 kB)`)
+}
+
+console.log(`Build smoke checks passed for ${version.version}; ${jsFiles.length} JS chunks within budget`)
