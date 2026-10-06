@@ -59,3 +59,20 @@ export const programs:Program[]=[
 export function getProgram(id:ProgramId){return programs.find(program=>program.id===id)??programs[0]}
 export function getCurrentProgram():Program{if(typeof window==='undefined')return programs[0];const id=localStorage.getItem(PROGRAM_STORAGE_KEY) as ProgramId|null;return getProgram(id??'kineo-fr')}
 export function selectProgram(id:ProgramId){localStorage.setItem(PROGRAM_STORAGE_KEY,id)}
+
+export function getProgramLevel(program:Program,code?:string|null){
+ if(!code)return null
+ return program.levels.find(level=>level.shortLabel.toLowerCase()===code.toLowerCase())??null
+}
+
+export function getUnlockedProgramLevels(program:Program,activeCode?:string|null){
+ const active=getProgramLevel(program,activeCode)
+ if(!active)return program.levels.slice(0,1)
+ return program.levels.filter(level=>level.order<=active.order)
+}
+
+export function isProgramLevelUnlocked(program:Program,activeCode:string|null|undefined,targetCode:string){
+ const active=getProgramLevel(program,activeCode)
+ const target=getProgramLevel(program,targetCode)
+ return Boolean(active&&target&&target.order<=active.order)
+}
