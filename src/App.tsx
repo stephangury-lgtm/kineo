@@ -37,6 +37,7 @@ import VisualReviewerPage from './pages/VisualReviewerPage'
 import VisualRevisionPage from './pages/VisualRevisionPage'
 import WeakRevisionPage from './pages/WeakRevisionPage'
 import './curriculum.css'
+import './feedback-fixes.css'
 
 export default function App(){
  const program=getCurrentProgram(),isKineoFrance=program.id==='kineo-fr',isSpain=program.id==='kineo-es'
