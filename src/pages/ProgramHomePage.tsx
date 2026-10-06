@@ -1,8 +1,13 @@
-import { useEffect,useState } from 'react'
+import { useEffect,useMemo,useState } from 'react'
 import { Link } from 'react-router-dom'
 import InstallAppCard from '../components/InstallAppCard'
 import { getCurrentProgram,getUnlockedProgramLevels } from '../curriculum/programs'
+import { getCurriculumFriendChallenges,type FriendChallenge } from '../services/challengeApi'
+import { getBadgesV2,getGamificationSummaryV2,type BadgesV2,type GamificationSummaryV2 } from '../services/kineoApi'
 import { getAccessiblePrograms,getCurriculumProgress,type AccessibleProgram,type CurriculumProgress } from '../services/programApi'
+import { getFriendships,type FriendshipsSummary } from '../services/socialApi'
+
+const emptyFriends:FriendshipsSummary={friends:[],incoming:[],outgoing:[]}
 
 export default function ProgramHomePage(){
  const program=getCurrentProgram()
@@ -10,17 +15,44 @@ export default function ProgramHomePage(){
  const isIfsi=program.id==='ifsi-fr'
  const [access,setAccess]=useState<AccessibleProgram|null>(null)
  const [progress,setProgress]=useState<CurriculumProgress|null>(null)
- useEffect(()=>{let cancelled=false;Promise.all([getAccessiblePrograms(),getCurriculumProgress(program.id)]).then(([items,nextProgress])=>{if(cancelled)return;setAccess(items.find(item=>item.program_id===program.id)??null);setProgress(nextProgress)}).catch(()=>{if(!cancelled){setAccess(null);setProgress(null)}});return()=>{cancelled=true}},[program.id])
+ const [game,setGame]=useState<GamificationSummaryV2|null>(null)
+ const [badges,setBadges]=useState<BadgesV2|null>(null)
+ const [friends,setFriends]=useState<FriendshipsSummary>(emptyFriends)
+ const [challenges,setChallenges]=useState<FriendChallenge[]>([])
+ const [error,setError]=useState<string|null>(null)
+ useEffect(()=>{let cancelled=false;Promise.all([
+  getAccessiblePrograms(),
+  getCurriculumProgress(program.id),
+  getGamificationSummaryV2(),
+  getBadgesV2(),
+  getFriendships(program.id),
+  getCurriculumFriendChallenges(program.id),
+ ]).then(([items,nextProgress,nextGame,nextBadges,nextFriends,nextChallenges])=>{
+  if(cancelled)return
+  setAccess(items.find(item=>item.program_id===program.id)??null)
+  setProgress(nextProgress);setGame(nextGame);setBadges(nextBadges);setFriends(nextFriends);setChallenges(nextChallenges)
+ }).catch((e:Error)=>{if(!cancelled)setError(e.message)});return()=>{cancelled=true}},[program.id])
  const activeLevel=access?.level_code??'—'
  const unlockedLevels=getUnlockedProgramLevels(program,access?.level_code)
  const refLabel=isIfsi?`Référentiel ${access?.curriculum_version==='2026'?'2026':'2009'}`:null
  const coverage=progress?.coverage_percent??0
  const completion=progress?.completion_percent??0
+ const xp=game?.xp_total??0
+ const streak=game?.streak.current??0
+ const nextBadge=useMemo(()=>badges?.badges.filter(badge=>!badge.earned).sort((a,b)=>b.progress_percent-a.progress_percent)[0]??null,[badges])
+ const incomingChallenges=challenges.filter(item=>item.direction==='received'&&item.status==='pending')
+ const playableChallenges=challenges.filter(item=>(item.status==='accepted'||item.status==='in_progress')&&!item.has_played)
+ const socialAttention=friends.incoming.length+incomingChallenges.length+playableChallenges.length
+ if(error&&!progress&&!game)return <section className="card"><h1>{isSpain?'Inicio no disponible':'Accueil indisponible'}</h1><p>{error}</p></section>
+ if(!progress||!game||!badges)return <section className="card skeleton-card"><p>{isSpain?'Cargando tu progreso…':'Chargement de ta progression…'}</p></section>
  return <div className="stack dashboard-stack program-home-page">
-  <section className="hero-card dashboard-daily-hero program-home-hero"><div className="hero-copy"><span className="hero-kicker">{program.flag} {isSpain?'Hoy · tu nivel':'Aujourd’hui · ton niveau'} {activeLevel}</span><h1>{isSpain?'¿Qué quieres trabajar hoy?':'Que veux-tu travailler aujourd’hui ?'}</h1><p>{isSpain?'Retoma tu temario, consolida tus bases y sigue tu progreso desde un único espacio.':'Reprends ton cursus, consolide tes fondamentaux et suis ta progression depuis un seul espace.'}</p><Link className="primary-button hero-action" to="/parcours">{isSpain?'Abrir mi temario':'Ouvrir mon cursus'}</Link></div><div className="hero-orbit"><span>{isSpain?'🧠':'🩺'}</span></div></section>
+  <section className="hero-card dashboard-daily-hero program-home-hero"><div className="hero-copy"><span className="hero-kicker">{program.flag} {isSpain?'Hoy · nivel':'Aujourd’hui · niveau'} {activeLevel}</span><h1>{streak>0?(isSpain?`${streak} día${streak>1?'s':''} seguidos 🔥`:`${streak} jour${streak>1?'s':''} de suite 🔥`):(isSpain?'Empieza tu racha hoy 🔥':'Commence ta série aujourd’hui 🔥')}</h1><p>{isSpain?'Retoma tu temario, consolida tus bases y sigue tu progreso desde un único espacio.':'Reprends ton cursus, consolide tes fondamentaux et suis ta progression depuis un seul espace.'}</p><Link className="primary-button hero-action" to="/fondamentaux?mode=mix">{isSpain?'Repasar · 10 preguntas':'Réviser · 10 questions'}</Link></div><div className="hero-orbit"><span>🧠</span></div></section>
   <InstallAppCard/>
-  {progress&&<section className="card progress-card"><div className="section-heading"><div><p className="eyebrow">{isSpain?'Progreso':'Progression'}</p><h2>{isSpain?`${coverage}% del nivel trabajado`:`${coverage}% du niveau travaillé`}</h2></div><Link className="text-link" to="/stats">{isSpain?'Detalles':'Détails'}</Link></div><div className="mastery-ring" style={{'--progress':`${Math.min(100,coverage)}%`} as React.CSSProperties}><span>{coverage}%</span></div><div className="progress-copy"><strong>{progress.questions_answered}/{progress.questions_total} {isSpain?'preguntas trabajadas':'questions travaillées'}</strong><span>{progress.topics_completed}/{progress.topics_total} {isSpain?'temas completados':'thèmes terminés'} · {completion}% {isSpain?'finalizado':'complété'}</span></div></section>}
+  {socialAttention>0&&<section className="card challenge-card"><div className="challenge-icon">⚔️</div><div className="challenge-copy"><p className="eyebrow">{isSpain?'No te lo pierdas':'À ne pas manquer'}</p><h2>{socialAttention} {isSpain?(socialAttention>1?'acciones sociales':'acción social'):`action${socialAttention>1?'s':''} sociale${socialAttention>1?'s':''}`}</h2><p>{friends.incoming.length>0?(isSpain?`${friends.incoming.length} invitación${friends.incoming.length>1?'es':''} de amistad · `:`${friends.incoming.length} invitation${friends.incoming.length>1?'s':''} d’ami · `):''}{incomingChallenges.length>0?(isSpain?`${incomingChallenges.length} reto${incomingChallenges.length>1?'s':''} recibido${incomingChallenges.length>1?'s':''} · `:`${incomingChallenges.length} défi${incomingChallenges.length>1?'s':''} reçu${incomingChallenges.length>1?'s':''} · `):''}{playableChallenges.length>0?(isSpain?`${playableChallenges.length} duelo${playableChallenges.length>1?'s':''} por jugar`:`${playableChallenges.length} duel${playableChallenges.length>1?'s':''} à jouer`):''}</p></div><Link className="secondary-button" to="/amis">{isSpain?'Ver':'Voir'}</Link></section>}
+  <section className="dashboard-metrics"><article className="metric-card"><span className="metric-icon">⚡</span><div><small>XP</small><strong>{xp}</strong></div></article><article className="metric-card"><span className="metric-icon">🔥</span><div><small>{isSpain?'Racha':'Série'}</small><strong>{streak} {isSpain?'d':'j'}</strong></div></article><article className="metric-card"><span className="metric-icon">◉</span><div><small>{isSpain?'Cobertura':'Couverture'}</small><strong>{coverage}%</strong></div></article></section>
+  {nextBadge&&<section className="card next-badge-card"><div className="next-badge-icon">{nextBadge.icon||'🎯'}</div><div className="next-badge-copy"><p className="eyebrow">{isSpain?'Próximo logro':'Prochain badge'}</p><h2>{nextBadge.name}</h2><p>{nextBadge.description}</p><div className="progress-track small"><div className="progress-fill" style={{width:`${Math.min(100,nextBadge.progress_percent)}%`}}/></div><small>{nextBadge.current_value}/{nextBadge.target_value} · {nextBadge.progress_percent}%</small></div><Link className="text-link" to="/rewards">{isSpain?'Todos los logros':'Tous les badges'}</Link></section>}
+  <section className="card progress-card"><div className="section-heading"><div><p className="eyebrow">{isSpain?'Progreso':'Progression'}</p><h2>{isSpain?`${coverage}% del nivel trabajado`:`${coverage}% du niveau travaillé`}</h2></div><Link className="text-link" to="/stats">{isSpain?'Detalles':'Détails'}</Link></div><div className="mastery-ring" style={{'--progress':`${Math.min(100,coverage)}%`} as React.CSSProperties}><span>{coverage}%</span></div><div className="progress-copy"><strong>{progress.questions_answered}/{progress.questions_total} {isSpain?'preguntas trabajadas':'questions travaillées'}</strong><span>{progress.topics_completed}/{progress.topics_total} {isSpain?'temas completados':'thèmes terminés'} · {completion}% {isSpain?'finalizado':'complété'}</span></div></section>
   <section className="card"><div className="section-heading"><div><p className="eyebrow">{isSpain?'Nivel activo':'Niveau actif'}</p><h2>{activeLevel}{refLabel?` · ${refLabel}`:''}</h2></div><span className="program-status live">{isSpain?'Asignado':'Attribué'}</span></div><p>{isSpain?'Tu nivel activo determina los contenidos desbloqueados. Puedes repasar este nivel y todos los anteriores desde el temario.':'Ton niveau actif détermine les contenus déverrouillés. Tu peux réviser ce niveau et tous les précédents depuis le parcours.'}</p><div className="program-steps">{unlockedLevels.map(level=><span key={level.id}>{level.shortLabel}</span>)}</div><Link className="secondary-button" to="/parcours">{isSpain?'Ver niveles accesibles':'Voir les niveaux accessibles'}</Link></section>
-  <section className="quick-grid program-home-actions"><Link className="quick-card" to="/parcours"><span>▦</span><strong>{isSpain?'Temario':'Cursus'}</strong><small>{isSpain?'Materias, fichas y práctica':'UE, fiches et exercices'}</small></Link><Link className="quick-card" to="/fondamentaux"><span>🧱</span><strong>{isSpain?'Fundamentos':'Fondamentaux'}</strong><small>{isSpain?'Repasar lo esencial':'Revoir les bases essentielles'}</small></Link><Link className="quick-card" to="/amis"><span>⚔️</span><strong>{isSpain?'Amigos y retos':'Amis & défis'}</strong><small>{isSpain?'Retos entre estudiantes':'Défis entre étudiants'}</small></Link><Link className="quick-card" to="/rewards"><span>★</span><strong>{isSpain?'Logros':'Badges'}</strong><small>{isSpain?'XP y recompensas':'XP et progression'}</small></Link></section>
+  <section className="quick-grid"><Link className="quick-card" to="/parcours"><span>▦</span><strong>{isSpain?'Temario':'Parcours'}</strong><small>{isSpain?'Elegir una materia':'Choisir une UE'}</small></Link><Link className="quick-card" to="/fondamentaux?mode=foundation"><span>🧱</span><strong>{isSpain?'Fundamentos':'Fondamentaux'}</strong><small>{isSpain?'Repasar lo esencial':'Revoir les acquis'}</small></Link><Link className="quick-card" to="/amis"><span>⚔️</span><strong>{isSpain?'Amigos y retos':'Amis & défis'}</strong><small>{socialAttention>0?(isSpain?`${socialAttention} acción${socialAttention>1?'es':''}`:`${socialAttention} action${socialAttention>1?'s':''} à traiter`):(isSpain?'Retar a un compañero':'Défier un camarade')}</small></Link><Link className="quick-card" to="/stats"><span>↗</span><strong>{isSpain?'Estadísticas':'Statistiques'}</strong><small>{isSpain?'Ver mi progreso':'Voir mes progrès'}</small></Link></section>
  </div>
 }
