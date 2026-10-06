@@ -22,7 +22,7 @@ export default function GamificationPage() {
       .catch((err: Error) => setError(err.message))
   }, [])
 
-  if (error) return <section className="card"><h1>{isSpain?'Gamificación no disponible':'Gamification indisponible'}</h1><p>{error}</p></section>
+  if (error) return <section className="card"><h1>{isSpain?'Recompensas no disponibles':'Gamification indisponible'}</h1><p>{error}</p></section>
   if (!summary || !badges) return <section className="card skeleton-card"><p>{isSpain?'Cargando tus recompensas…':'Chargement de tes récompenses…'}</p></section>
 
   const level = summary.level
@@ -45,7 +45,7 @@ export default function GamificationPage() {
       </section>
 
       <section className="stats-grid">
-        <article className="card score-card"><span>🔥 {isSpain?'Racha actual':'Série actuelle'}</span><strong>{summary.streak.current} j</strong><small>{isSpain?'Mejor':'Meilleure'} : {summary.streak.longest} j</small></article>
+        <article className="card score-card"><span>🔥 {isSpain?'Racha actual':'Série actuelle'}</span><strong>{summary.streak.current} {isSpain?'d':'j'}</strong><small>{isSpain?'Mejor':'Meilleure'} : {summary.streak.longest} {isSpain?'d':'j'}</small></article>
         <article className="card score-card"><span>🏅 {isSpain?'Logros':'Badges'}</span><strong>{summary.badges.earned}/{summary.badges.total}</strong><small>{earned.length} {isSpain?'desbloqueados':`débloqué${earned.length > 1 ? 's' : ''}`}</small></article>
         <article className="card score-card"><span>✅ {isSpain?'Respuestas correctas':'Bonnes réponses'}</span><strong>{badges.stats.correct_answers}</strong><small>{isSpain?'En todas tus revisiones':'Sur l’ensemble de tes révisions'}</small></article>
         <article className="card score-card"><span>⚡ {isSpain?'Próximo nivel':'Prochain niveau'}</span><strong>{level.next_level ? level.xp_to_next : 0} XP</strong><small>{level.next_level ? `${isSpain?'Hacia':'Vers'} ${level.next_name}` : (isSpain?'Nivel máximo':'Niveau maximum')}</small></article>
@@ -69,7 +69,7 @@ export default function GamificationPage() {
       <section className="card">
         <div className="section-heading">
           <div>
-            <p className="eyebrow">Collection</p>
+            <p className="eyebrow">{isSpain?'Colección':'Collection'}</p>
             <h2>{isSpain?'Logros desbloqueados':'Badges débloqués'}</h2>
           </div>
           <strong>{earned.length}</strong>
