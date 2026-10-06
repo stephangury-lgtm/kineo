@@ -4,6 +4,8 @@ export type StudentProfile={id:string;first_name:string|null;username:string|nul
 
 export async function getCurrentProfile(){const{data:userData,error:userError}=await supabase.auth.getUser();if(userError)throw userError;const user=userData.user;if(!user)return null;const{data,error}=await supabase.from('profiles').select('id, first_name, username, avatar_url, study_year, role').eq('id',user.id).maybeSingle();if(error)throw error;return data as StudentProfile|null}
 
+export async function touchUserActivity(){const{error}=await supabase.rpc('touch_user_activity_v1');if(error)throw error}
+
 export async function updateStudyProfile(params:{firstName?:string;username?:string;studyYear:number}){
  const username=params.username?.trim()
  if(params.studyYear<2||params.studyYear>5)throw new Error('Choisis une année comprise entre K2 et K5.')
