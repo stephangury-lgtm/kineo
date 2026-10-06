@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getUnreadNotificationCount, subscribeToNotificationChanges } from '../services/notificationApi'
+import { getCurrentProgram } from '../curriculum/programs'
 import './NotificationBell.css'
 
 type BadgeNavigator = Navigator & {
@@ -20,6 +21,7 @@ function syncAppBadge(count: number) {
 }
 
 export default function NotificationBell() {
+  const isSpain=getCurrentProgram().id==='kineo-es'
   const [count, setCount] = useState(0)
 
   useEffect(() => {
@@ -52,8 +54,9 @@ export default function NotificationBell() {
     }
   }, [])
 
+  const notificationLabel=count>0?(isSpain?`${count} notificación${count>1?'es':''} sin leer`:`${count} notification${count > 1 ? 's' : ''} non lue${count > 1 ? 's' : ''}`):(isSpain?'Notificaciones':'Notifications')
   return (
-    <Link className={`notification-bell${count > 0 ? ' has-unread' : ''}`} to="/notifications" aria-label={count > 0 ? `${count} notification${count > 1 ? 's' : ''} non lue${count > 1 ? 's' : ''}` : 'Notifications'} title={count > 0 ? `${count} notification${count > 1 ? 's' : ''} non lue${count > 1 ? 's' : ''}` : 'Notifications'}>
+    <Link className={`notification-bell${count > 0 ? ' has-unread' : ''}`} to="/notifications" aria-label={notificationLabel} title={notificationLabel}>
       <span aria-hidden="true">🔔</span>
       {count > 0 && <strong aria-live="polite">{count > 9 ? '9+' : count}</strong>}
     </Link>
