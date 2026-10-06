@@ -14,6 +14,7 @@ export default function ProgramLandingPage(){
  const [curriculumVersion,setCurriculumVersion]=useState<CurriculumVersion>(()=>isIfsi?(localStorage.getItem(referenceStorageKey) as CurriculumVersion|null)??'2009':'default')
  const [assignedAccess,setAssignedAccess]=useState<AccessibleProgram|null>(null)
  const [syncing,setSyncing]=useState(false)
+ const [syncError,setSyncError]=useState<string|null>(null)
  const [units,setUnits]=useState<ProgramCatalogUnit[]>([])
  const [loadingUnits,setLoadingUnits]=useState(false)
  const [catalogError,setCatalogError]=useState<string|null>(null)
@@ -50,18 +51,34 @@ export default function ProgramLandingPage(){
 
  async function chooseLevel(code:string){
   if(code===selectedLevel)return
+  const previous=selectedLevel
   setSelectedLevel(code)
   localStorage.setItem(storageKey,code)
-  setSyncing(true)
-  try{await saveProgramLevel(p.id,code);setAssignedAccess(current=>current?{...current,level_code:code}:current)}catch{/* local preference remains available if the server update fails */}finally{setSyncing(false)}
+  setSyncing(true);setSyncError(null)
+  try{
+   await saveProgramLevel(p.id,code)
+   setAssignedAccess(current=>current?{...current,level_code:code}:current)
+  }catch(error){
+   setSelectedLevel(previous)
+   if(previous)localStorage.setItem(storageKey,previous);else localStorage.removeItem(storageKey)
+   setSyncError(error instanceof Error?error.message:(isSpain?'No se pudo actualizar el nivel.':'Impossible de mettre à jour le niveau.'))
+  }finally{setSyncing(false)}
  }
 
  async function chooseReference(version:'2009'|'2026'){
   if(!isIfsi||version===curriculumVersion)return
+  const previous=curriculumVersion
   setCurriculumVersion(version)
   localStorage.setItem(referenceStorageKey,version)
-  setSyncing(true)
-  try{await saveProgramCurriculumVersion(p.id,version)}catch{/* keep the local choice visible while preserving the server-side assignment */}finally{setSyncing(false)}
+  setSyncing(true);setSyncError(null)
+  try{
+   await saveProgramCurriculumVersion(p.id,version)
+   setAssignedAccess(current=>current?{...current,curriculum_version:version}:current)
+  }catch(error){
+   setCurriculumVersion(previous)
+   localStorage.setItem(referenceStorageKey,previous)
+   setSyncError(error instanceof Error?error.message:'Impossible de mettre à jour le référentiel.')
+  }finally{setSyncing(false)}
  }
 
  async function toggleUnit(unitId:string){
@@ -74,8 +91,8 @@ export default function ProgramLandingPage(){
 
  return <div className="stack">
   <section className="hero-card"><div className="hero-copy"><span className="hero-kicker">{p.flag} {p.country}</span><h1>{p.name}</h1><p>{isSpain?'Un recorrido de Fisioterapia para aprender la materia y dominar progresivamente el vocabulario clínico en español, con apoyo FR ↔ ES.':isIfsi?'Un parcours IFSI organisé sur 3 ans et 6 semestres, avec séparation stricte entre les référentiels 2009 et 2026.':'Un parcours organisé avec des fiches de révision et des exercices accessibles chapitre par chapitre.'}</p><span className="program-status live">{isSpain?'Plan asignado a la cuenta':isIfsi?`Référentiel ${curriculumVersion}`:'Cursus du compte'}</span></div><div className="hero-orbit"><span>{isSpain?'🇪🇸':'🩺'}</span></div></section>
-  {isIfsi&&<section className="card ifsi-reference-card"><div className="section-heading"><div><p className="eyebrow">Référentiel national</p><h2>Quand es-tu entré en IFSI ?</h2></div><span className="program-status foundation">Réf. {curriculumVersion}</span></div><p>Choisis simplement ta période d’entrée en formation. Kineo sélectionnera automatiquement le bon référentiel et n’affichera que les UE, fiches et quiz correspondants.</p><div className="ifsi-reference-grid"><button type="button" className={`semester-card ${curriculumVersion==='2009'?'active':''}`} onClick={()=>void chooseReference('2009')} disabled={syncing}><strong>Je suis entré avant septembre 2026</strong><small>Référentiel 2009 · UE historiques 1.x à 6.x.</small></button><button type="button" className={`semester-card ${curriculumVersion==='2026'?'active':''}`} onClick={()=>void chooseReference('2026')} disabled={syncing}><strong>Je suis entré à partir de septembre 2026</strong><small>Référentiel 2026 · nouveaux domaines de compétences et nouvelles UE.</small></button></div></section>}
-  <section className="card"><div className="section-heading"><div><p className="eyebrow">{isSpain?'Estructura del grado':'Structure du parcours'}</p><h2>{isSpain?'4 años de Fisioterapia':'6 semestres IFSI'}</h2></div></div><p>{isSpain?'Selecciona tu nivel de trabajo. El contenido se organiza por materias y capítulos con práctica activa.':'Choisis ton semestre actif. Tu peux le mettre à jour au fil de ta formation.'}</p><div className="semester-grid">{p.levels.map(level=><button type="button" className={`semester-card ${selectedLevel===level.shortLabel?'active':''}`} key={level.id} onClick={()=>void chooseLevel(level.shortLabel)} disabled={syncing}><span>{String(level.order).padStart(2,'0')}</span><strong>{level.shortLabel}</strong><small>{level.label} · {isSpain?'Fichas · práctica FR/ES · casos · visuales':'UE · fiches · quiz · cas cliniques'}</small></button>)}</div></section>
+  {isIfsi&&<section className="card ifsi-reference-card"><div className="section-heading"><div><p className="eyebrow">Référentiel national</p><h2>Quand es-tu entré en IFSI ?</h2></div><span className="program-status foundation">Réf. {curriculumVersion}</span></div><p>Choisis simplement ta période d’entrée en formation. Kineo sélectionnera automatiquement le bon référentiel et n’affichera que les UE, fiches et quiz correspondants.</p><div className="ifsi-reference-grid"><button type="button" className={`semester-card ${curriculumVersion==='2009'?'active':''}`} onClick={()=>void chooseReference('2009')} disabled={syncing}><strong>Je suis entré avant septembre 2026</strong><small>Référentiel 2009 · UE historiques 1.x à 6.x.</small></button><button type="button" className={`semester-card ${curriculumVersion==='2026'?'active':''}`} onClick={()=>void chooseReference('2026')} disabled={syncing}><strong>Je suis entré à partir de septembre 2026</strong><small>Référentiel 2026 · nouveaux domaines de compétences et nouvelles UE.</small></button></div>{syncError&&<p className="form-error">{syncError}</p>}</section>}
+  <section className="card"><div className="section-heading"><div><p className="eyebrow">{isSpain?'Estructura del grado':'Structure du parcours'}</p><h2>{isSpain?'4 años de Fisioterapia':'6 semestres IFSI'}</h2></div></div><p>{isSpain?'Selecciona tu nivel de trabajo. El contenido se organiza por materias y capítulos con práctica activa.':'Choisis ton semestre actif. Tu peux le mettre à jour au fil de ta formation.'}</p><div className="semester-grid">{p.levels.map(level=><button type="button" className={`semester-card ${selectedLevel===level.shortLabel?'active':''}`} key={level.id} onClick={()=>void chooseLevel(level.shortLabel)} disabled={syncing}><span>{String(level.order).padStart(2,'0')}</span><strong>{level.shortLabel}</strong><small>{level.label} · {isSpain?'Fichas · práctica FR/ES · casos · visuales':'UE · fiches · quiz · cas cliniques'}</small></button>)}</div>{!isIfsi&&syncError&&<p className="form-error">{syncError}</p>}</section>
   <section className="card"><div className="section-heading"><div><p className="eyebrow">{isSpain?'Materias':'Unités d’enseignement'}</p><h2>{selectedLevel}{isIfsi?` · Réf. ${curriculumVersion}`:''}</h2></div><span className="program-status foundation">{loadingUnits?(isSpain?'Cargando…':'Chargement…'):`${units.length} ${isSpain?'configurada'+(units.length!==1?'s':''):'configurée'+(units.length>1?'s':'')}`}</span></div>{catalogError&&<p>{catalogError}</p>}{!loadingUnits&&units.length===0&&!catalogError?<div className="admin-empty"><span>📚</span><div><strong>{isSpain?'Contenido pedagógico en preparación.':isIfsi&&curriculumVersion==='2026'?'Référentiel 2026 en cours d’intégration.':'Contenu pédagogique à intégrer.'}</strong><p>{isSpain?'Las materias se integran únicamente a partir de fuentes y documentos validados, sin inventar contenido.':isIfsi&&curriculumVersion==='2026'?'Les nouvelles UE seront ajoutées semestre par semestre exclusivement à partir de l’arrêté du 20 février 2026 et de supports validés.':'Les UE seront ajoutées à partir du référentiel et des supports validés, sans contenu inventé.'}</p></div></div>:<div className="subject-list">{units.map(unit=>{const isOpen=openUnitId===unit.id;const topics=topicsByUnit[unit.id]??[];return <article className={`subject-row curriculum-unit ${isOpen?'open':''}`} key={unit.id}><button type="button" className="curriculum-unit-toggle" onClick={()=>void toggleUnit(unit.id)}><div><strong>{unit.icon?`${unit.icon} `:''}{unit.code?`${unit.code} · `:''}{unit.name}</strong><span>{unit.description??(unit.translation_mode==='bilingual'?(isSpain?'Modo bilingüe FR/ES':'Mode bilingue FR/ES'):unit.unit_type.toUpperCase())}</span></div><span>{isOpen?'−':'+'}</span></button>{isOpen&&<div className="curriculum-topic-list">{loadingTopics===unit.id?<p>{isSpain?'Cargando capítulos…':'Chargement des chapitres…'}</p>:topics.length===0?<p className="curriculum-empty">{isSpain?'No hay capítulos publicados en esta materia.':'Aucun chapitre importé pour cette UE.'}</p>:topics.map(topic=><article className="curriculum-topic" key={topic.id}><span>{String(topic.display_order).padStart(2,'0')}</span><div className="curriculum-topic-copy"><strong>{topic.name}</strong>{topic.description&&<small>{topic.description}</small>}<div className="curriculum-topic-actions"><Link className="secondary-button compact-button" to={`/cours/${topic.id}#fiche`}>📖 {isSpain?'Ver ficha':'Lire la fiche'}</Link><Link className="primary-button compact-button" to={`/cours/${topic.id}#qcm`}>✅ {isSpain?'Práctica activa':'Révision active'}</Link></div></div></article>)}</div>}</article>})}</div>}</section>
   <section className="card"><div className="section-heading"><div><p className="eyebrow">{isSpain?'Progreso y comunidad':'Progression & communauté'}</p><h2>{isSpain?'Logros, amigos y retos':'Badges, amis et défis'}</h2></div></div><div className="quick-grid"><Link className="quick-card" to="/rewards"><span>🏅</span><strong>{isSpain?'Logros':'Badges'}</strong><small>{isSpain?'XP, rachas y recompensas.':'XP, séries et récompenses.'}</small></Link><Link className="quick-card" to="/amis"><span>⚔️</span><strong>{isSpain?'Amigos y retos':'Amis & défis'}</strong><small>{isSpain?'Invitaciones, duelos y desafíos.':'Invitations, duels et challenges.'}</small></Link><Link className="quick-card" to="/classement"><span>🏆</span><strong>{isSpain?'Clasificación':'Classement'}</strong><small>{isSpain?'Compara tu progreso con la comunidad.':'Comparer ta progression avec la communauté.'}</small></Link><Link className="quick-card" to="/profil"><span>👤</span><strong>{isSpain?'Perfil':'Profil'}</strong><small>{isSpain?'Alias, nivel y preferencias.':'Pseudo, niveau et préférences.'}</small></Link></div></section>
  </div>
