@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getCurrentProgram } from '../curriculum/programs'
+import { getBadgeCopy } from '../curriculum/gamificationCopy'
 import {
   getBadgesV2,
   getGamificationSummaryV2,
@@ -56,8 +57,8 @@ export default function GamificationPage() {
           <div className="challenge-icon" aria-hidden="true">{nextBadge.icon || '🎯'}</div>
           <div className="challenge-copy">
             <p className="eyebrow">{isSpain?'Objetivo más cercano':'Objectif le plus proche'}</p>
-            <h2>{nextBadge.name}</h2>
-            <p>{nextBadge.description}</p>
+            <h2>{getBadgeCopy(nextBadge,isSpain).name}</h2>
+            <p>{getBadgeCopy(nextBadge,isSpain).description}</p>
             <div className="progress-track small" style={{ marginTop: 10 }}>
               <div className="progress-fill" style={{ width: `${Math.min(100, nextBadge.progress_percent)}%` }} />
             </div>
@@ -82,8 +83,8 @@ export default function GamificationPage() {
               <article className="badge-card earned" key={badge.id}>
                 <span className="badge-icon" aria-hidden="true">{badge.icon || '🏅'}</span>
                 <div className="badge-copy">
-                  <h3>{badge.name}</h3>
-                  <p>{badge.description}</p>
+                  <h3>{getBadgeCopy(badge,isSpain).name}</h3>
+                  <p>{getBadgeCopy(badge,isSpain).description}</p>
                   <span>{isSpain?'Desbloqueado':'Débloqué'} · {badge.progress_percent}%</span>
                 </div>
               </article>
@@ -105,8 +106,8 @@ export default function GamificationPage() {
             <article className="badge-card" key={badge.id}>
               <span className="badge-icon muted" aria-hidden="true">{badge.icon || '🔒'}</span>
               <div className="badge-copy">
-                <h3>{badge.name}</h3>
-                <p>{badge.description}</p>
+                <h3>{getBadgeCopy(badge,isSpain).name}</h3>
+                <p>{getBadgeCopy(badge,isSpain).description}</p>
                 <div className="progress-track small">
                   <div className="progress-fill" style={{ width: `${Math.min(100, badge.progress_percent)}%` }} />
                 </div>
