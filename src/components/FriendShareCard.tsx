@@ -1,6 +1,5 @@
 import { useEffect,useMemo,useState } from 'react'
 import { Link } from 'react-router-dom'
-import QRCode from 'qrcode'
 
 export default function FriendShareCard({username,isSpain=false}:{username:string;isSpain?:boolean}){
  const [message,setMessage]=useState<string|null>(null)
@@ -8,7 +7,8 @@ export default function FriendShareCard({username,isSpain=false}:{username:strin
  const inviteUrl=useMemo(()=>`${window.location.origin}/amis?add=${encodeURIComponent(username)}`,[username])
  useEffect(()=>{
   let active=true
-  QRCode.toDataURL(inviteUrl,{width:220,margin:1,errorCorrectionLevel:'M'})
+  void import('qrcode')
+   .then(({default:QRCode})=>QRCode.toDataURL(inviteUrl,{width:220,margin:1,errorCorrectionLevel:'M'}))
    .then(url=>{if(active)setQrUrl(url)})
    .catch(()=>{if(active)setQrUrl('')})
   return()=>{active=false}
