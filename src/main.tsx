@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import AppErrorBoundary from './components/AppErrorBoundary'
+import { reportClientError } from './services/clientErrorApi'
 import './styles.css'
 import './social.css'
 import './visual-quiz.css'
@@ -19,6 +20,18 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     </AppErrorBoundary>
   </React.StrictMode>,
 )
+
+window.addEventListener('error',(event)=>{
+ const message=event.error instanceof Error?event.error.message:event.message
+ if(!message)return
+ void reportClientError({message:`Window error: ${message}`})
+})
+
+window.addEventListener('unhandledrejection',(event)=>{
+ const reason=event.reason
+ const message=reason instanceof Error?reason.message:typeof reason==='string'?reason:'Unhandled promise rejection'
+ void reportClientError({message:`Promise rejection: ${message}`})
+})
 
 // Friend challenges are score-based duels, not corrective exercises.
 // Once an answer has been submitted (right or wrong), keep the selected state
