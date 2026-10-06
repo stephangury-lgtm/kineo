@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
+import { getCurrentProgram } from '../curriculum/programs'
 
 export default function OfflineStatus() {
+  const isSpain=getCurrentProgram().id==='kineo-es'
   const [online, setOnline] = useState(() => navigator.onLine)
 
   useEffect(() => {
@@ -15,5 +17,5 @@ export default function OfflineStatus() {
   }, [])
 
   if (online) return null
-  return <div className="offline-banner" role="status">Hors connexion · les écrans déjà chargés restent disponibles</div>
+  return <div className="offline-banner" role="status">{isSpain?'Sin conexión · las pantallas ya cargadas siguen disponibles':'Hors connexion · les écrans déjà chargés restent disponibles'}</div>
 }
