@@ -31,6 +31,19 @@ function matchingPairs(q:CurriculumQuizQuestion):CurriculumMatchPair[]{
  return Array.isArray(raw)?raw.filter((item):item is CurriculumMatchPair=>Boolean(item&&typeof item==='object'&&'left' in item&&'right' in item)):[]
 }
 
+function stableRank(value:string){
+ let hash=2166136261
+ for(let index=0;index<value.length;index++){
+  hash^=value.charCodeAt(index)
+  hash=Math.imul(hash,16777619)
+ }
+ return hash>>>0
+}
+
+function stableShuffle(values:string[],seed:string){
+ return [...values].sort((a,b)=>stableRank(`${seed}:${a}`)-stableRank(`${seed}:${b}`))
+}
+
 function isLocallyCorrect(q:CurriculumQuizQuestion,answer:string,matching:Record<string,string>){
  if(q.question_type==='fill_blank'){
   const normalized=normalizeAnswer(answer)
@@ -153,7 +166,7 @@ export default function CurriculumTopicPage(){
     const points=hotspots(q)
     const correctPoint=points.find(point=>point.correct)
     const pairs=matchingPairs(q)
-    const rightItems=[...new Set(pairs.map(pair=>pair.right))]
+    const rightItems=stableShuffle([...new Set(pairs.map(pair=>pair.right))],q.id)
     return <article className="curriculum-quiz-card" key={q.id}>
      <div style={{display:'flex',justifyContent:'space-between',gap:12,alignItems:'center'}}><strong>{isEs?'Pregunta':'Question'} {index+1}</strong><span className="program-status foundation">{formatLabel(q.question_type,isEs)}</span></div>
      <p>{q.question_text}</p>
