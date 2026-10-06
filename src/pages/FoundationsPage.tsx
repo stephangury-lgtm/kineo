@@ -1,0 +1,49 @@
+import { useEffect,useState } from 'react'
+import { Link,useSearchParams } from 'react-router-dom'
+import { getCurrentProgram } from '../curriculum/programs'
+import { getFoundationQuestions,submitFoundationAnswer,type FoundationMode,type FoundationQuestion } from '../services/foundationApi'
+import type { CurriculumAnswerResult } from '../services/programCatalogApi'
+
+export default function FoundationsPage(){
+ const program=getCurrentProgram()
+ const [params]=useSearchParams()
+ const mode:FoundationMode=params.get('mode')==='mix'?'mix':'foundation'
+ const isSpain=program.id==='kineo-es'
+ const [questions,setQuestions]=useState<FoundationQuestion[]>([])
+ const [index,setIndex]=useState(0)
+ const [selected,setSelected]=useState('')
+ const [result,setResult]=useState<CurriculumAnswerResult|null>(null)
+ const [correctCount,setCorrectCount]=useState(0)
+ const [loading,setLoading]=useState(true)
+ const [busy,setBusy]=useState(false)
+ const [error,setError]=useState<string|null>(null)
+
+ useEffect(()=>{
+  setLoading(true);setError(null);setIndex(0);setSelected('');setResult(null);setCorrectCount(0)
+  getFoundationQuestions(program.id,mode,10).then(setQuestions).catch(e=>setError(e instanceof Error?e.message:'Session indisponible.')).finally(()=>setLoading(false))
+ },[program.id,mode])
+
+ if(loading)return <section className="card skeleton-card"><p>{isSpain?'Preparando tu repaso…':'Préparation de ta révision…'}</p></section>
+ if(error)return <div className="stack"><section className="card"><h1>{isSpain?'Repaso no disponible':'Révision indisponible'}</h1><p>{error}</p></section><Link className="secondary-button" to="/parcours">{isSpain?'Volver':'Retour au parcours'}</Link></div>
+ if(!questions.length)return <div className="stack"><section className="card"><h1>{isSpain?'Contenido en preparación':'Contenu en préparation'}</h1><p>{isSpain?'Todavía no hay suficientes preguntas validadas para este modo.':'Il n’y a pas encore assez de questions validées pour ce mode.'}</p></section><Link className="secondary-button" to="/parcours">{isSpain?'Volver':'Retour au parcours'}</Link></div>
+ if(index>=questions.length){const percent=Math.round((correctCount/questions.length)*100);return <div className="stack"><section className="hero-card"><div className="hero-copy"><span className="hero-kicker">{mode==='mix'?(isSpain?'Mix acumulativo':'Mix complet'):(isSpain?'Fundamentos':'Retour aux fondamentaux')}</span><h1>{percent}%</h1><p>{correctCount} / {questions.length} {isSpain?'respuestas correctas':'bonnes réponses'}.</p></div><div className="hero-orbit"><span>{percent>=80?'🏆':'🧠'}</span></div></section><div className="quick-grid"><Link className="primary-button" to={`/fondamentaux?mode=${mode}`}>{isSpain?'Repetir':'Recommencer'}</Link><Link className="secondary-button" to="/parcours">{isSpain?'Volver al temario':'Retour au parcours'}</Link></div></div>}
+
+ const question=questions[index]
+ const isText=question.question_type==='fill_blank'
+ async function validate(){
+  if(!selected.trim()||busy)return
+  setBusy(true);setError(null)
+  try{
+   const answer=await submitFoundationAnswer(question.id,{text:selected})
+   setResult(answer)
+   if(answer.correct)setCorrectCount(value=>value+1)
+  }catch(e){setError(e instanceof Error?e.message:'Impossible de valider la réponse.')}
+  finally{setBusy(false)}
+ }
+ function next(){setSelected('');setResult(null);setIndex(value=>value+1)}
+
+ return <div className="stack">
+  <section className="card"><div className="section-heading"><div><p className="eyebrow">{mode==='mix'?(isSpain?'Mix acumulativo':'Mix complet'):(isSpain?'Fundamentos':'Retour aux fondamentaux')}</p><h1>{isSpain?'Pregunta':'Question'} {index+1} / {questions.length}</h1></div><span className="program-status live">{question.level_code}</span></div><div className="progress-track"><div className="progress-fill" style={{width:`${(index/questions.length)*100}%`}}/></div></section>
+  <section className="card quiz-card"><h2>{question.question_text}</h2>{isText?<label className="text-answer-wrap"><span>{isSpain?'Tu respuesta':'Ta réponse'}</span><input className="text-answer" value={selected} onChange={event=>!result&&setSelected(event.target.value)} disabled={Boolean(result)||busy}/></label>:<div className="answers">{question.options.map(option=>{const chosen=selected===option.text;const correct=Boolean(result?.correct_answer&&option.text===result.correct_answer);const incorrect=Boolean(result&&chosen&&!result.correct);return <button type="button" key={option.text} className={`answer ${chosen?'selected':''} ${correct?'correct':''} ${incorrect?'incorrect':''}`} onClick={()=>!result&&setSelected(option.text)} disabled={Boolean(result)||busy}>{option.text}</button>})}</div>}{error&&<p className="feedback" role="alert">{error}</p>}{result&&<div className={`result-box ${result.correct?'success':'retry'}`}><strong>{result.correct?(isSpain?'Correcto ✓':'Bonne réponse ✓'):(isSpain?'Respuesta incorrecta':'Réponse incorrecte')}</strong>{!result.correct&&result.correct_answer&&<p>{isSpain?'Respuesta correcta':'Bonne réponse'} : {result.correct_answer}</p>}{question.explanation&&<p>{question.explanation}</p>}</div>}<div className="quiz-actions">{!result?<button className="primary-button" type="button" onClick={()=>void validate()} disabled={!selected.trim()||busy}>{busy?(isSpain?'Validando…':'Validation…'):(isSpain?'Validar':'Valider')}</button>:<button className="primary-button" type="button" onClick={next}>{index+1===questions.length?(isSpain?'Terminar':'Terminer'):(isSpain?'Siguiente':'Question suivante')}</button>}</div></section>
+ </div>
+}
