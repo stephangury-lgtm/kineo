@@ -1,9 +1,11 @@
 import { spawn } from 'node:child_process'
+import path from 'node:path'
 
 const host='127.0.0.1'
 const port=4173
 const base=`http://${host}:${port}`
-const server=spawn('npm',['run','preview','--','--host',host,'--port',String(port),'--strictPort'],{stdio:['ignore','pipe','pipe']})
+const viteCli=path.join(process.cwd(),'node_modules','vite','bin','vite.js')
+const server=spawn(process.execPath,[viteCli,'preview','--host',host,'--port',String(port),'--strictPort'],{stdio:['ignore','pipe','pipe']})
 let output=''
 server.stdout.on('data',chunk=>{output+=chunk.toString()})
 server.stderr.on('data',chunk=>{output+=chunk.toString()})
@@ -11,6 +13,7 @@ server.stderr.on('data',chunk=>{output+=chunk.toString()})
 const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms))
 async function waitForServer(){
  for(let attempt=0;attempt<40;attempt++){
+  if(server.exitCode!==null)throw new Error(`Preview server exited early (${server.exitCode}). Output:\n${output}`)
   try{
    const response=await fetch(base,{redirect:'manual'})
    if(response.ok)return
@@ -40,7 +43,9 @@ try{
  if(!sw.includes(`kineo-shell-${String(version.commit).slice(0,7)}`))throw new Error('Preview service worker cache does not match build version')
  console.log(`Preview route checks passed for ${version.version}`)
 }finally{
- server.kill('SIGTERM')
- await Promise.race([new Promise(resolve=>server.once('exit',resolve)),sleep(1500)])
- if(!server.killed)server.kill('SIGKILL')
+ if(server.exitCode===null){
+  server.kill('SIGTERM')
+  await Promise.race([new Promise(resolve=>server.once('exit',resolve)),sleep(1000)])
+  if(server.exitCode===null)server.kill('SIGKILL')
+ }
 }
