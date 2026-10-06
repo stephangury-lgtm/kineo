@@ -34,6 +34,9 @@ jobs:
       - name: Production build smoke checks
         run: node scripts/check-build.mjs
 
+      - name: Preview route checks
+        run: node scripts/check-preview.mjs
+
       - name: Deploy to Cloudflare Workers
         run: npx wrangler deploy
         env:
