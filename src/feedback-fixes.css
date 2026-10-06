@@ -2,9 +2,12 @@
 .dashboard-daily-hero .hero-copy{max-width:none}
 .dashboard-daily-hero .hero-week-inline{display:grid;gap:6px;margin:4px 0 14px;max-width:560px}
 .dashboard-daily-hero .hero-week-copy{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:.78rem}
-.dashboard-daily-hero .hero-week-copy span,.dashboard-daily-hero .hero-week-target{color:var(--muted);font-size:.72rem;line-height:1.25}
+.dashboard-daily-hero .hero-week-copy strong,.dashboard-daily-hero .hero-week-copy span,.dashboard-daily-hero .hero-week-target{color:var(--text);font-size:.74rem;line-height:1.3;font-weight:750}
 .dashboard-daily-hero .hero-week-inline .progress-track{height:5px;margin:0}
 .dashboard-daily-hero .hero-week-target{display:block}
+
+.header-xp-badge{display:inline-flex;align-items:center;justify-content:center;min-height:34px;padding:7px 10px;border-radius:999px;background:var(--brand-soft);color:var(--brand);font-size:.75rem;line-height:1;font-weight:900;white-space:nowrap}
+.dashboard-stack>.dashboard-metrics{display:none}
 
 .dashboard-stack>.card>.people-list>.person-row .compact-button{align-self:start;margin-top:0;min-height:38px;padding:8px 13px;font-size:.74rem}
 
@@ -17,6 +20,7 @@
 
 @media(max-width:520px){
   .dashboard-daily-hero .hero-week-copy{align-items:flex-start;flex-direction:column;gap:2px}
+  .header-xp-badge{min-height:30px;padding:6px 8px;font-size:.7rem}
   .dashboard-stack>.card>.people-list>.person-row .compact-button{align-self:start;min-height:36px;padding:7px 11px;font-size:.72rem}
   .dashboard-stack .active-session-card .friend-actions{grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
   .dashboard-stack .active-session-card .friend-actions>.secondary-button,
