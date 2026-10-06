@@ -219,3 +219,54 @@
   .friends-stack .friend-actions{grid-template-columns:repeat(2,minmax(0,1fr));width:100%}
   .friends-stack .friend-actions>*{width:100%}
 }
+
+/* Final visual parity pass: IFSI / Spain follow Kineo France density */
+.foundation-revision-page .quiz-card,
+.curriculum-learning-page .curriculum-quiz-card{border-radius:18px}
+.foundation-revision-page .quiz-card>h1,
+.curriculum-learning-page .curriculum-quiz-card>p{overflow-wrap:anywhere}
+.foundation-revision-page .quiz-actions,
+.curriculum-learning-page .curriculum-quiz-card>.primary-button.wide{margin-top:12px}
+.curriculum-learning-page>.text-link{width:max-content;max-width:100%}
+.curriculum-learning-page .stats-grid{margin-top:-2px}
+.curriculum-learning-page .curriculum-learning-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.curriculum-learning-page .curriculum-learning-actions>*{min-height:42px}
+.curriculum-learning-page .curriculum-topic-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.curriculum-learning-page .curriculum-option{min-height:46px}
+.curriculum-learning-page .curriculum-feedback{border-radius:14px}
+.program-home-page .dashboard-metrics{margin-top:-2px}
+.program-home-page .progress-card{margin-top:0}
+.program-home-page .program-steps{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0 12px}
+.program-home-page .program-steps>span{display:inline-flex;align-items:center;justify-content:center;min-height:30px;padding:6px 10px;border-radius:999px;background:var(--brand-soft);color:var(--brand);font-size:.76rem;font-weight:850}
+.profile-stack .social-entry-card,
+.profile-stack .profile-photo-card,
+.profile-stack .revision-summary,
+.profile-stack .account-card{border-radius:18px}
+@media(max-width:620px){
+ .foundation-revision-page>.card,
+ .curriculum-learning-page>.card{padding:14px}
+ .foundation-revision-page .quiz-card,
+ .curriculum-learning-page .curriculum-quiz-card{padding:13px}
+ .foundation-revision-page .quiz-card h1{font-size:1.18rem;line-height:1.28}
+ .foundation-revision-page .answers{gap:8px}
+ .foundation-revision-page .answer{min-height:48px;padding:12px 13px}
+ .foundation-revision-page .quiz-actions .primary-button.wide{min-height:48px}
+ .curriculum-learning-page .stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .curriculum-learning-page .curriculum-learning-actions{display:grid;grid-template-columns:1fr 1fr;width:100%}
+ .curriculum-learning-page .curriculum-learning-actions>*{width:100%;justify-content:center;box-sizing:border-box}
+ .curriculum-learning-page .curriculum-topic-actions{grid-template-columns:1fr 1fr}
+ .curriculum-learning-page .curriculum-topic-actions>*{width:100%;justify-content:center;box-sizing:border-box}
+ .curriculum-learning-page .curriculum-option{padding:10px 11px}
+ .program-home-page .dashboard-metrics{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+ .program-home-page .metric-card{min-width:0;padding:10px 9px}
+ .program-home-page .metric-card strong{font-size:1rem}
+ .program-home-page .program-steps>span{min-height:28px;padding:5px 9px;font-size:.72rem}
+ .profile-stack .card{padding:14px}
+}
+@media(max-width:420px){
+ .curriculum-learning-page .curriculum-learning-actions,
+ .curriculum-learning-page .curriculum-topic-actions{grid-template-columns:1fr}
+ .foundation-revision-page .quiz-card h1{font-size:1.12rem}
+ .program-home-page .metric-card{grid-template-columns:auto 1fr;gap:6px}
+ .program-home-page .metric-icon{width:30px;height:30px}
+}
