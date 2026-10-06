@@ -6,29 +6,37 @@ type Props = { onDone: () => void }
 export default function ResetPasswordPage({ onDone }: Props) {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
+  const [messageType,setMessageType]=useState<'error'|'success'|null>(null)
   const [busy, setBusy] = useState(false)
 
   async function submit(event: FormEvent) {
     event.preventDefault()
-    if (password.length < 6) {
-      setMessage('Le mot de passe doit contenir au moins 6 caractères.')
+    setMessage(null)
+    setMessageType(null)
+    if (password.length < 8) {
+      setMessageType('error')
+      setMessage('Le mot de passe doit contenir au moins 8 caractères.')
       return
     }
     if (password !== confirmPassword) {
+      setMessageType('error')
       setMessage('Les deux mots de passe ne correspondent pas.')
       return
     }
 
     setBusy(true)
-    setMessage(null)
     try {
       const { error } = await supabase.auth.updateUser({ password })
       if (error) throw error
+      setMessageType('success')
       setMessage('Mot de passe modifié avec succès.')
-      setTimeout(onDone, 600)
+      window.setTimeout(onDone, 600)
     } catch (err) {
-      setMessage(err instanceof Error ? err.message : 'Impossible de modifier le mot de passe.')
+      setMessageType('error')
+      const text=err instanceof Error?err.message.toLowerCase():''
+      setMessage(text.includes('password should be at least')?'Le mot de passe doit contenir au moins 8 caractères.':'Impossible de modifier le mot de passe. Réessaie dans un instant.')
     } finally {
       setBusy(false)
     }
@@ -43,13 +51,22 @@ export default function ResetPasswordPage({ onDone }: Props) {
           <p>Entre ton nouveau mot de passe pour récupérer l’accès à Kineo.</p>
         </div>
 
-        <form className="auth-form" onSubmit={submit}>
-          <label>Nouveau mot de passe<input type="password" value={password} onChange={(e) => setPassword(e.target.value)} minLength={6} required autoComplete="new-password" /></label>
-          <label>Confirmer le mot de passe<input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} minLength={6} required autoComplete="new-password" /></label>
+        <form className="auth-form" onSubmit={submit} noValidate>
+          <label>
+            Nouveau mot de passe
+            <div className="password-field">
+              <input type={showPassword?'text':'password'} value={password} onChange={(e) => setPassword(e.target.value)} minLength={8} required autoComplete="new-password" />
+              <button className="password-toggle" type="button" onClick={()=>setShowPassword(value=>!value)} aria-label={showPassword?'Masquer le mot de passe':'Afficher le mot de passe'} aria-pressed={showPassword}>{showPassword?'🙈':'👁️'}</button>
+            </div>
+          </label>
+          <label>
+            Confirmer le mot de passe
+            <input type={showPassword?'text':'password'} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} minLength={8} required autoComplete="new-password" />
+          </label>
           <button className="primary-button wide" disabled={busy} type="submit">{busy ? 'Enregistrement…' : 'Enregistrer le nouveau mot de passe'}</button>
         </form>
 
-        {message && <p className="feedback">{message}</p>}
+        {message && <p className={`auth-feedback ${messageType??''}`} role={messageType==='error'?'alert':'status'}>{message}</p>}
       </section>
     </main>
   )
