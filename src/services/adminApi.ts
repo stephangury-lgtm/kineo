@@ -2,6 +2,7 @@ import { supabase } from '../lib/supabase'
 
 export type FeedbackStatus='new'|'reviewed'|'resolved'
 export type FeedbackItem={id:string;kind:'bug'|'content'|'suggestion';message:string;page_path:string|null;status:FeedbackStatus;created_at:string;user:{first_name:string|null;username:string|null;avatar_url:string|null}}
+export type ClientErrorItem={id:string;message:string;component_stack:string|null;page_path:string|null;app_version:string|null;created_at:string;user:{first_name:string|null;username:string|null}}
 export type QualitySummary={years:Array<{study_year:number;published_questions:number;unpublished_questions:number;visual_pending:number}>;quality:{published_total:number;published_without_source:number;published_incomplete_source:number;quarantined_quality:number;visual_quarantined:number};feedback:{new_feedback:number;reviewed_feedback:number;resolved_feedback:number};documents:{total:number;validated:number}}
 export type VisualPoint={x:number;y:number;label?:string;radius?:number;key?:string}
 export type VisualReview={anatomy_ok?:boolean;mobile_ok?:boolean;target_ok?:boolean;source_ok?:boolean;reviewed_at?:string;reviewed_by?:string}
@@ -12,6 +13,7 @@ async function rpc<T>(name:string,params?:Record<string,unknown>){const{data,err
 export const getContentQualitySummary=()=>rpc<QualitySummary>('get_content_quality_summary_v1')
 export const getFeedbackQueue=(status:FeedbackStatus|null=null,limit=100)=>rpc<FeedbackItem[]>('get_feedback_queue_v1',{p_status:status,p_limit:limit})
 export const setFeedbackStatus=(id:string,status:FeedbackStatus)=>rpc<boolean>('set_feedback_status_v1',{p_feedback_id:id,p_status:status})
+export const getClientErrorLogs=(limit=100)=>rpc<ClientErrorItem[]>('get_client_error_logs_v1',{p_limit:limit})
 export const getContentReviewQueue=()=>rpc<ReviewQueue>('get_content_review_queue_v4')
 export const setContentReviewStatus=(id:string,status:'draft'|'review'|'validated'|'published')=>rpc('set_content_review_status_v1',{p_kind:'question',p_id:id,p_status:status})
 export const setVisualApproval=(id:string,approved:boolean)=>rpc<{question_id:string;visual_approved:boolean}>('set_visual_approval_v1',{p_question_id:id,p_approved:approved})
