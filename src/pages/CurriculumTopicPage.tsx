@@ -79,11 +79,12 @@ export default function CurriculumTopicPage(){
  const [results,setResults]=useState<Record<string,CurriculumAnswerResult>>({})
  const [submitting,setSubmitting]=useState<string|null>(null)
  const [quizError,setQuizError]=useState<string|null>(null)
+ const [quizStarted,setQuizStarted]=useState(()=>typeof window!=='undefined'&&window.location.hash==='#qcm')
 
  useEffect(()=>{
   if(!topicId)return
   let cancelled=false
-  setLoading(true);setError(null);setTopic(null);setLessons([]);setQuiz([]);setAnswers({});setMatchingAnswers({});setChecked({});setResults({});setQuizError(null)
+  setLoading(true);setError(null);setTopic(null);setLessons([]);setQuiz([]);setAnswers({});setMatchingAnswers({});setChecked({});setResults({});setQuizError(null);setQuizStarted(typeof window!=='undefined'&&window.location.hash==='#qcm')
   getTopic(topicId,program.id,curriculumVersion)
    .then(async t=>{
     const [l,q]=await Promise.all([getTopicLessons(t.id),getTopicQuiz(t.id)])
@@ -140,7 +141,7 @@ export default function CurriculumTopicPage(){
     <p className="eyebrow light">{program.flag} {isEs?'Tema':'Chapitre'} · {program.shortName}</p>
     <h1>{topic.name}</h1>
     {topic.description&&<p>{topic.description}</p>}
-    <div className="curriculum-learning-actions"><a className="secondary-button" href="#fiche">📖 {isEs?'Leer la ficha':'Lire la fiche'}</a><a className="primary-button" href="#qcm">✅ {isEs?'Repaso activo':'Révision active'}</a></div>
+    <div className="curriculum-learning-actions"><a className="secondary-button" href="#fiche">📖 {isEs?'Leer la ficha':'Lire la fiche'}</a><a className="primary-button" href="#qcm" onClick={()=>setQuizStarted(true)}>✅ {isEs?'Repaso activo':'Révision active'}</a></div>
    </div>
    <div className="stats-hero-score"><span>Quiz</span><strong>{quiz.length}</strong></div>
   </section>
@@ -163,7 +164,9 @@ export default function CurriculumTopicPage(){
    </article>)}</div>}
   </section>
 
-  <section className="card" id="qcm">
+  <section className="card centered"><p className="eyebrow">{isEs?'Pasar a la práctica':'Passage à l’action'}</p><h2>{isEs?'Comprueba lo que has retenido':'Vérifie ce que tu as retenu'}</h2><p>{isEs?'Una serie corta de preguntas para transformar la lectura en memorización activa.':'Une courte série ciblée pour transformer la lecture en mémorisation active.'}</p><a className="primary-button wide" href="#qcm" onClick={()=>setQuizStarted(true)}>{isEs?`Empezar el quiz (${quiz.length} preguntas)`:`Lancer le quiz (${quiz.length} questions)`}</a></section>
+
+  {quizStarted&&<section className="card" id="qcm">
    <div className="section-heading"><div><p className="eyebrow">{isEs?'Repaso activo':'Révision active'}</p><h2>{isEs?'Pon a prueba tus conocimientos':'Teste tes acquis'}</h2></div>{quiz.length>0&&<span className="program-status foundation">{checkedCount}/{quiz.length} {isEs?'respondidas':`répondu${quiz.length>1?'s':''}`}</span>}</div>
    {quizError&&<p className="form-error">{quizError}</p>}
    {quiz.length===0?<div className="admin-empty"><span>❓</span><div><strong>{isEs?'Ejercicios en preparación.':'Exercices en préparation.'}</strong><p>{isEs?'La ficha se puede consultar, pero los ejercicios todavía no están publicados.':'La fiche est consultable mais les exercices de ce chapitre ne sont pas encore publiés.'}</p></div></div>:<div className="curriculum-quiz-list">{quiz.map((q,index)=>{
@@ -191,6 +194,6 @@ export default function CurriculumTopicPage(){
     </article>
    })}</div>}
    {checkedCount>0&&<p className="curriculum-score">{isEs?'Puntuación actual':'Score actuel'} : <strong>{score}/{checkedCount}</strong></p>}
-  </section>
+  </section>}
  </div>
 }
