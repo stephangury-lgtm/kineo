@@ -5,7 +5,7 @@ import { PROGRAM_STORAGE_KEY, selectProgram, type ProgramId } from '../curriculu
 import LoginPage from '../pages/LoginPage'
 import ProfileSetupPage from '../pages/ProfileSetupPage'
 import ResetPasswordPage from '../pages/ResetPasswordPage'
-import { getCurrentProfile, type StudentProfile } from '../services/profileApi'
+import { getCurrentProfile, touchUserActivity, type StudentProfile } from '../services/profileApi'
 import { getAccessiblePrograms, type PrimaryProgram } from '../services/programApi'
 
 type Props = { children: ReactNode }
@@ -30,6 +30,7 @@ export default function AuthGate({ children }: Props) {
 
     try {
       const [nextProfile,accessiblePrograms]=await Promise.all([getCurrentProfile(),getAccessiblePrograms()])
+      void touchUserActivity().catch(()=>undefined)
       const primary=accessiblePrograms.find(program=>program.is_primary)??null
       const nextProgram=primary
         ? {program_id:primary.program_id,academic_level_id:primary.academic_level_id,level_code:primary.level_code,curriculum_version:primary.curriculum_version}
@@ -78,6 +79,16 @@ export default function AuthGate({ children }: Props) {
 
     return () => data.subscription.unsubscribe()
   }, [])
+
+  useEffect(()=>{
+    if(!session)return
+    const ping=()=>{if(document.visibilityState==='visible')void touchUserActivity().catch(()=>undefined)}
+    const interval=window.setInterval(ping,10*60*1000)
+    const onVisibility=()=>{if(document.visibilityState==='visible')ping()}
+    document.addEventListener('visibilitychange',onVisibility)
+    window.addEventListener('focus',ping)
+    return()=>{window.clearInterval(interval);document.removeEventListener('visibilitychange',onVisibility);window.removeEventListener('focus',ping)}
+  },[session?.user.id])
 
   if (loading) {
     return <main className="auth-shell"><section className="card centered"><p>Ouverture de ton espace…</p></section></main>
