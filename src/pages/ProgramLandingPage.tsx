@@ -50,33 +50,27 @@ export default function ProgramLandingPage(){
  },[p.id,selectedLevel,isSpain,curriculumVersion])
 
  async function chooseLevel(code:string){
-  if(code===selectedLevel)return
-  const previous=selectedLevel
-  setSelectedLevel(code)
-  localStorage.setItem(storageKey,code)
+  if(code===selectedLevel||syncing)return
   setSyncing(true);setSyncError(null)
   try{
    await saveProgramLevel(p.id,code)
+   setSelectedLevel(code)
+   localStorage.setItem(storageKey,code)
    setAssignedAccess(current=>current?{...current,level_code:code}:current)
   }catch(error){
-   setSelectedLevel(previous)
-   if(previous)localStorage.setItem(storageKey,previous);else localStorage.removeItem(storageKey)
    setSyncError(error instanceof Error?error.message:(isSpain?'No se pudo actualizar el nivel.':'Impossible de mettre à jour le niveau.'))
   }finally{setSyncing(false)}
  }
 
  async function chooseReference(version:'2009'|'2026'){
-  if(!isIfsi||version===curriculumVersion)return
-  const previous=curriculumVersion
-  setCurriculumVersion(version)
-  localStorage.setItem(referenceStorageKey,version)
+  if(!isIfsi||version===curriculumVersion||syncing)return
   setSyncing(true);setSyncError(null)
   try{
    await saveProgramCurriculumVersion(p.id,version)
+   setCurriculumVersion(version)
+   localStorage.setItem(referenceStorageKey,version)
    setAssignedAccess(current=>current?{...current,curriculum_version:version}:current)
   }catch(error){
-   setCurriculumVersion(previous)
-   localStorage.setItem(referenceStorageKey,previous)
    setSyncError(error instanceof Error?error.message:'Impossible de mettre à jour le référentiel.')
   }finally{setSyncing(false)}
  }
