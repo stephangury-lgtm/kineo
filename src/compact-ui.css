@@ -176,3 +176,46 @@
   .dashboard-stack>.card>.people-list>.person-row .compact-button{width:auto;min-width:76px;min-height:36px;padding:7px 10px;font-size:.71rem;align-self:center}
   .dashboard-stack .challenge-card .friend-actions{grid-column:1/-1;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;min-width:0}
 }
+/* Cross-curriculum mobile QA: France remains the visual master */
+.program-status{
+  min-height:28px;
+  max-width:100%;
+  line-height:1.15;
+  white-space:normal;
+  text-align:center;
+  overflow-wrap:anywhere;
+}
+.topbar-actions{display:flex;align-items:center;gap:7px;min-width:0}
+.stats-grid>.card,.quick-grid>.quick-card{min-width:0}
+.score-card strong,.score-card small,.quick-card strong,.quick-card small{overflow-wrap:anywhere}
+.curriculum-learning-page .curriculum-learning-hero{min-width:0}
+.curriculum-learning-page .curriculum-learning-actions>*{min-width:0}
+.curriculum-quiz-card .primary-button{min-width:120px}
+.friends-stack .person-copy{min-width:0}
+.friends-stack .person-copy strong,.friends-stack .person-copy span{white-space:normal;overflow-wrap:anywhere}
+.friends-stack .pending-chip{white-space:normal;text-align:center}
+@media(max-width:520px){
+  .topbar{gap:8px}
+  .brand-lockup{min-width:0;flex:1}
+  .brand-lockup>div{min-width:0}
+  .brand,.brand-platform{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .topbar-actions{gap:5px;flex:0 0 auto}
+  .topbar-actions .header-xp-badge{max-width:76px;overflow:hidden;text-overflow:ellipsis}
+  .quick-grid{gap:8px}
+  .quick-card{min-height:104px;padding:12px;border-radius:16px}
+  .quick-card>span{width:34px;height:34px;border-radius:11px}
+  .quick-card strong{font-size:.86rem;line-height:1.15}
+  .quick-card small{font-size:.7rem;line-height:1.25}
+  .stats-grid{gap:7px}
+  .stats-grid>.card{padding:12px 9px;border-radius:16px}
+  .score-card span{font-size:.72rem;line-height:1.2}
+  .score-card strong{font-size:1.08rem;line-height:1.1}
+  .score-card small{font-size:.66rem;line-height:1.2}
+  .program-status{min-height:26px;padding:5px 8px;font-size:.68rem}
+  .curriculum-learning-page .card{padding:15px}
+  .curriculum-learning-page .curriculum-quiz-card{padding:12px}
+  .curriculum-learning-page .curriculum-quiz-card .primary-button{width:100%;min-height:44px}
+  .friends-stack .person-row{grid-template-columns:auto minmax(0,1fr)}
+  .friends-stack .friend-actions{grid-template-columns:repeat(2,minmax(0,1fr));width:100%}
+  .friends-stack .friend-actions>*{width:100%}
+}
