@@ -1,6 +1,6 @@
 import { supabase } from '../lib/supabase'
 import type { ProgramId } from '../curriculum/programs'
-import type { CurriculumVersion } from './programApi'
+import { getAccessiblePrograms,type CurriculumVersion } from './programApi'
 
 export type ProgramCatalogUnit={
  id:string
@@ -96,11 +96,16 @@ export async function getUnitTopics(unitId:string){
 }
 
 export async function getTopic(topicId:string,programId:ProgramId,curriculumVersion?:CurriculumVersion){
- let query=supabase.from('curriculum_topics').select('*, curriculum_units!inner(program_id,curriculum_version)').eq('id',topicId).eq('is_active',true).eq('curriculum_units.program_id',programId)
+ let query=supabase.from('curriculum_topics').select('*, curriculum_units!inner(program_id,academic_level_id,curriculum_version)').eq('id',topicId).eq('is_active',true).eq('curriculum_units.program_id',programId)
  if(curriculumVersion) query=query.eq('curriculum_units.curriculum_version',curriculumVersion)
  const {data,error}=await query.single()
  if(error) throw error
- const {curriculum_units:_,...topic}=data as ProgramCatalogTopic&{curriculum_units:{program_id:ProgramId;curriculum_version:CurriculumVersion}}
+ const row=data as ProgramCatalogTopic&{curriculum_units:{program_id:ProgramId;academic_level_id:string;curriculum_version:CurriculumVersion}}
+ const accesses=await getAccessiblePrograms()
+ const access=accesses.find(item=>item.program_id===programId)
+ if(!access?.academic_level_id||access.academic_level_id!==row.curriculum_units.academic_level_id) throw new Error('Ce chapitre n’appartient pas au niveau actif.')
+ if(curriculumVersion&&access.curriculum_version!==curriculumVersion) throw new Error('Ce chapitre n’appartient pas au référentiel actif.')
+ const {curriculum_units:_,...topic}=row
  return topic as ProgramCatalogTopic
 }
 
