@@ -8,7 +8,9 @@ const kinds:Array<{value:FeedbackKind;label:string;icon:string}>=[
  {value:'suggestion',label:'Suggestion',icon:'💡'},
 ]
 
-export default function FeedbackButton(){
+type FeedbackButtonProps={inline?:boolean}
+
+export default function FeedbackButton({inline=false}:FeedbackButtonProps){
  const [open,setOpen]=useState(false)
  const [kind,setKind]=useState<FeedbackKind>('bug')
  const [message,setMessage]=useState('')
@@ -24,7 +26,7 @@ export default function FeedbackButton(){
  }
  function close(){setOpen(false);setError(null);setSent(false)}
  return <>
-  <button className="feedback-fab" type="button" onClick={()=>setOpen(true)} aria-label="Signaler un problème ou faire une suggestion">!</button>
+  <button className={inline?'feedback-header-button':'feedback-fab'} type="button" onClick={()=>setOpen(true)} aria-label="Signaler un problème ou faire une suggestion">{inline?'!':'!'}</button>
   {open&&<div className="feedback-overlay" role="presentation" onMouseDown={event=>{if(event.target===event.currentTarget)close()}}>
    <section className="feedback-dialog" role="dialog" aria-modal="true" aria-labelledby="feedback-title">
     <div className="feedback-heading"><div><p className="eyebrow">Aide à améliorer Kineo</p><h2 id="feedback-title">Signaler quelque chose</h2></div><button className="feedback-close" type="button" onClick={close} aria-label="Fermer">×</button></div>
