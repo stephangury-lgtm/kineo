@@ -44,8 +44,9 @@ export type CurriculumLesson={
 }
 
 export type CurriculumQuizOption={text:string;correct:boolean}
-export type CurriculumQuestionType='mcq'|'fill_blank'|'visual_hotspot'|'clinical_case'
+export type CurriculumQuestionType='mcq'|'fill_blank'|'visual_hotspot'|'clinical_case'|'matching'
 export type CurriculumHotspot={id:string;label?:string;x:number;y:number;correct?:boolean}
+export type CurriculumMatchPair={left:string;right:string}
 export type CurriculumQuizQuestion={
  id:string
  topic_id:string
@@ -59,6 +60,24 @@ export type CurriculumQuizQuestion={
  accepted_answers:unknown
  image_url:string|null
  metadata:unknown
+}
+
+export type CurriculumAnswerPayload={
+ text?:string
+ hotspot_id?:string
+ pairs?:CurriculumMatchPair[]
+}
+
+export type CurriculumAnswerResult={
+ correct:boolean
+ correct_answer?:string|null
+ correct_hotspot_id?:string|null
+ correct_pairs?:CurriculumMatchPair[]
+ xp_earned?:number
+ topic_completed?:boolean
+ xp_total?:number
+ current_streak?:number
+ new_badges?:unknown
 }
 
 export async function getProgramUnits(programId:ProgramId,levelId?:string,curriculumVersion?:CurriculumVersion){
@@ -92,9 +111,15 @@ export async function getTopicLessons(topicId:string){
 }
 
 export async function getTopicQuiz(topicId:string){
- const {data,error}=await supabase.from('curriculum_quiz_questions').select('*').eq('topic_id',topicId).eq('is_published',true).order('display_order',{ascending:true})
+ const {data,error}=await supabase.from('curriculum_quiz_questions').select('*').eq('topic_id',topicId).eq('is_published',true).eq('validation_status','source_validated').order('display_order',{ascending:true})
  if(error) throw error
  return (data??[]) as CurriculumQuizQuestion[]
+}
+
+export async function submitCurriculumTopicAnswer(questionId:string,answer:CurriculumAnswerPayload){
+ const {data,error}=await supabase.rpc('submit_curriculum_topic_answer_v2',{p_question_id:questionId,p_answer:answer})
+ if(error) throw error
+ return data as CurriculumAnswerResult
 }
 
 export async function getAcademicLevelId(programId:ProgramId,code:string){
