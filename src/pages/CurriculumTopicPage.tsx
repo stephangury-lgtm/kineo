@@ -119,6 +119,11 @@ export default function CurriculumTopicPage(){
   return Boolean((answers[q.id]??'').trim())
  }
 
+ function restartQuiz(){
+  setAnswers({});setMatchingAnswers({});setChecked({});setResults({});setQuizError(null);setQuizStarted(true)
+  if(typeof window!=='undefined'){window.location.hash='qcm';window.requestAnimationFrame(()=>document.getElementById('qcm')?.scrollIntoView({behavior:'smooth',block:'start'}))}
+ }
+
  async function validateQuestion(q:CurriculumQuizQuestion){
   if(!canSubmit(q))return
   setSubmitting(q.id);setQuizError(null)
@@ -195,6 +200,6 @@ export default function CurriculumTopicPage(){
    })}</div>}
    {checkedCount>0&&checkedCount<quiz.length&&<p className="curriculum-score">{isEs?'Puntuación actual':'Score actuel'} : <strong>{score}/{checkedCount}</strong></p>}
   </section>}
-  {quizStarted&&quiz.length>0&&checkedCount===quiz.length&&<div className="stack"><section className="session-complete"><div className="completion-icon">{Math.round((score/quiz.length)*100)>=80?'🏆':Math.round((score/quiz.length)*100)>=60?'🎉':'💪'}</div><p className="eyebrow">{isEs?'Repaso completado':'Révision terminée'}</p><h1>{Math.round((score/quiz.length)*100)>=80?(isEs?'¡Excelente trabajo!':'Excellent travail !'):Math.round((score/quiz.length)*100)>=60?(isEs?'¡Buen progreso!':'Belle progression !'):(isEs?'Sigue así, estás progresando.':'Continue, tu progresses !')}</h1><div className="completion-score">{Math.round((score/quiz.length)*100)}%</div><p>{score}/{quiz.length} {isEs?'respuestas correctas':'bonnes réponses'}</p></section><section className="completion-grid"><article className="card"><span>✅ {isEs?'Correctas':'Bonnes réponses'}</span><strong>{score}</strong></article><article className="card"><span>❓ {isEs?'Preguntas':'Questions'}</span><strong>{quiz.length}</strong></article><article className="card"><span>🎯 {isEs?'Puntuación':'Score'}</span><strong>{Math.round((score/quiz.length)*100)}%</strong></article></section><div className="completion-actions"><Link className="primary-button" to="/parcours">{isEs?'Volver al temario':'Retour au parcours'}</Link><Link className="secondary-button" to="/stats">{isEs?'Ver mi progreso':'Voir mes statistiques'}</Link><Link className="text-link" to="/rewards">{isEs?'Ver mis logros':'Voir mes récompenses'}</Link></div></div>}
+  {quizStarted&&quiz.length>0&&checkedCount===quiz.length&&<div className="stack"><section className="session-complete"><div className="completion-icon">{Math.round((score/quiz.length)*100)>=80?'🏆':Math.round((score/quiz.length)*100)>=60?'🎉':'💪'}</div><p className="eyebrow">{isEs?'Repaso completado':'Révision terminée'}</p><h1>{Math.round((score/quiz.length)*100)>=80?(isEs?'¡Excelente trabajo!':'Excellent travail !'):Math.round((score/quiz.length)*100)>=60?(isEs?'¡Buen progreso!':'Belle progression !'):(isEs?'Sigue así, estás progresando.':'Continue, tu progresses !')}</h1><div className="completion-score">{Math.round((score/quiz.length)*100)}%</div><p>{score}/{quiz.length} {isEs?'respuestas correctas':'bonnes réponses'}</p></section><section className="completion-grid"><article className="card"><span>✅ {isEs?'Correctas':'Bonnes réponses'}</span><strong>{score}</strong></article><article className="card"><span>❓ {isEs?'Preguntas':'Questions'}</span><strong>{quiz.length}</strong></article><article className="card"><span>🎯 {isEs?'Puntuación':'Score'}</span><strong>{Math.round((score/quiz.length)*100)}%</strong></article></section><div className="completion-actions"><button className="primary-button" type="button" onClick={restartQuiz}>{isEs?'Repetir':'Rejouer'}</button><Link className="secondary-button" to="/parcours">{isEs?'Volver al temario':'Retour au parcours'}</Link><Link className="secondary-button" to="/stats">{isEs?'Ver mi progreso':'Voir mes statistiques'}</Link><Link className="text-link" to="/rewards">{isEs?'Ver mis logros':'Voir mes récompenses'}</Link></div></div>}
  </div>
 }
