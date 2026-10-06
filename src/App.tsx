@@ -12,35 +12,35 @@ import HeaderXpBadge from './components/HeaderXpBadge'
 import NotificationBell from './components/NotificationBell'
 import OfflineStatus from './components/OfflineStatus'
 import { getCurrentProgram } from './curriculum/programs'
-import CurriculumChallengePage from './pages/CurriculumChallengePage'
-import CurriculumPage from './pages/CurriculumPage'
-import CurriculumTopicPage from './pages/CurriculumTopicPage'
 import DashboardPage from './pages/DashboardPage'
-import FoundationsPage from './pages/FoundationsPage'
-import LessonPage from './pages/LessonPage'
-import LibraryPage from './pages/LibraryPage'
 import NotFoundPage from './pages/NotFoundPage'
-import ProfilePage from './pages/ProfilePage'
-import ProgramHomePage from './pages/ProgramHomePage'
-import ProgramLandingPage from './pages/ProgramLandingPage'
-import RevisionPage from './pages/RevisionPage'
 import './pages/RevisionPage.css'
-import SessionReviewPage from './pages/SessionReviewPage'
-import SubjectRevisionPage from './pages/SubjectRevisionPage'
-import WeakRevisionPage from './pages/WeakRevisionPage'
 import './curriculum.css'
 import './feedback-fixes.css'
 
 const AdminPage=lazy(()=>import('./pages/AdminPage'))
+const CurriculumChallengePage=lazy(()=>import('./pages/CurriculumChallengePage'))
+const CurriculumPage=lazy(()=>import('./pages/CurriculumPage'))
+const CurriculumTopicPage=lazy(()=>import('./pages/CurriculumTopicPage'))
+const FoundationsPage=lazy(()=>import('./pages/FoundationsPage'))
 const FriendsPage=lazy(()=>import('./pages/FriendsPage'))
 const GamificationPage=lazy(()=>import('./pages/GamificationPage'))
 const LeaderboardPage=lazy(()=>import('./pages/LeaderboardPage'))
+const LessonPage=lazy(()=>import('./pages/LessonPage'))
+const LibraryPage=lazy(()=>import('./pages/LibraryPage'))
 const MockExamPage=lazy(()=>import('./pages/MockExamPage'))
 const NotificationsPage=lazy(()=>import('./pages/NotificationsPage'))
+const ProfilePage=lazy(()=>import('./pages/ProfilePage'))
+const ProgramHomePage=lazy(()=>import('./pages/ProgramHomePage'))
+const ProgramLandingPage=lazy(()=>import('./pages/ProgramLandingPage'))
+const RevisionPage=lazy(()=>import('./pages/RevisionPage'))
+const SessionReviewPage=lazy(()=>import('./pages/SessionReviewPage'))
 const StatisticsPage=lazy(()=>import('./pages/StatisticsPage'))
+const SubjectRevisionPage=lazy(()=>import('./pages/SubjectRevisionPage'))
 const VisualAdminPage=lazy(()=>import('./pages/VisualAdminPage'))
 const VisualReviewerPage=lazy(()=>import('./pages/VisualReviewerPage'))
 const VisualRevisionPage=lazy(()=>import('./pages/VisualRevisionPage'))
+const WeakRevisionPage=lazy(()=>import('./pages/WeakRevisionPage'))
 
 const routeFallback=<section className="card skeleton-card"><p>Chargement…</p></section>
 
