@@ -25,6 +25,16 @@ export type ProgramCatalogRow={
 
 export type PrimaryProgram={program_id:ProgramId;academic_level_id:string|null;level_code:string|null;curriculum_version:CurriculumVersion}
 export type AccessibleProgram=PrimaryProgram&{is_primary:boolean}
+export type CurriculumProgress={
+ topics_total:number
+ topics_completed:number
+ questions_total:number
+ questions_answered:number
+ coverage_percent:number
+ completion_percent:number
+ academic_level_id:string|null
+ curriculum_version:CurriculumVersion
+}
 
 export async function getProgramCatalog(){
  const {data,error}=await supabase
@@ -100,4 +110,10 @@ export async function saveProgramCurriculumVersion(programId:ProgramId,version:C
  if(programId!=='ifsi-fr'&&version!=='default') throw new Error('Ce référentiel est réservé au cursus IFSI France.')
  const {error}=await supabase.from('profile_programs').update({curriculum_version:version,updated_at:new Date().toISOString()}).eq('user_id',user.id).eq('program_id',programId)
  if(error) throw error
+}
+
+export async function getCurriculumProgress(programId:ProgramId):Promise<CurriculumProgress>{
+ const {data,error}=await supabase.rpc('get_curriculum_progress_v1',{p_program_id:programId})
+ if(error) throw error
+ return data as CurriculumProgress
 }
