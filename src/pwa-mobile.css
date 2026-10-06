@@ -8,10 +8,15 @@ button,a{ -webkit-tap-highlight-color:transparent }
 .auth-shell{min-height:100dvh;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
 .bottom-nav{padding-left:calc(8px + env(safe-area-inset-left));padding-right:calc(8px + env(safe-area-inset-right));padding-bottom:max(8px,env(safe-area-inset-bottom))}
 @media(max-width:719px){
- .primary-button,.secondary-button,.duel-button,.answer,.bottom-nav a,.text-link{min-height:44px}
+ .primary-button,.secondary-button,.duel-button,.answer,.bottom-nav a,.text-link,.label-chip,.curriculum-option{min-height:44px}
  .primary-button,.secondary-button,.duel-button{display:inline-flex;align-items:center;justify-content:center}
  input,textarea,select{font-size:16px}
  textarea{min-height:120px}
+ .text-input{display:block;width:100%;max-width:100%;min-width:0;min-height:44px;box-sizing:border-box}
+ .matching-grid{display:grid;gap:.75rem;min-width:0}
+ .matching-row{display:grid;grid-template-columns:minmax(0,1fr);gap:.4rem;min-width:0}
+ .matching-row>span{min-width:0;overflow-wrap:anywhere}
+ .matching-row select{display:block;width:100%;max-width:100%;min-width:0;min-height:44px;box-sizing:border-box}
  .card,.hero-card,.stats-hero{scroll-margin-top:82px}
  .person-row{align-items:flex-start}
  .friend-actions{flex-wrap:wrap;justify-content:flex-end}
@@ -20,6 +25,6 @@ button,a{ -webkit-tap-highlight-color:transparent }
  .answer{padding:.9rem 1rem;line-height:1.35;text-align:left}
  .lesson-course-card,.lesson-key-points-card,.lesson-note-card{padding-left:1rem;padding-right:1rem}
  .lesson-reference-strip .person-row{align-items:center}
- details summary{min-height:38px;display:flex;align-items:center}
+ details summary{min-height:44px;display:flex;align-items:center}
 }
 @media(min-width:720px){.app-shell{padding-bottom:calc(110px + env(safe-area-inset-bottom))}}
