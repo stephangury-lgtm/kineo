@@ -32,3 +32,6 @@ jobs:
 
       - name: TypeScript and production build
         run: npm run build
+
+      - name: Production build smoke checks
+        run: node scripts/check-build.mjs
