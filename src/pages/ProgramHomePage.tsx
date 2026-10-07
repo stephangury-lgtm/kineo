@@ -17,7 +17,6 @@ export default function ProgramHomePage(){
  const [accessLoaded,setAccessLoaded]=useState(false)
  const [progress,setProgress]=useState<CurriculumProgress|null>(null)
  const [game,setGame]=useState<GamificationSummaryV2|null>(null)
- const [badges,setBadges]=useState<BadgesV2|null>(null)
  const [friends,setFriends]=useState<FriendshipsSummary>(emptyFriends)
  const [challenges,setChallenges]=useState<FriendChallenge[]>([])
  const [error,setError]=useState<string|null>(null)
@@ -29,13 +28,12 @@ export default function ProgramHomePage(){
    setAccess(nextAccess);setAccessLoaded(true)
    const common=await Promise.all([
     getGamificationSummaryV2(),
-    getBadgesV2(),
     getFriendships(program.id),
     getCurriculumFriendChallenges(program.id),
    ])
    if(cancelled)return
-   const [nextGame,nextBadges,nextFriends,nextChallenges]=common
-   setGame(nextGame);setBadges(nextBadges);setFriends(nextFriends);setChallenges(nextChallenges)
+   const [nextGame,nextFriends,nextChallenges]=common
+   setGame(nextGame);setFriends(nextFriends);setChallenges(nextChallenges)
    if(nextAccess?.academic_level_id){
     const nextProgress=await getCurriculumProgress(program.id)
     if(!cancelled)setProgress(nextProgress)
