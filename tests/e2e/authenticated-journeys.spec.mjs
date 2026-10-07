@@ -3,6 +3,7 @@ import { test,expect } from '@playwright/test'
 const base=(process.env.KINEO_E2E_BASE_URL||'https://kineo.stephangury.workers.dev').replace(/\/$/,'')
 const account=process.env.KINEO_E2E_EMAIL
 const secret=process.env.KINEO_E2E_PASSWORD
+const friendUsername=process.env.KINEO_E2E_FRIEND_USERNAME
 
 async function signIn(page){
  if(!account||!secret)throw new Error('Missing E2E account')
@@ -52,7 +53,16 @@ test('authenticated France revision, stats, badges and social pages',async({page
  await useProgram(page,'kineo-fr','K2')
  await expect(page.locator('.bottom-nav')).toBeVisible()
  await answerFirstFranceRevisionQuestion(page)
- for(const route of ['/stats','/rewards','/amis','/classement','/profil']){
+ await page.goto(base+'/amis',{waitUntil:'networkidle'})
+ await expect(page.locator('.app-shell')).toBeVisible()
+ if(!friendUsername)throw new Error('Missing E2E friend username')
+ const friendRow=page.locator('.person-row').filter({hasText:'@'+friendUsername}).first()
+ await expect(friendRow).toBeVisible({timeout:12000})
+ const challengeButton=friendRow.locator('button.duel-button')
+ await expect(challengeButton).toBeEnabled()
+ await challengeButton.click()
+ await expect(page.getByText(/Défi Kineo envoyé|Retos en curso|Défis en cours/)).toBeVisible({timeout:10000})
+ for(const route of ['/stats','/rewards','/classement','/profil']){
   await page.goto(base+route,{waitUntil:'networkidle'})
   await expect(page.locator('.app-shell')).toBeVisible()
   await expect(page.locator('body')).not.toContainText('Une erreur est survenue')
