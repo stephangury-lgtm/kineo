@@ -12,6 +12,7 @@ const topic=read('src/pages/CurriculumTopicPage.tsx')
 
 assert(main.includes('<AppErrorBoundary>'),'Global React error boundary is missing')
 assert(main.includes("window.addEventListener('unhandledrejection'"),'Unhandled promise rejection reporting is missing')
+assert(main.includes("window.addEventListener('vite:preloadError'"),'Stale dynamic chunk recovery is missing')
 assert(app.includes('<FeedbackButton/>'),'Feedback reporting must stay available for every curriculum')
 assert(app.includes("isKineoFrance?<RevisionContentGate><RevisionPage/></RevisionContentGate>:<Navigate to=\"/fondamentaux\" replace/>"),'Non-France revision routing drifted from cumulative revision')
 assert(social.includes("get_friend_leaderboard_v2"),'Leaderboard must use the program/level-scoped RPC')
