@@ -76,3 +76,13 @@
 .program-theme .challenge-card .challenge-copy p,.program-theme .challenge-card .challenge-copy h2,.program-theme .challenge-card>strong{color:var(--ink)}
 .program-theme .challenge-card .eyebrow{color:var(--program-primary)}
 @media(max-width:520px){.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats-grid .score-card{min-height:104px;padding:13px}.leaderboard-row{grid-template-columns:38px 42px minmax(0,1fr)}.leaderboard-row .subject-score{grid-column:3;justify-self:start}}
+
+/* Feedback polish: compact rewards + readable themed actions */
+.program-theme .hero-card .hero-action{background:#fff!important;color:var(--program-primary)!important;border-color:rgba(255,255,255,.75)!important;font-weight:900}
+.program-theme .challenge-card>.secondary-button{background:var(--program-primary);color:#fff;border-color:var(--program-primary)}
+.program-theme .challenge-card{padding:14px 16px;gap:12px}
+.program-theme .challenge-card .challenge-icon{width:44px;height:44px;font-size:1.25rem}
+.program-theme .challenge-card .challenge-copy{gap:2px}
+.program-theme .challenge-card .challenge-copy p{margin:2px 0;line-height:1.3}
+.program-theme .challenge-card .progress-track{margin-top:6px!important}
+.program-theme .visual-question img{image-rendering:auto;max-width:100%;height:auto}
