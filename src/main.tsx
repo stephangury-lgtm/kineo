@@ -21,6 +21,17 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   </React.StrictMode>,
 )
 
+window.addEventListener('vite:preloadError',(event)=>{
+  if(navigator.onLine===false)return
+  const key='kineo_chunk_recovery_at'
+  const last=Number(sessionStorage.getItem(key)??0)
+  const now=Date.now()
+  if(now-last<30_000)return
+  event.preventDefault()
+  sessionStorage.setItem(key,String(now))
+  window.location.reload()
+})
+
 window.addEventListener('error',(event)=>{
  const message=event.error instanceof Error?event.error.message:event.message
  if(!message)return
