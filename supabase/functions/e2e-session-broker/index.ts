@@ -96,7 +96,7 @@ Deno.serve(async(req)=>{
 
     return json({
       user_id:userId,email,password,
-      friend_user_id:friendId,friend_username:friendUsername,
+      friend_user_id:friendId,friend_username:friendUsername,friend_email:friendEmail,friend_password:friendPassword,
       programs:['kineo-fr','kineo-es','ifsi-fr']
     })
    }catch(error){
