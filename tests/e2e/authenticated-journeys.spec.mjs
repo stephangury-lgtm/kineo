@@ -69,7 +69,7 @@ test('authenticated France revision, stats, badges and social pages',async({page
  }
 })
 
-async function openFirstTopicAndValidateOneQuestion(page){
+async function openFirstTopicAndCompleteQuiz(page){
  const toggles=page.locator('.curriculum-unit-toggle')
  await expect(toggles.first()).toBeVisible({timeout:12000})
  let opened=false
@@ -84,21 +84,30 @@ async function openFirstTopicAndValidateOneQuestion(page){
  }
  expect(opened).toBeTruthy()
  await expect(page.locator('#qcm')).toBeVisible({timeout:12000})
- const card=page.locator('.curriculum-quiz-card').first()
- await expect(card).toBeVisible()
- const radio=card.locator('input[type="radio"]').first()
- const text=card.locator('input.text-input').first()
- const select=card.locator('.matching-row select').first()
- const hotspot=card.locator('button[aria-label]').first()
- if(await radio.count())await radio.check()
- else if(await text.count())await text.fill('e2e')
- else if(await select.count())await select.selectOption({index:1})
- else if(await hotspot.count())await hotspot.click()
- else throw new Error('Unsupported curriculum question type')
- const validate=card.locator('button.primary-button').filter({hasText:/Valider|Validar/}).first()
- await expect(validate).toBeEnabled()
- await validate.click()
- await expect(card.locator('.curriculum-feedback')).toBeVisible({timeout:10000})
+ const cards=page.locator('.curriculum-quiz-card')
+ const total=await cards.count()
+ expect(total).toBeGreaterThan(0)
+ for(let i=0;i<total;i++){
+  const card=cards.nth(i)
+  const radios=card.locator('input[type="radio"]')
+  const text=card.locator('input.text-input')
+  const selects=card.locator('.matching-row select')
+  const hotspots=card.locator('button[aria-label]')
+  if(await radios.count())await radios.first().check()
+  else if(await text.count())await text.first().fill('e2e')
+  else if(await selects.count()){
+   for(let j=0;j<await selects.count();j++){
+    const select=selects.nth(j)
+    if(await select.locator('option').count()>1)await select.selectOption({index:1})
+   }
+  }else if(await hotspots.count())await hotspots.first().click()
+  else throw new Error('Unsupported curriculum question type')
+  const validate=card.locator('button.primary-button').filter({hasText:/Valider|Validar/}).first()
+  await expect(validate).toBeEnabled()
+  await validate.click()
+  await expect(card.locator('.curriculum-feedback')).toBeVisible({timeout:10000})
+ }
+ await expect(page.locator('.session-complete')).toBeVisible({timeout:12000})
 }
 
 test('authenticated IFSI cumulative access and quiz answer',async({page})=>{
@@ -109,7 +118,7 @@ test('authenticated IFSI cumulative access and quiz answer',async({page})=>{
  expect(labels.some(v=>v.startsWith('S1'))).toBeTruthy()
  expect(labels.some(v=>v.startsWith('S2'))).toBeTruthy()
  expect(labels.some(v=>v.startsWith('S3'))).toBeFalsy()
- await openFirstTopicAndValidateOneQuestion(page)
+ await openFirstTopicAndCompleteQuiz(page)
  await page.goto(base+'/stats',{waitUntil:'networkidle'})
  await expect(page.locator('.stats-hero')).toBeVisible()
 })
@@ -119,7 +128,7 @@ test('authenticated Spain course, quiz, stats and badges',async({page})=>{
  await useProgram(page,'kineo-es','ES1')
  await expect(page.getByText('Elige un nivel accesible')).toBeVisible()
  await expect(page.locator('select.text-answer')).toHaveValue('ES1')
- await openFirstTopicAndValidateOneQuestion(page)
+ await openFirstTopicAndCompleteQuiz(page)
  await page.goto(base+'/stats',{waitUntil:'networkidle'})
  await expect(page.locator('.stats-hero')).toBeVisible()
  await page.goto(base+'/rewards',{waitUntil:'networkidle'})
