@@ -4,15 +4,18 @@ const base=(process.env.KINEO_E2E_BASE_URL||'https://kineo.stephangury.workers.d
 const account=process.env.KINEO_E2E_EMAIL
 const secret=process.env.KINEO_E2E_PASSWORD
 const friendUsername=process.env.KINEO_E2E_FRIEND_USERNAME
+const friendAccount=process.env.KINEO_E2E_FRIEND_EMAIL
+const friendSecret=process.env.KINEO_E2E_FRIEND_PASSWORD
 
-async function signIn(page){
- if(!account||!secret)throw new Error('Missing E2E account')
+async function signInWith(page,emailValue,passwordValue){
+ if(!emailValue||!passwordValue)throw new Error('Missing E2E account')
  await page.goto(base,{waitUntil:'networkidle'})
- await page.getByLabel('E-mail').fill(account)
- await page.locator('input[type="password"]').fill(secret)
+ await page.getByLabel('E-mail').fill(emailValue)
+ await page.locator('input[type="password"]').fill(passwordValue)
  await page.getByRole('button',{name:'Se connecter'}).click()
  await expect(page.locator('.bottom-nav')).toBeVisible({timeout:15000})
 }
+async function signIn(page){return signInWith(page,account,secret)}
 
 async function useProgram(page,program,level,curriculum='default'){
  await page.evaluate(({program,level,curriculum})=>{
@@ -21,6 +24,45 @@ async function useProgram(page,program,level,curriculum='default'){
   localStorage.setItem('healthapp_curriculum_'+program,curriculum)
  },{program,level,curriculum})
  await page.goto(base+'/parcours',{waitUntil:'networkidle'})
+}
+
+
+async function completeFranceSession(page){
+ for(let guard=0;guard<15;guard++){
+  if(await page.locator('.session-complete').count())return
+  const card=page.locator('.quiz-card')
+  await expect(card).toBeVisible({timeout:12000})
+  const choices=card.locator('.answers .answer')
+  const text=card.locator('.text-answer')
+  const selects=card.locator('.matching-row select')
+  if(await choices.count())await choices.first().click()
+  else if(await text.count())await text.first().fill('e2e')
+  else if(await selects.count()){
+   for(let i=0;i<await selects.count();i++){
+    const select=selects.nth(i)
+    if(await select.locator('option').count()>1)await select.selectOption({index:1})
+   }
+  }else throw new Error('Unsupported France challenge question type')
+  const validate=card.getByRole('button',{name:'Valider ma réponse'})
+  await expect(validate).toBeEnabled()
+  await validate.click()
+  await expect(card.locator('.result-box')).toBeVisible({timeout:10000})
+  await card.locator('.result-box .primary-button').click()
+ }
+ await expect(page.locator('.session-complete')).toBeVisible({timeout:12000})
+}
+
+async function acceptAndPlayFranceChallenge(page){
+ await useProgram(page,'kineo-fr','K2')
+ await page.goto(base+'/amis',{waitUntil:'networkidle'})
+ const incoming=page.locator('.challenge-row').filter({hasText:/te défie sur 10 questions/}).first()
+ await expect(incoming).toBeVisible({timeout:12000})
+ await incoming.getByRole('button',{name:'Accepter'}).click()
+ const playable=page.locator('.challenge-row').filter({hasText:/duel en cours|même quiz/}).first()
+ await expect(playable).toBeVisible({timeout:12000})
+ await playable.getByRole('button',{name:'Jouer'}).click()
+ await expect(page.locator('.quiz-card')).toBeVisible({timeout:12000})
+ await completeFranceSession(page)
 }
 
 async function answerFirstFranceRevisionQuestion(page){
@@ -48,7 +90,7 @@ async function answerFirstFranceRevisionQuestion(page){
  await expect(card.locator('.result-box')).toBeVisible({timeout:10000})
 }
 
-test('authenticated France revision, stats, badges and social pages',async({page})=>{
+test('authenticated France revision, social duel, stats, badges and ranking',async({page,browser})=>{
  await signIn(page)
  await useProgram(page,'kineo-fr','K2')
  await expect(page.locator('.bottom-nav')).toBeVisible()
@@ -61,7 +103,22 @@ test('authenticated France revision, stats, badges and social pages',async({page
  const challengeButton=friendRow.locator('button.duel-button')
  await expect(challengeButton).toBeEnabled()
  await challengeButton.click()
- await expect(page.getByText(/Défi Kineo envoyé|Retos en curso|Défis en cours/)).toBeVisible({timeout:10000})
+ await expect(page.getByText(/Défi Kineo envoyé|Défis en cours/)).toBeVisible({timeout:10000})
+
+ const friendContext=await browser.newContext()
+ const friendPage=await friendContext.newPage()
+ await signInWith(friendPage,friendAccount,friendSecret)
+ await acceptAndPlayFranceChallenge(friendPage)
+ await friendContext.close()
+
+ await page.goto(base+'/amis',{waitUntil:'networkidle'})
+ const myPlayable=page.locator('.challenge-row').filter({hasText:/duel en cours|même quiz/}).first()
+ await expect(myPlayable).toBeVisible({timeout:12000})
+ await myPlayable.getByRole('button',{name:'Jouer'}).click()
+ await expect(page.locator('.quiz-card')).toBeVisible({timeout:12000})
+ await completeFranceSession(page)
+ await expect(page.locator('.session-complete')).toBeVisible()
+
  for(const route of ['/stats','/rewards','/classement','/profil']){
   await page.goto(base+route,{waitUntil:'networkidle'})
   await expect(page.locator('.app-shell')).toBeVisible()
