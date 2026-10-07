@@ -43,6 +43,29 @@ async function program(page,id,level,curriculum='default'){
  await expect(page.locator('.bottom-nav')).toBeVisible()
 }
 
+async function assertIfsiScopedRevisionLinks(page,level){
+ const semester=page.getByRole('link',{name:new RegExp('Réviser tout le semestre '+level)})
+ await expect(semester).toBeVisible({timeout:15000})
+ expect(await semester.getAttribute('href')).toContain('scope=semester')
+ const toggles=page.locator('.curriculum-unit-toggle')
+ for(let i=0;i<await toggles.count();i++){
+  await toggles.nth(i).click()
+  const opened=page.locator('.curriculum-unit.open')
+  const unitRevision=opened.locator('.unit-revision-cta a').first()
+  const empty=opened.locator('.curriculum-empty')
+  await Promise.race([
+   unitRevision.waitFor({state:'visible',timeout:5000}).catch(()=>undefined),
+   empty.waitFor({state:'visible',timeout:5000}).catch(()=>undefined),
+  ])
+  if(await unitRevision.isVisible().catch(()=>false)){
+   expect(await unitRevision.getAttribute('href')).toContain('scope=unit')
+   await toggles.nth(i).click()
+   return
+  }
+ }
+ throw new Error('No IFSI UE revision link found')
+}
+
 async function openCurriculumQuiz(page){
  const toggles=page.locator('.curriculum-unit-toggle')
  await expect(toggles.first()).toBeVisible({timeout:15000})
@@ -129,6 +152,7 @@ test('single-login authenticated critical journey',async({page,browser})=>{
  expect(labels.some(v=>v.startsWith('S1'))).toBeTruthy()
  expect(labels.some(v=>v.startsWith('S2'))).toBeTruthy()
  expect(labels.some(v=>v.startsWith('S3'))).toBeFalsy()
+ await assertIfsiScopedRevisionLinks(page,'S2')
  await openCurriculumQuiz(page)
  await answerOneCurriculumQuestion(page)
 
