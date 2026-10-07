@@ -66,7 +66,6 @@ jobs:
 
       - name: Roll back failed production deployment
         if: steps.production_smoke.outcome == 'failure'
-        env:
         run: |
           npx wrangler rollback --message "Automatic rollback after failed Kineo production smoke check"
           sleep 5
