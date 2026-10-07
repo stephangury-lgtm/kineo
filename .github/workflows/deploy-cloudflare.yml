@@ -53,6 +53,8 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
       - name: Verify production routes and deployed version
+        id: production_smoke
+        continue-on-error: true
         env:
           EXPECTED_SHA: ${{ github.sha }}
         run: |
@@ -60,4 +62,20 @@ jobs:
             if npm run check:prod; then exit 0; fi
             sleep 3
           done
+          exit 1
+
+      - name: Roll back failed production deployment
+        if: steps.production_smoke.outcome == 'failure'
+        env:
+          PREVIOUS_VERSION: ${{ steps.previous.outputs.version_id }}
+        run: |
+          test -n "$PREVIOUS_VERSION"
+          npx wrangler rollback "$PREVIOUS_VERSION" --message "Automatic rollback after failed Kineo production smoke check"
+          sleep 5
+          KINEO_BASE_URL=https://kineo.stephangury.workers.dev npm run check:prod
+
+      - name: Fail workflow after rollback
+        if: steps.production_smoke.outcome == 'failure'
+        run: |
+          echo "Production smoke checks failed. Previous Cloudflare version was restored."
           exit 1
