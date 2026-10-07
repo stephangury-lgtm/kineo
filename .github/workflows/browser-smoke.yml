@@ -68,9 +68,13 @@ jobs:
           USER_ID=$(node -e "const x=JSON.parse(process.argv[1]);process.stdout.write(x.user_id)" "$CREATE_RESPONSE")
           EMAIL=$(node -e "const x=JSON.parse(process.argv[1]);process.stdout.write(x.email)" "$CREATE_RESPONSE")
           PASSWORD=$(node -e "const x=JSON.parse(process.argv[1]);process.stdout.write(x.password)" "$CREATE_RESPONSE")
+          FRIEND_USER_ID=$(node -e "const x=JSON.parse(process.argv[1]);process.stdout.write(x.friend_user_id)" "$CREATE_RESPONSE")
+          FRIEND_USERNAME=$(node -e "const x=JSON.parse(process.argv[1]);process.stdout.write(x.friend_username)" "$CREATE_RESPONSE")
           echo "::add-mask::$EMAIL"
           echo "::add-mask::$PASSWORD"
           echo "KINEO_E2E_USER_ID=$USER_ID" >> "$GITHUB_ENV"
+          echo "KINEO_E2E_FRIEND_USER_ID=$FRIEND_USER_ID" >> "$GITHUB_ENV"
+          echo "KINEO_E2E_FRIEND_USERNAME=$FRIEND_USERNAME" >> "$GITHUB_ENV"
           echo "KINEO_E2E_EMAIL=$EMAIL" >> "$GITHUB_ENV"
           echo "KINEO_E2E_PASSWORD=$PASSWORD" >> "$GITHUB_ENV"
 
@@ -87,5 +91,8 @@ jobs:
         run: |
           OIDC_RESPONSE=$(curl --fail --silent --show-error -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=kineo-e2e")
           OIDC_TOKEN=$(node -e "const x=JSON.parse(process.argv[1]);process.stdout.write(x.value)" "$OIDC_RESPONSE")
-          CLEANUP_BODY=$(node -e "process.stdout.write(JSON.stringify({action:'cleanup',user_id:process.argv[1]}))" "$KINEO_E2E_USER_ID")
-          curl --fail --silent --show-error -X POST "$BROKER_URL" -H "Authorization: Bearer $OIDC_TOKEN" -H "Content-Type: application/json" --data "$CLEANUP_BODY"
+          for USER_ID in "$KINEO_E2E_USER_ID" "$KINEO_E2E_FRIEND_USER_ID"; do
+            test -n "$USER_ID" || continue
+            CLEANUP_BODY=$(node -e "process.stdout.write(JSON.stringify({action:'cleanup',user_id:process.argv[1]}))" "$USER_ID")
+            curl --fail --silent --show-error -X POST "$BROKER_URL" -H "Authorization: Bearer $OIDC_TOKEN" -H "Content-Type: application/json" --data "$CLEANUP_BODY"
+          done
