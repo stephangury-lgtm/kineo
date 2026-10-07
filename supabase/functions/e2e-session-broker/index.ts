@@ -22,7 +22,7 @@ async function verifyGitHubOidc(req:Request){
  if(payload.repository!==allowedRepo)throw new Error('Repository not allowed')
  if(payload.ref!==allowedRef)throw new Error('Ref not allowed')
  const event=String(payload.event_name??'')
- if(!['push','workflow_dispatch'].includes(event))throw new Error('Event not allowed')
+ if(!['push','workflow_dispatch','workflow_run'].includes(event))throw new Error('Event not allowed')
  return payload
 }
 
@@ -38,8 +38,9 @@ Deno.serve(async(req)=>{
   const admin=createClient(supabaseUrl,serviceKey,{auth:{autoRefreshToken:false,persistSession:false}})
 
   if(action==='create'){
-   const runId=String(claims.run_id??crypto.randomUUID()).replace(/[^a-zA-Z0-9_-]/g,'').slice(-24)
-   const email=`kineo-e2e+${runId}@example.com`
+   const runId=String(claims.run_id??crypto.randomUUID()).replace(/[^a-zA-Z0-9_-]/g,'').slice(-20)
+   const suffix=String(body.suffix??'job').replace(/[^a-zA-Z0-9_-]/g,'').slice(0,12)||'job'
+   const email=`kineo-e2e+${runId}-${suffix}@example.com`
    const password=`K!neo-${crypto.randomUUID()}-Aa9!`
    const {data:userData,error:userError}=await admin.auth.admin.createUser({
     email,password,email_confirm:true,
@@ -73,7 +74,7 @@ Deno.serve(async(req)=>{
     const {error:programError}=await admin.from('profile_programs').upsert(rows,{onConflict:'user_id,program_id'})
     if(programError)throw programError
 
-    const friendEmail=`kineo-e2e-friend+${runId}@example.com`
+    const friendEmail=`kineo-e2e-friend+${runId}-${suffix}@example.com`
     const friendPassword=`K!neo-${crypto.randomUUID()}-Bb8!`
     const {data:friendData,error:friendError}=await admin.auth.admin.createUser({
       email:friendEmail,password:friendPassword,email_confirm:true,
@@ -81,7 +82,7 @@ Deno.serve(async(req)=>{
     })
     if(friendError||!friendData.user)throw friendError??new Error('Unable to create E2E companion')
     const friendId=friendData.user.id
-    const friendUsername=`e2e_friend_${runId.toLowerCase().replace(/[^a-z0-9_]/g,'_').slice(0,21)}`
+    const friendUsername=`e2e_friend_${(runId+'_'+suffix).toLowerCase().replace(/[^a-z0-9_]/g,'_').slice(0,21)}`
     const {error:friendProfileError}=await admin.from('profiles').upsert({
       id:friendId,first_name:'E2E Friend',username:friendUsername,role:'student',study_year:2,xp:0,level:1,updated_at:new Date().toISOString()
     },{onConflict:'id'})
