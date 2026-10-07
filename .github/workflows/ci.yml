@@ -36,6 +36,9 @@ jobs:
       - name: Production content health gate
         run: npm run check:health
 
+      - name: Anonymous RPC security contracts
+        run: npm run check:security
+
       - name: TypeScript and production build
         run: npm run build
 
