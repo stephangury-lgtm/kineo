@@ -33,3 +33,17 @@ const businessCheckedAt=Date.parse(businessRow.checked_at||business.generated_at
 if(!Number.isFinite(businessCheckedAt)||(Date.now()-businessCheckedAt)>90*60*1000)throw new Error('Business health snapshot is missing or stale')
 console.log('Business health:',JSON.stringify(business))
 if(!business.ok||Number(business.critical_count)!==0)throw new Error(`Business integrity failed with ${business.critical_count??'unknown'} critical issue(s)`)
+
+const authContractResponse=await fetch(`${url}/rest/v1/authenticated_contract_status?id=eq.1&select=payload,checked_at`,{
+ headers:{apikey:key,Authorization:`Bearer ${key}`},
+ cache:'no-store',
+})
+if(!authContractResponse.ok)throw new Error(`Authenticated contract endpoint returned ${authContractResponse.status}: ${await authContractResponse.text()}`)
+const authContractRows=await authContractResponse.json()
+const authContractRow=Array.isArray(authContractRows)?authContractRows[0]:null
+const authContract=authContractRow?.payload
+if(!authContract||typeof authContract!=='object')throw new Error('Authenticated contract endpoint returned an invalid payload')
+const authContractCheckedAt=Date.parse(authContractRow.checked_at||authContract.generated_at||'')
+if(!Number.isFinite(authContractCheckedAt)||(Date.now()-authContractCheckedAt)>90*60*1000)throw new Error('Authenticated contract snapshot is missing or stale')
+console.log('Authenticated contract health:',JSON.stringify(authContract))
+if(!authContract.ok||Number(authContract.critical_count)!==0)throw new Error(`Authenticated curriculum contracts failed with ${authContract.critical_count??'unknown'} critical issue(s)`)
