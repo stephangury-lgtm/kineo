@@ -50,7 +50,7 @@ Deno.serve(async(req)=>{
    try{
     const username=`e2e_${runId.toLowerCase().replace(/[^a-z0-9_]/g,'_').slice(0,28)}`
     const {error:profileError}=await admin.from('profiles').upsert({
-      id:userId,first_name:'E2E',username,role:'student',xp:0,level:1,updated_at:new Date().toISOString()
+      id:userId,first_name:'E2E',username,role:'student',study_year:2,xp:0,level:1,updated_at:new Date().toISOString()
     },{onConflict:'id'})
     if(profileError)throw profileError
 
@@ -83,7 +83,7 @@ Deno.serve(async(req)=>{
     const friendId=friendData.user.id
     const friendUsername=`e2e_friend_${runId.toLowerCase().replace(/[^a-z0-9_]/g,'_').slice(0,21)}`
     const {error:friendProfileError}=await admin.from('profiles').upsert({
-      id:friendId,first_name:'E2E Friend',username:friendUsername,role:'student',xp:0,level:1,updated_at:new Date().toISOString()
+      id:friendId,first_name:'E2E Friend',username:friendUsername,role:'student',study_year:2,xp:0,level:1,updated_at:new Date().toISOString()
     },{onConflict:'id'})
     if(friendProfileError)throw friendProfileError
     const friendRows=rows.map(row=>({...row,user_id:friendId}))
