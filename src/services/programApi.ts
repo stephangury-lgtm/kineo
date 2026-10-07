@@ -99,8 +99,15 @@ export async function saveProgramLevel(programId:ProgramId,levelCode:string){
  if(!user) return
  const {data:level,error:levelError}=await supabase.from('academic_levels').select('id').eq('program_id',programId).eq('code',levelCode).single()
  if(levelError) throw levelError
- const {error}=await supabase.from('profile_programs').update({academic_level_id:level.id,updated_at:new Date().toISOString()}).eq('user_id',user.id).eq('program_id',programId)
+ const {data:updated,error}=await supabase
+  .from('profile_programs')
+  .update({academic_level_id:level.id,updated_at:new Date().toISOString()})
+  .eq('user_id',user.id)
+  .eq('program_id',programId)
+  .select('academic_level_id')
+  .maybeSingle()
  if(error) throw error
+ if(!updated?.academic_level_id) throw new Error('Ce cursus n’est pas encore attribué à ton compte.')
 }
 
 export async function saveProgramCurriculumVersion(programId:ProgramId,version:CurriculumVersion){
