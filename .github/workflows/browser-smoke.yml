@@ -70,11 +70,17 @@ jobs:
           PASSWORD=$(node -e "const x=JSON.parse(process.argv[1]);process.stdout.write(x.password)" "$CREATE_RESPONSE")
           FRIEND_USER_ID=$(node -e "const x=JSON.parse(process.argv[1]);process.stdout.write(x.friend_user_id)" "$CREATE_RESPONSE")
           FRIEND_USERNAME=$(node -e "const x=JSON.parse(process.argv[1]);process.stdout.write(x.friend_username)" "$CREATE_RESPONSE")
+          FRIEND_EMAIL=$(node -e "const x=JSON.parse(process.argv[1]);process.stdout.write(x.friend_email)" "$CREATE_RESPONSE")
+          FRIEND_PASSWORD=$(node -e "const x=JSON.parse(process.argv[1]);process.stdout.write(x.friend_password)" "$CREATE_RESPONSE")
           echo "::add-mask::$EMAIL"
           echo "::add-mask::$PASSWORD"
+          echo "::add-mask::$FRIEND_EMAIL"
+          echo "::add-mask::$FRIEND_PASSWORD"
           echo "KINEO_E2E_USER_ID=$USER_ID" >> "$GITHUB_ENV"
           echo "KINEO_E2E_FRIEND_USER_ID=$FRIEND_USER_ID" >> "$GITHUB_ENV"
           echo "KINEO_E2E_FRIEND_USERNAME=$FRIEND_USERNAME" >> "$GITHUB_ENV"
+          echo "KINEO_E2E_FRIEND_EMAIL=$FRIEND_EMAIL" >> "$GITHUB_ENV"
+          echo "KINEO_E2E_FRIEND_PASSWORD=$FRIEND_PASSWORD" >> "$GITHUB_ENV"
           echo "KINEO_E2E_EMAIL=$EMAIL" >> "$GITHUB_ENV"
           echo "KINEO_E2E_PASSWORD=$PASSWORD" >> "$GITHUB_ENV"
 
