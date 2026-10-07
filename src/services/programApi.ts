@@ -46,14 +46,18 @@ export async function getProgramCatalog(){
  return ((data??[]) as ProgramCatalogRow[]).map(program=>({...program,academic_levels:[...(program.academic_levels??[])].sort((a,b)=>a.display_order-b.display_order)}))
 }
 
-export async function getAccessiblePrograms():Promise<AccessibleProgram[]>{
- const {data:{user},error:userError}=await supabase.auth.getUser()
- if(userError) throw userError
- if(!user) return []
+export async function getAccessiblePrograms(userId?:string):Promise<AccessibleProgram[]>{
+ let resolvedUserId=userId
+ if(!resolvedUserId){
+  const {data:{user},error:userError}=await supabase.auth.getUser()
+  if(userError) throw userError
+  resolvedUserId=user?.id
+ }
+ if(!resolvedUserId) return []
  const {data,error}=await supabase
   .from('profile_programs')
   .select('program_id,academic_level_id,is_primary,curriculum_version,academic_levels(code)')
-  .eq('user_id',user.id)
+  .eq('user_id',resolvedUserId)
   .order('is_primary',{ascending:false})
  if(error) throw error
  return (data??[]).map(row=>{
