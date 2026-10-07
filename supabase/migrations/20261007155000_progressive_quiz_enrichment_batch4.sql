@@ -36,7 +36,7 @@ values
 4,'UVic · Trabajo de Fin de Grado · 2026-2027',951,'source_validated',true,'clinical_case','[]'::jsonb,'{"enrichment_batch":"progressive_quiz_v4","difficulty_scale_version":"2026-10-v1"}'::jsonb),
 ('88888888-71a0-4d01-9004-000000000007','f9a03454-930d-4da2-bcb8-384f8c501fd7',
 'Caso de integración — La pregunta del TFG, el método y los resultados son correctos por separado, pero las conclusiones responden a otra cuestión. ¿Cuál es el problema principal?',
-'La calidad del TFG exige coherencia entre pregunta, método, resultados y conclusiones. Si les conclusions ne répondent pas à la question, la chaîne logique est rompue.',
+'La calidad del TFG exige coherencia entre pregunta, método, resultados y conclusiones. Si las conclusiones no responden a la pregunta, se rompe esa cadena lógica.',
 '[{"text":"Falta coherencia interna entre pregunta y conclusiones","correct":true},{"text":"Falta únicamente diseño visual","correct":false},{"text":"La defensa oral sustituye esa incoherencia","correct":false},{"text":"No existe ningún problema si los resultados son correctos","correct":false}]'::jsonb,
 5,'UVic · Trabajo de Fin de Grado · 2026-2027',952,'source_validated',true,'clinical_case','[]'::jsonb,'{"enrichment_batch":"progressive_quiz_v4","difficulty_scale_version":"2026-10-v1"}'::jsonb),
 ('88888888-71a0-4d01-9004-000000000008','a41836ca-60e0-445e-abe4-5a61fdf5ab98',
