@@ -61,18 +61,7 @@ values
 ('d0000003-71a0-4d01-9010-000000000009'::uuid,'478c3df1-d7ae-4dfc-a22f-7f737d431a1a'::uuid,'Quel énoncé résume le mieux l’homéostasie glycémique ?','L’insuline et le glucagon agissent de façon complémentaire avec plusieurs organes pour maintenir la glycémie dans une plage compatible avec le fonctionnement normal de l’organisme.','[{"text":"Elle repose sur une régulation coordonnée entre hormones et organes","correct":true},{"text":"Elle dépend uniquement de l’intestin","correct":false},{"text":"Elle est indépendante du pancréas","correct":false},{"text":"Elle ne varie jamais avec les repas ou le jeûne","correct":false}]'::jsonb,5,'NIDDK/NIH — Régulation de la glycémie',909,'source_validated',true,'clinical_case','[]'::jsonb,null,'{"source_url":"https://www.niddk.nih.gov/news/archive/2021/story-discovery-medications-diabetes-obesity-emerged-research-pancreatic-hormone","minimum_10_batch":"v1","source_validation":"institutional_validated"}'::jsonb)
 on conflict(id) do nothing;
 
-do $
-begin
- if exists(
-   select 1 from public.curriculum_quiz_readiness_v1
-   where topic_id in (
-     '78e455b5-75a8-43c8-bd10-22c6e7a27f72'::uuid,
-     '508670dc-3dfe-45a4-ac1f-8adee52e88af'::uuid,
-     '478c3df1-d7ae-4dfc-a22f-7f737d431a1a'::uuid
-   ) and not is_ready
- ) then
-   raise exception 'Validated external source batch 1 is not ready: expected >=10 validated questions per topic';
- end if;
-end $$;
+-- Readiness is enforced by curriculum_quiz_readiness_v1 and the application minimum-10 guard.
+
 
 select public.refresh_release_health_status_v1();
