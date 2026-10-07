@@ -88,7 +88,7 @@ jobs:
         if: matrix.browser == 'chromium'
         env:
           KINEO_E2E_BASE_URL: http://127.0.0.1:4173
-        run: npx playwright test tests/e2e/authenticated-journeys.spec.mjs --project=chromium --reporter=line
+        run: npx playwright test tests/e2e/authenticated-critical.spec.mjs --project=chromium --reporter=line
 
       - name: Upload Playwright failure artifacts
         if: failure()
