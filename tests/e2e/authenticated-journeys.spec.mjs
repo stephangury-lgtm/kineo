@@ -153,7 +153,7 @@ test('authenticated France revision, social duel, stats, badges, ranking, notifi
  await page.goto(base+'/',{waitUntil:'networkidle'})
  await page.locator('.feedback-fab').click()
  await expect(page.getByRole('dialog')).toBeVisible()
- await page.getByRole('button',{name:'Suggestion'}).click()
+ await page.getByRole('dialog').locator('.feedback-kind').filter({hasText:'Suggestion'}).click()
  await page.locator('#feedback-message').fill('Test E2E automatique du parcours de retour utilisateur.')
  await page.getByRole('button',{name:'Envoyer le retour'}).click()
  await expect(page.getByText('Merci, retour enregistré.')).toBeVisible({timeout:10000})
