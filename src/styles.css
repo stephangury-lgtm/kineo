@@ -86,3 +86,4 @@
 .program-theme .challenge-card .challenge-copy p{margin:2px 0;line-height:1.3}
 .program-theme .challenge-card .progress-track{margin-top:6px!important}
 .program-theme .visual-question img{image-rendering:auto;max-width:100%;height:auto}
+.program-theme .foundation-card,.program-theme .program-units-card,.program-theme .ifsi-reference-card{border-color:var(--program-line)}.program-theme .curriculum-unit.open,.program-theme .semester-card.active{border-color:var(--program-primary);box-shadow:0 0 0 1px var(--program-primary)}.program-theme .curriculum-unit-code,.program-theme .curriculum-unit-action,.program-theme .program-status.foundation{color:var(--program-primary)}.program-theme .program-status.foundation{background:var(--program-soft)}.program-theme .curriculum-topic{border-color:var(--program-line)}.program-theme .curriculum-unit-icon{background:var(--program-soft)}
