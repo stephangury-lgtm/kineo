@@ -11,25 +11,22 @@
   "lang": "fr",
   "dir": "ltr",
   "orientation": "portrait-primary",
-  "categories": ["education", "medical"],
+  "categories": [
+    "education",
+    "medical"
+  ],
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "/icons/kineo-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
+      "src": "/icons/kineo-launch.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "/icons/kineo-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/kineo-maskable-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
+      "src": "/icons/kineo-launch-maskable.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
       "purpose": "maskable"
     }
   ],
