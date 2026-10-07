@@ -8,3 +8,10 @@
 .program-units-card.focus-semester .curriculum-unit{border:1px solid rgba(15,118,110,.12)}
 .program-units-card.focus-semester .curriculum-unit-toggle{min-height:72px}
 @media(max-width:520px){.curriculum-unit-action{font-size:.7rem!important}.semester-focus-copy{font-size:.76rem;line-height:1.35}}
+
+.semester-revision-cta,.unit-revision-cta{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin:.75rem 0 1rem}
+.semester-revision-cta{padding:.85rem;border-radius:14px;background:rgba(99,102,241,.055)}
+.unit-revision-cta{padding:.7rem .8rem;margin:.35rem 0 .55rem;border-radius:12px;background:rgba(15,118,110,.045)}
+.semester-revision-cta a,.unit-revision-cta a{text-decoration:none}
+.semester-revision-cta small,.unit-revision-cta small{font-size:.75rem;opacity:.65}
+@media(max-width:520px){.semester-revision-cta,.unit-revision-cta{display:grid;grid-template-columns:1fr}.semester-revision-cta a,.unit-revision-cta a{text-align:center;width:100%}}
