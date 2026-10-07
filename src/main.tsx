@@ -73,6 +73,7 @@ if (challengeRoot && 'MutationObserver' in window) {
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
+    const hadControllerAtLoad = Boolean(navigator.serviceWorker.controller)
     navigator.serviceWorker.register('/sw.js').then((registration) => {
       const update = () => registration.update().catch(() => undefined)
       window.addEventListener('online', update)
@@ -84,7 +85,9 @@ if ('serviceWorker' in navigator) {
 
     let refreshing = false
     navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (refreshing) return
+      // Do not reload when the service worker takes control for the very first time.
+      // A first-install reload can abort an in-flight login or form submission.
+      if (!hadControllerAtLoad || refreshing) return
       refreshing = true
       window.location.reload()
     })
