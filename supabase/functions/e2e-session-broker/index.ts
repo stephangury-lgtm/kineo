@@ -73,7 +73,32 @@ Deno.serve(async(req)=>{
     const {error:programError}=await admin.from('profile_programs').upsert(rows,{onConflict:'user_id,program_id'})
     if(programError)throw programError
 
-    return json({user_id:userId,email,password,programs:['kineo-fr','kineo-es','ifsi-fr']})
+    const friendEmail=`kineo-e2e-friend+${runId}@example.com`
+    const friendPassword=`K!neo-${crypto.randomUUID()}-Bb8!`
+    const {data:friendData,error:friendError}=await admin.auth.admin.createUser({
+      email:friendEmail,password:friendPassword,email_confirm:true,
+      user_metadata:{e2e:true,github_run_id:runId,e2e_companion:true},
+    })
+    if(friendError||!friendData.user)throw friendError??new Error('Unable to create E2E companion')
+    const friendId=friendData.user.id
+    const friendUsername=`e2e_friend_${runId.toLowerCase().replace(/[^a-z0-9_]/g,'_').slice(0,21)}`
+    const {error:friendProfileError}=await admin.from('profiles').upsert({
+      id:friendId,first_name:'E2E Friend',username:friendUsername,role:'student',xp:0,level:1,updated_at:new Date().toISOString()
+    },{onConflict:'id'})
+    if(friendProfileError)throw friendProfileError
+    const friendRows=rows.map(row=>({...row,user_id:friendId}))
+    const {error:friendProgramError}=await admin.from('profile_programs').upsert(friendRows,{onConflict:'user_id,program_id'})
+    if(friendProgramError)throw friendProgramError
+    const {error:friendshipError}=await admin.from('friendships').insert({
+      requester_id:userId,addressee_id:friendId,status:'accepted'
+    })
+    if(friendshipError)throw friendshipError
+
+    return json({
+      user_id:userId,email,password,
+      friend_user_id:friendId,friend_username:friendUsername,
+      programs:['kineo-fr','kineo-es','ifsi-fr']
+    })
    }catch(error){
     await admin.from('profile_programs').delete().eq('user_id',userId)
     await admin.from('profiles').delete().eq('id',userId)
