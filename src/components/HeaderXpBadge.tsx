@@ -1,4 +1,4 @@
-import { useEffect,useState } from 'react'
+import { useCallback,useEffect,useState } from 'react'
 import { getGamificationSummaryV2 } from '../services/kineoApi'
 import { getCurrentProgram } from '../curriculum/programs'
 
