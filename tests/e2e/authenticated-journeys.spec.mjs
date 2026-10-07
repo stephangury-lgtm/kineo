@@ -1,5 +1,7 @@
 import { test,expect } from '@playwright/test'
 
+test.describe.configure({retries:0})
+
 const base=(process.env.KINEO_E2E_BASE_URL||'https://kineo.stephangury.workers.dev').replace(/\/$/,'')
 const account=process.env.KINEO_E2E_EMAIL
 const secret=process.env.KINEO_E2E_PASSWORD
