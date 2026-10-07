@@ -15,7 +15,11 @@ concurrency:
 jobs:
   mobile-browser:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 18
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, webkit]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,7 +39,7 @@ jobs:
       - name: Install pinned Playwright runner
         run: |
           npm install --no-save --package-lock=false @playwright/test@1.55.0
-          npx playwright install --with-deps chromium
+          npx playwright install --with-deps ${{ matrix.browser }}
 
       - name: Start production preview
         run: |
@@ -50,4 +54,4 @@ jobs:
       - name: Mobile browser and PWA smoke tests
         env:
           KINEO_E2E_BASE_URL: http://127.0.0.1:4173
-        run: npx playwright test tests/e2e/public-smoke.spec.mjs --reporter=line
+        run: npx playwright test tests/e2e/public-smoke.spec.mjs --project=${{ matrix.browser }} --reporter=line
