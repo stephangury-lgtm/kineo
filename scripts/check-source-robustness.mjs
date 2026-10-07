@@ -27,6 +27,7 @@ assert(foundations.includes('async function restart()'),'Cumulative revision rep
 assert(foundations.includes('getFoundationQuestions(program.id,mode,sessionCount'),'Cumulative revision must request a fresh validated pool')
 assert(foundationApi.includes('sampleBalancedByUnit'),'Semester revision must stay balanced across units')
 assert(foundationApi.includes('if(scope.levelCode)return sampleBalancedByUnit(pool,count)'),'Semester scope must use balanced sampling')
+assert(foundationApi.includes('if(scope.unitId)return sampleBalancedByKey(pool,question=>question.topic_id,count)'),'UE revision must stay balanced across topics')
 assert(topic.includes('function restartQuiz()'),'Topic quiz replay must explicitly reset local state')
 assert(topic.includes("setChecked({})"),'Topic quiz replay must clear completion state')
 
