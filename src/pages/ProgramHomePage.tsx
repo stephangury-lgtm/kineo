@@ -15,24 +15,35 @@ export default function ProgramHomePage(){
  const isSpain=program.id==='kineo-es'
  const isIfsi=program.id==='ifsi-fr'
  const [access,setAccess]=useState<AccessibleProgram|null>(null)
+ const [accessLoaded,setAccessLoaded]=useState(false)
  const [progress,setProgress]=useState<CurriculumProgress|null>(null)
  const [game,setGame]=useState<GamificationSummaryV2|null>(null)
  const [badges,setBadges]=useState<BadgesV2|null>(null)
  const [friends,setFriends]=useState<FriendshipsSummary>(emptyFriends)
  const [challenges,setChallenges]=useState<FriendChallenge[]>([])
  const [error,setError]=useState<string|null>(null)
- useEffect(()=>{let cancelled=false;Promise.all([
-  getAccessiblePrograms(),
-  getCurriculumProgress(program.id),
-  getGamificationSummaryV2(),
-  getBadgesV2(),
-  getFriendships(program.id),
-  getCurriculumFriendChallenges(program.id),
- ]).then(([items,nextProgress,nextGame,nextBadges,nextFriends,nextChallenges])=>{
-  if(cancelled)return
-  setAccess(items.find(item=>item.program_id===program.id)??null)
-  setProgress(nextProgress);setGame(nextGame);setBadges(nextBadges);setFriends(nextFriends);setChallenges(nextChallenges)
- }).catch((e:Error)=>{if(!cancelled)setError(e.message)});return()=>{cancelled=true}},[program.id])
+ useEffect(()=>{let cancelled=false
+  setError(null);setAccessLoaded(false);setProgress(null)
+  getAccessiblePrograms().then(async items=>{
+   if(cancelled)return
+   const nextAccess=items.find(item=>item.program_id===program.id)??null
+   setAccess(nextAccess);setAccessLoaded(true)
+   const common=await Promise.all([
+    getGamificationSummaryV2(),
+    getBadgesV2(),
+    getFriendships(program.id),
+    getCurriculumFriendChallenges(program.id),
+   ])
+   if(cancelled)return
+   const [nextGame,nextBadges,nextFriends,nextChallenges]=common
+   setGame(nextGame);setBadges(nextBadges);setFriends(nextFriends);setChallenges(nextChallenges)
+   if(nextAccess?.academic_level_id){
+    const nextProgress=await getCurriculumProgress(program.id)
+    if(!cancelled)setProgress(nextProgress)
+   }
+  }).catch((e:Error)=>{if(!cancelled){setAccessLoaded(true);setError(e.message)}})
+  return()=>{cancelled=true}
+ },[program.id])
  const activeLevel=access?.level_code??'—'
  const unlockedLevels=getUnlockedProgramLevels(program,access?.level_code)
  const refLabel=isIfsi?`Référentiel ${access?.curriculum_version==='2026'?'2026':'2009'}`:null
@@ -44,8 +55,10 @@ export default function ProgramHomePage(){
  const incomingChallenges=challenges.filter(item=>item.direction==='received'&&item.status==='pending')
  const playableChallenges=challenges.filter(item=>(item.status==='accepted'||item.status==='in_progress')&&!item.has_played)
  const socialAttention=friends.incoming.length+incomingChallenges.length+playableChallenges.length
- if(error&&!progress&&!game)return <section className="card"><h1>{isSpain?'Inicio no disponible':'Accueil indisponible'}</h1><p>{error}</p></section>
- if(!progress||!game||!badges)return <section className="card skeleton-card"><p>{isSpain?'Cargando tu progreso…':'Chargement de ta progression…'}</p></section>
+ if(error&&!game)return <section className="card"><h1>{isSpain?'Inicio no disponible':'Accueil indisponible'}</h1><p>{error}</p></section>
+ if(!accessLoaded||!game||!badges)return <section className="card skeleton-card"><p>{isSpain?'Cargando tu progreso…':'Chargement de ta progression…'}</p></section>
+ if(access&&!access.academic_level_id)return <div className="stack program-home-page"><section className="hero-card program-home-hero"><div className="hero-copy"><span className="hero-kicker">{program.flag} {isSpain?'Configura tu nivel':'Configure ton niveau'}</span><h1>{isSpain?'Elige tu año de estudios para empezar':'Choisis ton niveau d’étude pour commencer'}</h1><p>{isSpain?'Tu nivel desbloquea únicamente los contenidos correspondientes y los años anteriores.':'Ton niveau déverrouille uniquement les contenus correspondants et les niveaux précédents.'}</p><Link className="primary-button hero-action" to="/profil">{isSpain?'Elegir mi nivel':'Choisir mon niveau'}</Link></div><div className="hero-orbit"><span>🎓</span></div></section><section className="card"><p>{isSpain?'Tu cuenta tiene acceso a este plan, pero todavía no tiene un nivel asignado.':'Ton compte a accès à ce cursus, mais aucun niveau n’est encore attribué.'}</p></section></div>
+ if(!progress)return <section className="card skeleton-card"><p>{isSpain?'Cargando tu progreso…':'Chargement de ta progression…'}</p></section>
  return <div className="stack dashboard-stack program-home-page">
   <section className="hero-card dashboard-daily-hero program-home-hero"><div className="hero-copy"><span className="hero-kicker">{program.flag} {isSpain?'Hoy · nivel':'Aujourd’hui · niveau'} {activeLevel}</span><h1>{streak>0?(isSpain?`${streak} día${streak>1?'s':''} seguidos 🔥`:`${streak} jour${streak>1?'s':''} de suite 🔥`):(isSpain?'Empieza tu racha hoy 🔥':'Commence ta série aujourd’hui 🔥')}</h1><p>{isSpain?'Retoma tu temario, consolida tus bases y sigue tu progreso desde un único espacio.':'Reprends ton cursus, consolide tes fondamentaux et suis ta progression depuis un seul espace.'}</p><Link className="primary-button hero-action" to="/fondamentaux?mode=mix">{isSpain?'Repasar · 10 preguntas':'Réviser · 10 questions'}</Link></div><div className="hero-orbit"><span>🧠</span></div></section>
   <InstallAppCard/>
