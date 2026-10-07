@@ -21,7 +21,7 @@ export async function getFriendships(programId:ProgramId){
  return{friends:result.friends??[],incoming:result.incoming??[],outgoing:result.outgoing??[]}satisfies FriendshipsSummary
 }
 
-export async function getFriendLeaderboard(){const{data,error}=await supabase.rpc('get_friend_leaderboard_v1');if(error)throw error;return(data??[])as FriendLeaderboardRow[]}
+export async function getFriendLeaderboard(programId:ProgramId){const{data,error}=await supabase.rpc('get_friend_leaderboard_v2',{p_program_id:programId});if(error)throw error;return(data??[])as FriendLeaderboardRow[]}
 export async function sendFriendRequest(addresseeId:string){const{data,error}=await supabase.rpc('send_friend_request_v1',{p_addressee:addresseeId});if(error)throw error;return data as string}
 export async function respondFriendRequest(friendshipId:string,accept:boolean){const{data,error}=await supabase.rpc('respond_friend_request_v1',{p_friendship_id:friendshipId,p_accept:accept});if(error)throw error;return data as string}
 export async function removeFriendship(friendshipId:string){const{data,error}=await supabase.rpc('remove_friendship_v1',{p_friendship_id:friendshipId});if(error)throw error;return Boolean(data)}
