@@ -11,7 +11,8 @@
     "cf:deploy": "wrangler deploy",
     "check:source": "node scripts/check-source-robustness.mjs",
     "check:health": "node scripts/check-release-health.mjs",
-    "check:prod": "node scripts/check-production.mjs"
+    "check:prod": "node scripts/check-production.mjs",
+    "check:security": "node scripts/check-security-contracts.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
