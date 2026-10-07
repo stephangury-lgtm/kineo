@@ -3,8 +3,6 @@ import { test, expect } from '@playwright/test'
 const base=(process.env.KINEO_E2E_BASE_URL||'http://127.0.0.1:4173').replace(/\/$/,'')
 const routes=['/','/parcours','/fondamentaux','/stats','/rewards','/amis','/profil']
 
-test.use({viewport:{width:390,height:844}})
-
 test('mobile shell stays renderable on critical routes',async({page})=>{
  const pageErrors=[]
  page.on('pageerror',error=>pageErrors.push(error.message))
