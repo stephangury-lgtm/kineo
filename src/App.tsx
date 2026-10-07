@@ -49,9 +49,9 @@ const routeFallback=<section className="card skeleton-card"><p>Chargement…</p>
 export default function App(){
  const program=getCurrentProgram(),isKineoFrance=program.id==='kineo-fr',isSpain=program.id==='kineo-es'
  const navItems=isKineoFrance
-  ?[{to:'/',label:'Accueil',icon:'⌂',end:true},{to:'/parcours',label:'Parcours',icon:'▦'},{to:'/revision',label:'Réviser',icon:'✦'},{to:'/stats',label:'Stats',icon:'↗'},{to:'/profil',label:'Profil',icon:'●'}]
+  ?[{to:'/',label:'Accueil',icon:'⌂',end:true},{to:'/parcours',label:'Parcours',icon:'▦'},{to:'/revision',label:'Réviser',icon:'✦'},{to:'/stats',label:'Stats',icon:'↗'},{to:'/rewards',label:'Badges',icon:'◆'}]
   :isSpain
-   ?[{to:'/',label:'Inicio',icon:'⌂',end:true},{to:'/parcours',label:'Temario',icon:'▦'},{to:'/fondamentaux',label:'Repasar',icon:'✦'},{to:'/stats',label:'Progreso',icon:'↗'},{to:'/profil',label:'Perfil',icon:'●'}]
+   ?[{to:'/',label:'Inicio',icon:'⌂',end:true},{to:'/parcours',label:'Temario',icon:'▦'},{to:'/fondamentaux',label:'Repasar',icon:'✦'},{to:'/stats',label:'Progreso',icon:'↗'},{to:'/rewards',label:'Logros',icon:'◆'}]
    :[{to:'/',label:'Accueil',icon:'⌂',end:true},{to:'/parcours',label:'Parcours',icon:'▦'},{to:'/fondamentaux',label:'Réviser',icon:'✦'},{to:'/stats',label:'Stats',icon:'↗'},{to:'/profil',label:'Profil',icon:'●'}]
  const curriculumHome=<ProgramLandingPage/>
  const programHome=<ProgramHomePage/>
