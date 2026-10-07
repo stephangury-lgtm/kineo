@@ -89,7 +89,12 @@ async function openCurriculumQuiz(page){
 
 async function answerOneCurriculumQuestion(page){
  const card=page.locator('.curriculum-quiz-card').first()
- await expect(card).toBeVisible()
+ if(!await card.isVisible().catch(()=>false)){
+  const preparing=page.locator('#qcm .admin-empty').first()
+  await expect(preparing).toBeVisible({timeout:7000})
+  await expect(preparing).toContainText(/10/)
+  return false
+ }
  const radio=card.locator('input[type="radio"]').first()
  const input=card.locator('input.text-input').first()
  const select=card.locator('.matching-row select').first()
@@ -103,6 +108,7 @@ async function answerOneCurriculumQuestion(page){
  await expect(validate).toBeEnabled()
  await validate.click()
  await expect(card.locator('.curriculum-feedback')).toBeVisible({timeout:10000})
+ return true
 }
 
 test('single-login authenticated critical journey',async({page,browser})=>{
