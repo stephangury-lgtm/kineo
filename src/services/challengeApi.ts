@@ -6,7 +6,7 @@ export type CurriculumChallengeQuestion={id:string;question_text:string;options:
 export type CurriculumChallengeAnswerResult={correct:boolean;correct_answer:string|null;answered:number;completed_my_run:boolean;score:number|null;challenge_completed:boolean;new_badges?:unknown[]}
 export type CurriculumChallengeAvailability={program_id:string;academic_level_id:string|null;level_code:string|null;validated_mcq:number;required_mcq:number;can_challenge:boolean}
 
-export async function getFriendChallenges(){const{data,error}=await supabase.rpc('get_friend_challenges_v2');if(error)throw error;return(data??[])as FriendChallenge[]}
+export async function getFriendChallenges(){const{data,error}=await supabase.rpc('get_friend_challenges_v3');if(error)throw error;return(data??[])as FriendChallenge[]}
 export async function createFriendChallenge(friendId:string){const{data,error}=await supabase.rpc('create_friend_challenge_v1',{p_friend_id:friendId});if(error)throw error;return data as string}
 export async function respondFriendChallenge(challengeId:string,accept:boolean){const{data,error}=await supabase.rpc('respond_friend_challenge_v1',{p_challenge_id:challengeId,p_accept:accept});if(error)throw error;return data as string}
 export async function cancelFriendChallenge(challengeId:string){const{data,error}=await supabase.rpc('cancel_friend_challenge_v1',{p_challenge_id:challengeId});if(error)throw error;return Boolean(data)}
