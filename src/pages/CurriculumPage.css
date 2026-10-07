@@ -16,3 +16,7 @@
 .curriculum-page .subject-row strong,.curriculum-page .subject-row span{line-height:1.35}
 @media(max-width:900px){.curriculum-page .stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.curriculum-page .stats-hero{grid-template-columns:1fr}.curriculum-page .stats-hero-score{justify-items:start;width:max-content}}
 @media(max-width:520px){.curriculum-page{gap:9px}.curriculum-page .stats-hero{padding:14px 13px;gap:9px;border-radius:17px}.curriculum-page .stats-hero h1{font-size:1.35rem;margin:2px 0 4px}.curriculum-page .stats-hero p:last-child{font-size:.78rem;line-height:1.28}.curriculum-page .stats-hero-score{min-width:0;padding:7px 9px;border-radius:11px}.curriculum-page .stats-hero-score strong{font-size:1.08rem}.curriculum-page .stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}.curriculum-page .score-card{min-height:76px;padding:9px 10px;gap:2px;border-radius:12px}.curriculum-page .score-card>span{font-size:.72rem}.curriculum-page .score-card>strong{font-size:1.25rem}.curriculum-page .score-card>small{font-size:.64rem;line-height:1.15}}
+
+.curriculum-year-card{transition:border-color .18s ease,box-shadow .18s ease}
+.curriculum-year-card.current-year-card{border:2px solid var(--brand-2);box-shadow:0 12px 30px rgba(15,118,110,.12)}
+.curriculum-year-card.current-year-card>.section-heading{padding-bottom:10px;border-bottom:1px solid var(--brand-soft)}
