@@ -1,5 +1,7 @@
 import { test,expect } from '@playwright/test'
 
+test.describe.configure({retries:0})
+
 const base=(process.env.KINEO_E2E_BASE_URL||'http://127.0.0.1:4173').replace(/\/$/,'')
 const email=process.env.KINEO_E2E_EMAIL
 const password=process.env.KINEO_E2E_PASSWORD
@@ -99,6 +101,8 @@ test('single-login authenticated critical journey',async({page,browser})=>{
  await expect(page.getByText('Merci, retour enregistré.')).toBeVisible({timeout:10000})
 
  await program(page,'ifsi-fr','S2','2009')
+ await expect(page.locator('select.text-answer')).toHaveValue('S2',{timeout:15000})
+ await expect(page.locator('select.text-answer option').filter({hasText:/^S1/})).toHaveCount(1,{timeout:15000})
  const labels=await page.locator('select.text-answer option').allTextContents()
  expect(labels.some(v=>v.startsWith('S1'))).toBeTruthy()
  expect(labels.some(v=>v.startsWith('S2'))).toBeTruthy()
@@ -107,7 +111,8 @@ test('single-login authenticated critical journey',async({page,browser})=>{
  await answerOneCurriculumQuestion(page)
 
  await program(page,'kineo-es','ES1')
- await expect(page.getByText('Elige un nivel accesible')).toBeVisible()
+ await expect(page.locator('select.text-answer')).toHaveValue('ES1',{timeout:15000})
+ await expect(page.getByText('Elige un nivel accesible')).toBeVisible({timeout:15000})
  await openCurriculumQuiz(page)
  await answerOneCurriculumQuestion(page)
  await page.goto(base+'/rewards',{waitUntil:'domcontentloaded'})
