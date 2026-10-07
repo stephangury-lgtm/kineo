@@ -69,6 +69,7 @@ export default function ProgramLandingPage(){
    setCurriculumVersion(version)
    localStorage.setItem(referenceStorageKey,version)
    setAssignedAccess(current=>current?{...current,curriculum_version:version}:current)
+   window.dispatchEvent(new CustomEvent('kineo:curriculum-version-updated',{detail:{programId:p.id,version}}))
   }catch(error){
    setSyncError(error instanceof Error?error.message:'Impossible de mettre à jour le référentiel.')
   }finally{setSyncing(false)}
