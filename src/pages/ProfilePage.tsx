@@ -69,8 +69,12 @@ export default function ProfilePage() {
     setLevelBusy(true);setMessage(null)
     try{
       await saveProgramLevel(activeProgram.id,code)
-      setAccessiblePrograms(current=>current.map(item=>item.program_id===activeProgram.id?{...item,level_code:code}:item))
+      const refreshedPrograms=await getAccessiblePrograms()
+      const persisted=refreshedPrograms.find(item=>item.program_id===activeProgram.id)
+      if(persisted?.level_code!==code)throw new Error(activeProgram.id==='kineo-es'?'El nivel no se ha guardado. Inténtalo de nuevo.':'Le niveau n’a pas été enregistré. Réessaie.')
+      setAccessiblePrograms(refreshedPrograms)
       localStorage.setItem(`healthapp_level_${activeProgram.id}`,code)
+      window.dispatchEvent(new Event('kineo-profile-updated'))
       setMessage(activeProgram.id==='kineo-es'?'Nivel actualizado ✓':'Niveau d’étude mis à jour ✓')
     }catch(err){setMessage(err instanceof Error?err.message:'Impossible de mettre à jour le niveau.')}
     finally{setLevelBusy(false)}
