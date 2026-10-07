@@ -9,8 +9,10 @@ async function rpc(name,body){
  })
 }
 
-const publicHealth=await rpc('get_release_health_v1',{})
-if(!publicHealth.ok)throw new Error(`Public release-health contract failed: ${publicHealth.status}`)
+const publicHealth=await fetch(`${url}/rest/v1/release_health_status?id=eq.1&select=id`,{
+ headers:{apikey:key,Authorization:`Bearer ${key}`},
+})
+if(!publicHealth.ok)throw new Error(`Public release-health read contract failed: ${publicHealth.status}`)
 
 const protectedCalls=[
  ['get_badges_v2',{}],
