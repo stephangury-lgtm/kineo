@@ -4,6 +4,7 @@ export type StudentProfile={id:string;first_name:string|null;username:string|nul
 
 export async function getCurrentProfile(){const{data:userData,error:userError}=await supabase.auth.getUser();if(userError)throw userError;const user=userData.user;if(!user)return null;const{data,error}=await supabase.from('profiles').select('id, first_name, username, avatar_url, study_year, role').eq('id',user.id).maybeSingle();if(error)throw error;return data as StudentProfile|null}
 
+export async function markAppOpen(){const{error}=await supabase.rpc('mark_app_open_v1');if(error)throw error}
 export async function touchUserActivity(){const{error}=await supabase.rpc('touch_user_activity_v1');if(error)throw error}
 
 export async function updateStudyProfile(params:{firstName?:string;username?:string;studyYear:number}){
