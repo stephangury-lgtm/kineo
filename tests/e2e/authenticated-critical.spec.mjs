@@ -17,6 +17,22 @@ async function login(page,emailValue,passwordValue){
  await expect(page.locator('.bottom-nav')).toBeVisible({timeout:20000})
 }
 
+async function gotoStable(page,path){
+ const target=base+path
+ for(let attempt=0;attempt<3;attempt++){
+  try{
+   await page.goto(target,{waitUntil:'domcontentloaded'})
+   await expect(page).toHaveURL(target,{timeout:10000})
+   await page.waitForLoadState('load').catch(()=>undefined)
+   await page.waitForTimeout(400)
+   return
+  }catch(error){
+   if(attempt===2)throw error
+   await page.waitForTimeout(500)
+  }
+ }
+}
+
 async function program(page,id,level,curriculum='default'){
  await page.evaluate(({id,level,curriculum})=>{
   localStorage.setItem('healthapp_program',id)
@@ -92,12 +108,12 @@ test('single-login authenticated critical journey',async({page,browser})=>{
  await friendContext.close()
 
  for(const route of ['/stats','/rewards','/classement','/profil','/notifications']){
-  await page.goto(base+route,{waitUntil:'domcontentloaded'})
+  await gotoStable(page,route)
   await expect(page.locator('.app-shell')).toBeVisible()
   await expect(page.locator('body')).not.toContainText('Une erreur est survenue')
  }
 
- await page.goto(base+'/',{waitUntil:'domcontentloaded'})
+ await gotoStable(page,'/')
  await page.locator('.feedback-fab').click()
  const dialog=page.getByRole('dialog')
  await expect(dialog).toBeVisible()
@@ -121,6 +137,6 @@ test('single-login authenticated critical journey',async({page,browser})=>{
  await expect(page.getByText('Elige un nivel accesible')).toBeVisible({timeout:15000})
  await openCurriculumQuiz(page)
  await answerOneCurriculumQuestion(page)
- await page.goto(base+'/rewards',{waitUntil:'domcontentloaded'})
+ await gotoStable(page,'/rewards')
  await expect(page.getByText('Colección')).toBeVisible()
 })
