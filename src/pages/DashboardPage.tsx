@@ -11,7 +11,6 @@ const ACTIVE_SMART_SESSION='kineo_active_smart_session'
 export default function DashboardPage(){
  const [dashboard,setDashboard]=useState<DashboardV2|null>(null)
  const [game,setGame]=useState<GamificationSummaryV2|null>(null)
- const [badges,setBadges]=useState<BadgesV2|null>(null)
  const [modes,setModes]=useState<RevisionModeAvailability|null>(null)
  const [priorities,setPriorities]=useState<StudyPrioritiesV1|null>(null)
  const [active,setActive]=useState<ActiveRevisionSession|null>(null)
