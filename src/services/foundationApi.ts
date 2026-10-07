@@ -30,11 +30,12 @@ function shuffle<T>(items:T[]){
  return copy
 }
 
-function sampleBalancedByUnit(pool:FoundationQuestion[],count:number){
+function sampleBalancedByKey(pool:FoundationQuestion[],key:(question:FoundationQuestion)=>string,count:number){
  const buckets=new Map<string,FoundationQuestion[]>()
  for(const question of shuffle(pool)){
-  const bucket=buckets.get(question.unit_id)??[]
-  bucket.push(question);buckets.set(question.unit_id,bucket)
+  const id=key(question)
+  const bucket=buckets.get(id)??[]
+  bucket.push(question);buckets.set(id,bucket)
  }
  const ordered=[...buckets.values()].sort((a,b)=>a.length-b.length)
  const result:FoundationQuestion[]=[]
@@ -46,6 +47,18 @@ function sampleBalancedByUnit(pool:FoundationQuestion[],count:number){
   cursor++
  }
  return result
+}
+
+function sampleBalancedByUnit(pool:FoundationQuestion[],count:number){
+ const byUnit=new Map<string,FoundationQuestion[]>()
+ for(const question of pool){
+  const bucket=byUnit.get(question.unit_id)??[]
+  bucket.push(question);byUnit.set(question.unit_id,bucket)
+ }
+ const topicBalanced=[...byUnit.entries()].flatMap(([unitId,questions])=>
+  sampleBalancedByKey(questions,question=>question.topic_id,questions.length).map(question=>({...question,unit_id:unitId}))
+ )
+ return sampleBalancedByKey(topicBalanced,question=>question.unit_id,count)
 }
 
 function sampleByMode(pool:FoundationQuestion[],activeOrder:number,mode:FoundationMode,count:number){
@@ -100,7 +113,7 @@ export async function getFoundationQuestions(programId:ProgramId,mode:Foundation
   const level=levelByTopic.get(question.topic_id)
   return {...question,level_code:level?.code??'?',level_order:level?.display_order??activeLevel.display_order,unit_id:unitByTopic.get(question.topic_id)??''}
  })
- if(scope.unitId)return shuffle(pool).slice(0,count)
+ if(scope.unitId)return sampleBalancedByKey(pool,question=>question.topic_id,count)
  if(scope.levelCode)return sampleBalancedByUnit(pool,count)
  return sampleByMode(pool,activeLevel.display_order,mode,count)
 }
