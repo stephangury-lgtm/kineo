@@ -22,10 +22,36 @@ async function useProgram(page,program,level,curriculum='default'){
  await page.goto(base+'/parcours',{waitUntil:'networkidle'})
 }
 
-test('authenticated France shell, stats, badges and social pages',async({page})=>{
+async function answerFirstFranceRevisionQuestion(page){
+ await page.goto(base+'/revision',{waitUntil:'networkidle'})
+ const start=page.getByRole('button',{name:'Commencer'})
+ if(await start.count())await start.click()
+ const card=page.locator('.quiz-card')
+ await expect(card).toBeVisible({timeout:12000})
+ const choices=card.locator('.answers .answer')
+ const text=card.locator('.text-answer')
+ const selects=card.locator('.matching-row select')
+ if(await choices.count())await choices.first().click()
+ else if(await text.count())await text.first().fill('e2e')
+ else if(await selects.count()){
+  for(let i=0;i<await selects.count();i++){
+   const select=selects.nth(i)
+   if(await select.locator('option').count()>1)await select.selectOption({index:1})
+  }
+ }else{
+  throw new Error('Unsupported France question type in E2E')
+ }
+ const validate=card.getByRole('button',{name:'Valider ma réponse'})
+ await expect(validate).toBeEnabled()
+ await validate.click()
+ await expect(card.locator('.result-box')).toBeVisible({timeout:10000})
+}
+
+test('authenticated France revision, stats, badges and social pages',async({page})=>{
  await signIn(page)
  await useProgram(page,'kineo-fr','K2')
  await expect(page.locator('.bottom-nav')).toBeVisible()
+ await answerFirstFranceRevisionQuestion(page)
  for(const route of ['/stats','/rewards','/amis','/classement','/profil']){
   await page.goto(base+route,{waitUntil:'networkidle'})
   await expect(page.locator('.app-shell')).toBeVisible()
