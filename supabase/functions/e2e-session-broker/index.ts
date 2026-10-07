@@ -75,6 +75,8 @@ Deno.serve(async(req)=>{
 
     return json({user_id:userId,email,password,programs:['kineo-fr','kineo-es','ifsi-fr']})
    }catch(error){
+    await admin.from('profile_programs').delete().eq('user_id',userId)
+    await admin.from('profiles').delete().eq('id',userId)
     await admin.auth.admin.deleteUser(userId)
     throw error
    }
@@ -85,6 +87,8 @@ Deno.serve(async(req)=>{
    if(!/^[0-9a-f-]{36}$/i.test(userId))return json({error:'Invalid user id'},400)
    const {data:userData}=await admin.auth.admin.getUserById(userId)
    if(!userData.user?.user_metadata?.e2e)return json({error:'Refusing to delete a non-E2E user'},403)
+   await admin.from('profile_programs').delete().eq('user_id',userId)
+   await admin.from('profiles').delete().eq('id',userId)
    const {error}=await admin.auth.admin.deleteUser(userId)
    if(error)throw error
    return json({deleted:true})
