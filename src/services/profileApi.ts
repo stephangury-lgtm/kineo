@@ -2,7 +2,18 @@ import { supabase } from '../lib/supabase'
 
 export type StudentProfile={id:string;first_name:string|null;username:string|null;avatar_url:string|null;study_year:number|null;role:'student'|'admin'}
 
-export async function getCurrentProfile(){const{data:userData,error:userError}=await supabase.auth.getUser();if(userError)throw userError;const user=userData.user;if(!user)return null;const{data,error}=await supabase.from('profiles').select('id, first_name, username, avatar_url, study_year, role').eq('id',user.id).maybeSingle();if(error)throw error;return data as StudentProfile|null}
+export async function getCurrentProfile(userId?:string){
+ let resolvedUserId=userId
+ if(!resolvedUserId){
+  const{data:userData,error:userError}=await supabase.auth.getUser()
+  if(userError)throw userError
+  resolvedUserId=userData.user?.id
+ }
+ if(!resolvedUserId)return null
+ const{data,error}=await supabase.from('profiles').select('id, first_name, username, avatar_url, study_year, role').eq('id',resolvedUserId).maybeSingle()
+ if(error)throw error
+ return data as StudentProfile|null
+}
 
 export async function markAppOpen(){const{error}=await supabase.rpc('mark_app_open_v1');if(error)throw error}
 export async function touchUserActivity(){const{error}=await supabase.rpc('touch_user_activity_v1');if(error)throw error}
@@ -28,7 +39,7 @@ export async function uploadProfilePhoto(originalFile:File){
  if(convertibleMobile.includes(originalType))file=await convertToJpeg(originalFile);else if(!directlySupported.includes(originalType)){if(!originalType.startsWith('image/'))throw new Error('Le fichier sélectionné n’est pas une image.');file=await convertToJpeg(originalFile)}
  if(file.size>5*1024*1024)file=await convertToJpeg(file);if(file.size>5*1024*1024)throw new Error('La photo reste trop volumineuse après optimisation. Choisis une image plus légère.')
  const{data:userData,error:userError}=await supabase.auth.getUser();if(userError)throw userError;const user=userData.user;if(!user)throw new Error('Utilisateur non authentifié')
- const currentProfile=await getCurrentProfile();const previousPath=currentProfile?.avatar_url?storagePathFromAvatarUrl(currentProfile.avatar_url,user.id):null
+ const currentProfile=await getCurrentProfile(user.id);const previousPath=currentProfile?.avatar_url?storagePathFromAvatarUrl(currentProfile.avatar_url,user.id):null
  const extension=file.type==='image/png'?'png':file.type==='image/webp'?'webp':'jpg';const path=`${user.id}/avatar-${Date.now()}.${extension}`
  const{error:uploadError}=await supabase.storage.from('avatars').upload(path,file,{cacheControl:'3600',contentType:file.type||'image/jpeg',upsert:false});if(uploadError)throw new Error(`Envoi de la photo impossible : ${uploadError.message}`)
  const{data:publicData}=supabase.storage.from('avatars').getPublicUrl(path);const avatarUrl=publicData.publicUrl
