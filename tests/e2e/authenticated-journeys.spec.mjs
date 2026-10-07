@@ -75,11 +75,15 @@ async function openFirstTopicAndCompleteQuiz(page){
  let opened=false
  for(let i=0;i<await toggles.count();i++){
   await toggles.nth(i).click()
-  const link=page.locator('.curriculum-topic-actions a.primary-button').first()
-  if(await link.count()){
+  const unit=page.locator('.curriculum-unit.open').first()
+  const link=unit.locator('.curriculum-topic-actions a.primary-button').first()
+  try{
+   await expect(link).toBeVisible({timeout:4000})
    await link.click()
    opened=true
    break
+  }catch{
+   if(await toggles.nth(i).getAttribute('aria-expanded')==='true')await toggles.nth(i).click()
   }
  }
  expect(opened).toBeTruthy()
