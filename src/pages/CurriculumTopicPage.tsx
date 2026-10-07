@@ -2,7 +2,7 @@ import { useEffect,useMemo,useState } from 'react'
 import { Link,useParams } from 'react-router-dom'
 import { CompactReferences,ReadableCourseContent } from '../components/ReadableCourseContent'
 import { getCurrentProgram } from '../curriculum/programs'
-import { getTopic,getTopicLessons,getTopicQuiz,submitCurriculumTopicAnswer,type CurriculumAnswerPayload,type CurriculumAnswerResult,type CurriculumHotspot,type CurriculumLesson,type CurriculumMatchPair,type CurriculumQuizQuestion,type CurriculumQuizOption,type ProgramCatalogTopic } from '../services/programCatalogApi'
+import { MIN_TOPIC_QUIZ_QUESTIONS,getTopic,getTopicLessons,getTopicQuiz,submitCurriculumTopicAnswer,type CurriculumAnswerPayload,type CurriculumAnswerResult,type CurriculumHotspot,type CurriculumLesson,type CurriculumMatchPair,type CurriculumQuizQuestion,type CurriculumQuizOption,type ProgramCatalogTopic } from '../services/programCatalogApi'
 import type { CurriculumVersion } from '../services/programApi'
 import '../course-reading.css'
 
@@ -175,12 +175,12 @@ export default function CurriculumTopicPage(){
    </article>)}</div>}
   </section>
 
-  <section className="card centered"><p className="eyebrow">{isEs?'Pasar a la práctica':'Passage à l’action'}</p><h2>{isEs?'Comprueba lo que has retenido':'Vérifie ce que tu as retenu'}</h2><p>{isEs?'Una serie corta de preguntas para transformar la lectura en memorización activa.':'Une courte série ciblée pour transformer la lecture en mémorisation active.'}</p><a className="primary-button wide" href="#qcm" onClick={()=>setQuizStarted(true)}>{isEs?`Empezar el quiz (${quiz.length} preguntas)`:`Lancer le quiz (${quiz.length} questions)`}</a></section>
+  <section className="card centered"><p className="eyebrow">{isEs?'Pasar a la práctica':'Passage à l’action'}</p><h2>{isEs?'Comprueba lo que has retenido':'Vérifie ce que tu as retenu'}</h2><p>{isEs?'Cada quiz publicado contiene al menos 10 preguntas validadas.':'Chaque quiz publié contient au minimum 10 questions validées.'}</p>{quiz.length>=MIN_TOPIC_QUIZ_QUESTIONS?<a className="primary-button wide" href="#qcm" onClick={()=>setQuizStarted(true)}>{isEs?`Empezar el quiz (${quiz.length} preguntas)`:`Lancer le quiz (${quiz.length} questions)`}</a>:<button className="primary-button wide" type="button" disabled>{isEs?'Quiz en preparación · mínimo 10 preguntas':'Quiz en préparation · minimum 10 questions'}</button>}</section>
 
   {quizStarted&&<section className="card" id="qcm">
    <div className="section-heading"><div><p className="eyebrow">{isEs?'Repaso activo':'Révision active'}</p><h2>{isEs?'Pon a prueba tus conocimientos':'Teste tes acquis'}</h2></div>{quiz.length>0&&<span className="program-status foundation">{checkedCount}/{quiz.length} {isEs?'respondidas':`répondu${quiz.length>1?'s':''}`}</span>}</div>
    {quizError&&<p className="form-error">{quizError}</p>}
-   {quiz.length===0?<div className="admin-empty"><span>❓</span><div><strong>{isEs?'Ejercicios en preparación.':'Exercices en préparation.'}</strong><p>{isEs?'La ficha se puede consultar, pero los ejercicios todavía no están publicados.':'La fiche est consultable mais les exercices de ce chapitre ne sont pas encore publiés.'}</p></div></div>:<div className="curriculum-quiz-list">{quiz.map((q,index)=>{
+   {quiz.length===0?<div className="admin-empty"><span>❓</span><div><strong>{isEs?'Ejercicios en preparación.':'Exercices en préparation.'}</strong><p>{isEs?`La ficha se puede consultar. El quiz se publicará cuando alcance ${MIN_TOPIC_QUIZ_QUESTIONS} preguntas validadas.`:`La fiche reste consultable. Le quiz sera publié dès qu’il atteindra ${MIN_TOPIC_QUIZ_QUESTIONS} questions validées.`}</p></div></div>:<div className="curriculum-quiz-list">{quiz.map((q,index)=>{
     const selected=answers[q.id]??''
     const isChecked=!!checked[q.id]
     const localCorrect=isLocallyCorrect(q,selected,matchingAnswers[q.id]??{})
