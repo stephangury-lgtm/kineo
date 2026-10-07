@@ -14,6 +14,22 @@ const publicHealth=await fetch(`${url}/rest/v1/release_health_status?id=eq.1&sel
 })
 if(!publicHealth.ok)throw new Error(`Public release-health read contract failed: ${publicHealth.status}`)
 
+const securityStatus=await fetch(`${url}/rest/v1/security_health_status?id=eq.1&select=payload,checked_at`,{
+ headers:{apikey:key,Authorization:`Bearer ${key}`},
+ cache:'no-store',
+})
+if(!securityStatus.ok)throw new Error(`Security health read failed: ${securityStatus.status}`)
+const securityRows=await securityStatus.json()
+const securityRow=Array.isArray(securityRows)?securityRows[0]:null
+const securityHealth=securityRow?.payload
+if(!securityHealth||!securityHealth.ok||Number(securityHealth.critical_count)!==0){
+ throw new Error(`Security health gate failed with ${securityHealth?.critical_count??'unknown'} critical issue(s)`)
+}
+const securityCheckedAt=Date.parse(securityRow.checked_at||securityHealth.generated_at||'')
+if(!Number.isFinite(securityCheckedAt)||(Date.now()-securityCheckedAt)>90*60*1000){
+ throw new Error('Security health snapshot is missing or stale')
+}
+
 const protectedCalls=[
  ['get_badges_v2',{}],
  ['get_friend_leaderboard_v2',{p_program_id:'kineo-es'}],
