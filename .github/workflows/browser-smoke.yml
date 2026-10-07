@@ -90,6 +90,17 @@ jobs:
           KINEO_E2E_BASE_URL: http://127.0.0.1:4173
         run: npx playwright test tests/e2e/authenticated-journeys.spec.mjs --project=chromium --reporter=line
 
+      - name: Upload Playwright failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-${{ matrix.browser }}-${{ github.run_id }}
+          path: |
+            test-results
+            /tmp/kineo-preview.log
+          if-no-files-found: ignore
+          retention-days: 7
+
       - name: Delete isolated authenticated E2E account
         if: always() && matrix.browser == 'chromium' && env.KINEO_E2E_USER_ID != ''
         env:
