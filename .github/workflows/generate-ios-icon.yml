@@ -1,6 +1,9 @@
 name: Generate Kineo iOS Icon
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/generate-ios-icon.yml'
 permissions:
   contents: write
 jobs:
