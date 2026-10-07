@@ -48,9 +48,18 @@ export default function ProfilePage() {
     setBusy(true); setMessage(null)
     try {
       const updated = await updateStudyProfile({ firstName, username, studyYear })
+      if(activeProgram.id==='kineo-fr'){
+        const levelCode=`K${updated.study_year ?? studyYear}`
+        await saveProgramLevel(activeProgram.id,levelCode)
+        const refreshedPrograms=await getAccessiblePrograms()
+        const persisted=refreshedPrograms.find(item=>item.program_id===activeProgram.id)
+        if(persisted?.level_code!==levelCode)throw new Error('Le niveau a été enregistré dans le profil mais pas dans le parcours. Réessaie.')
+        setAccessiblePrograms(refreshedPrograms)
+        localStorage.setItem(`healthapp_level_${activeProgram.id}`,levelCode)
+      }
       setProfile(updated); setUsername(updated.username ?? '')
       window.dispatchEvent(new Event('kineo-profile-updated'))
-      setMessage(activeProgram.id==='kineo-es'?'Perfil actualizado ✓':'Profil mis à jour ✓')
+      setMessage(activeProgram.id==='kineo-es'?'Perfil actualizado ✓':'Profil et niveau mis à jour ✓')
     } catch (err) { setMessage(err instanceof Error ? err.message : (activeProgram.id==='kineo-es'?'No se pudo actualizar el perfil.':'Impossible de mettre à jour le profil.')) }
     finally { setBusy(false) }
   }
