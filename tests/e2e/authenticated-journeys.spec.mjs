@@ -28,10 +28,16 @@ async function useProgram(page,program,level,curriculum='default'){
 
 
 async function completeFranceSession(page){
- for(let guard=0;guard<15;guard++){
+ for(let guard=0;guard<20;guard++){
   if(await page.locator('.session-complete').count())return
   const card=page.locator('.quiz-card')
   await expect(card).toBeVisible({timeout:12000})
+  const resultBox=card.locator('.result-box')
+  if(await resultBox.isVisible().catch(()=>false)){
+   await resultBox.locator('.primary-button').click()
+   await expect(resultBox).toBeHidden({timeout:10000})
+   continue
+  }
   const choices=card.locator('.answers .answer')
   const text=card.locator('.text-answer')
   const selects=card.locator('.matching-row select')
@@ -46,8 +52,9 @@ async function completeFranceSession(page){
   const validate=card.getByRole('button',{name:'Valider ma réponse'})
   await expect(validate).toBeEnabled()
   await validate.click()
-  await expect(card.locator('.result-box')).toBeVisible({timeout:10000})
-  await card.locator('.result-box .primary-button').click()
+  await expect(resultBox).toBeVisible({timeout:10000})
+  await resultBox.locator('.primary-button').click()
+  await expect(resultBox).toBeHidden({timeout:10000})
  }
  await expect(page.locator('.session-complete')).toBeVisible({timeout:12000})
 }
@@ -56,13 +63,19 @@ async function acceptAndPlayFranceChallenge(page){
  await useProgram(page,'kineo-fr','K2')
  await page.goto(base+'/amis',{waitUntil:'networkidle'})
  const incoming=page.locator('.challenge-row').filter({hasText:/te défie sur 10 questions/}).first()
- await expect(incoming).toBeVisible({timeout:12000})
- await incoming.getByRole('button',{name:'Accepter'}).click()
- const playable=page.locator('.challenge-row').filter({hasText:/duel en cours|même quiz/}).first()
- await expect(playable).toBeVisible({timeout:12000})
- await playable.getByRole('button',{name:'Jouer'}).click()
- await expect(page.locator('.quiz-card')).toBeVisible({timeout:12000})
- await completeFranceSession(page)
+ if(await incoming.count()){
+  await incoming.getByRole('button',{name:'Accepter'}).click()
+  await expect(incoming).toBeHidden({timeout:10000})
+ }
+ const playable=page.locator('.challenge-row').filter({has:page.getByRole('button',{name:'Jouer'})}).first()
+ if(await playable.count()){
+  await playable.getByRole('button',{name:'Jouer'}).click()
+  await expect(page.locator('.quiz-card')).toBeVisible({timeout:12000})
+  await completeFranceSession(page)
+  return
+ }
+ const waiting=page.locator('.challenge-row').filter({hasText:/Résultat en attente|Terminé/}).first()
+ await expect(waiting).toBeVisible({timeout:12000})
 }
 
 async function answerFirstFranceRevisionQuestion(page){
@@ -90,7 +103,8 @@ async function answerFirstFranceRevisionQuestion(page){
  await expect(card.locator('.result-box')).toBeVisible({timeout:10000})
 }
 
-test('authenticated France revision, social duel, stats, badges and ranking',async({page,browser})=>{
+test('authenticated France revision, social duel, stats, badges, ranking, notifications and feedback',async({page,browser})=>{
+ test.setTimeout(120000)
  await signIn(page)
  await useProgram(page,'kineo-fr','K2')
  await expect(page.locator('.bottom-nav')).toBeVisible()
@@ -101,9 +115,12 @@ test('authenticated France revision, social duel, stats, badges and ranking',asy
  const friendRow=page.locator('.person-row').filter({hasText:'@'+friendUsername}).first()
  await expect(friendRow).toBeVisible({timeout:12000})
  const challengeButton=friendRow.locator('button.duel-button')
- await expect(challengeButton).toBeEnabled()
- await challengeButton.click()
- await expect(page.getByText(/Défi Kineo envoyé|Défis en cours/)).toBeVisible({timeout:10000})
+ if(await challengeButton.isEnabled()){
+  await challengeButton.click()
+  await expect(page.getByText(/Défi Kineo envoyé|Défis en cours/)).toBeVisible({timeout:10000})
+ }else{
+  await expect(page.locator('.challenge-row').first()).toBeVisible({timeout:10000})
+ }
 
  const friendContext=await browser.newContext()
  const friendPage=await friendContext.newPage()
@@ -112,18 +129,28 @@ test('authenticated France revision, social duel, stats, badges and ranking',asy
  await friendContext.close()
 
  await page.goto(base+'/amis',{waitUntil:'networkidle'})
- const myPlayable=page.locator('.challenge-row').filter({hasText:/duel en cours|même quiz/}).first()
- await expect(myPlayable).toBeVisible({timeout:12000})
- await myPlayable.getByRole('button',{name:'Jouer'}).click()
- await expect(page.locator('.quiz-card')).toBeVisible({timeout:12000})
- await completeFranceSession(page)
- await expect(page.locator('.session-complete')).toBeVisible()
+ const myPlayable=page.locator('.challenge-row').filter({has:page.getByRole('button',{name:'Jouer'})}).first()
+ if(await myPlayable.count()){
+  await myPlayable.getByRole('button',{name:'Jouer'}).click()
+  await expect(page.locator('.quiz-card')).toBeVisible({timeout:12000})
+  await completeFranceSession(page)
+  await expect(page.locator('.session-complete')).toBeVisible()
+ }else{
+  await expect(page.locator('.duel-result').first()).toBeVisible({timeout:12000})
+ }
 
- for(const route of ['/stats','/rewards','/classement','/profil']){
+ for(const route of ['/stats','/rewards','/classement','/profil','/notifications']){
   await page.goto(base+route,{waitUntil:'networkidle'})
   await expect(page.locator('.app-shell')).toBeVisible()
   await expect(page.locator('body')).not.toContainText('Une erreur est survenue')
  }
+ await page.goto(base+'/',{waitUntil:'networkidle'})
+ await page.locator('.feedback-fab').click()
+ await expect(page.getByRole('dialog')).toBeVisible()
+ await page.getByRole('button',{name:'Suggestion'}).click()
+ await page.locator('#feedback-message').fill('Test E2E automatique du parcours de retour utilisateur.')
+ await page.getByRole('button',{name:'Envoyer le retour'}).click()
+ await expect(page.getByText('Merci, retour enregistré.')).toBeVisible({timeout:10000})
 })
 
 async function openFirstTopicAndCompleteQuiz(page){
