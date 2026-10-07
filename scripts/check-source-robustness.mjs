@@ -8,6 +8,7 @@ const main=read('src/main.tsx')
 const social=read('src/services/socialApi.ts')
 const landing=read('src/pages/ProgramLandingPage.tsx')
 const foundations=read('src/pages/FoundationsPage.tsx')
+const foundationApi=read('src/services/foundationApi.ts')
 const topic=read('src/pages/CurriculumTopicPage.tsx')
 
 assert(main.includes('<AppErrorBoundary>'),'Global React error boundary is missing')
@@ -24,8 +25,8 @@ assert(landing.includes('isProgramLevelUnlocked'),'Curriculum level locking help
 assert(!landing.includes('saveProgramLevel('),'Parcours must never change the assigned academic level')
 assert(foundations.includes('async function restart()'),'Cumulative revision replay must reset and reload a session')
 assert(foundations.includes('getFoundationQuestions(program.id,mode,sessionCount'),'Cumulative revision must request a fresh validated pool')
-assert(foundations.includes('sampleBalancedByUnit'),'Semester revision must stay balanced across units')
-assert(foundations.includes('if(scope.levelCode)return sampleBalancedByUnit(pool,count)'),'Semester scope must use balanced sampling')
+assert(foundationApi.includes('sampleBalancedByUnit'),'Semester revision must stay balanced across units')
+assert(foundationApi.includes('if(scope.levelCode)return sampleBalancedByUnit(pool,count)'),'Semester scope must use balanced sampling')
 assert(topic.includes('function restartQuiz()'),'Topic quiz replay must explicitly reset local state')
 assert(topic.includes("setChecked({})"),'Topic quiz replay must clear completion state')
 
