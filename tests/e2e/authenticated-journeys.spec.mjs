@@ -11,7 +11,7 @@ const friendSecret=process.env.KINEO_E2E_FRIEND_PASSWORD
 
 async function signInWith(page,emailValue,passwordValue){
  if(!emailValue||!passwordValue)throw new Error('Missing E2E account')
- await page.goto(base,{waitUntil:'networkidle'})
+ await page.goto(base,{waitUntil:'domcontentloaded'})
  await page.getByLabel('E-mail').fill(emailValue)
  await page.locator('input[type="password"]').fill(passwordValue)
  await page.getByRole('button',{name:'Se connecter'}).click()
@@ -25,7 +25,7 @@ async function useProgram(page,program,level,curriculum='default'){
   localStorage.setItem('healthapp_level_'+program,level)
   localStorage.setItem('healthapp_curriculum_'+program,curriculum)
  },{program,level,curriculum})
- await page.goto(base+'/parcours',{waitUntil:'networkidle'})
+ await page.goto(base+'/parcours',{waitUntil:'domcontentloaded'})
 }
 
 
@@ -63,9 +63,9 @@ async function completeFranceSession(page){
 
 async function acceptAndPlayFranceChallenge(page){
  await useProgram(page,'kineo-fr','K2')
- await page.goto(base+'/notifications',{waitUntil:'networkidle'})
+ await page.goto(base+'/notifications',{waitUntil:'domcontentloaded'})
  await expect(page.getByText(/Nouveau défi|défie sur 10 questions/).first()).toBeVisible({timeout:12000})
- await page.goto(base+'/amis',{waitUntil:'networkidle'})
+ await page.goto(base+'/amis',{waitUntil:'domcontentloaded'})
  const incoming=page.locator('.challenge-row').filter({hasText:/te défie sur 10 questions/}).first()
  if(await incoming.count()){
   await incoming.getByRole('button',{name:'Accepter'}).click()
@@ -83,7 +83,7 @@ async function acceptAndPlayFranceChallenge(page){
 }
 
 async function answerFirstFranceRevisionQuestion(page){
- await page.goto(base+'/revision',{waitUntil:'networkidle'})
+ await page.goto(base+'/revision',{waitUntil:'domcontentloaded'})
  const start=page.getByRole('button',{name:'Commencer'})
  if(await start.count())await start.click()
  const card=page.locator('.quiz-card')
@@ -113,7 +113,7 @@ test('authenticated France revision, social duel, stats, badges, ranking, notifi
  await useProgram(page,'kineo-fr','K2')
  await expect(page.locator('.bottom-nav')).toBeVisible()
  await answerFirstFranceRevisionQuestion(page)
- await page.goto(base+'/amis',{waitUntil:'networkidle'})
+ await page.goto(base+'/amis',{waitUntil:'domcontentloaded'})
  await expect(page.locator('.app-shell')).toBeVisible()
  if(!friendUsername)throw new Error('Missing E2E friend username')
  const friendRow=page.locator('.person-row').filter({hasText:'@'+friendUsername}).first()
@@ -132,7 +132,7 @@ test('authenticated France revision, social duel, stats, badges, ranking, notifi
  await acceptAndPlayFranceChallenge(friendPage)
  await friendContext.close()
 
- await page.goto(base+'/amis',{waitUntil:'networkidle'})
+ await page.goto(base+'/amis',{waitUntil:'domcontentloaded'})
  const myPlayable=page.locator('.challenge-row').filter({has:page.getByRole('button',{name:'Jouer'})}).first()
  if(await myPlayable.count()){
   await myPlayable.getByRole('button',{name:'Jouer'}).click()
@@ -144,7 +144,7 @@ test('authenticated France revision, social duel, stats, badges, ranking, notifi
  }
 
  for(const route of ['/stats','/rewards','/classement','/profil','/notifications']){
-  await page.goto(base+route,{waitUntil:'networkidle'})
+  await page.goto(base+route,{waitUntil:'domcontentloaded'})
   await expect(page.locator('.app-shell')).toBeVisible()
   await expect(page.locator('body')).not.toContainText('Une erreur est survenue')
   if(route==='/classement'){
@@ -152,7 +152,7 @@ test('authenticated France revision, social duel, stats, badges, ranking, notifi
    await expect(page.getByText('@'+friendUsername)).toBeVisible({timeout:10000})
   }
  }
- await page.goto(base+'/',{waitUntil:'networkidle'})
+ await page.goto(base+'/',{waitUntil:'domcontentloaded'})
  await page.locator('.feedback-fab').click()
  await expect(page.getByRole('dialog')).toBeVisible()
  await page.getByRole('dialog').locator('.feedback-kind').filter({hasText:'Suggestion'}).click()
@@ -215,7 +215,7 @@ test('authenticated IFSI cumulative access and quiz answer',async({page})=>{
  expect(labels.some(v=>v.startsWith('S2'))).toBeTruthy()
  expect(labels.some(v=>v.startsWith('S3'))).toBeFalsy()
  await openFirstTopicAndCompleteQuiz(page)
- await page.goto(base+'/stats',{waitUntil:'networkidle'})
+ await page.goto(base+'/stats',{waitUntil:'domcontentloaded'})
  await expect(page.locator('.stats-hero')).toBeVisible()
 })
 
@@ -225,8 +225,8 @@ test('authenticated Spain course, quiz, stats and badges',async({page})=>{
  await expect(page.getByText('Elige un nivel accesible')).toBeVisible()
  await expect(page.locator('select.text-answer')).toHaveValue('ES1')
  await openFirstTopicAndCompleteQuiz(page)
- await page.goto(base+'/stats',{waitUntil:'networkidle'})
+ await page.goto(base+'/stats',{waitUntil:'domcontentloaded'})
  await expect(page.locator('.stats-hero')).toBeVisible()
- await page.goto(base+'/rewards',{waitUntil:'networkidle'})
+ await page.goto(base+'/rewards',{waitUntil:'domcontentloaded'})
  await expect(page.getByText('Colección')).toBeVisible()
 })
