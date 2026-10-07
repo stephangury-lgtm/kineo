@@ -23,7 +23,7 @@ assert(social.includes("{p_program_id:programId}"),'Leaderboard must pass the ac
 assert(landing.includes('isProgramLevelUnlocked'),'Curriculum level locking helper is not used')
 assert(!landing.includes('saveProgramLevel('),'Parcours must never change the assigned academic level')
 assert(foundations.includes('async function restart()'),'Cumulative revision replay must reset and reload a session')
-assert(foundations.includes('getFoundationQuestions(program.id,mode,10)'),'Cumulative revision must request a fresh validated pool')
+assert(foundations.includes('getFoundationQuestions(program.id,mode,sessionCount'),'Cumulative revision must request a fresh validated pool')
 assert(topic.includes('function restartQuiz()'),'Topic quiz replay must explicitly reset local state')
 assert(topic.includes("setChecked({})"),'Topic quiz replay must clear completion state')
 
