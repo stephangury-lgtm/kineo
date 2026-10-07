@@ -128,3 +128,15 @@ export async function getCurriculumProgress(programId:ProgramId):Promise<Curricu
  if(error) throw error
  return data as CurriculumProgress
 }
+
+export type CurriculumStats={
+ period_days:number
+ summary:{attempts:number;correct_answers:number;accuracy_percent:number;xp_period:number;xp_total:number;level:number;streak_current:number;streak_longest:number;questions_total:number;questions_answered:number;coverage_percent:number}
+ daily_activity:Array<{date:string;attempts:number;correct:number;accuracy_percent:number;xp:number}>
+ units:Array<{id:string;name:string;questions_total:number;questions_answered:number;coverage_percent:number;attempts:number;correct:number;accuracy_percent:number}>
+}
+export async function getCurriculumStats(programId:ProgramId,days=30):Promise<CurriculumStats>{
+ const {data,error}=await supabase.rpc('get_curriculum_stats_v1',{p_program_id:programId,p_days:days})
+ if(error) throw error
+ return data as CurriculumStats
+}
