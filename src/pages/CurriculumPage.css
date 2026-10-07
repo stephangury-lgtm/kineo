@@ -33,6 +33,6 @@
 .subject-course-action{display:inline-flex;align-items:center;gap:5px;margin-left:auto;color:var(--brand);font-size:.78rem;font-weight:900;white-space:nowrap}
 .subject-course-action>span{font-size:1.1rem;line-height:1}
 
-.subject-courses-action{display:inline-flex!important;align-items:center;justify-content:flex-end;gap:5px;margin-left:auto;color:var(--brand)!important;font-size:.78rem;font-weight:900;white-space:nowrap}
-.subject-courses-action>span{font-size:1.15rem;line-height:1}
-@media(max-width:520px){.subject-courses-action{font-size:.72rem}}
+.subject-course-action{display:inline-flex!important;align-items:center;justify-content:flex-end;gap:5px;margin-left:auto;color:var(--brand)!important;font-size:.78rem;font-weight:900;white-space:nowrap}
+.subject-course-action>span{font-size:1.15rem;line-height:1}
+@media(max-width:520px){.subject-course-action{font-size:.72rem}}
