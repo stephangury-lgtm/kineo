@@ -29,7 +29,8 @@ export default function AuthGate({ children }: Props) {
     }
 
     try {
-      const [nextProfile,accessiblePrograms]=await Promise.all([getCurrentProfile(),getAccessiblePrograms()])
+      const userId=nextSession.user.id
+      const [nextProfile,accessiblePrograms]=await Promise.all([getCurrentProfile(userId),getAccessiblePrograms(userId)])
       void markAppOpen().catch(()=>undefined)
       const primary=accessiblePrograms.find(program=>program.is_primary)??null
       const nextProgram=primary
