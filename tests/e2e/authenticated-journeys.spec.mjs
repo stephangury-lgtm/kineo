@@ -61,6 +61,8 @@ async function completeFranceSession(page){
 
 async function acceptAndPlayFranceChallenge(page){
  await useProgram(page,'kineo-fr','K2')
+ await page.goto(base+'/notifications',{waitUntil:'networkidle'})
+ await expect(page.getByText(/Nouveau défi|défie sur 10 questions/).first()).toBeVisible({timeout:12000})
  await page.goto(base+'/amis',{waitUntil:'networkidle'})
  const incoming=page.locator('.challenge-row').filter({hasText:/te défie sur 10 questions/}).first()
  if(await incoming.count()){
@@ -143,6 +145,10 @@ test('authenticated France revision, social duel, stats, badges, ranking, notifi
   await page.goto(base+route,{waitUntil:'networkidle'})
   await expect(page.locator('.app-shell')).toBeVisible()
   await expect(page.locator('body')).not.toContainText('Une erreur est survenue')
+  if(route==='/classement'){
+   await expect(page.locator('.people-list')).toBeVisible()
+   await expect(page.getByText('@'+friendUsername)).toBeVisible({timeout:10000})
+  }
  }
  await page.goto(base+'/',{waitUntil:'networkidle'})
  await page.locator('.feedback-fab').click()
