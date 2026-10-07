@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  id-token: write
 
 concurrency:
   group: kineo-browser-smoke-${{ github.ref }}
@@ -55,3 +56,35 @@ jobs:
         env:
           KINEO_E2E_BASE_URL: http://127.0.0.1:4173
         run: npx playwright test tests/e2e/public-smoke.spec.mjs --project=${{ matrix.browser }} --reporter=line
+
+      - name: Create isolated authenticated E2E account
+        if: matrix.browser == 'chromium'
+        env:
+          BROKER_URL: https://kimtiyuytikyseuzmjbv.supabase.co/functions/v1/e2e-session-broker
+        run: |
+          OIDC_RESPONSE=$(curl --fail --silent --show-error -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=kineo-e2e")
+          OIDC_TOKEN=$(node -e "const x=JSON.parse(process.argv[1]);process.stdout.write(x.value)" "$OIDC_RESPONSE")
+          CREATE_RESPONSE=$(curl --fail --silent --show-error -X POST "$BROKER_URL" -H "Authorization: Bearer $OIDC_TOKEN" -H "Content-Type: application/json" --data '{"action":"create"}')
+          USER_ID=$(node -e "const x=JSON.parse(process.argv[1]);process.stdout.write(x.user_id)" "$CREATE_RESPONSE")
+          EMAIL=$(node -e "const x=JSON.parse(process.argv[1]);process.stdout.write(x.email)" "$CREATE_RESPONSE")
+          PASSWORD=$(node -e "const x=JSON.parse(process.argv[1]);process.stdout.write(x.password)" "$CREATE_RESPONSE")
+          echo "::add-mask::$EMAIL"
+          echo "::add-mask::$PASSWORD"
+          echo "KINEO_E2E_USER_ID=$USER_ID" >> "$GITHUB_ENV"
+          echo "KINEO_E2E_EMAIL=$EMAIL" >> "$GITHUB_ENV"
+          echo "KINEO_E2E_PASSWORD=$PASSWORD" >> "$GITHUB_ENV"
+
+      - name: Authenticated curriculum journey smoke
+        if: matrix.browser == 'chromium'
+        env:
+          KINEO_E2E_BASE_URL: http://127.0.0.1:4173
+        run: npx playwright test tests/e2e/authenticated-journeys.spec.mjs --project=chromium --reporter=line
+
+      - name: Delete isolated authenticated E2E account
+        if: always() && matrix.browser == 'chromium' && env.KINEO_E2E_USER_ID != ''
+        env:
+          BROKER_URL: https://kimtiyuytikyseuzmjbv.supabase.co/functions/v1/e2e-session-broker
+        run: |
+          OIDC_RESPONSE=$(curl --fail --silent --show-error -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=kineo-e2e")
+          OIDC_TOKEN=$(node -e "const x=JSON.parse(process.argv[1]);process.stdout.write(x.value)" "$OIDC_RESPONSE")
+          curl --fail --silent --show-error -X POST "$BROKER_URL" -H "Authorization: Bearer $OIDC_TOKEN" -H "Content-Type: application/json" --data "{"action":"cleanup","user_id":"$KINEO_E2E_USER_ID"}"
