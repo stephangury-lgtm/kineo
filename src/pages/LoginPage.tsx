@@ -84,10 +84,10 @@ export default function LoginPage() {
   return (
     <main className="auth-shell">
       <section className="auth-visual">
-        <div className="auth-logo">K</div>
-        <p className="eyebrow light">Kineo · Révision kiné</p>
+        <img className="auth-brand-logo" src="/kineo-brand-logo.svg" alt="Kineo" />
+        <p className="eyebrow light">Kineo · Plateforme santé</p>
         <h1>Progresse un peu chaque jour.</h1>
-        <p>Des sessions courtes, un parcours K2–K5 et une révision qui s’adapte à tes erreurs.</p>
+        <p>Des révisions courtes et gamifiées pour les étudiants en kinésithérapie et en soins infirmiers, en France et en Espagne.</p>
         <div className="auth-pills"><span>🔥 Séries</span><span>🧠 SRS</span><span>🏆 Badges</span></div>
       </section>
 
