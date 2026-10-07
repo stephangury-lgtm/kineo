@@ -82,7 +82,7 @@ jobs:
       - name: Run authenticated journeys against production
         env:
           KINEO_E2E_BASE_URL: https://kineo.stephangury.workers.dev
-        run: npx playwright test tests/e2e/authenticated-journeys.spec.mjs --project=${{ matrix.browser }} --reporter=line
+        run: npx playwright test tests/e2e/authenticated-critical.spec.mjs --project=${{ matrix.browser }} --reporter=line
 
       - name: Upload production Playwright artifacts
         if: failure()
