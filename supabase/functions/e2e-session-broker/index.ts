@@ -48,6 +48,7 @@ Deno.serve(async(req)=>{
    })
    if(userError||!userData.user)throw userError??new Error('Unable to create E2E user')
    const userId=userData.user.id
+   let companionId:string|null=null
    try{
     const username=`e2e_${runId.toLowerCase().replace(/[^a-z0-9_]/g,'_').slice(0,28)}`
     const {error:profileError}=await admin.from('profiles').upsert({
@@ -82,6 +83,7 @@ Deno.serve(async(req)=>{
     })
     if(friendError||!friendData.user)throw friendError??new Error('Unable to create E2E companion')
     const friendId=friendData.user.id
+    companionId=friendId
     const friendUsername=`e2e_friend_${(runId+'_'+suffix).toLowerCase().replace(/[^a-z0-9_]/g,'_').slice(0,21)}`
     const {error:friendProfileError}=await admin.from('profiles').upsert({
       id:friendId,first_name:'E2E Friend',username:friendUsername,role:'student',study_year:2,xp:0,level:1,updated_at:new Date().toISOString()
@@ -101,6 +103,11 @@ Deno.serve(async(req)=>{
       programs:['kineo-fr','kineo-es','ifsi-fr']
     })
    }catch(error){
+    if(companionId){
+      await admin.from('profile_programs').delete().eq('user_id',companionId)
+      await admin.from('profiles').delete().eq('id',companionId)
+      await admin.auth.admin.deleteUser(companionId)
+    }
     await admin.from('profile_programs').delete().eq('user_id',userId)
     await admin.from('profiles').delete().eq('id',userId)
     await admin.auth.admin.deleteUser(userId)
