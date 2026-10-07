@@ -63,6 +63,12 @@ function formatLabel(type:CurriculumQuizQuestion['question_type'],isEs:boolean){
  return isEs?'QCM':'QCM'
 }
 
+function difficultyLabel(level:number,isEs:boolean){
+ const labels=isEs?['Fundamentos','Comprensión','Aplicación','Razonamiento clínico','Integración']:['Fondamentaux','Compréhension','Application','Raisonnement clinique','Intégration']
+ const safe=Math.max(1,Math.min(5,Number(level)||1))
+ return `${safe}/5 · ${labels[safe-1]}`
+}
+
 export default function CurriculumTopicPage(){
  const {topicId}=useParams()
  const program=getCurrentProgram()
@@ -185,7 +191,7 @@ export default function CurriculumTopicPage(){
     const pairs=matchingPairs(q)
     const rightItems=stableShuffle([...new Set(pairs.map(pair=>pair.right))],q.id)
     return <article className="curriculum-quiz-card" key={q.id}>
-     <div style={{display:'flex',justifyContent:'space-between',gap:12,alignItems:'center'}}><strong>{isEs?'Pregunta':'Question'} {index+1}</strong><span className="program-status foundation">{formatLabel(q.question_type,isEs)}</span></div>
+     <div style={{display:'flex',justifyContent:'space-between',gap:12,alignItems:'center'}}><strong>{isEs?'Pregunta':'Question'} {index+1}</strong><span className="program-status foundation">{formatLabel(q.question_type,isEs)} · {difficultyLabel(q.difficulty,isEs)}</span></div>
      <p>{q.question_text}</p>
      {q.image_url&&<div style={{position:'relative',maxWidth:720,margin:'12px auto'}}><img src={q.image_url} alt={isEs?'Soporte anatómico':'Support anatomique'} style={{display:'block',width:'100%',borderRadius:16}}/>{q.question_type==='visual_hotspot'&&points.map(point=>{
       const selectedPoint=selected===point.id
