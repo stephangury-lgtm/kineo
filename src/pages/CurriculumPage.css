@@ -20,3 +20,10 @@
 .curriculum-year-card{transition:border-color .18s ease,box-shadow .18s ease}
 .curriculum-year-card.current-year-card{border:2px solid var(--brand-2);box-shadow:0 12px 30px rgba(15,118,110,.12)}
 .curriculum-year-card.current-year-card>.section-heading{padding-bottom:10px;border-bottom:1px solid var(--brand-soft)}
+
+.curriculum-year-card.current-year-card{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--brand-soft),#fff 34%)}
+.curriculum-year-card.current-year-card::before{content:'';position:absolute;inset:0 auto 0 0;width:5px;background:var(--brand)}
+.year-status{display:grid;justify-items:end;gap:4px;text-align:right}
+.year-status small{font-size:.68rem;color:var(--muted);font-weight:700}
+.current-level-pill{display:inline-flex;align-items:center;padding:6px 9px;border-radius:999px;background:var(--brand);color:#fff;font-size:.72rem;font-weight:900;white-space:nowrap}
+@media(max-width:520px){.curriculum-year-card.current-year-card>.section-heading{align-items:flex-start}.year-status{justify-items:start;text-align:left}.current-level-pill{font-size:.68rem;padding:5px 8px}}
