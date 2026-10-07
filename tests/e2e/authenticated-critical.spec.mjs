@@ -32,7 +32,13 @@ async function openCurriculumQuiz(page){
  await expect(toggles.first()).toBeVisible({timeout:15000})
  for(let i=0;i<await toggles.count();i++){
   await toggles.nth(i).click()
-  const link=page.locator('.curriculum-unit.open .curriculum-topic-actions a.primary-button').first()
+  const opened=page.locator('.curriculum-unit.open')
+  const link=opened.locator('.curriculum-topic-actions a.primary-button').first()
+  const empty=opened.locator('.curriculum-empty')
+  await Promise.race([
+   link.waitFor({state:'visible',timeout:5000}).catch(()=>undefined),
+   empty.waitFor({state:'visible',timeout:5000}).catch(()=>undefined),
+  ])
   if(await link.isVisible().catch(()=>false)){
    await link.click()
    await expect(page.locator('#qcm')).toBeVisible({timeout:15000})
