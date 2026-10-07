@@ -42,3 +42,22 @@ test('authentication gate remains usable on small screens',async({page})=>{
  const inputs=page.locator('input')
  expect(await inputs.count()).toBeGreaterThan(0)
 })
+
+
+test('installed shell reloads offline after service worker takeover',async({page,context,browserName})=>{
+ test.skip(browserName!=='chromium','Offline service-worker reload is validated in Chromium')
+ await page.goto(base,{waitUntil:'networkidle'})
+ await page.evaluate(async()=>{await navigator.serviceWorker.ready})
+ if(!await page.evaluate(()=>Boolean(navigator.serviceWorker.controller))){
+  await page.reload({waitUntil:'networkidle'})
+  await page.waitForFunction(()=>Boolean(navigator.serviceWorker.controller),null,{timeout:10000})
+ }
+ try{
+  await context.setOffline(true)
+  await page.reload({waitUntil:'domcontentloaded',timeout:15000})
+  await expect(page.locator('#root')).toBeVisible()
+  await expect(page.locator('body')).not.toContainText('Une erreur est survenue')
+ }finally{
+  await context.setOffline(false)
+ }
+})
