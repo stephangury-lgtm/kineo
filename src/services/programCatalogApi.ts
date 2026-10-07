@@ -32,6 +32,6 @@ export async function getTopic(topicId:string,programId:ProgramId,curriculumVers
 }
 
 export async function getTopicLessons(topicId:string){const{data,error}=await supabase.from('curriculum_lessons').select('*').eq('topic_id',topicId).eq('is_published',true).order('display_order',{ascending:true});if(error)throw error;return(data??[])as CurriculumLesson[]}
-export async function getTopicQuiz(topicId:string){const{data,error}=await supabase.from('curriculum_quiz_questions').select('*').eq('topic_id',topicId).eq('is_published',true).eq('validation_status','source_validated').order('display_order',{ascending:true});if(error)throw error;return(data??[])as CurriculumQuizQuestion[]}
+export async function getTopicQuiz(topicId:string){const{data,error}=await supabase.from('curriculum_quiz_questions').select('*').eq('topic_id',topicId).eq('is_published',true).eq('validation_status','source_validated').order('difficulty',{ascending:true}).order('display_order',{ascending:true});if(error)throw error;return(data??[])as CurriculumQuizQuestion[]}
 export async function submitCurriculumTopicAnswer(questionId:string,answer:CurriculumAnswerPayload){const{data,error}=await supabase.rpc('submit_curriculum_topic_answer_v2',{p_question_id:questionId,p_answer:answer});if(error)throw error;return data as CurriculumAnswerResult}
 export async function getAcademicLevelId(programId:ProgramId,code:string){const{data,error}=await supabase.from('academic_levels').select('id').eq('program_id',programId).eq('code',code).single();if(error)throw error;return data.id as string}
