@@ -28,9 +28,8 @@ const protectedCalls=[
 
 for(const [name,body] of protectedCalls){
  const response=await rpc(name,body)
- if(response.ok){
-  throw new Error(`Security regression: anonymous caller can execute ${name}`)
- }
+ if(response.status===404)throw new Error(`Security contract invalid: ${name} RPC is missing or signature changed`)
+ if(response.ok)throw new Error(`Security regression: anonymous caller can execute ${name}`)
 }
 
 console.log(`Anonymous security contracts passed for ${protectedCalls.length} protected RPCs`)
