@@ -5,7 +5,7 @@ import { PROGRAM_STORAGE_KEY, selectProgram, type ProgramId } from '../curriculu
 import LoginPage from '../pages/LoginPage'
 import ProfileSetupPage from '../pages/ProfileSetupPage'
 import ResetPasswordPage from '../pages/ResetPasswordPage'
-import { getCurrentProfile, touchUserActivity, type StudentProfile } from '../services/profileApi'
+import { getCurrentProfile, markAppOpen, touchUserActivity, type StudentProfile } from '../services/profileApi'
 import { getAccessiblePrograms, type PrimaryProgram } from '../services/programApi'
 
 type Props = { children: ReactNode }
@@ -30,7 +30,7 @@ export default function AuthGate({ children }: Props) {
 
     try {
       const [nextProfile,accessiblePrograms]=await Promise.all([getCurrentProfile(),getAccessiblePrograms()])
-      void touchUserActivity().catch(()=>undefined)
+      void markAppOpen().catch(()=>undefined)
       const primary=accessiblePrograms.find(program=>program.is_primary)??null
       const nextProgram=primary
         ? {program_id:primary.program_id,academic_level_id:primary.academic_level_id,level_code:primary.level_code,curriculum_version:primary.curriculum_version}
@@ -82,12 +82,39 @@ export default function AuthGate({ children }: Props) {
 
   useEffect(()=>{
     if(!session)return
-    const ping=()=>{if(document.visibilityState==='visible')void touchUserActivity().catch(()=>undefined)}
-    const interval=window.setInterval(ping,10*60*1000)
-    const onVisibility=()=>{if(document.visibilityState==='visible')ping()}
+
+    let lastActivityAt=0
+    let lastOpenAt=Date.now()
+
+    const recordActivity=()=>{
+      const now=Date.now()
+      if(now-lastActivityAt<60_000)return
+      lastActivityAt=now
+      void touchUserActivity().catch(()=>undefined)
+    }
+
+    const recordOpen=()=>{
+      const now=Date.now()
+      if(now-lastOpenAt<60_000)return
+      lastOpenAt=now
+      void markAppOpen().catch(()=>undefined)
+    }
+
+    const onVisibility=()=>{
+      if(document.visibilityState==='visible')recordOpen()
+    }
+
+    window.addEventListener('pointerdown',recordActivity,{passive:true})
+    window.addEventListener('keydown',recordActivity)
+    window.addEventListener('touchstart',recordActivity,{passive:true})
     document.addEventListener('visibilitychange',onVisibility)
-    window.addEventListener('focus',ping)
-    return()=>{window.clearInterval(interval);document.removeEventListener('visibilitychange',onVisibility);window.removeEventListener('focus',ping)}
+
+    return()=>{
+      window.removeEventListener('pointerdown',recordActivity)
+      window.removeEventListener('keydown',recordActivity)
+      window.removeEventListener('touchstart',recordActivity)
+      document.removeEventListener('visibilitychange',onVisibility)
+    }
   },[session?.user.id])
 
   if (loading) {
