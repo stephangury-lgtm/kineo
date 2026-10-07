@@ -67,10 +67,8 @@ jobs:
       - name: Roll back failed production deployment
         if: steps.production_smoke.outcome == 'failure'
         env:
-          PREVIOUS_VERSION: ${{ steps.previous.outputs.version_id }}
         run: |
-          test -n "$PREVIOUS_VERSION"
-          npx wrangler rollback "$PREVIOUS_VERSION" --message "Automatic rollback after failed Kineo production smoke check"
+          npx wrangler rollback --message "Automatic rollback after failed Kineo production smoke check"
           sleep 5
           KINEO_BASE_URL=https://kineo.stephangury.workers.dev npm run check:prod
 
