@@ -15,18 +15,37 @@ export type FoundationQuestion={
  accepted_answers:unknown
  level_code:string
  level_order:number
+ unit_id:string
 }
 
 type LevelRow={id:string;code:string;display_order:number}
 type UnitRow={id:string;academic_level_id:string}
 type TopicRow={id:string;unit_id:string}
 
-type RawQuestion=Omit<FoundationQuestion,'level_code'|'level_order'>
+type RawQuestion=Omit<FoundationQuestion,'level_code'|'level_order'|'unit_id'>
 
 function shuffle<T>(items:T[]){
  const copy=[...items]
  for(let i=copy.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[copy[i],copy[j]]=[copy[j],copy[i]]}
  return copy
+}
+
+function sampleBalancedByUnit(pool:FoundationQuestion[],count:number){
+ const buckets=new Map<string,FoundationQuestion[]>()
+ for(const question of shuffle(pool)){
+  const bucket=buckets.get(question.unit_id)??[]
+  bucket.push(question);buckets.set(question.unit_id,bucket)
+ }
+ const ordered=[...buckets.values()].sort((a,b)=>a.length-b.length)
+ const result:FoundationQuestion[]=[]
+ let cursor=0
+ while(result.length<count&&ordered.some(bucket=>bucket.length)){
+  const bucket=ordered[cursor%ordered.length]
+  const next=bucket.shift()
+  if(next)result.push(next)
+  cursor++
+ }
+ return result
 }
 
 function sampleByMode(pool:FoundationQuestion[],activeOrder:number,mode:FoundationMode,count:number){
@@ -73,14 +92,16 @@ export async function getFoundationQuestions(programId:ProgramId,mode:Foundation
  const topicRows=(topics??[]) as TopicRow[]
  if(!topicRows.length)return []
  const levelByTopic=new Map(topicRows.map(topic=>[topic.id,levelByUnit.get(topic.unit_id)!]))
+ const unitByTopic=new Map(topicRows.map(topic=>[topic.id,topic.unit_id]))
 
  const {data:questions,error:questionError}=await supabase.from('curriculum_quiz_questions').select('id,topic_id,question_text,explanation,options,question_type,accepted_answers').eq('is_published',true).eq('validation_status','source_validated').in('topic_id',topicRows.map(topic=>topic.id)).in('question_type',['mcq','clinical_case','fill_blank'])
  if(questionError) throw questionError
  const pool=((questions??[]) as RawQuestion[]).map(question=>{
   const level=levelByTopic.get(question.topic_id)
-  return {...question,level_code:level?.code??'?',level_order:level?.display_order??activeLevel.display_order}
+  return {...question,level_code:level?.code??'?',level_order:level?.display_order??activeLevel.display_order,unit_id:unitByTopic.get(question.topic_id)??''}
  })
- if(scope.unitId||scope.levelCode)return shuffle(pool).slice(0,count)
+ if(scope.unitId)return shuffle(pool).slice(0,count)
+ if(scope.levelCode)return sampleBalancedByUnit(pool,count)
  return sampleByMode(pool,activeLevel.display_order,mode,count)
 }
 
