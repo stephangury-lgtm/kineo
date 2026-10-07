@@ -4,6 +4,7 @@ import { getAccessiblePrograms } from './programApi'
 import type { CurriculumAnswerPayload,CurriculumAnswerResult,CurriculumQuestionType,CurriculumQuizOption } from './programCatalogApi'
 
 export type FoundationMode='foundation'|'mix'
+export type FoundationScope={levelCode?:string;unitId?:string}
 export type FoundationQuestion={
  id:string
  topic_id:string
@@ -42,7 +43,7 @@ function sampleByMode(pool:FoundationQuestion[],activeOrder:number,mode:Foundati
  return current.slice(0,count)
 }
 
-export async function getFoundationQuestions(programId:ProgramId,mode:FoundationMode,count=10):Promise<FoundationQuestion[]>{
+export async function getFoundationQuestions(programId:ProgramId,mode:FoundationMode,count=10,scope:FoundationScope={}):Promise<FoundationQuestion[]>{
  const accesses=await getAccessiblePrograms()
  const access=accesses.find(item=>item.program_id===programId)
  if(!access?.academic_level_id) throw new Error('Niveau étudiant non défini.')
@@ -54,11 +55,13 @@ export async function getFoundationQuestions(programId:ProgramId,mode:Foundation
  const {data:levels,error:levelError}=await supabase.from('academic_levels').select('id,code,display_order').eq('program_id',programId).lte('display_order',activeLevel.display_order).order('display_order')
  if(levelError) throw levelError
  const allowed=(levels??[]) as LevelRow[]
+ const scopedLevels=scope.levelCode?allowed.filter(level=>level.code===scope.levelCode):allowed
  const levelById=new Map(allowed.map(level=>[level.id,level]))
- if(!allowed.length)return []
+ if(!scopedLevels.length)return []
 
- let unitQuery=supabase.from('curriculum_units').select('id,academic_level_id').eq('program_id',programId).eq('is_active',true).in('academic_level_id',allowed.map(level=>level.id))
+ let unitQuery=supabase.from('curriculum_units').select('id,academic_level_id').eq('program_id',programId).eq('is_active',true).in('academic_level_id',scopedLevels.map(level=>level.id))
  unitQuery=unitQuery.eq('curriculum_version',access.curriculum_version)
+ if(scope.unitId)unitQuery=unitQuery.eq('id',scope.unitId)
  const {data:units,error:unitError}=await unitQuery
  if(unitError) throw unitError
  const unitRows=(units??[]) as UnitRow[]
@@ -77,6 +80,7 @@ export async function getFoundationQuestions(programId:ProgramId,mode:Foundation
   const level=levelByTopic.get(question.topic_id)
   return {...question,level_code:level?.code??'?',level_order:level?.display_order??activeLevel.display_order}
  })
+ if(scope.unitId||scope.levelCode)return shuffle(pool).slice(0,count)
  return sampleByMode(pool,activeLevel.display_order,mode,count)
 }
 
