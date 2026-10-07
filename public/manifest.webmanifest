@@ -1,8 +1,8 @@
 {
   "id": "/",
-  "name": "Kineo — Révisions Kiné",
+  "name": "Kineo — Révisions Santé",
   "short_name": "Kineo",
-  "description": "Révision gamifiée pour étudiants en kinésithérapie",
+  "description": "Plateforme de révision gamifiée pour étudiants en kinésithérapie et en soins infirmiers",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -38,7 +38,7 @@
       "name": "Réviser maintenant",
       "short_name": "Réviser",
       "description": "Lancer une session de révision Kineo",
-      "url": "/revision"
+      "url": "/"
     },
     {
       "name": "Amis & défis",
