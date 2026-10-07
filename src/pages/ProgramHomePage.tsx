@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import InstallAppCard from '../components/InstallAppCard'
 import { getCurrentProgram,getUnlockedProgramLevels } from '../curriculum/programs'
 import { getCurriculumFriendChallenges,type FriendChallenge } from '../services/challengeApi'
-import { getBadgesV2,getGamificationSummaryV2,type BadgesV2,type GamificationSummaryV2 } from '../services/kineoApi'
+import { getGamificationSummaryV2,type GamificationSummaryV2 } from '../services/kineoApi'
 import { getAccessiblePrograms,getCurriculumProgress,type AccessibleProgram,type CurriculumProgress } from '../services/programApi'
 import { getFriendships,type FriendshipsSummary } from '../services/socialApi'
 
@@ -54,7 +54,7 @@ export default function ProgramHomePage(){
  const playableChallenges=challenges.filter(item=>(item.status==='accepted'||item.status==='in_progress')&&!item.has_played)
  const socialAttention=friends.incoming.length+incomingChallenges.length+playableChallenges.length
  if(error&&!game)return <section className="card"><h1>{isSpain?'Inicio no disponible':'Accueil indisponible'}</h1><p>{error}</p></section>
- if(!accessLoaded||!game||!badges)return <section className="card skeleton-card"><p>{isSpain?'Cargando tu progreso…':'Chargement de ta progression…'}</p></section>
+ if(!accessLoaded||!game)return <section className="card skeleton-card"><p>{isSpain?'Cargando tu progreso…':'Chargement de ta progression…'}</p></section>
  if(access&&!access.academic_level_id)return <div className="stack program-home-page"><section className="hero-card program-home-hero"><div className="hero-copy"><span className="hero-kicker">{program.flag} {isSpain?'Configura tu nivel':'Configure ton niveau'}</span><h1>{isSpain?'Elige tu año de estudios para empezar':'Choisis ton niveau d’étude pour commencer'}</h1><p>{isSpain?'Tu nivel desbloquea únicamente los contenidos correspondientes y los años anteriores.':'Ton niveau déverrouille uniquement les contenus correspondants et les niveaux précédents.'}</p><Link className="primary-button hero-action" to="/profil">{isSpain?'Elegir mi nivel':'Choisir mon niveau'}</Link></div><div className="hero-orbit"><span>🎓</span></div></section><section className="card"><p>{isSpain?'Tu cuenta tiene acceso a este plan, pero todavía no tiene un nivel asignado.':'Ton compte a accès à ce cursus, mais aucun niveau n’est encore attribué.'}</p></section></div>
  if(!progress)return <section className="card skeleton-card"><p>{isSpain?'Cargando tu progreso…':'Chargement de ta progression…'}</p></section>
  return <div className="stack dashboard-stack program-home-page">
