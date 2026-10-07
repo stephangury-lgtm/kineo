@@ -32,5 +32,8 @@ jobs:
       - name: Production content health
         run: npm run check:health
 
+      - name: Anonymous RPC security contracts
+        run: npm run check:security
+
       - name: Production route smoke checks
         run: npm run check:prod
