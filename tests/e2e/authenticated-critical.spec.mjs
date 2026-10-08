@@ -117,7 +117,7 @@ test('single-login authenticated critical journey',async({page,browser})=>{
  await login(page,email,password)
 
  await program(page,'kineo-fr','K2')
- await gotoStable(page,'/revision')
+ await gotoStable(page,'/quiz')
  await expect(page.getByRole('button',{name:'Commencer'})).toBeVisible()
  await gotoStable(page,'/amis')
  const friend=page.locator('.person-row').filter({hasText:'@'+friendUsername}).first()
