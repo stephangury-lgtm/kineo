@@ -41,6 +41,7 @@ export default function GamificationPage() {
     if (/correct_answers|question|anatom|knowledge/.test(rule)) return 'knowledge'
     if (/daily_perfect|perfect|score|accuracy|performance|xp/.test(rule)) return 'performance'
     if (/quiz_completed|lesson|course|level|year|journey|curriculum/.test(rule)) return 'journey'
+    if (/friends_added/.test(rule)) return 'special'
     if (/challenge|duel|friend|social/.test(rule)) return 'challenges'
     const text = (badge.name + ' ' + badge.description).toLowerCase()
     if (/série|racha|jour|día|streak|regular/.test(text)) return 'regular'
