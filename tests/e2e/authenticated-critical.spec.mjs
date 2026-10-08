@@ -39,7 +39,7 @@ async function program(page,id,level,curriculum='default'){
   localStorage.setItem('healthapp_level_'+id,level)
   localStorage.setItem('healthapp_curriculum_'+id,curriculum)
  },{id,level,curriculum})
- await page.goto(base+'/parcours',{waitUntil:'domcontentloaded'})
+ await gotoStable(page,'/parcours')
  await expect(page.locator('.bottom-nav')).toBeVisible()
 }
 
@@ -117,9 +117,9 @@ test('single-login authenticated critical journey',async({page,browser})=>{
  await login(page,email,password)
 
  await program(page,'kineo-fr','K2')
- await page.goto(base+'/revision',{waitUntil:'domcontentloaded'})
+ await gotoStable(page,'/revision')
  await expect(page.getByRole('button',{name:'Commencer'})).toBeVisible()
- await page.goto(base+'/amis',{waitUntil:'domcontentloaded'})
+ await gotoStable(page,'/amis')
  const friend=page.locator('.person-row').filter({hasText:'@'+friendUsername}).first()
  await expect(friend).toBeVisible({timeout:15000})
  const duel=friend.locator('button.duel-button')
@@ -130,7 +130,7 @@ test('single-login authenticated critical journey',async({page,browser})=>{
  const friendPage=await friendContext.newPage()
  await login(friendPage,friendEmail,friendPassword)
  await program(friendPage,'kineo-fr','K2')
- await friendPage.goto(base+'/amis',{waitUntil:'domcontentloaded'})
+ await gotoStable(friendPage,'/amis')
  const incoming=friendPage.locator('.challenge-row').filter({has:friendPage.getByRole('button',{name:'Accepter'})}).first()
  if(await incoming.count())await incoming.getByRole('button',{name:'Accepter'}).click()
  await expect(friendPage.locator('.challenge-row').first()).toBeVisible({timeout:15000})
