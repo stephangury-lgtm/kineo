@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getCurrentProgram } from '../curriculum/programs'
 import { getBadgeCopy } from '../curriculum/gamificationCopy'
 import {
@@ -32,7 +32,7 @@ export default function GamificationPage() {
   const earned = badges.badges.filter((badge) => badge.earned)
   const locked = badges.badges.filter((badge) => !badge.earned)
   const progress = Math.round(earned.length / Math.max(1,badges.badges.length)*100)
-  const categories = useMemo(() => [{key:'regular',icon:'📅',name:isSpain?'Regularidad':'Régularité',test:/série|racha|jour|día|streak|regular/i},{key:'knowledge',icon:'🧠',name:isSpain?'Conocimientos':'Connaissances',test:/question|réponse|respuesta|anatom|expert|savoir|conocim/i},{key:'performance',icon:'🏆',name:isSpain?'Rendimiento':'Performance',test:/score|perfect|réuss|aciert|performance|xp/i},{key:'journey',icon:'📈',name:isSpain?'Recorrido':'Parcours',test:/niveau|nivel|parcours|étape|curso/i},{key:'challenges',icon:'🎯',name:isSpain?'Desafíos':'Défis',test:/défi|desaf|challenge|ami/i},{key:'special',icon:'⭐',name:isSpain?'Especial':'Spécial',test:/.*/}], [isSpain])
+  const categories = [{key:'regular',icon:'📅',name:isSpain?'Regularidad':'Régularité',test:/série|racha|jour|día|streak|regular/i},{key:'knowledge',icon:'🧠',name:isSpain?'Conocimientos':'Connaissances',test:/question|réponse|respuesta|anatom|expert|savoir|conocim/i},{key:'performance',icon:'🏆',name:isSpain?'Rendimiento':'Performance',test:/score|perfect|réuss|aciert|performance|xp/i},{key:'journey',icon:'📈',name:isSpain?'Recorrido':'Parcours',test:/niveau|nivel|parcours|étape|curso/i},{key:'challenges',icon:'🎯',name:isSpain?'Desafíos':'Défis',test:/défi|desaf|challenge|ami/i},{key:'special',icon:'⭐',name:isSpain?'Especial':'Spécial',test:/.*/}]
   const groups = categories.map(cat=>({...cat,items:badges.badges.filter(b=>{const text=getBadgeCopy(b,isSpain).name+' '+getBadgeCopy(b,isSpain).description;return cat.key==='special'? !categories.slice(0,5).some(other=>other.test.test(text)):cat.test.test(text)&&!categories.slice(0,categories.indexOf(cat)).some(other=>other.test.test(text))})}))
 
   return <div className="stack stats-mobile badge-dashboard">
