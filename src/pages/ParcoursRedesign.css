@@ -1,0 +1,29 @@
+/* Parcours v3: a genuinely different compact learning-first layout for all curricula */
+.parcours-redesign{display:flex!important;flex-direction:column;gap:16px!important;max-width:1080px;margin:0 auto}
+.parcours-redesign .parcours-intro{padding:26px 30px!important;border-radius:22px!important;box-shadow:none!important}
+.parcours-redesign .parcours-intro h1{font-size:clamp(1.5rem,3vw,2rem)!important;line-height:1.2!important;max-width:620px}
+.parcours-redesign .parcours-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;order:3}
+.parcours-redesign .parcours-summary .score-card{min-height:80px!important;box-shadow:none!important;border:1px solid #e4edf5!important}
+.parcours-redesign .parcours-filter{order:1;padding:16px 20px!important;border-radius:16px!important;box-shadow:none!important}
+.parcours-redesign .parcours-filter .section-heading{margin-bottom:8px}
+.parcours-redesign .parcours-filter .section-heading h2{font-size:1.05rem}
+.parcours-redesign .parcours-filter .text-answer-wrap{max-width:430px}
+.parcours-redesign .parcours-content{order:2;border-radius:20px!important;padding:22px!important;box-shadow:none!important;border:1px solid #dce8f3!important}
+.parcours-redesign .parcours-content>.section-heading{margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid #e6eef5}
+.parcours-redesign .parcours-content>.section-heading h2{font-size:1.5rem}
+.parcours-redesign .subject-list{display:grid;gap:10px}
+.parcours-redesign .subject-list>details,.parcours-redesign .subject-list>.curriculum-unit{border:1px solid #dce8f3;border-radius:14px!important;background:#fff!important;overflow:hidden}
+.parcours-redesign .subject-list>details[open],.parcours-redesign .subject-list>.curriculum-unit.open{border-color:var(--program-primary,var(--brand));box-shadow:0 5px 16px rgba(17,42,78,.06)}
+.parcours-redesign .subject-list summary,.parcours-redesign .curriculum-unit-toggle{min-height:72px;padding:16px!important;cursor:pointer;background:#fff}
+.parcours-redesign .subject-list summary:hover,.parcours-redesign .curriculum-unit-toggle:hover{background:#f5faff}
+.parcours-redesign .subject-list summary strong,.parcours-redesign .curriculum-unit-title strong{font-size:1rem}
+.parcours-redesign .subject-course-button,.parcours-redesign .curriculum-unit-action{border:1px solid #cfe0f0;border-radius:10px;padding:9px 12px;background:#eef6ff;font-size:.78rem}
+.parcours-redesign .curriculum-topic-list{border-top:1px solid #e6eef5;padding:12px 16px}
+.parcours-redesign .curriculum-topic{padding:14px 4px;border-bottom:1px solid #edf1f6}
+.parcours-redesign .curriculum-topic:last-child{border-bottom:0}
+.parcours-redesign .curriculum-topic-actions{justify-content:flex-end!important}
+.parcours-redesign .curriculum-topic-actions a{min-height:42px}
+.parcours-redesign .foundation-card{order:4}
+.parcours-redesign .ifsi-reference-card{order:0}
+.parcours-redesign>.card:last-child:not(.parcours-content):not(.parcours-filter):not(.foundation-card):not(.ifsi-reference-card){order:5}
+@media(max-width:700px){.parcours-redesign{gap:10px!important}.parcours-redesign .parcours-intro{padding:18px!important}.parcours-redesign .parcours-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.parcours-redesign .parcours-content{padding:14px!important}.parcours-redesign .subject-list summary,.parcours-redesign .curriculum-unit-toggle{min-height:64px;padding:12px!important}.parcours-redesign .subject-course-button,.parcours-redesign .curriculum-unit-action{padding:8px;font-size:.7rem}.parcours-redesign .curriculum-topic-actions{justify-content:flex-start!important}.parcours-redesign .parcours-filter{padding:14px!important}}
