@@ -31,6 +31,7 @@ if(!Number.isFinite(securityCheckedAt)||(Date.now()-securityCheckedAt)>90*60*100
 }
 
 const protectedCalls=[
+ ['start_revision_session_replay_v1',{p_source_session_id:'00000000-0000-0000-0000-000000000000'}],
  ['get_badges_v2',{}],
  ['get_friend_leaderboard_v2',{p_program_id:'kineo-es'}],
  ['get_friend_challenges_v3',{}],
