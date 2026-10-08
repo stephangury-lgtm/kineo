@@ -25,3 +25,9 @@
 .session-replay-mini{border:1px solid currentColor;border-radius:999px;background:transparent;color:inherit;padding:4px 9px;font-size:12px;line-height:1.3;white-space:nowrap;cursor:pointer;opacity:.82;align-self:center}
 .session-replay-mini:disabled{opacity:.4;cursor:wait}
 .session-replay-mini:focus-visible{outline:2px solid currentColor;outline-offset:2px}
+
+/* Seven-day chart uses full card width; longer periods scroll instead of squeezing labels. */
+.stats-mobile .activity-chart:has(> .activity-day:nth-child(7):last-child){overflow-x:hidden;gap:clamp(8px,2vw,18px)}
+.stats-mobile .activity-chart:has(> .activity-day:nth-child(7):last-child) .activity-day{flex:1 1 0;min-width:0}
+.stats-mobile .activity-chart:has(> .activity-day:nth-child(30)){overflow-x:auto;gap:3px}
+.stats-mobile .activity-chart:has(> .activity-day:nth-child(30)) .activity-day{flex:0 0 clamp(12px,2.5vw,22px)}
