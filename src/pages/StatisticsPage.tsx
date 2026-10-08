@@ -1,14 +1,11 @@
 import { useEffect,useMemo,useState } from 'react'
-import { Link,useNavigate } from 'react-router-dom'
-import { getGamificationSummaryV2,getRecentRevisionSessionsV1,getUserStatsV2,startRevisionSessionReplayV1,type GamificationSummaryV2,type RevisionHistoryItem,type UserStatsV2 } from '../services/kineoApi'
+import { Link } from 'react-router-dom'
+import { getGamificationSummaryV2,getRecentRevisionSessionsV1,getUserStatsV2,type GamificationSummaryV2,type RevisionHistoryItem,type UserStatsV2 } from '../services/kineoApi'
 import { getCurrentProfile } from '../services/profileApi'
 import './StatisticsPage.css'
 const modeLabels:Record<string,string>={smart:'Révision intelligente',visual:'Anatomie visuelle',exam:'Examen blanc',daily:'Challenge du jour',clinical_case:'Cas clinique',matching:'Associations',mcq:'QCM',true_false:'Vrai / Faux',fill_blank:'Texte à trous',translation:'Traduction',mix:'Révision ciblée'}
 function durationLabel(seconds:number){const totalMin=Math.floor(seconds/60);const hours=Math.floor(totalMin/60);const min=totalMin%60;return hours>0?`${hours} h ${min.toString().padStart(2,'0')} min`:totalMin>0?`${totalMin} min`:`${seconds}s`}
 export default function StatisticsPage(){
- const navigate=useNavigate()
- const [replaying,setReplaying]=useState<string|null>(null)
- const replay=async(id:string)=>{setReplaying(id);try{const next=await startRevisionSessionReplayV1(id);navigate('/quiz?mode=replay&session='+encodeURIComponent(next))}catch(e){setError(e instanceof Error?e.message:'Impossible de relancer cette session')}finally{setReplaying(null)}}
  const [stats,setStats]=useState<UserStatsV2|null>(null),[game,setGame]=useState<GamificationSummaryV2|null>(null),[history,setHistory]=useState<RevisionHistoryItem[]>([]),[studyYear,setStudyYear]=useState<number|null>(null),[days,setDays]=useState(30),[error,setError]=useState<string|null>(null)
  useEffect(()=>{let stop=false;Promise.all([getUserStatsV2(days),getRecentRevisionSessionsV1(12),getCurrentProfile(),getGamificationSummaryV2()]).then(([s,h,p,g])=>{if(!stop){setStats(s);setHistory(h);setStudyYear(p?.study_year??null);setGame(g)}}).catch((e:Error)=>!stop&&setError(e.message));return()=>{stop=true}},[days])
  const subjects=useMemo(()=>stats?.subjects.filter(x=>x.published_questions>0&&(!studyYear||x.year_number===studyYear))??[],[stats,studyYear]),activity=stats?.daily_activity??[],max=Math.max(1,...activity.map(x=>x.attempts)),revisionSeconds=history.reduce((n,x)=>n+x.duration_seconds,0)
