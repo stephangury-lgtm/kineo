@@ -10,7 +10,8 @@ export default defineConfig({
  projects:[
   {name:'chromium',use:{...devices['Pixel 7']}},
   {name:'webkit',use:{...devices['iPhone 14']}},
- ],
+  {name:'firefox',use:{...devices['Desktop Firefox']}},
+ ]
  use:{
   trace:'retain-on-failure',
   screenshot:'only-on-failure',
