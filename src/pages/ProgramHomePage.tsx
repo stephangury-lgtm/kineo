@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import InstallAppCard from '../components/InstallAppCard'
 import { getCurrentProgram,getUnlockedProgramLevels } from '../curriculum/programs'
 import { getCurriculumFriendChallenges,type FriendChallenge } from '../services/challengeApi'
-import { getGamificationSummaryV2,type GamificationSummaryV2 } from '../services/kineoApi'
+import { getActiveRevisionSessionV1,getGamificationSummaryV2,type ActiveRevisionSession,type GamificationSummaryV2 } from '../services/kineoApi'
 import { getAccessiblePrograms,getCurriculumProgress,type AccessibleProgram,type CurriculumProgress } from '../services/programApi'
 import { getFriendships,type FriendshipsSummary } from '../services/socialApi'
 
@@ -17,6 +17,7 @@ export default function ProgramHomePage(){
  const [accessLoaded,setAccessLoaded]=useState(false)
  const [progress,setProgress]=useState<CurriculumProgress|null>(null)
  const [game,setGame]=useState<GamificationSummaryV2|null>(null)
+ const [active,setActive]=useState<ActiveRevisionSession|null>(null)
  const [friends,setFriends]=useState<FriendshipsSummary>(emptyFriends)
  const [challenges,setChallenges]=useState<FriendChallenge[]>([])
  const [error,setError]=useState<string|null>(null)
@@ -30,9 +31,11 @@ export default function ProgramHomePage(){
     getGamificationSummaryV2(),
     getFriendships(program.id),
     getCurriculumFriendChallenges(program.id),
+    getActiveRevisionSessionV1().catch(()=>null),
    ])
    if(cancelled)return
-   const [nextGame,nextFriends,nextChallenges]=common
+   const [nextGame,nextFriends,nextChallenges,nextActive]=common
+   setActive(nextActive)
    setGame(nextGame);setFriends(nextFriends);setChallenges(nextChallenges)
    if(nextAccess?.academic_level_id){
     const nextProgress=await getCurriculumProgress(program.id)
@@ -59,7 +62,7 @@ export default function ProgramHomePage(){
   <section className="home-v4-welcome"><div><span className="eyebrow">✨ {isSpain?'TU ESPACIO':'TON ESPACE'} {program.shortName.toUpperCase()}</span><h1>{isSpain?'¿Listo para una nueva sesión?':'Prêt pour une nouvelle session ?'} 👋</h1><p>{isSpain?'Cada pequeño paso te acerca a tus objetivos.':'Chaque petit progrès te rapproche de tes objectifs.'}</p></div></section><div className="home-v4-toprow"><section className="hero-card dashboard-daily-hero program-home-hero home-v3-hero"><div className="hero-copy"><span className="hero-kicker">{program.flag} {isSpain?'Hoy · nivel':'Aujourd’hui · niveau'} {activeLevel}</span><h1>{streak>0?(isSpain?`${streak} día${streak>1?'s':''} seguidos 🔥`:`${streak} jour${streak>1?'s':''} de suite 🔥`):(isSpain?'Empieza tu racha hoy 🔥':'Commence ta série aujourd’hui 🔥')}</h1><p>{isSpain?'Retoma tu temario, consolida tus bases y sigue tu progreso desde un único espacio.':'Reprends ton cursus, consolide tes fondamentaux et suis ta progression depuis un seul espace.'}</p><Link className="primary-button hero-action" to="/fondamentaux?mode=mix">{isSpain?'Repasar · 10 preguntas':'Réviser · 10 questions'}</Link></div><div className="hero-orbit"><span>🧠</span></div></section>
   </div>
   <Link to="/rewards" className="card dashboard-level-card"><div className="dashboard-level-top"><span className="dashboard-level-emblem">🏅<small>{isSpain?'NIVEL':'NIVEAU'}</small>{game.level.number}</span><div><span className="eyebrow">{isSpain?'Mi nivel XP':'Mon niveau XP'}</span><h2>{isSpain?'Nivel':'Niveau'} {game.level.number} · {game.level.name}</h2><p>{xp} XP · {game.level.next_level?game.level.xp_to_next+' XP '+(isSpain?'para el próximo nivel':'avant le prochain niveau'):(isSpain?'Nivel máximo':'Niveau maximum')}</p></div><span className="dashboard-level-arrow">→</span></div><div className="progress-track"><div className="progress-fill" style={{width:Math.max(0,Math.min(100,game.level.progress_percent))+'%'}}/></div><small>{Math.round(game.level.progress_percent)}% · {isSpain?'Ver mis logros':'Voir mes badges'}</small></Link>
-  <div className="home-v3-shortcuts"><Link to="/fondamentaux?mode=mix" className="home-v3-shortcut"><span>📘</span><strong>{isSpain?'Repasar':'Réviser'}</strong><small>{isSpain?'Preguntas':'Questions'}</small></Link><Link to="/amis" className="home-v3-shortcut home-social-shortcut" aria-label={socialAttention>0?(isSpain?`${socialAttention} acciones pendientes, retos entre amigos`:`${socialAttention} actions en attente, défis entre amis`):(isSpain?'Retos entre amigos':'Défis entre amis')}><span>🎯</span>{socialAttention>0&&<span className="home-social-count" aria-hidden="true">{socialAttention>99?'99+':socialAttention}</span>}<strong>{isSpain?'Retos':'Défis'}</strong><small>{socialAttention>0?(isSpain?`${socialAttention} pendiente${socialAttention>1?'s':''}`:`${socialAttention} action${socialAttention>1?'s':''} à traiter`):(isSpain?'Amigos':'Entre amis')}</small></Link><Link to="/rewards" className="home-v3-shortcut"><span>🏆</span><strong>{isSpain?'Logros':'Badges'}</strong><small>{isSpain?'Premios':'Récompenses'}</small></Link><Link to="/stats" className="home-v3-shortcut"><span>📊</span><strong>{isSpain?'Progreso':'Statistiques'}</strong><small>{isSpain?'Detalles':'Mes progrès'}</small></Link></div>
+  <div className="home-v3-shortcuts"><Link to={active&&active.answered_count<active.question_count?`/revision?mode=resume&session=${encodeURIComponent(active.id)}`:'/fondamentaux?mode=mix'} className="home-v3-shortcut home-social-shortcut"><span>📘</span>{active&&active.answered_count<active.question_count&&<span className="home-resume-count">1</span>}<strong>{isSpain?'Repasar':'Réviser'}</strong><small>{active&&active.answered_count<active.question_count?(isSpain?'Continuar sesión':'Reprendre ma session'):(isSpain?'Preguntas':'Questions')}</small></Link><Link to="/amis" className="home-v3-shortcut home-social-shortcut" aria-label={socialAttention>0?(isSpain?`${socialAttention} acciones pendientes, retos entre amigos`:`${socialAttention} actions en attente, défis entre amis`):(isSpain?'Retos entre amigos':'Défis entre amis')}><span>🎯</span>{socialAttention>0&&<span className="home-social-count" aria-hidden="true">{socialAttention>99?'99+':socialAttention}</span>}<strong>{isSpain?'Retos':'Défis'}</strong><small>{socialAttention>0?(isSpain?`${socialAttention} pendiente${socialAttention>1?'s':''}`:`${socialAttention} action${socialAttention>1?'s':''} à traiter`):(isSpain?'Amigos':'Entre amis')}</small></Link><Link to="/rewards" className="home-v3-shortcut"><span>🏆</span><strong>{isSpain?'Logros':'Badges'}</strong><small>{isSpain?'Premios':'Récompenses'}</small></Link><Link to="/stats" className="home-v3-shortcut"><span>📊</span><strong>{isSpain?'Progreso':'Statistiques'}</strong><small>{isSpain?'Detalles':'Mes progrès'}</small></Link></div>
   <InstallAppCard/>
 
   <section className="dashboard-metrics"><article className="metric-card"><span className="metric-icon">⚡</span><div><small>XP</small><strong>{xp}</strong></div></article><article className="metric-card"><span className="metric-icon">🔥</span><div><small>{isSpain?'Racha':'Série'}</small><strong>{streak} {isSpain?'d':'j'}</strong></div></article><article className="metric-card"><span className="metric-icon">◉</span><div><small>{isSpain?'Cobertura':'Couverture'}</small><strong>{coverage}%</strong></div></article></section>
