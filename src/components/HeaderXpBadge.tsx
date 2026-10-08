@@ -7,8 +7,11 @@ export default function HeaderXpBadge(){
  const [xp,setXp]=useState<number|null>(null)
  useEffect(()=>{
   let active=true
-  getGamificationSummaryV2().then(summary=>{if(active)setXp(summary.xp_total??0)}).catch(()=>undefined)
-  return()=>{active=false}
+  const refresh=()=>{getGamificationSummaryV2().then(summary=>{if(active)setXp(summary.xp_total??0)}).catch(()=>undefined)}
+  refresh()
+  window.addEventListener('kineo:xp-updated',refresh)
+  window.addEventListener('focus',refresh)
+  return()=>{active=false;window.removeEventListener('kineo:xp-updated',refresh);window.removeEventListener('focus',refresh)}
  },[])
  if(xp===null)return null
  return <span className="header-xp-badge" aria-label={isSpain?`${xp} puntos de experiencia`:`${xp} points d'expérience`}>⚡ {xp} XP</span>
