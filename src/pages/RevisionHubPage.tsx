@@ -1,8 +1,16 @@
-import { Link, Navigate, useSearchParams } from 'react-router-dom'
+import { useEffect,useState } from 'react'
+import { useNavigate,Link,Navigate,useSearchParams } from 'react-router-dom'
+import { getRecentRevisionSessionsV1,startRevisionSessionReplayV1,type RevisionHistoryItem } from '../services/kineoApi'
 import { getCurrentProgram } from '../curriculum/programs'
 import './RevisionHubPage.css'
 export default function RevisionHubPage(){
  const [params]=useSearchParams()
+ const navigate=useNavigate()
+ const [recent,setRecent]=useState<RevisionHistoryItem[]>([])
+ const [busy,setBusy]=useState<string|null>(null)
+ const [error,setError]=useState('')
+ useEffect(()=>{let alive=true;getRecentRevisionSessionsV1(3).then(rows=>{if(alive)setRecent(rows)}).catch(()=>{});return()=>{alive=false}},[])
+ const replay=async(id:string)=>{setBusy(id);setError('');try{const next=await startRevisionSessionReplayV1(id);navigate('/quiz?mode=replay&session='+encodeURIComponent(next))}catch(e){setError(e instanceof Error?e.message:'Session indisponible')}finally{setBusy(null)}}
  const program=getCurrentProgram()
  const france=program.id==='kineo-fr'
  const spain=program.id==='kineo-es'
@@ -24,5 +32,5 @@ export default function RevisionHubPage(){
   {icon:'⚔️',title:spain?'Retos con amigos':'Défis entre amis',desc:spain?'Desafía a tus amigos':'Défie tes amis',to:'/amis'},
   {icon:'🏆',title:spain?'Mi progreso':'Ma progression',desc:spain?'Consulta tus resultados':'Consulte tes résultats',to:'/stats'},
  ]
- return <div className="stack revision-hub"><section className="stats-hero"><div><p className="eyebrow light">{spain?'Tu espacio de repaso':'Ton espace de révision'}</p><h1>{spain?'¿Qué quieres repasar hoy ?':'Comment veux-tu réviser aujourd’hui ?'}</h1><p>{spain?'Elige un modo adaptado a tu nivel.':'Choisis un mode selon ton objectif et ton niveau.'}</p></div></section><div className="revision-hub-grid">{items.map(item=><Link key={item.title} className="card revision-hub-option" to={item.to}><span className="revision-hub-icon" aria-hidden="true">{item.icon}</span><span className="revision-hub-copy"><strong>{item.title}</strong><small>{item.desc}</small></span><span aria-hidden="true">→</span></Link>)}</div></div>
+ return <div className="stack revision-hub"><section className="stats-hero"><div><p className="eyebrow light">{spain?'Tu espacio de repaso':'Ton espace de révision'}</p><h1>{spain?'¿Qué quieres repasar hoy ?':'Comment veux-tu réviser aujourd’hui ?'}</h1><p>{spain?'Elige un modo adaptado a tu nivel.':'Choisis un mode selon ton objectif et ton niveau.'}</p></div></section><div className="revision-hub-grid">{items.map(item=><Link key={item.title} className="card revision-hub-option" to={item.to}><span className="revision-hub-icon" aria-hidden="true">{item.icon}</span><span className="revision-hub-copy"><strong>{item.title}</strong><small>{item.desc}</small></span><span aria-hidden="true">→</span></Link>)}</div>{france&&recent.length>0&&<section className="card"><div className="section-heading"><h2>Mes dernières sessions</h2><Link to="/revision/historique">Voir tout →</Link></div>{error&&<p role="alert">{error}</p>}{recent.map(x=><div key={x.id} className="history-row"><div className="history-mode"><strong>{x.mode}</strong><small>{x.score_percent}%</small></div><button type="button" className="session-replay-mini" disabled={busy!==null} onClick={()=>void replay(x.id)}>{busy===x.id?'…':'↻ Refaire'}</button></div>)}</section>}</div>
 }
