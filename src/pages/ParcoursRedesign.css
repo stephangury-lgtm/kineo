@@ -34,3 +34,11 @@
 .parcours-redesign .curriculum-topic-copy{grid-column:2;position:relative;display:flex!important;flex-direction:column;align-items:stretch;min-width:0;width:100%}
 .parcours-redesign .curriculum-topic-actions{position:static!important;display:flex!important;flex-wrap:wrap;gap:8px;justify-content:flex-start!important;margin:8px 0 0!important;transform:none!important}
 .parcours-redesign .curriculum-topic-actions a{position:static!important;display:inline-flex!important;flex:0 1 auto;min-height:44px;transform:none!important}
+
+/* v4: genuinely replace legacy blue hero with a neutral course-first header */
+.parcours-redesign .parcours-page-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;background:#fff;border:1px solid #dce8f3;border-radius:16px;box-shadow:none;color:#0b2545}
+.parcours-redesign .parcours-page-heading h1{margin:4px 0 6px;font-size:clamp(1.35rem,3vw,1.8rem);line-height:1.15;color:#0b2545}
+.parcours-redesign .parcours-page-heading p:last-child{margin:0;color:#5c6f82;font-size:.9rem;line-height:1.4}
+.parcours-redesign .parcours-page-heading .eyebrow{margin:0;color:var(--program-primary,var(--brand));font-size:.72rem;letter-spacing:.08em;font-weight:800}
+.parcours-redesign .parcours-level-chip{flex-shrink:0;padding:10px 14px;border-radius:12px;background:#edf5fc;color:#0b2545;font-weight:900;font-size:1rem}
+@media(max-width:600px){.parcours-redesign .parcours-page-heading{padding:14px;align-items:flex-start}.parcours-redesign .parcours-page-heading h1{font-size:1.35rem}.parcours-redesign .parcours-page-heading p:last-child{font-size:.78rem}.parcours-redesign .parcours-level-chip{padding:8px 10px;font-size:.85rem}}
