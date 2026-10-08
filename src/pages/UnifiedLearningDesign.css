@@ -48,3 +48,11 @@
 .kineo-parcours-v2 .curriculum-topic-actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px;margin-left:auto}
 .kineo-parcours-v2 .curriculum-topic-actions a{min-height:40px;display:inline-flex;align-items:center;justify-content:center}
 @media(max-width:600px){.kineo-parcours-v2 .subject-course-button,.kineo-parcours-v2 .curriculum-unit-action{font-size:.8rem}.kineo-parcours-v2 .curriculum-topic-actions{justify-content:flex-end}.kineo-parcours-v2 .curriculum-topic-actions a{font-size:.8rem}}
+
+/* Ensure lesson actions stay within their row instead of overlapping the index or sticky header. */
+.kineo-parcours-v2 .curriculum-topic{display:flex;align-items:flex-start;gap:12px;min-width:0}
+.kineo-parcours-v2 .curriculum-topic>span:first-child{flex:0 0 auto;position:relative;z-index:0;pointer-events:none}
+.kineo-parcours-v2 .curriculum-topic-copy{display:flex;flex-direction:column;gap:8px;flex:1 1 0;min-width:0}
+.kineo-parcours-v2 .curriculum-topic-actions{position:relative;z-index:1;display:flex;justify-content:flex-start;flex-wrap:wrap;margin:0;max-width:100%}
+.kineo-parcours-v2 .curriculum-topic-actions a{position:relative;z-index:2;max-width:100%;white-space:normal;text-align:center}
+.kineo-parcours-v2 .curriculum-topic-list{min-width:0}

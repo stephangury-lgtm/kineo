@@ -79,7 +79,8 @@ async function openCurriculumQuiz(page){
    empty.waitFor({state:'visible',timeout:5000}).catch(()=>undefined),
   ])
   if(await link.isVisible().catch(()=>false)){
-   await link.click()
+   await link.scrollIntoViewIfNeeded()
+   await link.click({timeout:12000})
    await expect(page.locator('#qcm')).toBeVisible({timeout:15000})
    return
   }
