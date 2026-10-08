@@ -52,3 +52,6 @@
 
 /* Pending friend actions shown on the single social shortcut */
 .dashboard-stack .home-social-shortcut{position:relative}.dashboard-stack .home-social-shortcut .home-social-count{position:absolute;top:8px;right:9px;display:grid;place-items:center;min-width:23px;height:23px;box-sizing:border-box;padding:0 6px;border-radius:99px;background:#d82f56;color:#fff;font-size:.73rem;font-weight:900;line-height:1;box-shadow:0 2px 7px rgba(216,47,86,.22)}
+
+/* Incomplete revisions use a gentle orange marker on the revision shortcut */
+.dashboard-stack .home-social-shortcut .home-resume-count{position:absolute;top:8px;right:9px;display:grid;place-items:center;min-width:23px;height:23px;padding:0 6px;box-sizing:border-box;border-radius:99px;background:#e08a24;color:#172333;font-size:.73rem;font-weight:900;line-height:1;box-shadow:0 2px 7px rgba(160,92,12,.18)}
