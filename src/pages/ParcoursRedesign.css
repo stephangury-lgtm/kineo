@@ -27,3 +27,10 @@
 .parcours-redesign .ifsi-reference-card{order:0}
 .parcours-redesign>.card:last-child:not(.parcours-content):not(.parcours-filter):not(.foundation-card):not(.ifsi-reference-card){order:5}
 @media(max-width:700px){.parcours-redesign{gap:10px!important}.parcours-redesign .parcours-intro{padding:18px!important}.parcours-redesign .parcours-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.parcours-redesign .parcours-content{padding:14px!important}.parcours-redesign .subject-list summary,.parcours-redesign .curriculum-unit-toggle{min-height:64px;padding:12px!important}.parcours-redesign .subject-course-button,.parcours-redesign .curriculum-unit-action{padding:8px;font-size:.7rem}.parcours-redesign .curriculum-topic-actions{justify-content:flex-start!important}.parcours-redesign .parcours-filter{padding:14px!important}}
+
+/* Keep topic actions in normal document flow: no absolute-position overlays. */
+.parcours-redesign .curriculum-topic{position:relative;display:grid!important;grid-template-columns:32px minmax(0,1fr);align-items:start;gap:12px;overflow:visible}
+.parcours-redesign .curriculum-topic>span:first-child{grid-column:1;pointer-events:none}
+.parcours-redesign .curriculum-topic-copy{grid-column:2;position:relative;display:flex!important;flex-direction:column;align-items:stretch;min-width:0;width:100%}
+.parcours-redesign .curriculum-topic-actions{position:static!important;display:flex!important;flex-wrap:wrap;gap:8px;justify-content:flex-start!important;margin:8px 0 0!important;transform:none!important}
+.parcours-redesign .curriculum-topic-actions a{position:static!important;display:inline-flex!important;flex:0 1 auto;min-height:44px;transform:none!important}

@@ -79,8 +79,9 @@ async function openCurriculumQuiz(page){
    empty.waitFor({state:'visible',timeout:5000}).catch(()=>undefined),
   ])
   if(await link.isVisible().catch(()=>false)){
-   await link.scrollIntoViewIfNeeded()
-   await link.click({timeout:12000})
+   const destination=await link.getAttribute('href')
+   if(!destination)throw new Error('Curriculum revision link has no destination')
+   await gotoStable(page,destination)
    await expect(page.locator('#qcm')).toBeVisible({timeout:15000})
    return
   }
