@@ -28,3 +28,8 @@
 .badge-category-detail small,.badge-category-detail .badge-count{font-size:.72rem;color:#61738a}
 .badge-category-detail .badge-medal{flex-shrink:0}
 .badge-category-toggle:focus-visible{outline:2px solid #2563eb;outline-offset:4px;border-radius:6px}
+
+.badge-dashboard .badge-showcase-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.badge-dashboard .badge-showcase-card{min-width:0;padding:9px 5px;text-align:center}
+.badge-dashboard .badge-showcase-card strong{font-size:.69rem;overflow-wrap:anywhere;line-height:1.2}
+.badge-dashboard .badge-showcase-card small{font-size:.62rem;overflow-wrap:anywhere;line-height:1.2}
