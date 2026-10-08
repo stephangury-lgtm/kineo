@@ -110,9 +110,9 @@ export default function LoginPage() {
               type="email"
               value={email}
               onChange={(e) => { setEmail(e.target.value); clearFeedback() }}
-              autoComplete={mode === 'signup' ? 'section-signup email' : 'email'}
-              name="email"
-              id="student-email"
+              autoComplete="username"
+              name="username"
+              id="username"
               autoCapitalize="none"
               autoCorrect="off"
               spellCheck={false}
@@ -130,6 +130,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => { setPassword(e.target.value); clearFeedback() }}
                 autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+                id="current-or-new-password"
                 name="password"
                 placeholder="••••••••"
                 aria-invalid={hasError}
