@@ -10,3 +10,21 @@
 .badge-category-count>small{font-size:.65rem;color:#718096}
 .badge-category-card>.progress-track{grid-row:3}
 @media(max-width:390px){.badge-category-card{grid-template-columns:34px minmax(0,1fr)}.badge-category-count>strong{font-size:1rem}}
+
+/* Expandable category cards: complete earned and locked badge inventory */
+.badge-category-expandable{display:block;min-width:0}
+.badge-category-toggle{display:grid;grid-template-columns:42px minmax(0,1fr) 18px;gap:7px 10px;align-items:center;cursor:pointer;list-style:none}
+.badge-category-toggle::-webkit-details-marker{display:none}
+.badge-category-toggle>.badge-category-icon{grid-column:1;grid-row:1/3}
+.badge-category-toggle>strong{grid-column:2;grid-row:1}
+.badge-category-toggle>.badge-category-count{grid-column:2;grid-row:2}
+.badge-category-chevron{grid-column:3;grid-row:1/3;font-size:1.3rem;transition:transform .2s}
+.badge-category-expandable[open] .badge-category-chevron{transform:rotate(180deg)}
+.badge-category-toggle>.progress-track{grid-column:1/-1;grid-row:3;width:100%}
+.badge-category-details{border-top:1px solid #e5eaf0;margin-top:12px;padding-top:10px;display:grid;gap:12px}
+.badge-category-detail{display:flex;align-items:flex-start;gap:10px;min-width:0}
+.badge-category-detail>div{display:flex;flex-direction:column;gap:3px;min-width:0}
+.badge-category-detail strong{font-size:.83rem}
+.badge-category-detail small,.badge-category-detail .badge-count{font-size:.72rem;color:#61738a}
+.badge-category-detail .badge-medal{flex-shrink:0}
+.badge-category-toggle:focus-visible{outline:2px solid #2563eb;outline-offset:4px;border-radius:6px}
