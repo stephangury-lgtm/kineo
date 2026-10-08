@@ -11,6 +11,7 @@ function translateAuthError(error: unknown) {
   if (message.includes('rate limit') || message.includes('too many requests') || message.includes('over_email_send_rate_limit')) return 'Trop de tentatives ou d’e-mails envoyés. Patiente quelques minutes avant de réessayer.'
   if (message.includes('email address') && message.includes('invalid')) return 'Cette adresse e-mail n’est pas acceptée. Vérifie son orthographe.'
   if (message.includes('signup is disabled') || message.includes('signups not allowed')) return 'Les inscriptions sont temporairement indisponibles. Réessaie plus tard.'
+  if (message.includes('error sending confirmation email') || message.includes('unexpected_failure') || message.includes('smtp')) return 'Le service de confirmation par e-mail est indisponible. Réessaie plus tard.'
   if (message.includes('database error saving new user')) return 'La création du profil a échoué. Réessaie dans quelques instants ou contacte le support.'
   if (message.includes('network') || message.includes('failed to fetch') || message.includes('fetch failed')) return 'Connexion au serveur impossible. Vérifie ta connexion Internet et réessaie.'
   return 'Une erreur est survenue. Réessaie dans un instant.'
