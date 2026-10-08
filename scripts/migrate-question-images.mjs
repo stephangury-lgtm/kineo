@@ -9,6 +9,8 @@ const url=process.env.SUPABASE_URL
 const key=process.env.SUPABASE_SERVICE_ROLE_KEY
 if(!url||!key)throw Error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY')
 const dry=process.env.DRY_RUN!=='false'
+// Private bucket URLs require signed access; never replace a working embedded image with an inaccessible URL.
+if(!dry)throw Error('Write mode disabled until the quiz API issues signed image URLs for private Storage objects.')
 const supabase=createClient(url,key,{auth:{persistSession:false,autoRefreshToken:false}})
 const bucket='anatomy-images'
 let offset=0,scanned=0,migrated=0,failed=0
