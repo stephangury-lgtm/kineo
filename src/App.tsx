@@ -1,3 +1,4 @@
+import './pages/UnifiedLearningDesign.css'
 import { Suspense, lazy } from 'react'
 import { NavLink, Navigate, Route, Routes } from 'react-router-dom'
 import AdminGate from './auth/AdminGate'

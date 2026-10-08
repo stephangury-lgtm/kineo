@@ -1,0 +1,24 @@
+/* Kineo shared learning experience: A (calm curriculum) + B (playful revision). */
+.kineo-parcours-v2{--learning-ink:#0b2545;gap:14px;min-width:0}
+.kineo-parcours-v2 .stats-hero{background:linear-gradient(135deg,#f4f9ff,#eaf3ff);color:var(--learning-ink);border:1px solid #dae8fa;box-shadow:none;border-radius:24px;padding:22px}
+.kineo-parcours-v2 .stats-hero h1,.kineo-parcours-v2 .stats-hero p,.kineo-parcours-v2 .stats-hero .eyebrow{color:var(--learning-ink)}
+.kineo-parcours-v2 .stats-hero .eyebrow{color:var(--program-primary,#2867cc)}
+.kineo-parcours-v2 .stats-hero-score{background:#fff;border:1px solid #d7e5f5;color:var(--learning-ink)}
+.kineo-parcours-v2 .card{border:1px solid #e3ebf6;border-radius:20px;box-shadow:0 5px 18px rgba(11,37,69,.045)}
+.kineo-parcours-v2 .score-card{background:#fff;min-width:0}
+.kineo-parcours-v2 .score-card strong{color:var(--program-primary,#2867cc)}
+.kineo-parcours-v2 .subject-list{gap:10px}
+.kineo-parcours-v2 .subject-row,.kineo-parcours-v2 .curriculum-unit-toggle{border-radius:16px;min-height:54px}
+.kineo-parcours-v2 .subject-course-button,.kineo-parcours-v2 .curriculum-unit-action{margin-left:auto}
+.kineo-parcours-v2 .quick-card{border-radius:17px}
+.revision-play-home .revision-play-hero,.foundation-revision-page .revision-play-hero{background:linear-gradient(125deg,var(--program-primary,#2466cf),var(--program-secondary,#648af4));border-radius:25px;box-shadow:0 12px 28px color-mix(in srgb,var(--program-primary,#2466cf) 18%,transparent);overflow:hidden}
+.revision-play-home .quick-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.revision-play-home .quick-card{border-radius:20px;min-height:110px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:16px;background:linear-gradient(145deg,#f1f7ff,#e3f0ff);border:1px solid #d9e8fb}
+.revision-play-home .quick-card:nth-child(4n+2){background:linear-gradient(145deg,#e9fcf6,#d4f8eb);border-color:#c8eee1}
+.revision-play-home .quick-card:nth-child(4n+3){background:linear-gradient(145deg,#fff1e4,#ffe2c8);border-color:#f9dfc5}
+.revision-play-home .quick-card:nth-child(4n+4){background:linear-gradient(145deg,#f2edff,#e4dcff);border-color:#ded3fa}
+.revision-play-home .quick-card>span{font-size:1.55rem}
+.revision-play-session .quiz-card{border-radius:23px;border:1px solid #dce7f6;box-shadow:0 8px 25px rgba(11,37,69,.055)}
+.revision-play-session .answer{border-radius:15px;min-height:48px;touch-action:manipulation}
+.revision-play-session .answer:focus-visible,.revision-play-home .quick-card:focus-visible{outline:3px solid var(--program-primary,#2466cf);outline-offset:3px}
+@media(max-width:600px){.kineo-parcours-v2{gap:10px}.kineo-parcours-v2 .stats-hero{padding:17px 15px;grid-template-columns:minmax(0,1fr) auto}.kineo-parcours-v2 .stats-hero h1{font-size:1.45rem}.kineo-parcours-v2 .stats-hero-score{width:62px}.kineo-parcours-v2 .stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.revision-play-home .quick-grid{gap:9px}.revision-play-home .quick-card{min-height:100px;padding:12px}}
