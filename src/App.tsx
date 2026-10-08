@@ -55,7 +55,7 @@ export default function App(){
   ?[{to:'/',label:'Accueil',icon:'⌂',end:true},{to:'/parcours',label:'Parcours',icon:'▦'},{to:'/revision',label:'Réviser',icon:'✦'},{to:'/stats',label:'Stats',icon:'↗'},{to:'/rewards',label:'Badges',icon:'◆'}]
   :isSpain
    ?[{to:'/',label:'Inicio',icon:'⌂',end:true},{to:'/parcours',label:'Temario',icon:'▦'},{to:'/revision',label:'Repasar',icon:'✦'},{to:'/stats',label:'Progreso',icon:'↗'},{to:'/rewards',label:'Logros',icon:'◆'}]
-   :[{to:'/',label:'Accueil',icon:'⌂',end:true},{to:'/parcours',label:'Parcours',icon:'▦'},{to:'/revision',label:'Réviser',icon:'✦'},{to:'/stats',label:'Stats',icon:'↗'},{to:'/profil',label:'Profil',icon:'●'}]
+   :[{to:'/',label:'Accueil',icon:'⌂',end:true},{to:'/parcours',label:'Parcours',icon:'▦'},{to:'/revision',label:'Réviser',icon:'✦'},{to:'/stats',label:'Stats',icon:'↗'},{to:'/rewards',label:'Badges',icon:'◆'}]
  const curriculumHome=<ProgramLandingPage/>
  const programHome=<ProgramHomePage/>
  const programTheme=isSpain?'fisio':isKineoFrance?'kine':'ifsi'
