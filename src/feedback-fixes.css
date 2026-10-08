@@ -49,3 +49,6 @@
 
 /* Fix blank area above daily card heading: legacy hero grid and bottom alignment */
 .dashboard-stack .home-v4-toprow>.home-v3-hero{display:block!important;min-height:0!important;height:auto!important;align-content:start!important;grid-template-columns:none!important;grid-template-rows:none!important}.dashboard-stack .home-v4-toprow>.home-v3-hero>.hero-copy{display:flex!important;flex-direction:column!important;align-self:start!important;justify-self:stretch!important;justify-content:flex-start!important;gap:5px!important;margin:0!important;padding:0!important;max-width:100%!important}.dashboard-stack .home-v4-toprow>.home-v3-hero .hero-kicker{display:block!important;margin:0!important;padding:0!important;line-height:1.2!important}.dashboard-stack .home-v4-toprow>.home-v3-hero h1{margin:0!important;padding:0!important}.dashboard-stack .home-v4-toprow>.home-v3-hero .hero-action{align-self:flex-start!important}
+
+/* Pending friend actions shown on the single social shortcut */
+.dashboard-stack .home-social-shortcut{position:relative}.dashboard-stack .home-social-shortcut .home-social-count{position:absolute;top:8px;right:9px;display:grid;place-items:center;min-width:23px;height:23px;box-sizing:border-box;padding:0 6px;border-radius:99px;background:#d82f56;color:#fff;font-size:.73rem;font-weight:900;line-height:1;box-shadow:0 2px 7px rgba(216,47,86,.22)}
