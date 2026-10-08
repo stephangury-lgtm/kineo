@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { getCurrentProgram } from '../curriculum/programs'
 import { getBadgeCopy } from '../curriculum/gamificationCopy'
 import {
@@ -7,6 +7,8 @@ import {
   type BadgesV2,
   type GamificationSummaryV2,
 } from '../services/kineoApi'
+
+import './GamificationPage.css'
 
 export default function GamificationPage() {
   const isSpain = getCurrentProgram().id === 'kineo-es'
@@ -29,79 +31,16 @@ export default function GamificationPage() {
   const level = summary.level
   const earned = badges.badges.filter((badge) => badge.earned)
   const locked = badges.badges.filter((badge) => !badge.earned)
+  const progress = Math.round(earned.length / Math.max(1,badges.badges.length)*100)
+  const categories = useMemo(() => [{key:'regular',icon:'📅',name:isSpain?'Regularidad':'Régularité',test:/série|racha|jour|día|streak|regular/i},{key:'knowledge',icon:'🧠',name:isSpain?'Conocimientos':'Connaissances',test:/question|réponse|respuesta|anatom|expert|savoir|conocim/i},{key:'performance',icon:'🏆',name:isSpain?'Rendimiento':'Performance',test:/score|perfect|réuss|aciert|performance|xp/i},{key:'journey',icon:'📈',name:isSpain?'Recorrido':'Parcours',test:/niveau|nivel|parcours|étape|curso/i},{key:'challenges',icon:'🎯',name:isSpain?'Desafíos':'Défis',test:/défi|desaf|challenge|ami/i},{key:'special',icon:'⭐',name:isSpain?'Especial':'Spécial',test:/.*/}], [isSpain])
+  const groups = categories.map(cat=>({...cat,items:badges.badges.filter(b=>{const text=getBadgeCopy(b,isSpain).name+' '+getBadgeCopy(b,isSpain).description;return cat.key==='special'? !categories.slice(0,5).some(other=>other.test.test(text)):cat.test.test(text)&&!categories.slice(0,categories.indexOf(cat)).some(other=>other.test.test(text))})}))
 
-  return (
-    <div className="stack">
-      <section className="hero-card">
-        <div className="hero-copy">
-          <span className="hero-kicker">{isSpain?'Progreso y recompensas':'Progression & récompenses'}</span>
-          <h1>{isSpain?'Nivel':'Niveau'} {level.number} · {level.name}</h1>
-          <p>{summary.xp_total} XP {isSpain?'acumulados. Continúa tus sesiones para desbloquear los próximos niveles y logros.':'accumulés. Continue tes sessions pour débloquer les prochains niveaux et badges.'}</p>
-          <div className="progress-track" aria-label={`${isSpain?'Progreso del nivel':'Progression niveau'} ${level.progress_percent}%`}>
-            <div className="progress-fill" style={{ width: `${Math.min(100, level.progress_percent)}%` }} />
-          </div>
-        </div>
-        <div className="hero-orbit" aria-hidden="true">{level.icon || '⭐'}</div>
-      </section>
-
-      <section className="stats-grid">
-        <article className="card score-card"><span>🔥 {isSpain?'Racha actual':'Série actuelle'}</span><strong>{summary.streak.current} {isSpain?'d':'j'}</strong><small>{isSpain?'Mejor':'Meilleure'} : {summary.streak.longest} {isSpain?'d':'j'}</small></article>
-        <article className="card score-card"><span>🏅 {isSpain?'Logros':'Badges'}</span><strong>{summary.badges.earned}/{summary.badges.total}</strong><small>{earned.length} {isSpain?'desbloqueados':`débloqué${earned.length > 1 ? 's' : ''}`}</small></article>
-        <article className="card score-card"><span>✅ {isSpain?'Respuestas correctas':'Bonnes réponses'}</span><strong>{badges.stats.correct_answers}</strong><small>{isSpain?'En todas tus revisiones':'Sur l’ensemble de tes révisions'}</small></article>
-        <article className="card score-card"><span>⚡ {isSpain?'Próximo nivel':'Prochain niveau'}</span><strong>{level.next_level ? level.xp_to_next : 0} XP</strong><small>{level.next_level ? `${isSpain?'Hacia':'Vers'} ${level.next_name}` : (isSpain?'Nivel máximo':'Niveau maximum')}</small></article>
-      </section>
-
-
-      <section className="card">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">{isSpain?'Colección':'Collection'}</p>
-            <h2>{isSpain?'Logros desbloqueados':'Badges débloqués'}</h2>
-          </div>
-          <strong>{earned.length}</strong>
-        </div>
-        {earned.length === 0 ? (
-          <p>{isSpain?'Tu primer logro llegará con tus primeros éxitos.':'Ton premier badge arrivera dès tes premières réussites.'}</p>
-        ) : (
-          <div className="badge-grid" style={{ marginTop: 14 }}>
-            {earned.map((badge) => (
-              <article className="badge-card earned" key={badge.id}>
-                <span className="badge-icon" aria-hidden="true">{badge.icon || '🏅'}</span>
-                <div className="badge-copy">
-                  <h3>{getBadgeCopy(badge,isSpain).name}</h3>
-                  <p>{getBadgeCopy(badge,isSpain).description}</p>
-                  <span>{isSpain?'Desbloqueado':'Débloqué'} · {badge.progress_percent}%</span>
-                </div>
-              </article>
-            ))}
-          </div>
-        )}
-      </section>
-
-      <section className="card">
-        <div className="section-heading">
-          <div>
-            <p className="eyebrow">{isSpain?'Próximamente':'À venir'}</p>
-            <h2>{isSpain?'Próximos logros':'Prochains badges'}</h2>
-          </div>
-          <strong>{locked.length}</strong>
-        </div>
-        <div className="badge-grid" style={{ marginTop: 14 }}>
-          {locked.map((badge) => (
-            <article className="badge-card" key={badge.id}>
-              <span className="badge-icon muted" aria-hidden="true">{badge.icon || '🔒'}</span>
-              <div className="badge-copy">
-                <h3>{getBadgeCopy(badge,isSpain).name}</h3>
-                <p>{getBadgeCopy(badge,isSpain).description}</p>
-                <div className="progress-track small">
-                  <div className="progress-fill" style={{ width: `${Math.min(100, badge.progress_percent)}%` }} />
-                </div>
-                <span>{badge.current_value}/{badge.target_value} · {badge.progress_percent}%</span>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-    </div>
-  )
+  return <div className="stack stats-mobile badge-dashboard">
+    <header className="stats-page-head"><div><h1>{isSpain?'Mis logros':'Mes badges'}</h1><p>{isSpain?'¡Tus esfuerzos tienen recompensa!':'Tes efforts sont récompensés !'}</p></div><span className="profile-context">{getCurrentProgram().shortName}</span></header>
+    <section className="badge-celebration"><div><span className="badge-kicker">✦ {isSpain?'Colección de logros':'Collection de badges'}</span><h2>{isSpain?'Cada paso cuenta.':'Chaque progrès compte.'}</h2><p>{isSpain?'Sigue aprendiendo y desbloquea nuevos logros.':'Continue à réviser et débloque de nouvelles récompenses.'}</p></div><span className="badge-hero-trophy" aria-hidden="true">🏆</span></section>
+    <section className="card badge-overview"><div className="badge-progress-ring" style={{'--badge-progress':progress+'%'} as React.CSSProperties}><div><span>⭐</span><strong>{earned.length}</strong><small>/ {badges.badges.length}</small></div></div><div className="badge-overview-copy"><h2>{isSpain?'¡Sigue así!':'Continue comme ça !'}</h2><p>{isSpain?'Logros desbloqueados':'Badges débloqués'} : <strong>{earned.length}</strong> · {isSpain?'Por descubrir':'À découvrir'} : <strong>{locked.length}</strong></p><div className="progress-track"><div className="progress-fill" style={{width:progress+'%'}}/></div><small>{progress}% · {summary.xp_total} XP · {isSpain?'Racha':'Série'} {summary.streak.current} {isSpain?'días':'jours'}</small></div></section>
+    <section className="badge-section"><div className="badge-section-head"><h2>{isSpain?'Mis logros por categoría':'Mes badges par catégorie'}</h2><span>{earned.length}/{badges.badges.length}</span></div><div className="badge-category-grid">{groups.map(g=><article className="badge-category-card" key={g.key}><span className={'badge-category-icon '+g.key}>{g.icon}</span><strong>{g.name}</strong><small>{g.items.filter(b=>b.earned).length}/{g.items.length}</small><div className="progress-track small"><div className="progress-fill" style={{width:(g.items.filter(b=>b.earned).length/Math.max(1,g.items.length)*100)+'%'}}/></div></article>)}</div></section>
+    <section className="badge-section"><div className="badge-section-head"><h2>{isSpain?'Logros recientes':'Badges récents'}</h2><span>{earned.length} ✓</span></div>{earned.length?<div className="badge-showcase-grid">{earned.map(b=><article className="badge-showcase-card" key={b.id}><div className="badge-medal earned" aria-hidden="true"><span>{b.icon||'🏅'}</span></div><strong>{getBadgeCopy(b,isSpain).name}</strong><small>{getBadgeCopy(b,isSpain).description}</small><span className="badge-earned-label">{isSpain?'Desbloqueado':'Débloqué'}</span></article>)}</div>:<div className="card badge-empty">{isSpain?'¡Tu primera medalla te espera!':'Ta première médaille t’attend !'}</div>}</section>
+    <section className="badge-section"><div className="badge-section-head"><h2>{isSpain?'Próximos logros':'Prochains badges à débloquer'}</h2><span>{locked.length}</span></div><div className="badge-next-grid">{locked.map(b=><article className="badge-next-card" key={b.id}><div className="badge-medal locked" aria-hidden="true"><span>{b.icon||'🏅'}</span></div><div><strong>{getBadgeCopy(b,isSpain).name}</strong><small>{getBadgeCopy(b,isSpain).description}</small><div className="progress-track small"><div className="progress-fill" style={{width:Math.min(100,b.progress_percent)+'%'}}/></div><span className="badge-count">{b.current_value}/{b.target_value} · {b.progress_percent}%</span></div></article>)}</div></section>
+  </div>
 }
