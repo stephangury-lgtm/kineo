@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { getGamificationSummaryV2,getRecentRevisionSessionsV1,getUserStatsV2,type GamificationSummaryV2,type RevisionHistoryItem,type UserStatsV2 } from '../services/kineoApi'
 import { getCurrentProfile } from '../services/profileApi'
 import './StatisticsPage.css'
-const modeLabels:Record<string,string>={smart:'Révision intelligente',visual:'Anatomie visuelle',exam:'Examen blanc',daily:'Challenge du jour',clinical_case:'Cas clinique',matching:'Associations',mcq:'QCM',true_false:'Vrai / Faux',fill_blank:'Texte à trous',translation:'Traduction',mix:'Révision ciblée'}
 function durationLabel(seconds:number){const totalMin=Math.floor(seconds/60);const hours=Math.floor(totalMin/60);const min=totalMin%60;return hours>0?`${hours} h ${min.toString().padStart(2,'0')} min`:totalMin>0?`${totalMin} min`:`${seconds}s`}
 export default function StatisticsPage(){
  const [stats,setStats]=useState<UserStatsV2|null>(null),[game,setGame]=useState<GamificationSummaryV2|null>(null),[history,setHistory]=useState<RevisionHistoryItem[]>([]),[studyYear,setStudyYear]=useState<number|null>(null),[days,setDays]=useState(30),[error,setError]=useState<string|null>(null)
