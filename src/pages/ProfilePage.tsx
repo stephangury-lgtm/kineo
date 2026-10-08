@@ -20,6 +20,9 @@ export default function ProfilePage() {
   const [accessiblePrograms,setAccessiblePrograms]=useState<AccessibleProgram[]>([])
   const [visualReviewer,setVisualReviewer]=useState(false)
   const [email, setEmail] = useState('')
+  const [reminderOptIn,setReminderOptIn]=useState(false)
+  const [reminderBusy,setReminderBusy]=useState(false)
+  const [reminderMessage,setReminderMessage]=useState('')
   const [firstName, setFirstName] = useState('')
   const [username, setUsername] = useState('')
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
@@ -41,6 +44,7 @@ export default function ProfilePage() {
       setAvatarUrl(nextProfile?.avatar_url ?? null)
       setStudyYear(nextProfile?.study_year ?? 2)
       setEmail(auth.data.user?.email ?? '')
+      void supabase.rpc('get_inactivity_reminder_preference_v1').then(({data,error})=>{if(!error)setReminderOptIn(Boolean(data?.[0]?.opted_in))})
     })
   }, [])
 
@@ -106,6 +110,14 @@ export default function ProfilePage() {
     finally { setPhotoBusy(false) }
   }
 
+  async function toggleReminders(next:boolean){
+    setReminderBusy(true);setReminderMessage('')
+    const {error}=await supabase.rpc('set_inactivity_reminder_preference_v1',{p_opted_in:next})
+    if(error)setReminderMessage('Impossible d’enregistrer ce choix. Réessaie.')
+    else {setReminderOptIn(next);setReminderMessage('Préférence enregistrée ✓')}
+    setReminderBusy(false)
+  }
+
   function switchProgram(programId:ProgramId){selectProgram(programId);window.location.assign('/')}
 
   if (!profile) return <section className="card"><p>{activeProgram.id==='kineo-es'?'Cargando el perfil…':'Chargement du profil…'}</p></section>
@@ -126,6 +138,7 @@ export default function ProfilePage() {
     {username?<FriendShareCard username={username} isSpain={isSpain}/>:<section className="card social-entry-card"><div><p className="eyebrow">{isSpain?'Añadir amigos':'Ajouter des amis'}</p><h2>{isSpain?'Crea primero tu alias':'Crée d’abord ton pseudo'}</h2><p>{isSpain?'Tu tarjeta de amigo y tu QR aparecerán aquí cuando guardes un alias público.':'Ta carte ami et ton QR code apparaîtront ici dès que tu auras enregistré un pseudo public.'}</p></div></section>}
     <section className="card revision-summary"><div className="revision-summary-heading"><div><p className="eyebrow">{isSpain?'Repaso':'Révisions'}</p><h2>{isSpain?'Parámetros de aprendizaje':'Paramètres d’apprentissage'}</h2></div><span className="revision-summary-year">{activeLevel}</span></div><div className="revision-summary-grid"><div className="revision-summary-item"><span>{isSpain?'Nivel activo':'Niveau actif'}</span><strong>{activeLevel}</strong></div><div className="revision-summary-item"><span>{isSpain?'Planes disponibles':'Parcours accessible'}</span><strong>{visiblePrograms.map(program=>program.shortName).join(' · ')}</strong></div><div className="revision-summary-item"><span>{isSpain?'Método':'Méthode'}</span><strong>{isSpain?'SRS espaciado':'SRS espacé'}</strong></div><div className="revision-summary-item"><span>{isSpain?'Ritmo':'Rythme'}</span><strong>{isSpain?'Regular':'Régulier'}</strong></div></div></section>
     <section className="card social-entry-card"><div><p className="eyebrow">Social</p><h2>{isSpain?'Amigos, retos y clasificación':'Amis, défis & classement'}</h2><p>{isSpain?'Encuentra a tus compañeros, lanza duelos de 10 preguntas y compara el XP semanal.':'Retrouve tes camarades, lance des duels de 10 questions et compare votre XP de la semaine.'}</p></div><div className="friend-actions"><Link className="secondary-button" to="/amis">{isSpain?'Mis amigos':'Mes amis'}</Link><Link className="secondary-button" to="/classement">{isSpain?'Clasificación':'Classement'}</Link></div></section>
+    <section className="card social-entry-card"><div><p className="eyebrow">Notifications</p><h2>{isSpain?'Recordatorios de estudio':'Rappels de révision'}</h2><p>{isSpain?'Un correo tras 48 horas de inactividad, máximo uno cada 7 días. Puedes desactivarlo cuando quieras.':'Un email après 48 heures d’inactivité, au maximum un tous les 7 jours. Désactivation possible à tout moment.'}</p></div><label className="friend-actions" style={{alignItems:'center',gap:12}}><input type="checkbox" checked={reminderOptIn} disabled={reminderBusy} onChange={e=>void toggleReminders(e.target.checked)} style={{width:20,height:20,flexShrink:0}}/><span>{isSpain?'Acepto recibir recordatorios por email':'J’accepte les rappels de révision par email'}</span></label>{reminderMessage&&<p className="field-hint" role="status">{reminderMessage}</p>}</section>
     <section className="card account-card"><p className="eyebrow">{isSpain?'Cuenta':'Compte'}</p><h2>{isSpain?'Conexión':'Connexion'}</h2><div className="account-row"><div><strong>{isSpain?'Correo electrónico':'Adresse e-mail'}</strong><span>{email || (isSpain?'No disponible':'Non disponible')}</span></div><span className="status-dot">{isSpain?'Activo':'Actif'}</span></div><div className="profile-version-row"><span>{isSpain?'Versión de la aplicación':'Version de l’application'}</span><AppVersionBadge/></div><div className="friend-actions"><Link className="text-link" to="/informations">{isSpain?'Información, privacidad y ayuda':'Informations, confidentialité & aide'}</Link></div><button className="secondary-button" onClick={() => supabase.auth.signOut()}>{isSpain?'Cerrar sesión':'Se déconnecter'}</button></section>
   </div>
 }
