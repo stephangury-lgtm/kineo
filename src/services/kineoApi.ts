@@ -39,3 +39,5 @@ export const getQuizQuestionsV4=async(sessionId:string)=>(await rpc<QuizQuestion
 export const submitQuizAnswerV3=(params:{sessionId:string;questionId:string;answer:unknown;responseTimeMs:number})=>rpc('submit_quiz_answer_v5',{p_session_id:params.sessionId,p_question_id:params.questionId,p_answer:params.answer,p_response_time_ms:params.responseTimeMs})
 export const finishQuizSessionV2=(sessionId:string)=>rpc('finish_quiz_session_v2',{p_session_id:sessionId})
 export const finishDailyChallengeV2=(sessionId:string)=>rpc('finish_daily_challenge_v2',{p_session_id:sessionId})
+
+export const startRevisionSessionReplayV1=(sourceSessionId:string)=>rpc<string>('start_revision_session_replay_v1',{p_source_session_id:sourceSessionId})
