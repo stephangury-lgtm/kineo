@@ -51,3 +51,27 @@
 .parcours-redesign .curriculum-topic-copy strong,.parcours-redesign .curriculum-topic-copy p{overflow-wrap:anywhere}
 .parcours-redesign .parcours-summary>.score-card{min-width:0;overflow-wrap:anywhere}
 @media(max-width:420px){.parcours-redesign .curriculum-topic{grid-template-columns:24px minmax(0,1fr);gap:8px}.parcours-redesign .curriculum-topic-list{padding:10px}.parcours-redesign .curriculum-topic-actions a{white-space:normal;text-align:center}.parcours-redesign .parcours-summary{gap:7px}}
+
+/* Mobile IFSI UE cards: compact two-column header, no stretched grid rows. */
+.parcours-redesign .subject-list>.curriculum-unit,
+.parcours-redesign .subject-list>details{height:auto!important;min-height:0!important;align-self:start}
+.parcours-redesign .curriculum-unit-toggle{
+ display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;
+ align-items:center!important;align-content:center!important;
+ justify-content:initial!important;gap:10px!important;
+ height:auto!important;min-height:76px!important;padding:12px 14px!important;
+}
+.parcours-redesign .curriculum-unit-toggle>.curriculum-unit-copy,
+.parcours-redesign .curriculum-unit-toggle>div:first-child{
+ grid-column:1!important;grid-row:1!important;display:flex!important;
+ flex-direction:column!important;justify-content:center!important;
+ gap:5px!important;min-width:0!important;width:auto!important;
+}
+.parcours-redesign .curriculum-unit-toggle>.curriculum-unit-action,
+.parcours-redesign .curriculum-unit-toggle>span:last-child{
+ grid-column:2!important;grid-row:1!important;align-self:center!important;
+ margin:0!important;justify-self:end!important;
+}
+.parcours-redesign .curriculum-unit-title{display:flex!important;flex-wrap:wrap!important;gap:5px 8px!important;align-items:center!important}
+.parcours-redesign .curriculum-unit-title strong{flex:1 1 100%!important;line-height:1.3!important}
+@media(max-width:600px){.parcours-redesign .curriculum-unit-toggle{min-height:72px!important;padding:11px 12px!important}.parcours-redesign .curriculum-unit-title strong{font-size:.94rem!important}.parcours-redesign .curriculum-unit-action{font-size:.75rem!important}}
