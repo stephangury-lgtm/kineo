@@ -11,6 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
+      - name: Install image converter
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y imagemagick
       - name: Generate Apple touch icon
         run: |
           convert -background white public/icons/kineo-launch.svg -resize 180x180 public/icons/apple-touch-icon-180.png
