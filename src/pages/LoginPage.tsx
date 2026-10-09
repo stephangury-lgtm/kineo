@@ -89,8 +89,8 @@ export default function LoginPage() {
   return (
     <main className="auth-shell">
       <section className="auth-visual">
-        <img className="auth-brand-logo" src="/kineo-brand-logo.svg" alt="Kineo" />
-        <p className="eyebrow light">Kineo · Plateforme santé</p>
+        <img className="auth-brand-logo" src="/leryko-brand-logo.svg" alt="Leryko" />
+        <p className="eyebrow light">Leryko · Plateforme santé</p>
         <h1>Progresse un peu chaque jour.</h1>
         <p>Des révisions courtes et gamifiées pour les étudiants en kinésithérapie et en soins infirmiers, en France et en Espagne.</p>
         
