@@ -75,3 +75,33 @@
 .parcours-redesign .curriculum-unit-title{display:flex!important;flex-wrap:wrap!important;gap:5px 8px!important;align-items:center!important}
 .parcours-redesign .curriculum-unit-title strong{flex:1 1 100%!important;line-height:1.3!important}
 @media(max-width:600px){.parcours-redesign .curriculum-unit-toggle{min-height:72px!important;padding:11px 12px!important}.parcours-redesign .curriculum-unit-title strong{font-size:.94rem!important}.parcours-redesign .curriculum-unit-action{font-size:.75rem!important}}
+
+/* Fix opened UE: the toggle must be a full-width row above the lessons,
+   not the first column of a two-column layout. */
+.parcours-redesign .curriculum-unit{
+ display:flex!important;flex-direction:column!important;
+ grid-template-columns:none!important;align-items:stretch!important;
+ width:100%!important;height:auto!important;min-width:0!important;
+}
+.parcours-redesign .curriculum-unit>.curriculum-unit-toggle{
+ position:relative!important;display:flex!important;flex-direction:row!important;
+ flex-wrap:nowrap!important;align-items:center!important;
+ width:100%!important;max-width:100%!important;min-width:0!important;
+ grid-column:1/-1!important;grid-row:auto!important;flex:0 0 auto!important;
+}
+.parcours-redesign .curriculum-unit>.curriculum-topic-list{
+ display:block!important;width:100%!important;max-width:100%!important;
+ min-width:0!important;flex:0 0 auto!important;grid-column:1/-1!important;
+ grid-row:auto!important;box-sizing:border-box!important;
+}
+.parcours-redesign .curriculum-unit-toggle>.curriculum-unit-copy,
+.parcours-redesign .curriculum-unit-toggle>div:first-child{
+ flex:1 1 auto!important;min-width:0!important;width:auto!important;
+}
+.parcours-redesign .curriculum-unit-toggle>.curriculum-unit-action,
+.parcours-redesign .curriculum-unit-toggle>span:last-child{
+ flex:0 0 auto!important;margin-left:auto!important;
+}
+.parcours-redesign .curriculum-unit-title strong{
+ overflow-wrap:break-word!important;word-break:normal!important;
+}
