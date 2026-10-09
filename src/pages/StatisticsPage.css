@@ -31,9 +31,3 @@
 .stats-mobile .activity-chart:has(> .activity-day:nth-child(7):last-child) .activity-day{flex:1 1 0;min-width:0}
 .stats-mobile .activity-chart:has(> .activity-day:nth-child(30)){overflow-x:auto;gap:3px}
 .stats-mobile .activity-chart:has(> .activity-day:nth-child(30)) .activity-day{flex:0 0 clamp(12px,2.5vw,22px)}
-
-/* Keep badge access visible within stats on every curriculum and viewport. */
-.stats-header-actions{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
-.stats-badges-link{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:7px 12px;border-radius:999px;background:var(--program-primary,var(--brand));color:#fff;font-size:.78rem;font-weight:850;text-decoration:none;white-space:nowrap}
-.stats-badges-link:focus-visible{outline:3px solid var(--program-secondary,#14b8a6);outline-offset:2px}
-@media(max-width:620px){.stats-header-actions{width:100%;justify-content:space-between}.stats-header-actions .profile-context{max-width:100%;overflow-wrap:anywhere}}
