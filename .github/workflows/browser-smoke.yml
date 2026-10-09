@@ -23,10 +23,10 @@ jobs:
         browser: [chromium, webkit]
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5
 
       - name: Setup Node
-        uses: actions/setup-node@v4.4.0
+        uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
@@ -92,7 +92,7 @@ jobs:
 
       - name: Upload Playwright failure artifacts
         if: failure()
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v5
         with:
           name: playwright-${{ matrix.browser }}-${{ github.run_id }}
           path: |
