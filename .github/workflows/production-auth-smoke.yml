@@ -27,12 +27,12 @@ jobs:
         browser: [chromium, firefox, webkit]
     steps:
       - name: Checkout deployed revision
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
@@ -86,7 +86,7 @@ jobs:
 
       - name: Upload production Playwright artifacts
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: production-auth-${{ matrix.browser }}-${{ github.run_id }}
           path: test-results
