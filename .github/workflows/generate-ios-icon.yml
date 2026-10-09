@@ -10,7 +10,7 @@ jobs:
   icon:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Generate Apple touch icon
         run: |
           convert -background white public/icons/kineo-launch.svg -resize 180x180 public/icons/apple-touch-icon-180.png
