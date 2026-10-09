@@ -31,3 +31,12 @@
 .stats-mobile .activity-chart:has(> .activity-day:nth-child(7):last-child) .activity-day{flex:1 1 0;min-width:0}
 .stats-mobile .activity-chart:has(> .activity-day:nth-child(30)){overflow-x:auto;gap:3px}
 .stats-mobile .activity-chart:has(> .activity-day:nth-child(30)) .activity-day{flex:0 0 clamp(12px,2.5vw,22px)}
+
+/* Mobile stats: prevent the chart and cards from widening the viewport. */
+.stats-mobile{width:100%;min-width:0;max-width:100%;overflow-x:clip}
+.stats-mobile>*,.stats-mobile .card,.stats-mobile .section-heading,.stats-mobile .overview-copy{min-width:0;max-width:100%}
+.stats-mobile .activity-chart{max-width:100%;min-width:0;overflow-x:auto;overscroll-behavior-x:contain}
+.stats-mobile .activity-day{min-width:12px}
+.stats-mobile .overview-copy>p,.stats-mobile .overview-copy h2{overflow-wrap:anywhere}
+.stats-mobile .period-tabs{min-width:0;max-width:100%;flex-wrap:wrap;justify-content:flex-start}
+@media(max-width:620px){.stats-mobile .stats-overview{grid-template-columns:86px minmax(0,1fr);gap:10px;padding:14px 12px}.stats-mobile .progress-ring{width:86px}.stats-mobile .progress-ring:before{width:64px}.stats-mobile .stats-kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stats-mobile .stat-kpi{min-width:0;min-height:88px;padding:10px!important}.stats-mobile .stat-kpi strong{font-size:1.1rem;overflow-wrap:anywhere}.stats-mobile .activity-chart:has(> .activity-day:nth-child(30)){overflow-x:auto}.stats-mobile .activity-day{flex:0 0 14px}.stats-mobile .activity-chart:has(> .activity-day:nth-child(7):last-child) .activity-day{flex:1 1 0;min-width:0}}
