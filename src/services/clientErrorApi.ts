@@ -24,8 +24,8 @@ function sendToSentry(report:ClientErrorReport){
    tags:{source:'kineo',category},
    request:{url:location.origin+location.pathname},
   }
-  const envelope=JSON.stringify({event_id:eventId,sent_at:timestamp,dsn:`https://${SENTRY_PUBLIC_KEY}@o4512227188932608.ingest.de.sentry.io/4512227195289680`})+'\\n'+
-   JSON.stringify({type:'event'})+'\\n'+JSON.stringify(payload)
+  const envelope=JSON.stringify({event_id:eventId,sent_at:timestamp,dsn:`https://${SENTRY_PUBLIC_KEY}@o4512227188932608.ingest.de.sentry.io/4512227195289680`})+'\n'+
+   JSON.stringify({type:'event'})+'\n'+JSON.stringify(payload)
   void fetch(SENTRY_INGEST,{
    method:'POST',headers:{'Content-Type':'application/x-sentry-envelope'},
    body:envelope,keepalive:true,credentials:'omit',referrerPolicy:'no-referrer',
