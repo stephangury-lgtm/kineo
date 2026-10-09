@@ -93,7 +93,7 @@ export default function LoginPage() {
         <p className="eyebrow light">Kineo · Plateforme santé</p>
         <h1>Progresse un peu chaque jour.</h1>
         <p>Des révisions courtes et gamifiées pour les étudiants en kinésithérapie et en soins infirmiers, en France et en Espagne.</p>
-        <div className="auth-pills"><span>🔥 Séries</span><span>🧠 SRS</span><span>🏆 Badges</span></div>
+        
       </section>
 
       <section className="card auth-card">
