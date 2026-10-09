@@ -87,3 +87,14 @@
 .program-theme .challenge-card .progress-track{margin-top:6px!important}
 .program-theme .visual-question img{image-rendering:auto;max-width:100%;height:auto}
 .program-theme .foundation-card,.program-theme .program-units-card,.program-theme .ifsi-reference-card{border-color:var(--program-line)}.program-theme .curriculum-unit.open,.program-theme .semester-card.active{border-color:var(--program-primary);box-shadow:0 0 0 1px var(--program-primary)}.program-theme .curriculum-unit-code,.program-theme .curriculum-unit-action,.program-theme .program-status.foundation{color:var(--program-primary)}.program-theme .program-status.foundation{background:var(--program-soft)}.program-theme .curriculum-topic{border-color:var(--program-line)}.program-theme .curriculum-unit-icon{background:var(--program-soft)}
+/* LERYKO temporary brand identity: shared health-learning palette */
+:root{--ink:#0B2545;--brand:#3B82F6;--brand-2:#10B981;--brand-soft:#E8F3FF;--line:#dce8f5;--shadow:0 12px 30px rgba(11,37,69,.08)}
+body{background:#f5f9ff;color:#0B2545}
+.program-theme{--program-navy:#0B2545;--program-primary:#3B82F6;--program-secondary:#60A5FA;--program-soft:#E8F3FF;--program-line:#D7E8FF}
+.program-theme--kine{--program-primary:#3B82F6;--program-secondary:#60A5FA;--program-soft:#E8F3FF;--program-line:#D7E8FF}
+.program-theme--ifsi{--program-primary:#A78BFA;--program-secondary:#8B5CF6;--program-soft:#F2EDFF;--program-line:#E4D9FF}
+.program-theme--fisio{--program-primary:#10B981;--program-secondary:#14B8A6;--program-soft:#E8FBF5;--program-line:#CBF2E6}
+.program-theme .primary-button{background:linear-gradient(120deg,var(--program-primary),var(--program-secondary));color:white}
+.program-theme .bottom-nav a.active{color:var(--program-primary);background:var(--program-soft)}
+.brand-logo{width:132px;max-height:48px;object-fit:contain}
+@media(max-width:520px){.brand-logo{width:106px;max-height:40px}}
