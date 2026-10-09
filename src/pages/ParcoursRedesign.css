@@ -42,3 +42,12 @@
 .parcours-redesign .parcours-page-heading .eyebrow{margin:0;color:var(--program-primary,var(--brand));font-size:.72rem;letter-spacing:.08em;font-weight:800}
 .parcours-redesign .parcours-level-chip{flex-shrink:0;padding:10px 14px;border-radius:12px;background:#edf5fc;color:#0b2545;font-weight:900;font-size:1rem}
 @media(max-width:600px){.parcours-redesign .parcours-page-heading{padding:14px;align-items:flex-start}.parcours-redesign .parcours-page-heading h1{font-size:1.35rem}.parcours-redesign .parcours-page-heading p:last-child{font-size:.78rem}.parcours-redesign .parcours-level-chip{padding:8px 10px;font-size:.85rem}}
+
+/* Feedback 2026-10-09: prevent UE blocks and controls overflowing narrow phones. */
+.parcours-redesign,.parcours-redesign .parcours-content,.parcours-redesign .subject-list,.parcours-redesign .curriculum-unit,.parcours-redesign .curriculum-unit-toggle,.parcours-redesign .curriculum-unit-title,.parcours-redesign .curriculum-topic-copy{min-width:0;max-width:100%;box-sizing:border-box}
+.parcours-redesign .curriculum-unit-toggle{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.parcours-redesign .curriculum-unit-title{flex:1 1 180px;overflow-wrap:anywhere}
+.parcours-redesign .curriculum-unit-action{max-width:100%;white-space:normal;text-align:center;overflow-wrap:anywhere}
+.parcours-redesign .curriculum-topic-copy strong,.parcours-redesign .curriculum-topic-copy p{overflow-wrap:anywhere}
+.parcours-redesign .parcours-summary>.score-card{min-width:0;overflow-wrap:anywhere}
+@media(max-width:420px){.parcours-redesign .curriculum-topic{grid-template-columns:24px minmax(0,1fr);gap:8px}.parcours-redesign .curriculum-topic-list{padding:10px}.parcours-redesign .curriculum-topic-actions a{white-space:normal;text-align:center}.parcours-redesign .parcours-summary{gap:7px}}
