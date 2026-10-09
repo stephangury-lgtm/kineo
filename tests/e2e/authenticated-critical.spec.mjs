@@ -170,5 +170,5 @@ test('single-login authenticated critical journey',async({page,browser})=>{
  await openCurriculumQuiz(page)
  await answerOneCurriculumQuestion(page)
  await gotoStable(page,'/rewards')
- await expect(page.getByText('Colección')).toBeVisible()
+ await expect(page.getByRole('heading',{name:'Mis logros por categoría'})).toBeVisible({timeout:15000})
 })
