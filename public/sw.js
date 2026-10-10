@@ -1,6 +1,5 @@
-const CACHE = 'kineo-shell-v10'
+const CACHE = 'kineo-shell-v11'
 const SHELL = [
-  '/',
   '/manifest.webmanifest',
   '/kineo-icon.svg',
   '/icons/kineo-192.png',
@@ -34,7 +33,7 @@ self.addEventListener('fetch', (event) => {
           if (response.ok) caches.open(CACHE).then((cache) => cache.put('/', response.clone()))
           return response
         })
-        .catch(() => caches.match(event.request).then((cached) => cached || caches.match('/'))),
+        .catch(() => caches.match(event.request)),
     )
     return
   }
