@@ -65,9 +65,10 @@ export default function AuthGate({ children }: Props) {
   }
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => loadProfile(data.session))
+    supabase.auth.getSession().then(({ data }) => loadProfile(data.session)).catch(() => setLoading(false))
 
     const { data } = supabase.auth.onAuthStateChange((event, nextSession) => {
+      if (event === 'INITIAL_SESSION') return
       if (event === 'PASSWORD_RECOVERY') {
         setPasswordRecovery(true)
         setSession(nextSession)
@@ -78,7 +79,8 @@ export default function AuthGate({ children }: Props) {
       void loadProfile(nextSession)
     })
 
-    return () => data.subscription.unsubscribe()
+    const startupTimer = window.setTimeout(() => setLoading(false), 12000)
+    return () => { window.clearTimeout(startupTimer); data.subscription.unsubscribe() }
   }, [])
 
   useEffect(()=>{
