@@ -1,7 +1,7 @@
 {
   "id": "/",
-  "name": "Kineo — Révisions Santé",
-  "short_name": "Kineo",
+  "name": "LERYKO — Révisions Santé",
+  "short_name": "LERYKO",
   "description": "Plateforme de révision gamifiée pour étudiants en kinésithérapie et en soins infirmiers",
   "start_url": "/",
   "scope": "/",
@@ -18,13 +18,13 @@
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "/icons/kineo-launch.svg",
+      "src": "/icons/leryko-launch.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "/icons/kineo-launch-maskable.svg",
+      "src": "/icons/leryko-launch-maskable.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "maskable"
