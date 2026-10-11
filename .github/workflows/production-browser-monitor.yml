@@ -1,0 +1,56 @@
+name: Kineo Production Browser Monitor
+
+on:
+  schedule:
+    - cron: '15 6 * * *'
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Deploy Kineo to Cloudflare"]
+    types: [completed]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: kineo-production-browser-monitor
+  cancel-in-progress: true
+
+jobs:
+  production-browser:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, webkit]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Install Playwright and browser
+        run: |
+          npm install --no-save --package-lock=false @playwright/test@1.55.0
+          npx playwright install --with-deps ${{ matrix.browser }}
+      - name: Check production endpoints and deployment metadata
+        env:
+          KINEO_BASE_URL: https://kineo.stephangury.workers.dev
+        run: node scripts/check-production.mjs
+      - name: Run read-only browser checks against Cloudflare production
+        env:
+          KINEO_E2E_BASE_URL: https://kineo.stephangury.workers.dev
+        run: npx playwright test tests/e2e/public-smoke.spec.mjs --project=${{ matrix.browser }} --reporter=line
+      - name: Upload failure evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: production-browser-${{ matrix.browser }}-${{ github.run_id }}
+          path: |
+            test-results/
+            playwright-report/
+          if-no-files-found: ignore
+          retention-days: 14
