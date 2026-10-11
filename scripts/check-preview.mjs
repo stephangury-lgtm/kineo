@@ -27,7 +27,7 @@ async function expectHtml(route){
  const response=await fetch(`${base}${route}`,{headers:{accept:'text/html'}})
  if(!response.ok)throw new Error(`${route} returned ${response.status}`)
  const text=await response.text()
- if(!text.includes('<div id="root"></div>'))throw new Error(`${route} is not serving the SPA shell`)
+ if(!/<div\s+id=["']root["'][^>]*>/.test(text))throw new Error(`${route} is not serving the SPA shell`)
 }
 
 try{
