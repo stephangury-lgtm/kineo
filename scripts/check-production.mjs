@@ -13,7 +13,7 @@ for(const route of routes){
  const response=await fetchOk(route)
  const html=await response.text()
  if(route==='/')homeHtml=html
- if(!html.includes('<div id="root"></div>'))throw new Error(`${route} is not serving the Kineo SPA shell`)
+ if(!/<div\s+id=["']root["'][^>]*>/.test(html))throw new Error(`${route} is not serving the Kineo SPA shell`)
  const contentType=response.headers.get('content-type')||''
  if(!contentType.includes('text/html'))throw new Error(`${route} has unexpected content type: ${contentType}`)
 }
@@ -25,7 +25,7 @@ for(const assetPath of scriptPaths){
  const contentType=response.headers.get('content-type')||''
  if(!/javascript|ecmascript/.test(contentType))throw new Error(`${assetPath} has invalid JavaScript MIME type: ${contentType}`)
  const body=await response.text()
- if(body.trim().startsWith('<!doctype')||body.includes('<div id="root"></div>'))throw new Error(`${assetPath} incorrectly serves the SPA HTML fallback`)
+ if(body.trim().startsWith('<!doctype')||/<div\s+id=["']root["'][^>]*>/.test(body))throw new Error(`${assetPath} incorrectly serves the SPA HTML fallback`)
 }
 
 const securityHeaders=await fetchOk('/')
