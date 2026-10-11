@@ -25,7 +25,7 @@ if(!sw.includes(`kineo-shell-${shortCommit}`)){
 if(!sw.includes('version.json')) throw new Error('Service worker does not handle version.json')
 
 const html=fs.readFileSync(path.join(dist,'index.html'),'utf8')
-if(!html.includes('<div id="root"></div>')) throw new Error('Production index is missing React root')
+if(!/<div\s+id=["']root["'][^>]*>/.test(html)) throw new Error('Production index is missing React root')
 
 const assets=path.join(dist,'assets')
 const jsFiles=fs.readdirSync(assets).filter(file=>file.endsWith('.js'))
