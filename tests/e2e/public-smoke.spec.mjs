@@ -61,3 +61,12 @@ test('installed shell reloads offline after service worker takeover',async({page
   await context.setOffline(false)
  }
 })
+
+test('iOS startup recovery is loaded before the application bundle',async({request})=>{
+ const response=await request.get(base)
+ const html=await response.text()
+ expect(html).toContain('/startup-recovery.js')
+ const script=await request.get(base+'/startup-recovery.js')
+ expect(script.ok()).toBeTruthy()
+ expect(await script.text()).toContain('startup-help')
+})
