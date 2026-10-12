@@ -53,7 +53,7 @@ export default function GamificationPage() {
   }
   const groups = categories.map(cat=>({...cat,items:badges.badges.filter(b=>categoryForBadge(b)===cat.key)}))
   const countedTotal = groups.reduce((sum,group)=>sum+group.items.length,0)
-  const countedEarned = groups.reduce((sum,group)=>sum+group.items.filter(b=>b.earned).length,0)
+  const countedEarned = groups.reduce((sum,group)=>sum+group.items.filter(isBadgeEarned).length,0)
 
   return <div className="stack stats-mobile badge-dashboard">
     <section className="card badge-overview"><div className="badge-progress-ring" style={{'--badge-progress':progress+'%'} as React.CSSProperties}><div><span>⭐</span><strong>{earned.length}</strong><small>/ {badges.badges.length}</small></div></div><div className="badge-overview-copy"><h2>{isSpain?'¡Sigue así!':'Continue comme ça !'}</h2><p>{isSpain?'Logros desbloqueados':'Badges débloqués'} : <strong>{earned.length}</strong> · {isSpain?'Por descubrir':'À découvrir'} : <strong>{locked.length}</strong></p><div className="progress-track"><div className="progress-fill" style={{width:progress+'%'}}/></div><small>{progress}% · {summary.xp_total} XP · {isSpain?'Racha':'Série'} {summary.streak.current} {isSpain?'días':'jours'}</small></div></section>
