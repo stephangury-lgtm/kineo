@@ -10,6 +10,7 @@ const landing=read('src/pages/ProgramLandingPage.tsx')
 const foundations=read('src/pages/FoundationsPage.tsx')
 const foundationApi=read('src/services/foundationApi.ts')
 const topic=read('src/pages/CurriculumTopicPage.tsx')
+const catalog=read('src/services/programCatalogApi.ts')
 
 assert(main.includes('<AppErrorBoundary>'),'Global React error boundary is missing')
 assert(main.includes("window.addEventListener('unhandledrejection'"),'Unhandled promise rejection reporting is missing')
@@ -28,6 +29,7 @@ assert(foundations.includes('getFoundationQuestions(program.id,mode,sessionCount
 assert(foundationApi.includes('sampleBalancedByUnit'),'Semester revision must stay balanced across units')
 assert(foundationApi.includes('if(scope.levelCode)return sampleBalancedByUnit(pool,count)'),'Semester scope must use balanced sampling')
 assert(foundationApi.includes('if(scope.unitId)return sampleBalancedByKey(pool,question=>question.topic_id,count)'),'UE revision must stay balanced across topics')
+assert(catalog.includes('shuffledOptions(question.options??[])'),'Curriculum answer choices must be randomized at fetch time')
 assert(topic.includes('function restartQuiz()'),'Topic quiz replay must explicitly reset local state')
 assert(topic.includes("setChecked({})"),'Topic quiz replay must clear completion state')
 
