@@ -5,10 +5,14 @@
   function recover() {
     if (recovering || navigator.onLine === false) return;
     var now = Date.now();
+    // The URL marker also prevents reload loops when iOS blocks sessionStorage.
+    var url = new URL(location.href);
+    var lastRecovery = Number(url.searchParams.get('recovery') || 0);
+    if (lastRecovery && now - lastRecovery < 120000) return;
     try {
       if (now - Number(sessionStorage.getItem(key) || 0) < 120000) return;
       sessionStorage.setItem(key, String(now));
-    } catch (_) { return; }
+    } catch (_) { /* iOS storage can be unavailable; the URL guard remains active. */ }
     recovering = true;
     var cleanup = [];
     if ('serviceWorker' in navigator) {
@@ -21,8 +25,7 @@
         return Promise.all(keys.filter(function (name) { return name.indexOf('kineo-shell-') === 0; }).map(function (name) { return caches.delete(name); }));
       }));
     }
-    Promise.allSettled(cleanup).then(function () {
-      var url = new URL(location.href);
+    Promise.all(cleanup.map(function (operation) { return operation.catch(function () { return null; }); })).then(function () {
       url.searchParams.set('recovery', String(now));
       location.replace(url.toString());
     });
@@ -38,4 +41,20 @@
     var message = String(reason && reason.message || reason || '');
     if (/Importing a module script failed|Failed to fetch dynamically imported module|Unable to preload CSS|Loading chunk .* failed/i.test(message)) recover();
   });
+  // A missing entry bundle may emit no useful error event on Safari standalone.
+  // Keep a manual recovery path even when the JavaScript application never mounts.
+  window.setTimeout(function () {
+    var help = document.getElementById('startup-help');
+    if (!help || !help.isConnected || document.getElementById('startup-recovery-button')) return;
+    var button = document.createElement('button');
+    button.id = 'startup-recovery-button';
+    button.type = 'button';
+    button.textContent = 'Réparer le démarrage';
+    button.style.cssText = 'display:block;margin:20px auto;padding:12px 20px;border:0;border-radius:12px;background:#0f4c3a;color:#fff;font:600 16px system-ui,sans-serif';
+    button.addEventListener('click', recover);
+    help.appendChild(button);
+  }, 8000);
+  window.setTimeout(function () {
+    if (document.getElementById('startup-help')) recover();
+  }, 16000);
 })();
