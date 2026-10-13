@@ -111,7 +111,7 @@ export async function getFoundationQuestions(programId:ProgramId,mode:Foundation
  if(questionError) throw questionError
  const pool=((questions??[]) as RawQuestion[]).map(question=>{
   const level=levelByTopic.get(question.topic_id)
-  return {...question,level_code:level?.code??'?',level_order:level?.display_order??activeLevel.display_order,unit_id:unitByTopic.get(question.topic_id)??''}
+  return {...question,options:shuffle(question.options),level_code:level?.code??'?',level_order:level?.display_order??activeLevel.display_order,unit_id:unitByTopic.get(question.topic_id)??''}
  })
  if(scope.unitId)return sampleBalancedByKey(pool,question=>question.topic_id,count)
  if(scope.levelCode)return sampleBalancedByUnit(pool,count)
