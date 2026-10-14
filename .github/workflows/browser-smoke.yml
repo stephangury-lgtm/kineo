@@ -39,7 +39,7 @@ jobs:
 
       - name: Install pinned Playwright runner
         run: |
-          npm install --no-save --package-lock=false @playwright/test@1.55.0
+          npm install --no-save --package-lock=false @playwright/test@1.64.1
           npx playwright install --with-deps ${{ matrix.browser }}
 
       - name: Start production preview
@@ -55,7 +55,7 @@ jobs:
       - name: Mobile browser and PWA smoke tests
         env:
           KINEO_E2E_BASE_URL: http://127.0.0.1:4173
-        run: npx playwright test tests/e2e/public-smoke.spec.mjs --project=${{ matrix.browser }} --reporter=line
+        run: npx playwright test tests/e2e/public-smoke.spec.mjs tests/e2e/audit-regressions.spec.mjs --project=${{ matrix.browser }} --reporter=line
 
       - name: Create isolated authenticated E2E account
         if: matrix.browser == 'chromium'

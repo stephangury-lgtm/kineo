@@ -31,6 +31,9 @@ jobs:
       - name: Critical source invariants
         run: npm run check:source
 
+      - name: Unit regression checks
+        run: npm run test:unit
+
       - name: Production content health gate
         run: npm run check:health
 

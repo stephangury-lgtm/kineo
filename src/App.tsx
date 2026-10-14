@@ -51,6 +51,10 @@ const WeakRevisionPage=lazy(()=>import('./pages/WeakRevisionPage'))
 const routeFallback=<section className="card skeleton-card"><p>Chargement…</p></section>
 
 export default function App(){
+ return <Suspense fallback={routeFallback}><Routes><Route path="/informations" element={<main className="content"><PublicInfoPage/></main>}/><Route path="*" element={<AuthenticatedApp/>}/></Routes></Suspense>
+}
+
+function AuthenticatedApp(){
  const program=getCurrentProgram(),isKineoFrance=program.id==='kineo-fr',isSpain=program.id==='kineo-es'
  const navItems=isKineoFrance
   ?[{to:'/',label:'Accueil',icon:'⌂',end:true},{to:'/parcours',label:'Parcours',icon:'▦'},{to:'/revision',label:'Réviser',icon:'✦'},{to:'/stats',label:'Stats',icon:'↗'},{to:'/rewards',label:'Badges',icon:'◆'}]

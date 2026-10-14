@@ -20,13 +20,26 @@ export async function touchUserActivity(){const{error}=await supabase.rpc('touch
 
 export async function updateStudyProfile(params:{firstName?:string;username?:string;studyYear:number}){
  const username=params.username?.trim()
- if(params.studyYear<2||params.studyYear>5)throw new Error('Choisis une année comprise entre K2 et K5.')
+ if(!Number.isInteger(params.studyYear)||params.studyYear<1||params.studyYear>5)throw new Error('Choisis une année d’étude valide pour ton cursus.')
  if(username&&!/^[a-zA-Z0-9._-]{3,24}$/.test(username))throw new Error('Le pseudo doit contenir 3 à 24 caractères : lettres, chiffres, point, tiret ou underscore.')
  const{error}=await supabase.rpc('update_study_profile_v1',{p_first_name:params.firstName?.trim()??'',p_username:username??'',p_study_year:params.studyYear})
  if(error)throw error
  const refreshed=await getCurrentProfile();if(!refreshed)throw new Error('Profil introuvable après mise à jour.')
  window.dispatchEvent(new Event('kineo-profile-updated'))
  return refreshed
+}
+
+export async function setupStudentProfile(params:{programId:string;levelCode:string;firstName:string;username:string}){
+ const username=params.username.trim()
+ if(username&&!/^[a-zA-Z0-9._-]{3,24}$/.test(username))throw new Error('Le pseudo doit contenir 3 à 24 caractères : lettres, chiffres, point, tiret ou underscore.')
+ const {data,error}=await supabase.rpc('setup_student_profile_v1',{
+  p_program_id:params.programId,p_level_code:params.levelCode,
+  p_first_name:params.firstName.trim(),p_username:username,
+ })
+ if(error)throw error
+ if(!data?.id)throw new Error('Le profil n’a pas pu être enregistré.')
+ window.dispatchEvent(new Event('kineo-profile-updated'))
+ return data as StudentProfile
 }
 
 function inferImageType(file:File){if(file.type)return file.type.toLowerCase();const ext=file.name.split('.').pop()?.toLowerCase();if(ext==='jpg'||ext==='jpeg')return'image/jpeg';if(ext==='png')return'image/png';if(ext==='webp')return'image/webp';if(ext==='heic')return'image/heic';if(ext==='heif')return'image/heif';return''}

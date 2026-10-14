@@ -1,6 +1,7 @@
 import { supabase } from '../lib/supabase'
 import type { ProgramId } from '../curriculum/programs'
 import { getAccessiblePrograms } from './programApi'
+import { getSafeCurriculumQuestions } from './curriculumQuizApi'
 import type { CurriculumAnswerPayload,CurriculumAnswerResult,CurriculumQuestionType,CurriculumQuizOption } from './programCatalogApi'
 
 export type FoundationMode='foundation'|'mix'
@@ -12,7 +13,6 @@ export type FoundationQuestion={
  explanation:string|null
  options:CurriculumQuizOption[]
  question_type:CurriculumQuestionType
- accepted_answers:unknown
  level_code:string
  level_order:number
  unit_id:string
@@ -21,8 +21,6 @@ export type FoundationQuestion={
 type LevelRow={id:string;code:string;display_order:number}
 type UnitRow={id:string;academic_level_id:string}
 type TopicRow={id:string;unit_id:string}
-
-type RawQuestion=Omit<FoundationQuestion,'level_code'|'level_order'|'unit_id'>
 
 function shuffle<T>(items:T[]){
  const copy=[...items]
@@ -107,9 +105,8 @@ export async function getFoundationQuestions(programId:ProgramId,mode:Foundation
  const levelByTopic=new Map(topicRows.map(topic=>[topic.id,levelByUnit.get(topic.unit_id)!]))
  const unitByTopic=new Map(topicRows.map(topic=>[topic.id,topic.unit_id]))
 
- const {data:questions,error:questionError}=await supabase.from('curriculum_quiz_questions').select('id,topic_id,question_text,explanation,options,question_type,accepted_answers').eq('is_published',true).eq('validation_status','source_validated').in('topic_id',topicRows.map(topic=>topic.id)).in('question_type',['mcq','clinical_case','fill_blank'])
- if(questionError) throw questionError
- const pool=((questions??[]) as RawQuestion[]).map(question=>{
+ const questions=await getSafeCurriculumQuestions(topicRows.map(topic=>topic.id))
+ const pool=questions.filter(question=>['mcq','clinical_case','fill_blank'].includes(question.question_type)).map(question=>{
   const level=levelByTopic.get(question.topic_id)
   return {...question,options:shuffle(question.options),level_code:level?.code??'?',level_order:level?.display_order??activeLevel.display_order,unit_id:unitByTopic.get(question.topic_id)??''}
  })
@@ -119,7 +116,7 @@ export async function getFoundationQuestions(programId:ProgramId,mode:Foundation
 }
 
 export async function submitFoundationAnswer(questionId:string,payload:CurriculumAnswerPayload):Promise<CurriculumAnswerResult>{
- const {data,error}=await supabase.rpc('submit_curriculum_topic_answer_v2',{p_question_id:questionId,p_answer:payload})
+ const {data,error}=await supabase.rpc('submit_curriculum_topic_answer_v3',{p_question_id:questionId,p_answer:payload})
  if(error) throw error
  return data as CurriculumAnswerResult
 }

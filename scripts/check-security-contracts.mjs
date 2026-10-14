@@ -31,6 +31,9 @@ if(!Number.isFinite(securityCheckedAt)||(Date.now()-securityCheckedAt)>90*60*100
 }
 
 const protectedCalls=[
+ ['get_curriculum_quiz_questions_v1',{p_topic_ids:[]}],
+ ['setup_student_profile_v1',{p_program_id:'ifsi-fr',p_level_code:'S1',p_first_name:'',p_username:''}],
+ ['submit_curriculum_topic_answer_v3',{p_question_id:'00000000-0000-0000-0000-000000000000',p_answer:{text:'ci'}}],
  ['start_revision_session_replay_v1',{p_source_session_id:'00000000-0000-0000-0000-000000000000'}],
  ['get_badges_v2',{}],
  ['get_friend_leaderboard_v2',{p_program_id:'kineo-es'}],
