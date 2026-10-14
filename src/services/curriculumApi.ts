@@ -41,6 +41,8 @@ export type CurriculumYear = {
 }
 
 export type LessonSourceDocument={
+  id:string
+  available:boolean
   title:string
   validation_status:string|null
   page_start:number|null

@@ -164,6 +164,38 @@ test.describe('audit regressions with isolated API fixtures',()=>{
  })
 })
 
+test.describe('private course documents',()=>{
+ test.use({serviceWorkers:'block'})
+ test('opens a protected PDF with a short signed URL and refreshes access',async({page})=>{
+  await mockStudent(page,{assigned:true,programId:'kineo-fr',levelCode:'K2',profileYear:2})
+  const documentId='b0000000-0000-4000-8000-000000000001'
+  let signedRequests=0
+  await page.route('**/rest/v1/rpc/get_course_document_v1',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({id:documentId,title:'Protected anatomy course',file_name:'course.pdf',storage_path:'courses/test.pdf',mime_type:'application/pdf',file_size:123})}))
+  await page.route('**/storage/v1/object/sign/documents/**',route=>{
+   if(route.request().method()==='POST'){
+    expect(route.request().postDataJSON().expiresIn).toBe(900)
+    signedRequests++
+    return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({signedURL:'/object/sign/documents/courses/test.pdf?token=local-fixture'})})
+   }
+   return route.fulfill({status:200,contentType:'application/pdf',body:'%PDF-1.4\n%%EOF'})
+  })
+  await page.goto(base+'/document/'+documentId)
+  await expect(page.getByRole('heading',{name:'Protected anatomy course'})).toBeVisible()
+  await expect(page.locator('iframe')).toHaveAttribute('src',/\/storage\/v1\/object\/sign\/documents\//)
+  await expect(page.getByRole('link',{name:'Ouvrir le PDF'})).not.toHaveAttribute('href',/google|\/public\//)
+  await page.getByRole('button',{name:'Actualiser l’accès'}).click()
+  await expect.poll(()=>signedRequests).toBe(2)
+ })
+ test('denied PDF access shows an error without a Google Drive fallback',async({page})=>{
+  await mockStudent(page,{assigned:true,programId:'kineo-fr',levelCode:'K2',profileYear:2})
+  await page.route('**/rest/v1/rpc/get_course_document_v1',route=>route.fulfill({status:403,contentType:'application/json',body:JSON.stringify({message:'Permission denied'})}))
+  await page.goto(base+'/document/b0000000-0000-4000-8000-000000000001')
+  await expect(page.getByRole('alert')).toContainText('indisponible')
+  await expect(page.locator('iframe')).toHaveCount(0)
+  await expect(page.getByRole('button',{name:'Réessayer'})).toBeVisible()
+ })
+})
+
 test('offline deep-link reload falls back to the cached shell',async({page,context,browserName})=>{
  test.skip(browserName!=='chromium','Service worker behavior is verified in Chromium')
  await page.goto(base+'/profil',{waitUntil:'networkidle'})

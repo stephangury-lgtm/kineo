@@ -1,4 +1,5 @@
 import { test,expect } from '@playwright/test'
+import { createHash } from 'node:crypto'
 
 test.describe.configure({retries:0})
 
@@ -119,6 +120,19 @@ test('single-login authenticated critical journey',async({page,browser})=>{
  await login(page,email,password)
 
  await program(page,'kineo-fr','K2')
+ await gotoStable(page,'/bibliotheque')
+ await expect(page.getByRole('heading',{name:'Cours originaux'})).toBeVisible()
+ await page.getByRole('link',{name:/CM3 Ostéologie et arthrologie du genou/}).click()
+ await expect(page.getByRole('heading',{name:'CM3 Ostéologie et arthrologie du genou'})).toBeVisible()
+ const signedPdf=await page.getByRole('link',{name:'Ouvrir le PDF'}).getAttribute('href')
+ expect(new URL(signedPdf).pathname).toMatch(/^\/storage\/v1\/object\/sign\/documents\//)
+ let pdfResponse
+ try{pdfResponse=await page.request.get(signedPdf)}catch{throw new Error('Private course PDF could not be downloaded')}
+ expect(pdfResponse.status()).toBe(200)
+ expect(pdfResponse.headers()['content-type']).toContain('application/pdf')
+ const pdf=await pdfResponse.body()
+ expect(pdf.length).toBe(7890604)
+ expect(createHash('sha256').update(pdf).digest('hex')).toBe('b5be41afe0a6361cf006122320708884c1606be7cca4a8d55d17df1b0345208d')
  await gotoStable(page,'/quiz')
  await expect(page.getByRole('button',{name:'Commencer'})).toBeVisible()
  await gotoStable(page,'/amis')
