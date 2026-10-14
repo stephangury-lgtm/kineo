@@ -1,5 +1,13 @@
 # Leryko audit fixes — 14 October 2026
 
+## Production status
+
+The functional changes were merged in PR #11 and deployed to Cloudflare as commit `b948be0`. Authenticated production smoke checks passed in Chromium, Firefox and WebKit before the final answer-read revocation.
+
+Both migrations are applied in production: `20261014190544` (atomic setup and safe quiz API) and `20261014193838` (raw-answer read revocation). Filenames match the actual migration history. The student-role SQL regression suite passed again after the revocation, with generated identities rolled back. Direct SELECT on the table, option corrections, accepted answers and matching metadata is denied to the authenticated role.
+
+Local verification reported 38 browser passes, four Chromium-specific offline skips, three unit-test passes, successful TypeScript/build/source/security checks, and no vulnerabilities reported by npm audit. No audit test identities remain in production.
+
 ## Changes
 
 - Atomic profile/curriculum setup supports IFSI S1/S2 and Spain ES1 and resumes partially configured accounts without changing their assigned curriculum.
