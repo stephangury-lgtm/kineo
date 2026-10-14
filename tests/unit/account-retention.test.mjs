@@ -56,3 +56,13 @@ test('A failed delivery suspends deletion; provider failures also fail closed', 
   const r=await runRetention(h.adapters); assert.equal(r.deleted,0); assert.equal(h.calls.some(c=>c[0]==='delete'),false)
  }
 })
+test('Expired provider logs require a persisted receipt and database approval', async () => {
+ for (const confirmed of [true,false]) {
+  const h=harness({...notice,delivered_at:confirmed?'2026-01-01':null,delete_after:confirmed?'2026-01-31':null})
+  h.adapters.resend=async()=>({retention_expired:true})
+  const r=await runRetention(h.adapters); assert.equal(r.deleted,confirmed?1:0)
+ }
+ const h=harness({...notice,delivered_at:'2026-01-01',delete_after:'2026-01-31'},null)
+ h.adapters.resend=async()=>({retention_expired:true})
+ assert.equal((await runRetention(h.adapters)).deleted,0)
+})

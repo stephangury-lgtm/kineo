@@ -35,6 +35,8 @@ Deno.serve(async (req: Request) => {
     method, headers, body: body === undefined ? undefined : JSON.stringify(body),
     signal: AbortSignal.timeout(15000),
    })
+   // A previously recorded receipt remains valid after Resend's 30-day log retention.
+   if (method === 'GET' && response.status === 404) return {retention_expired: true}
    if (!response.ok) throw new Error('Email provider unavailable')
    return response.json()
   }

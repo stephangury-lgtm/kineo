@@ -32,12 +32,17 @@ export async function runRetention({rpc, auth, removeAvatars, resend, config}) {
    }
    if (job.state !== 'deleting') {
     const email = await resend('GET', `/emails/${encodeURIComponent(job.provider_id)}`)
-    const state = deliveryState(email, job)
-    if (state === 'waiting') continue
-    const updated = await rpc('retention_notice_result_v1', {p_lease: lease, p_id: job.id, p_event: state})
-    if (state === 'blocked') {counts.blocked++; continue}
-    if (!updated) continue
-    counts.delivered++
+    const recordedReceipt = email?.retention_expired === true && job.state === 'delivered' &&
+     Boolean(job.provider_id && job.delivered_at && job.delete_after)
+    if (!recordedReceipt) {
+     if (email?.retention_expired) throw new Error('Delivery was never confirmed')
+     const state = deliveryState(email, job)
+     if (state === 'waiting') continue
+     const updated = await rpc('retention_notice_result_v1', {p_lease: lease, p_id: job.id, p_event: state})
+     if (state === 'blocked') {counts.blocked++; continue}
+     if (!updated) continue
+     counts.delivered++
+    }
     // The database, not the browser/worker clock, enforces the complete grace period.
    }
    let claim = await rpc('retention_claim_delete_v1', {p_lease: lease, p_id: job.id})
