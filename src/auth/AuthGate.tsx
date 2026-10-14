@@ -140,8 +140,10 @@ export default function AuthGate({ children }: Props) {
     }
 
     const onVisibility=()=>{
-      if(document.visibilityState==='visible')recordOpen()
+      if(document.visibilityState==='visible'){recordOpen();recordActivity()}
     }
+
+    recordActivity()
 
     window.addEventListener('pointerdown',recordActivity,{passive:true})
     window.addEventListener('keydown',recordActivity)
