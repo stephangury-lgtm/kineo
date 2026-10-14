@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import type { Session } from '@supabase/supabase-js'
 import { supabase } from '../lib/supabase'
 import { PROGRAM_STORAGE_KEY, selectProgram, type ProgramId } from '../curriculum/programs'
@@ -15,12 +15,21 @@ export default function AuthGate({ children }: Props) {
   const [profile, setProfile] = useState<StudentProfile | null>(null)
   const [primaryProgram,setPrimaryProgram]=useState<PrimaryProgram|null>(null)
   const [loading, setLoading] = useState(true)
+  const [slowLoading, setSlowLoading] = useState(false)
+  const loadVersion = useRef(0)
+  const slowTimer = useRef<number | null>(null)
   const [profileError, setProfileError] = useState<string | null>(null)
   const [passwordRecovery, setPasswordRecovery] = useState(false)
 
   async function loadProfile(nextSession: Session | null) {
+    const version = ++loadVersion.current
+    if (slowTimer.current !== null) window.clearTimeout(slowTimer.current)
+    setLoading(true)
+    setSlowLoading(false)
     setSession(nextSession)
     setProfileError(null)
+    setProfile(null)
+    setPrimaryProgram(null)
     if (!nextSession) {
       setProfile(null)
       setPrimaryProgram(null)
@@ -28,9 +37,14 @@ export default function AuthGate({ children }: Props) {
       return
     }
 
+    slowTimer.current = window.setTimeout(() => {
+      if (version === loadVersion.current) setSlowLoading(true)
+    }, 12000)
+
     try {
       const userId=nextSession.user.id
       const [nextProfile,accessiblePrograms]=await Promise.all([getCurrentProfile(userId),getAccessiblePrograms(userId)])
+      if (version !== loadVersion.current) return
       void markAppOpen().catch(()=>undefined)
       const primary=accessiblePrograms.find(program=>program.is_primary)??null
       const nextProgram=primary
@@ -46,41 +60,63 @@ export default function AuthGate({ children }: Props) {
         selectProgram(selectedProgram)
         if(selectedAccess?.level_code)localStorage.setItem(`healthapp_level_${selectedProgram}`,selectedAccess.level_code)
         if(selectedAccess?.curriculum_version)localStorage.setItem(`healthapp_curriculum_${selectedProgram}`,selectedAccess.curriculum_version)
-        if(stored&&stored!==selectedProgram){window.location.reload();return}
+        if(stored!==selectedProgram){window.location.reload();return}
       }
     } catch (err) {
-      setProfileError(err instanceof Error ? err.message : 'Profil indisponible')
+      if (version === loadVersion.current) setProfileError(err instanceof Error ? err.message : 'Profil indisponible')
     } finally {
-      setLoading(false)
+      if (version === loadVersion.current) {
+        if (slowTimer.current !== null) window.clearTimeout(slowTimer.current)
+        slowTimer.current = null
+        setLoading(false)
+        setSlowLoading(false)
+      }
     }
   }
 
   async function signOut() {
-    setLoading(true)
-    await supabase.auth.signOut()
-    setProfile(null)
-    setPrimaryProgram(null)
-    setSession(null)
-    setLoading(false)
+    try {
+      const { error } = await supabase.auth.signOut()
+      if (error) throw error
+      setPasswordRecovery(false)
+      await loadProfile(null)
+    } catch {
+      ++loadVersion.current
+      if (slowTimer.current !== null) window.clearTimeout(slowTimer.current)
+      slowTimer.current = null
+      setSlowLoading(false)
+      setLoading(false)
+      setProfileError('Impossible de se déconnecter. Vérifie ta connexion puis réessaie.')
+    }
   }
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => loadProfile(data.session)).catch(() => setLoading(false))
+    const initialVersion = loadVersion.current
+    supabase.auth.getSession().then(({ data, error }) => {
+      if (initialVersion !== loadVersion.current) return
+      if (error) throw error
+      return loadProfile(data.session)
+    }).catch(() => { if (initialVersion === loadVersion.current) setLoading(false) })
 
     const { data } = supabase.auth.onAuthStateChange((event, nextSession) => {
       if (event === 'INITIAL_SESSION') return
       if (event === 'PASSWORD_RECOVERY') {
+        ++loadVersion.current
+        if (slowTimer.current !== null) window.clearTimeout(slowTimer.current)
         setPasswordRecovery(true)
         setSession(nextSession)
         setLoading(false)
         return
       }
-      setLoading(true)
+      if (!nextSession) setPasswordRecovery(false)
       void loadProfile(nextSession)
     })
 
-    const startupTimer = window.setTimeout(() => setLoading(false), 12000)
-    return () => { window.clearTimeout(startupTimer); data.subscription.unsubscribe() }
+    return () => {
+      ++loadVersion.current
+      if (slowTimer.current !== null) window.clearTimeout(slowTimer.current)
+      data.subscription.unsubscribe()
+    }
   }, [])
 
   useEffect(()=>{
@@ -121,7 +157,7 @@ export default function AuthGate({ children }: Props) {
   },[session?.user.id])
 
   if (loading) {
-    return <main className="auth-shell"><section className="card centered"><p>Ouverture de ton espace…</p></section></main>
+    return <main className="auth-shell"><section className="card centered"><p role="status">{slowLoading ? 'Le chargement prend plus de temps que prévu. Vérifie ta connexion Internet.' : 'Ouverture de ton espace…'}</p>{slowLoading && session && <div className="completion-actions"><button className="primary-button" onClick={() => void loadProfile(session)}>Réessayer</button><button className="secondary-button" onClick={() => void signOut()}>Se déconnecter</button></div>}</section></main>
   }
 
   if (passwordRecovery && session) {
@@ -138,8 +174,8 @@ export default function AuthGate({ children }: Props) {
     return <main className="auth-shell"><section className="card centered"><h1>Profil introuvable</h1><p>Ton compte est connecté mais le profil associé n’a pas pu être chargé.</p><div className="completion-actions"><button className="primary-button" onClick={() => void loadProfile(session)}>Réessayer</button><button className="secondary-button" onClick={() => void signOut()}>Se déconnecter</button></div></section></main>
   }
 
-  if (!primaryProgram || !primaryProgram.academic_level_id) {
-    return <ProfileSetupPage current={profile} onSaved={setProfile} />
+  if (!profile.study_year || !primaryProgram || !primaryProgram.academic_level_id) {
+    return <ProfileSetupPage current={profile} existingProgram={primaryProgram} onSaved={setProfile} />
   }
 
   return <>{children}</>

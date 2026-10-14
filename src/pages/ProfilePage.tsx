@@ -17,6 +17,8 @@ function levelLabel(programId:ProgramId,access:AccessibleProgram|undefined,study
 
 export default function ProfilePage() {
   const [profile, setProfile] = useState<StudentProfile | null>(null)
+  const [profileError,setProfileError]=useState(false)
+  const [loadAttempt,setLoadAttempt]=useState(0)
   const [accessiblePrograms,setAccessiblePrograms]=useState<AccessibleProgram[]>([])
   const [visualReviewer,setVisualReviewer]=useState(false)
   const [email, setEmail] = useState('')
@@ -35,7 +37,11 @@ export default function ProfilePage() {
   const activeProgram=getCurrentProgram()
 
   useEffect(() => {
+    let active=true
+    setProfileError(false)
     void Promise.all([getCurrentProfile(), supabase.auth.getUser(), getAccessiblePrograms(), canReviewVisuals().catch(()=>false)]).then(([nextProfile, auth, nextPrograms, canReview]) => {
+      if(!active)return
+      if(auth.error || !nextProfile)throw auth.error ?? new Error('Profil introuvable')
       setProfile(nextProfile)
       setAccessiblePrograms(nextPrograms)
       setVisualReviewer(Boolean(canReview))
@@ -44,9 +50,10 @@ export default function ProfilePage() {
       setAvatarUrl(nextProfile?.avatar_url ?? null)
       setStudyYear(nextProfile?.study_year ?? 2)
       setEmail(auth.data.user?.email ?? '')
-      void supabase.rpc('get_inactivity_reminder_preference_v1').then(({data,error})=>{if(!error)setReminderOptIn(Boolean(data?.[0]?.opted_in))})
-    })
-  }, [])
+      void Promise.resolve(supabase.rpc('get_inactivity_reminder_preference_v1')).then(({data,error})=>{if(active&&!error)setReminderOptIn(Boolean(data?.[0]?.opted_in))}).catch(()=>undefined)
+    }).catch(()=>{if(active)setProfileError(true)})
+    return()=>{active=false}
+  }, [loadAttempt])
 
   async function save() {
     setBusy(true); setMessage(null)
@@ -120,7 +127,8 @@ export default function ProfilePage() {
 
   function switchProgram(programId:ProgramId){selectProgram(programId);window.location.assign('/')}
 
-  if (!profile) return <section className="card"><p>{activeProgram.id==='kineo-es'?'Cargando el perfil…':'Chargement du profil…'}</p></section>
+  if (profileError) return <section className="card"><p role="alert">{activeProgram.id==='kineo-es'?'No se pudo cargar el perfil. Comprueba tu conexión.':'Impossible de charger ton profil. Vérifie ta connexion.'}</p><button className="primary-button" onClick={()=>setLoadAttempt(value=>value+1)}>{activeProgram.id==='kineo-es'?'Reintentar':'Réessayer'}</button></section>
+  if (!profile) return <section className="card"><p role="status">{activeProgram.id==='kineo-es'?'Cargando el perfil…':'Chargement du profil…'}</p></section>
   const fallback = (firstName || username || '?').slice(0, 1).toUpperCase()
   const visiblePrograms=profile.role==='admin'?programs:programs.filter(program=>accessiblePrograms.some(access=>access.program_id===program.id))
   const activeAccess=accessiblePrograms.find(access=>access.program_id===activeProgram.id)

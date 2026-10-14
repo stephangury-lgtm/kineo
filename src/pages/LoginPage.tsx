@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { supabase } from '../lib/supabase'
+import { Link } from 'react-router-dom'
 import './LoginPage.css'
 
 function translateAuthError(error: unknown) {
@@ -158,6 +159,7 @@ export default function LoginPage() {
         {message && <p className={`auth-feedback ${messageType ?? ''}`} role={messageType === 'error' ? 'alert' : 'status'}>{message}</p>}
 
         {mode==='login'?<button className="link-button auth-account-action" type="button" onClick={()=>switchMode('signup')}>Je n’ai pas encore de compte</button>:<button className="link-button auth-account-action" type="button" onClick={()=>switchMode('login')}>{mode==='reset'?'← Retour à la connexion':'J’ai déjà un compte'}</button>}
+        <Link className="text-link" to="/informations">Informations, confidentialité & assistance</Link>
       </section>
     </main>
   )
