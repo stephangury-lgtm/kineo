@@ -121,7 +121,9 @@ Deno.serve(async(req)=>{
   if(action==='cleanup'){
    const userId=String(body.user_id??'')
    if(!/^[0-9a-f-]{36}$/i.test(userId))return json({error:'Invalid user id'},400)
-   const {data:userData}=await admin.auth.admin.getUserById(userId)
+   const {data:userData,error:lookupError}=await admin.auth.admin.getUserById(userId)
+   if(lookupError?.status===404)return json({deleted:true})
+   if(lookupError)throw lookupError
    if(!canDeleteFixture(userData.user,claims))return json({error:'Refusing to delete an account outside this test run'},403)
    await admin.from('profile_programs').delete().eq('user_id',userId)
    await admin.from('profiles').delete().eq('id',userId)
@@ -136,3 +138,4 @@ Deno.serve(async(req)=>{
   return json({error:error instanceof Error?error.message:'E2E broker error'},403)
  }
 })
+

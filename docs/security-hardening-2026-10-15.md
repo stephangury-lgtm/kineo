@@ -24,6 +24,10 @@ Le code ajoute CSP/HSTS, épingle les versions npm déjà résolues, prépare De
 
 ## Vérifications et limites
 
+Une seconde passe a corrigé le blocage des PDF par le chargement des notes/favoris : catalogue indépendant, délai de 12 secondes, reprise et annulation des requêtes abandonnées. Le scénario est vérifié sur Chromium, Firefox et WebKit.
+
+Les traces, vidéos et captures des tests connectés de production ne sont plus publiées en artifacts : elles peuvent contenir des jetons ou liens signés. Un contrôle préalable PostgREST et une politique restrictive Storage exigent un profil encore présent, même si la signature du JWT n'a pas encore expiré. Les liens de téléchargement signés déjà émis restent utilisables jusqu'à leur expiration. Un scénario CI dédié utilise une connexion normale au compte factice du run, supprime ce compte par le broker autorisé puis vérifie les refus Data API et Storage sans publier le jeton.
+
 Les suites SQL s'exécutent en transaction annulée, avec comptes générés pour les tests. Contrôles de deux comptes sur profils, notes, notifications et sessions ; impossibilité de transférer une note, de publier comme étudiant ou d'attribuer directement des XP. Tests de cursus, masquage des réponses, PDF privés et garde-fous de rétention rejoués.
 
 Audit npm du 15 octobre : zéro vulnérabilité signalée. Son résultat est ponctuel. Sonde publique : 20 requêtes, concurrence 4, zéro échec, p95 513 ms. Cette sonde ne mesure pas la capacité avec des étudiants connectés.
@@ -36,6 +40,8 @@ L'inventaire recense 80 fonctions SECURITY DEFINER accessibles à authenticated.
 - Sauvegarde complète quotidienne hors site et exercice de restauration : destination et accès PostgreSQL/Storage manquants. Outils chiffrés préparés, copie locale des 24 PDF vérifiée ; aucune prétention de sauvegarde complète ou de reprise validée. Voir `backup-and-recovery.md`.
 - Environnement de test : fichiers préparés uniquement, conformément au choix du propriétaire ; voir `staging.md`.
 - Domaine d'envoi absent : ni avertissement ni suppression pour inactivité activés. Le worker quotidien indique configured=false, sans erreurs.
+- SMTP Supabase personnalisé désactivé : les confirmations d'inscription et réinitialisations destinées au public restent à configurer et tester ; le service SMTP de test limite les destinataires à l'équipe du projet (https://supabase.com/docs/guides/auth/auth-smtp).
 - Durées et purges des autres journaux, signalements, assistance et sauvegardes : décisions et configurations restantes. Les textes publics ne doivent pas promettre une purge qui n'existe pas.
 - Test de charge authentifié et revue indépendante avant ouverture large : à réaliser sur l'environnement de test.
+
 
