@@ -8,7 +8,7 @@ function translateAuthError(error: unknown) {
   if (message.includes('invalid login credentials')) return 'E-mail ou mot de passe incorrect.'
   if (message.includes('email not confirmed')) return 'Ton adresse e-mail n’est pas encore confirmée.'
   if (message.includes('user already registered')) return 'Un compte existe déjà avec cette adresse e-mail.'
-  if (message.includes('password should be at least')) return 'Le mot de passe doit contenir au moins 8 caractères.'
+  if (message.includes('password should be at least')) return 'Le mot de passe doit contenir au moins 12 caractères.'
   if (message.includes('rate limit') || message.includes('too many requests') || message.includes('over_email_send_rate_limit')) return 'Trop de tentatives ou d’e-mails envoyés. Patiente quelques minutes avant de réessayer.'
   if (message.includes('email address') && message.includes('invalid')) return 'Cette adresse e-mail n’est pas acceptée. Vérifie son orthographe.'
   if (message.includes('signup is disabled') || message.includes('signups not allowed')) return 'Les inscriptions sont temporairement indisponibles. Réessaie plus tard.'
@@ -39,7 +39,7 @@ export default function LoginPage() {
     if(!normalizedEmail){setMessageType('error');setMessage('Saisis ton adresse e-mail.');return false}
     if(!/^\S+@\S+\.\S+$/.test(normalizedEmail)){setMessageType('error');setMessage('Saisis une adresse e-mail valide.');return false}
     if(mode!=='reset'&&!password){setMessageType('error');setMessage('Saisis ton mot de passe.');return false}
-    if(mode==='signup'&&password.length<8){setMessageType('error');setMessage('Le mot de passe doit contenir au moins 8 caractères.');return false}
+    if(mode==='signup'&&password.length<12){setMessageType('error');setMessage('Le mot de passe doit contenir au moins 12 caractères.');return false}
     return true
   }
 

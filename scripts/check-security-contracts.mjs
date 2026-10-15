@@ -31,6 +31,8 @@ if(!Number.isFinite(securityCheckedAt)||(Date.now()-securityCheckedAt)>90*60*100
 }
 
 const protectedCalls=[
+ ['get_course_document_v1',{p_document_id:'00000000-0000-0000-0000-000000000000'}],
+ ['get_course_documents_v1',{}],
  ['get_curriculum_quiz_questions_v1',{p_topic_ids:[]}],
  ['setup_student_profile_v1',{p_program_id:'ifsi-fr',p_level_code:'S1',p_first_name:'',p_username:''}],
  ['submit_curriculum_topic_answer_v3',{p_question_id:'00000000-0000-0000-0000-000000000000',p_answer:{text:'ci'}}],
@@ -53,6 +55,7 @@ for(const [name,body] of protectedCalls){
  const response=await rpc(name,body)
  if(response.status===404)throw new Error(`Security contract invalid: ${name} RPC is missing or signature changed`)
  if(response.ok)throw new Error(`Security regression: anonymous caller can execute ${name}`)
+ if(![401,403].includes(response.status))throw new Error(`Unexpected denial for ${name}: ${response.status}; a server failure is not proof of access control`)
 }
 
 console.log(`Anonymous security contracts passed for ${protectedCalls.length} protected RPCs`)

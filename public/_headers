@@ -3,6 +3,8 @@
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Strict-Transport-Security: max-age=31536000
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self' https://kimtiyuytikyseuzmjbv.supabase.co wss://kimtiyuytikyseuzmjbv.supabase.co https://o4512227188932608.ingest.de.sentry.io; frame-src https://kimtiyuytikyseuzmjbv.supabase.co; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
 
 /index.html
   Cache-Control: no-cache

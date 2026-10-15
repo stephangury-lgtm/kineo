@@ -12,6 +12,7 @@ export type ClientErrorReport={
 const SENTRY_INGEST='https://o4512227188932608.ingest.de.sentry.io/api/4512227195289680/envelope/'
 const SENTRY_PUBLIC_KEY='3b0b0fd98c21d1607f1c64156ad72a40'
 function sendToSentry(report:ClientErrorReport){
+ if(import.meta.env.VITE_BACKEND_ENV==='staging')return
  try{
   const eventId=crypto.randomUUID().replace(/-/g,'')
   const timestamp=new Date().toISOString()
