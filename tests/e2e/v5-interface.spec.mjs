@@ -40,4 +40,16 @@ test.describe('V5 React opt-in with isolated API fixtures',()=>{
   expect(calls.some(x=>/get_user_dashboard_v3|get_revision_mode_availability_v1|get_my_library_v1/.test(x))).toBe(false)
   await expect(page.getByRole('link',{name:'Retrouver mes supports et mes notes'})).toHaveCount(0)
  })
+ test('revision hub checks resume before offering another session',async({page})=>{
+  const {state,calls}=await v5Student(page,{failActive:true})
+  await page.goto(base+'/revision?ui=v5')
+  await expect(page.getByRole('button',{name:'Réessayer la reprise'})).toBeVisible()
+  await expect(page.getByRole('link',{name:'Révision intelligente',exact:false})).toHaveCount(0)
+  state.failActive=false
+  state.active={id:'saved-session',answered_count:4,question_count:10,mode:'smart'}
+  await page.getByRole('button',{name:'Réessayer la reprise'}).click()
+  await expect(page.getByRole('link',{name:'Continuer ma séance'})).toHaveAttribute('href','/quiz?mode=resume&session=saved-session')
+  expect(calls.some(x=>/start_.*session|start_smart_revision/.test(x))).toBe(false)
+ })
+
 })

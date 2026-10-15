@@ -11,3 +11,9 @@ Ce premier portage comprend la navigation à cinq entrées, l'accueil France ave
 Validation V5 : construire avec le drapeau, servir sur 4173, puis `LERYKO_TEST_V5=1 npx playwright test tests/e2e/v5-interface.spec.mjs`. Validation de non-régression : construire sans le drapeau et exécuter les suites existantes. Le sélecteur change uniquement l'interface, jamais les rôles, les autorisations ou la base.
 
 Avant publication réelle : baseline et migrations de staging, profils synthétiques des cursus, documents de test, recettes connectées sur trois moteurs, audit des permissions, tests de reprise et validation utilisateur. Un retour au code ancien ne restaure pas les données ; ici aucune modification du schéma n'est prévue.
+
+## Finalisation du lot de navigation
+
+Dans Réviser (France), la vérification de la séance en cours précède les modes. Un échec propose une nouvelle tentative et masque les lancements jusqu’à résolution ; une attente de plus de 12 secondes est traitée comme un échec. Une séance trouvée dispose d’une action de reprise avant les autres choix. Aucun quiz ne démarre automatiquement. Les écrans métier existants, dont amis et administration, restent accessibles avec leurs contrôles habituels.
+
+La validation automatisée couvre cinq scénarios V5 sur Chromium, Firefox et WebKit, avec API interceptées. Elle ne remplace pas une recette connectée sur staging. Le prototype Sites conserve des données fictives ; cette PR ne le transforme pas en application connectée.
