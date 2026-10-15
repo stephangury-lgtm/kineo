@@ -7,6 +7,7 @@
 - Quotas atomiques côté base : 20 créations de sessions/minute, 30 demandes d'amitié/heure, 30 signalements/heure, 20 erreurs client/heure, 60 écritures de notes/minute, 240 réponses de cursus/minute. Ces limites ne remplacent pas un contrôle réseau et ne bloquent pas toutes les lectures abusives.
 - Compteurs privés sans contenu, supprimés quotidiennement lorsqu'ils ont plus d'un jour (conservation maximale proche de 48 heures). RLS activée, aucun accès client.
 - Contrôle de sécurité enrichi : droits TRUNCATE, RLS, fonctions privilégiées anonymes, chemins de recherche et caractère privé des cours.
+- Défi quotidien de cursus : explications masquées jusqu'à la fin du défi. Test SQL dédié vérifiant le masquage initial et leur restitution après les cinq réponses validées.
 - Surveillance opérationnelle dans un schéma privé : worker de rétention, erreurs cron récentes, fichiers de cours manquants. Vérification réservée au serveur avec un résultat booléen, accessible aux seuls workflows GitHub explicitement autorisés par OIDC.
 
 Le contrôle automatique avait rejeté une première proposition exposant des métriques opérationnelles anonymement. Cette proposition a été abandonnée au profit du schéma privé ; aucune publication de ces détails n'a été appliquée.
@@ -37,3 +38,4 @@ L'inventaire recense 80 fonctions SECURITY DEFINER accessibles à authenticated.
 - Domaine d'envoi absent : ni avertissement ni suppression pour inactivité activés. Le worker quotidien indique configured=false, sans erreurs.
 - Durées et purges des autres journaux, signalements, assistance et sauvegardes : décisions et configurations restantes. Les textes publics ne doivent pas promettre une purge qui n'existe pas.
 - Test de charge authentifié et revue indépendante avant ouverture large : à réaliser sur l'environnement de test.
+
