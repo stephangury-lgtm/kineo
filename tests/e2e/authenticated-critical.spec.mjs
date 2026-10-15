@@ -2,6 +2,9 @@ import { test,expect } from '@playwright/test'
 import { createHash } from 'node:crypto'
 
 test.describe.configure({retries:0})
+// Production traces contain bearer tokens and signed URLs. Never publish them
+// as artifacts of this public repository, even for disposable test identities.
+test.use({trace:'off',video:'off',screenshot:'off'})
 
 const base=(process.env.KINEO_E2E_BASE_URL||'http://127.0.0.1:4173').replace(/\/$/,'')
 const email=process.env.KINEO_E2E_EMAIL
@@ -186,3 +189,4 @@ test('single-login authenticated critical journey',async({page,browser})=>{
  await gotoStable(page,'/rewards')
  await expect(page.getByRole('heading',{name:'Mis logros por categoría'})).toBeVisible({timeout:15000})
 })
+
