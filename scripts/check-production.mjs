@@ -1,6 +1,6 @@
 const base=(process.env.KINEO_BASE_URL||'https://kineo.stephangury.workers.dev').replace(/\/$/,'')
 const expected=(process.env.EXPECTED_SHA||'').slice(0,7)
-const routes=['/','/parcours','/fondamentaux','/stats','/rewards','/amis','/profil','/notifications']
+const routes=['/','/parcours','/fondamentaux','/stats','/rewards','/amis','/profil','/notifications','/bibliotheque','/informations']
 
 async function fetchOk(path,accept='text/html'){
  const response=await fetch(`${base}${path}`,{headers:{accept},cache:'no-store',redirect:'manual'})
@@ -29,7 +29,7 @@ for(const assetPath of scriptPaths){
 }
 
 const securityHeaders=await fetchOk('/')
-for(const header of ['x-content-type-options','x-frame-options','referrer-policy']){
+for(const header of ['x-content-type-options','x-frame-options','referrer-policy','content-security-policy','strict-transport-security']){
  if(!securityHeaders.headers.get(header))throw new Error(`Production security header missing: ${header}`)
 }
 

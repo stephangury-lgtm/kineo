@@ -1,9 +1,8 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts"
 import { createClient } from "jsr:@supabase/supabase-js@2"
 import { createRemoteJWKSet, jwtVerify } from "npm:jose@5.9.6"
+import { verifyWorkflowClaims, canDeleteFixture } from './policy.mjs'
 
-const allowedRepo='stephangury-lgtm/kineo'
-const allowedRef='refs/heads/main'
 const audience='kineo-e2e'
 const jwks=createRemoteJWKSet(new URL('https://token.actions.githubusercontent.com/.well-known/jwks'))
 
@@ -19,10 +18,7 @@ async function verifyGitHubOidc(req:Request){
   issuer:'https://token.actions.githubusercontent.com',
   audience,
  })
- if(payload.repository!==allowedRepo)throw new Error('Repository not allowed')
- if(payload.ref!==allowedRef)throw new Error('Ref not allowed')
- const event=String(payload.event_name??'')
- if(!['push','workflow_dispatch','workflow_run'].includes(event))throw new Error('Event not allowed')
+ verifyWorkflowClaims(payload)
  return payload
 }
 
@@ -37,6 +33,11 @@ Deno.serve(async(req)=>{
   if(!supabaseUrl||!serviceKey)throw new Error('Supabase admin environment unavailable')
   const admin=createClient(supabaseUrl,serviceKey,{auth:{autoRefreshToken:false,persistSession:false}})
 
+  if(action==='operations-health'){
+   const {data,error}=await admin.rpc('check_operations_health_v1')
+   return json({ok:!error&&data===true},!error&&data===true?200:503)
+  }
+
   if(action==='create'){
    const runId=String(claims.run_id??crypto.randomUUID()).replace(/[^a-zA-Z0-9_-]/g,'').slice(-20)
    const suffix=String(body.suffix??'job').replace(/[^a-zA-Z0-9_-]/g,'').slice(0,12)||'job'
@@ -45,6 +46,7 @@ Deno.serve(async(req)=>{
    const {data:userData,error:userError}=await admin.auth.admin.createUser({
     email,password,email_confirm:true,
     user_metadata:{e2e:true,github_run_id:runId},
+    app_metadata:{leryko_e2e:true,github_run_id:runId,retention_exempt:true},
    })
    if(userError||!userData.user)throw userError??new Error('Unable to create E2E user')
    const userId=userData.user.id
@@ -80,6 +82,7 @@ Deno.serve(async(req)=>{
     const {data:friendData,error:friendError}=await admin.auth.admin.createUser({
       email:friendEmail,password:friendPassword,email_confirm:true,
       user_metadata:{e2e:true,github_run_id:runId,e2e_companion:true},
+      app_metadata:{leryko_e2e:true,github_run_id:runId,retention_exempt:true},
     })
     if(friendError||!friendData.user)throw friendError??new Error('Unable to create E2E companion')
     const friendId=friendData.user.id
@@ -119,7 +122,7 @@ Deno.serve(async(req)=>{
    const userId=String(body.user_id??'')
    if(!/^[0-9a-f-]{36}$/i.test(userId))return json({error:'Invalid user id'},400)
    const {data:userData}=await admin.auth.admin.getUserById(userId)
-   if(!userData.user?.user_metadata?.e2e)return json({error:'Refusing to delete a non-E2E user'},403)
+   if(!canDeleteFixture(userData.user,claims))return json({error:'Refusing to delete an account outside this test run'},403)
    await admin.from('profile_programs').delete().eq('user_id',userId)
    await admin.from('profiles').delete().eq('id',userId)
    const {error}=await admin.auth.admin.deleteUser(userId)

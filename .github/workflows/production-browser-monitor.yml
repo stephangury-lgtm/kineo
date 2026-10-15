@@ -43,7 +43,7 @@ jobs:
       - name: Run read-only browser checks against Cloudflare production
         env:
           KINEO_E2E_BASE_URL: https://kineo.stephangury.workers.dev
-        run: npx playwright test tests/e2e/public-smoke.spec.mjs --project=${{ matrix.browser }} --reporter=line
+        run: npx playwright test tests/e2e/public-smoke.spec.mjs tests/e2e/security-policy.spec.mjs --project=${{ matrix.browser }} --reporter=line
       - name: Upload failure evidence
         if: failure()
         uses: actions/upload-artifact@v4
