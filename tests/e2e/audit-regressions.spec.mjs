@@ -166,6 +166,28 @@ test.describe('audit regressions with isolated API fixtures',()=>{
 
 test.describe('private course documents',()=>{
  test.use({serviceWorkers:'block'})
+ test('course PDFs stay available while personal library stalls and recovers',async({page})=>{
+  await mockStudent(page,{assigned:true,programId:'kineo-fr',levelCode:'K2',profileYear:2})
+  let release
+  const held=new Promise(resolve=>{release=resolve})
+  let calls=0
+  await page.route('**/rest/v1/rpc/get_course_documents_v1',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify([{id:'b0000000-0000-4000-8000-000000000001',title:'Available course PDF',file_name:'course.pdf',file_size:123}])}))
+  await page.route('**/rest/v1/rpc/get_my_library_v1',async route=>{
+   calls++
+   if(calls===1){await held;return route.fulfill({status:503,contentType:'application/json',body:JSON.stringify({message:'fixture unavailable'})})}
+   return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify({favorites:[],notes:[]})})
+  })
+  try{
+   await page.goto(base+'/bibliotheque')
+   await expect(page.getByRole('link',{name:/Available course PDF/})).toBeVisible()
+   await expect(page.getByText('Chargement de tes notes et favoris…')).toBeVisible()
+   release()
+   await expect(page.getByRole('alert')).toContainText('momentanément indisponibles')
+   await expect(page.getByRole('link',{name:/Available course PDF/})).toBeVisible()
+   await page.getByRole('button',{name:'Réessayer les notes et favoris'}).click()
+   await expect(page.getByRole('heading',{name:'Mes notes de cours'})).toBeVisible()
+  }finally{release()}
+ })
  test('opens a protected PDF with a short signed URL and refreshes access',async({page})=>{
   await mockStudent(page,{assigned:true,programId:'kineo-fr',levelCode:'K2',profileYear:2})
   const documentId='b0000000-0000-4000-8000-000000000001'
@@ -212,3 +234,4 @@ test('offline deep-link reload falls back to the cached shell',async({page,conte
   await expect(page.getByRole('button',{name:'Se connecter'})).toBeVisible()
  }finally{await context.setOffline(false)}
 })
+

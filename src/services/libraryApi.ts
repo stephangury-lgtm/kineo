@@ -23,8 +23,11 @@ export async function saveLessonNote(lessonId:string,content:string){
   return String(data??'')
 }
 
-export async function getMyLibrary(){
-  const {data,error}=await supabase.rpc('get_my_library_v1')
+export async function getMyLibrary(signal?:AbortSignal){
+  const query=supabase.rpc('get_my_library_v1')
+  const {data,error}=await (signal?query.abortSignal(signal):query)
   if(error) throw error
+  if(!data||!Array.isArray(data.favorites)||!Array.isArray(data.notes))throw new Error('Bibliothèque indisponible')
   return data as PersonalLibrary
 }
+
