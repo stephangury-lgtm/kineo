@@ -6,7 +6,9 @@ export function InterfaceVersionProvider({children}:{children:ReactNode}){
  const available=(import.meta as ImportMeta&{env:Record<string,string>}).env.VITE_ENABLE_V5_PREVIEW==='true'
  const [selected,setSelected]=useState(()=>{
   if(!available)return false
-  try{return new URLSearchParams(window.location.search).get('ui')==='v5'||sessionStorage.getItem(storageKey)==='v5'}catch{return false}
+  const requested=new URLSearchParams(window.location.search).get('ui')==='v5'
+  if(requested){try{sessionStorage.setItem(storageKey,'v5')}catch{};return true}
+  try{return sessionStorage.getItem(storageKey)==='v5'}catch{return false}
  })
  const setV5=(enabled:boolean)=>{if(!available)return;setSelected(enabled);try{sessionStorage.setItem(storageKey,enabled?'v5':'legacy')}catch{};const url=new URL(window.location.href);url.searchParams.delete('ui');window.history.replaceState(window.history.state,'',url)}
  return <VersionContext.Provider value={{v5:available&&selected,available,setV5}}>{children}</VersionContext.Provider>

@@ -1,6 +1,18 @@
 import {test,expect} from '@playwright/test'
 import {v5Student} from '../fixtures/v5Student.mjs'
 const base=(process.env.KINEO_E2E_BASE_URL||'http://127.0.0.1:4173').replace(/\/$/,'')
+async function mockQuiz(page){
+ const calls={questions:0,answers:0}
+ await page.route('**/rest/v1/rpc/get_quiz_questions_v4',route=>{
+  calls.questions++
+  return route.fulfill({json:[1,2].map(n=>({id:'question-'+n,type:'mcq',question_text:'Question de test '+n,difficulty:1,image_url:null,metadata:{},display_order:n,question_options:[{id:'a',option_text:'Choix A',display_order:1},{id:'b',option_text:'Choix B',display_order:2}]}))})
+ })
+ await page.route('**/rest/v1/rpc/submit_quiz_answer_v5',route=>{
+  calls.answers++
+  return route.fulfill({json:{submitted:true,correct:false,xp_earned:0,correction:{correct_option_ids:['b'],explanation:'Correction reçue après validation'}}})
+ })
+ return calls
+}
 test.describe('V5 React opt-in with isolated API fixtures',()=>{
  test.skip(process.env.LERYKO_TEST_V5!=='1','Requires a build with VITE_ENABLE_V5_PREVIEW=true')
  test.use({serviceWorkers:'block'})
@@ -50,6 +62,65 @@ test.describe('V5 React opt-in with isolated API fixtures',()=>{
   await page.getByRole('button',{name:'Réessayer la reprise'}).click()
   await expect(page.getByRole('link',{name:'Continuer ma séance'})).toHaveAttribute('href','/quiz?mode=resume&session=saved-session')
   expect(calls.some(x=>/start_.*session|start_smart_revision/.test(x))).toBe(false)
+ })
+ test('a denied lesson preserves the exact question and correction on return',async({page})=>{
+  await v5Student(page)
+  const calls=await mockQuiz(page)
+  await page.route('**/rest/v1/rpc/get_lesson_v2',route=>route.fulfill({status:403,json:{message:'Lesson access denied'}}))
+  await page.goto(base+'/quiz?ui=v5&mode=lesson&session=saved&lesson=a0000000-0000-4000-8000-000000000003')
+  await expect(page.getByText('Correction reçue après validation')).toHaveCount(0)
+  await page.getByRole('button',{name:'Choix A',exact:true}).click()
+  await page.getByRole('button',{name:'Valider ma réponse',exact:true}).click()
+  await expect(page.getByText('Correction reçue après validation')).toBeVisible()
+  await page.getByRole('link',{name:'Relire cette leçon'}).click()
+  await expect(page.getByRole('heading',{name:'Leçon indisponible'})).toBeVisible()
+  await expect(page.getByRole('heading',{name:'Question de test 1'})).not.toBeVisible()
+  await page.getByRole('link',{name:'Retour à ma révision',exact:true}).click()
+  await expect(page.getByText('Correction reçue après validation')).toBeVisible()
+  await expect(page.getByRole('button',{name:'Choix A',exact:true})).toBeDisabled()
+  expect(calls).toEqual({questions:1,answers:1})
+  await page.getByRole('button',{name:'Question suivante',exact:true}).click()
+  await expect(page.getByRole('heading',{name:'Question de test 2'})).toBeVisible()
+  await expect(page.getByText('Correction reçue après validation')).toHaveCount(0)
+ })
+ test('an unsubmitted choice survives a course detour without submitting',async({page})=>{
+  await v5Student(page)
+  const calls=await mockQuiz(page)
+  await page.goto(base+'/quiz?ui=v5&session=saved')
+  await page.getByRole('button',{name:'Choix A',exact:true}).click()
+  await page.locator('.v5-navigation').getByRole('link',{name:'Parcours',exact:true}).click()
+  await page.getByRole('link',{name:'Retour à ma révision',exact:true}).click()
+  await expect(page.getByRole('button',{name:'Choix A',exact:true})).toHaveClass(/selected/)
+  await expect(page.getByRole('button',{name:'Valider ma réponse',exact:true})).toBeEnabled()
+  expect(calls).toEqual({questions:1,answers:0})
+  await page.locator('.v5-navigation').getByRole('link',{name:'Parcours',exact:true}).click()
+  await expect(page.getByRole('link',{name:'Retour à ma révision',exact:true})).toBeVisible()
+  await page.reload()
+  await expect(page.locator('.v5-navigation')).toBeVisible()
+  await expect(page.getByRole('link',{name:'Retour à ma révision',exact:true})).toHaveCount(0)
+ })
+ test('exam answers never expose course shortcuts or server correction early',async({page})=>{
+  await v5Student(page)
+  await mockQuiz(page)
+  await page.goto(base+'/quiz?ui=v5&mode=exam&session=exam')
+  await page.getByRole('button',{name:'Choix A',exact:true}).click()
+  await page.getByRole('button',{name:'Valider ma réponse',exact:true}).click()
+  await expect(page.getByText('Réponse enregistrée ✓')).toBeVisible()
+  await expect(page.getByText('Correction reçue après validation')).toHaveCount(0)
+  await expect(page.getByRole('link',{name:'Consulter mes cours'})).toHaveCount(0)
+ })
+ test('logout discards the mounted quiz and its correction',async({page})=>{
+  await v5Student(page)
+  await mockQuiz(page)
+  await page.route('**/rest/v1/rpc/can_review_visuals_v1',route=>route.fulfill({json:false}))
+  await page.goto(base+'/quiz?ui=v5&session=saved')
+  await page.getByRole('button',{name:'Choix A',exact:true}).click()
+  await page.getByRole('button',{name:'Valider ma réponse',exact:true}).click()
+  await expect(page.getByText('Correction reçue après validation')).toBeVisible()
+  await page.getByRole('link',{name:'Ouvrir mon compte'}).click()
+  await page.getByRole('button',{name:'Se déconnecter',exact:true}).click()
+  await expect(page.locator('.v5-navigation')).toHaveCount(0)
+  await expect(page.getByText('Correction reçue après validation',{exact:true})).toHaveCount(0)
  })
 
 })
