@@ -5,6 +5,15 @@ test.skip(process.env.LERYKO_STAGING_ACCEPTANCE!=='1','Requires isolated staging
 const base=process.env.KINEO_E2E_BASE_URL
 const backend='https://cyzdivbdgpvhwpmikeqh.supabase.co'
 async function navigate(page,path){
+ // Exercise the application's router when its link is available. Repeated
+ // document reloads interrupt Auth/RPC requests and do not model tab navigation.
+ const internal=page.locator(`a[href="${path}"]:visible`).first()
+ if(page.url().startsWith(base+'/')&&await internal.count()){
+  await internal.click()
+  await expect(page).toHaveURL(base+path)
+  await expect(page.locator('#root')).toBeVisible()
+  return
+ }
  for(let attempt=0;attempt<2;attempt++){
   try{await page.goto(base+path,{waitUntil:'domcontentloaded'});break}
   catch(error){if(attempt||!/NS_BINDING_ABORTED|interrupted by another navigation/.test(String(error)))throw error}
@@ -66,4 +75,5 @@ for(const [program,level,version] of [['kineo-fr','K2','default'],['kineo-es','E
   expect(errors).toEqual([])
  })
 }
+
 
