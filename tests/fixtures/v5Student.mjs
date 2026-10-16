@@ -1,4 +1,4 @@
-export async function v5Student(page,{program='kineo-fr',active=null,failActive=false,failGame=false,dailyDone=false}={}){
+export async function v5Student(page,{program='kineo-fr',active=null,failActive=false,failGame=false,dailyDone=false,role='student'}={}){
  const state={active,failActive,failGame,dailyDone},calls=[]
  const id='a0000000-0000-4000-8000-000000000001',level='a0000000-0000-4000-8000-000000000002'
  const expires=Math.floor(Date.now()/1000)+3600
@@ -9,7 +9,10 @@ export async function v5Student(page,{program='kineo-fr',active=null,failActive=
   const path=new URL(route.request().url()).pathname;calls.push(path)
   const send=(data,status=200)=>route.fulfill({status,contentType:'application/json',body:JSON.stringify(data)})
   if(path==='/auth/v1/user')return send(user)
-  if(path==='/rest/v1/profiles')return send({id,first_name:'Test V5',username:'test.v5',study_year:program==='kineo-fr'?2:1,role:'student',avatar_url:null})
+  if(path==='/rest/v1/profiles')return send({id,first_name:'Test V5',username:'test.v5',study_year:program==='kineo-fr'?2:1,role,avatar_url:null})
+  if(path.endsWith('/can_review_visuals_v1'))return send(false)
+  if(path.endsWith('/get_content_quality_summary_v1'))return send({years:[],quality:{published_total:0,published_without_source:0,published_incomplete_source:0,visual_quarantined:0},feedback:{new_feedback:0,reviewed_feedback:0,resolved_feedback:0},documents:{total:0,validated:0}})
+  if(path.endsWith('/get_content_review_queue_v4'))return send({counts:{review:0,validated:0,published:0,quarantined_visual:0},questions:[]})
   if(path==='/rest/v1/profile_programs')return send([{program_id:program,academic_level_id:level,is_primary:true,curriculum_version:program==='ifsi-fr'?'2009':'default',academic_levels:{code:program==='ifsi-fr'?'S1':'K2'}}])
   if(path.endsWith('/get_active_revision_session_v1'))return state.failActive?send({message:'Fixture failure'},500):send(state.active)
   if(path.endsWith('/get_user_dashboard_v3'))return send({daily:{completed:state.dailyDone,question_count:10}})

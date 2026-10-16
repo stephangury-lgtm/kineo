@@ -1,6 +1,7 @@
 const base=(process.env.KINEO_BASE_URL||'https://kineo.stephangury.workers.dev').replace(/\/$/,'')
-const expected=(process.env.EXPECTED_SHA||'').slice(0,7)
-const routes=['/','/parcours','/fondamentaux','/stats','/rewards','/amis','/profil','/notifications','/bibliotheque','/informations']
+const expected=(process.env.EXPECTED_SHA||'').trim()
+if(expected&&!/^[a-f0-9]{40}$/.test(expected))throw new Error('Expected production commit must be a full SHA')
+const routes=['/','/parcours','/revision','/progres','/fondamentaux','/stats','/rewards','/amis','/profil','/notifications','/bibliotheque','/informations']
 
 async function fetchOk(path,accept='text/html'){
  const response=await fetch(`${base}${path}`,{headers:{accept},cache:'no-store',redirect:'manual'})
@@ -36,7 +37,8 @@ for(const header of ['x-content-type-options','x-frame-options','referrer-policy
 const versionResponse=await fetchOk(`/version.json?health=${Date.now()}`,'application/json')
 const version=await versionResponse.json()
 if(!version.version||!version.commit)throw new Error('Production version.json is incomplete')
-if(expected&&!String(version.commit).startsWith(expected))throw new Error(`Production commit mismatch: expected ${expected}, got ${version.commit}`)
+if(expected&&version.commit!==expected)throw new Error(`Production commit mismatch: expected ${expected}, got ${version.commit}`)
+if(process.env.EXPECTED_INTERFACE&&(version.interface??'legacy')!==process.env.EXPECTED_INTERFACE)throw new Error('Production interface mismatch')
 
 const swResponse=await fetchOk(`/sw.js?health=${Date.now()}`,'text/javascript')
 const sw=await swResponse.text()

@@ -1,5 +1,6 @@
 import { readFile, writeFile } from 'node:fs/promises'
 import { execFileSync } from 'node:child_process'
+import {interfaceBuild} from './interface-build.mjs'
 
 function resolveSha(){
   const envSha=process.env.GITHUB_SHA?.trim()
@@ -12,10 +13,11 @@ const sha=resolveSha()
 const shortSha=sha==='local'?'local':sha.slice(0,7)
 const now=new Date()
 const date=now.toISOString().slice(0,10)
-const version=`KINEO-V2-${date.replaceAll('-','.')}-${shortSha}`
-const cache=`kineo-shell-${shortSha}`
+const interfaceMode=interfaceBuild(process.env)
+const version=`KINEO-V2-${date.replaceAll('-','.')}-${shortSha}-${interfaceMode}`
+const cache=`kineo-shell-${shortSha}-${interfaceMode}`
 
-await writeFile('dist/version.json',JSON.stringify({version,date,branch:process.env.GITHUB_REF_NAME??'local',commit:sha},null,2)+'\n','utf8')
+await writeFile('dist/version.json',JSON.stringify({version,date,branch:process.env.GITHUB_REF_NAME??'local',commit:sha,interface:interfaceMode,cache},null,2)+'\n','utf8')
 
 const swPath='dist/sw.js'
 const sw=await readFile(swPath,'utf8')
