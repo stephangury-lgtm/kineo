@@ -8,6 +8,12 @@ Une branche de sauvegarde `backup/leryko-production-before-v5-2026-10-16` conser
 
 La recette connectée sur un backend isolé n’est pas réalisée : le propriétaire avait demandé de préparer les fichiers seulement. Aucun projet Supabase supplémentaire n’est créé. Ne pas remplir les variables d’acceptation ci-dessous tant que cette recette n’a pas eu lieu.
 
+## Cohérence des trois cursus
+
+Kiné France, Kiné Espagne et IFSI partagent les cinq entrées, le cadre de l’accueil (prochaine action, cours, progression), les cartes et les boutons. Les libellés sont adaptés en espagnol pour Kiné Espagne. Les niveaux restent propres à chaque cursus : K2–K5, ES1–ES4 et semestres IFSI. Les fonctionnalités France ne sont pas artificiellement proposées aux autres cursus : leur historique détaillé renvoie vers les statistiques de leur cursus, et Réviser évite les appels de reprise/historique du moteur France.
+
+La recette doit couvrir les trois cursus et leurs droits respectifs. Les tests visuels contrôlent une navigation à cinq onglets sur une seule ligne, l’absence de débordement horizontal à 320, 390 et 1 024 pixels, le cadre commun et les principaux accès sur les trois moteurs. Cela ne remplace pas la validation du contenu ni des écritures réelles de chaque cursus.
+
 ## Trois niveaux de retour arrière
 
 1. Dans une construction V5, l’utilisateur choisit « Interface actuelle » dans le bandeau. `/?ui=legacy` force aussi ce choix pour la session du navigateur. Les deux présentations utilisent le même compte et les mêmes données. Ce retour ne rétablit pas un ancien moteur applicatif.
@@ -37,7 +43,7 @@ Le workflow **Prepare reversible Leryko releases** prépare les deux variantes �
 
 La PR reste soumise aux protections de main et aux contrôles obligatoires. Aucun contournement et aucune fusion automatique ne sont ajoutés.
 
-Avant la bascule, rendre obligatoires également les deux contrôles `candidate (legacy)` et `candidate (v5)` du workflow de préparation. Leur ajout aux protections n’est pas effectué par les fichiers YAML seuls.
+Le 16 octobre 2026, après confirmation d’identité du propriétaire, les deux contrôles `candidate (legacy)` et `candidate (v5)` ont été ajoutés et vérifiés dans les protections de main, en complément de `build` et `CodeQL`. Pull request, branche à jour, résolution des conversations et absence de contournement administrateur restent imposées. Les fichiers YAML seuls ne modifient pas ces règles.
 
 Après validation du commit précis sur main, renseigner les variables GitHub :
 

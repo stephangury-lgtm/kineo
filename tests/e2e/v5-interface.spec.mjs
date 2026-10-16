@@ -163,5 +163,35 @@ test.describe('V5 React opt-in with isolated API fixtures',()=>{
   await page.goto(base+'/?ui=v5')
   await expect(page.locator('.v5-navigation a')).toHaveCount(5)
  })
+ for(const program of ['kineo-fr','kineo-es','ifsi-fr'])test(`shared V5 visual structure and program-safe navigation: ${program}`,async({page})=>{
+  const {calls}=await v5Student(page,{program})
+  const spain=program==='kineo-es'
+  await page.goto(base+'/?ui=v5')
+  await expect(page.locator('.learning-v5 > section.card')).toHaveCount(3)
+  await expect(page.locator('.v5-next-action .primary-button')).toBeVisible()
+  for(const width of [320,390,1024]){
+   await page.setViewportSize({width,height:900})
+   const nav=page.locator('.v5-navigation')
+   await expect(nav.getByRole('link')).toHaveCount(5)
+   const geometry=await nav.evaluate(el=>({rows:new Set([...el.querySelectorAll('a')].map(a=>Math.round(a.getBoundingClientRect().top))).size,overflow:document.documentElement.scrollWidth>window.innerWidth,radius:getComputedStyle(document.querySelector('.v5-next-action')).borderRadius}))
+   expect(geometry).toEqual({rows:1,overflow:false,radius:'17px'})
+  }
+  await page.locator('.v5-navigation').getByRole('link',{name:spain?'Progreso':'Progrès',exact:true}).click()
+  await expect(page.getByRole('link',{name:spain?'Abrir mi colección':'Ouvrir ma collection de badges'})).toHaveAttribute('href','/rewards')
+  await page.locator('.v5-navigation').getByRole('link',{name:spain?'Repasar':'Réviser',exact:true}).click()
+  await expect(page.getByRole('heading',{name:spain?'¿Qué quieres repasar hoy ?':'Comment veux-tu réviser aujourd’hui ?'})).toBeVisible()
+  if(program!=='kineo-fr')expect(calls.some(path=>/get_active_revision_session_v1|get_recent_revision_sessions_v1|get_revision_mode_availability_v1|get_user_dashboard_v3/.test(path))).toBe(false)
+  await page.locator('.v5-navigation').getByRole('link',{name:spain?'Comunidad':'Communauté',exact:true}).click()
+  await expect(page.getByRole('navigation',{name:spain?'Secciones de comunidad':'Rubriques de la communauté'}).getByRole('button')).toHaveCount(3)
+  await page.getByRole('link',{name:spain?'Abrir mi cuenta':'Ouvrir mon compte'}).click()
+  await expect(page.getByRole('navigation',{name:spain?'Mi cuenta':'Mon compte'})).toBeVisible()
+  await expect(page.getByRole('button',{name:spain?'Interfaz anterior':'Interface actuelle',exact:true})).toBeVisible()
+  if(program!=='kineo-fr'){
+   await page.goto(base+'/revision/historique')
+   await expect(page).toHaveURL(base+'/stats')
+   await expect(page.getByRole('heading',{name:spain?'Mis estadísticas':'Mes statistiques',exact:true})).toBeVisible()
+   expect(calls.some(path=>/get_active_revision_session_v1|get_recent_revision_sessions_v1/.test(path))).toBe(false)
+  }
+ })
 
 })
