@@ -74,7 +74,7 @@ jobs:
         run: node scripts/staging/accounts.mjs cleanup
       - name: Retain rollback evidence without credentials
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: staging-rollback-${{ github.sha }}
           path: staging-rollback-target.json

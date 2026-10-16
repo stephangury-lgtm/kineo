@@ -59,7 +59,7 @@ jobs:
         run: |
           npm run release:prepare
           npm run test:rollback
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: leryko-candidate-${{ github.sha }}-${{ matrix.interface }}
           include-hidden-files: true
