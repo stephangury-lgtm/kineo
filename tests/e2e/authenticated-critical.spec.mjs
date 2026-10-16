@@ -150,11 +150,16 @@ test('single-login authenticated critical journey',async({page,browser})=>{
  await login(friendPage,friendEmail,friendPassword)
  await program(friendPage,'kineo-fr','K2')
  await gotoStable(friendPage,'/amis')
+ await expect(friendPage.locator('.bottom-nav')).toBeVisible({timeout:20000})
  const challengeTab=friendPage.getByRole('button',{name:/^Défis ·/})
- if(await challengeTab.isVisible())await challengeTab.click()
+ if(await friendPage.locator('.v5-navigation').count()){
+  await expect(challengeTab).toBeVisible({timeout:20000})
+  await challengeTab.click()
+ }
  const incoming=friendPage.locator('.challenge-row').filter({has:friendPage.getByRole('button',{name:'Accepter'})}).first()
- if(await incoming.count())await incoming.getByRole('button',{name:'Accepter'}).click()
- await expect(friendPage.locator('.challenge-row').first()).toBeVisible({timeout:15000})
+ await expect(incoming).toBeVisible({timeout:20000})
+ await incoming.getByRole('button',{name:'Accepter',exact:true}).click()
+ await expect(friendPage.locator('.challenge-row').getByRole('button',{name:'Jouer',exact:true})).toBeVisible({timeout:20000})
  await friendContext.close()
 
  for(const route of ['/stats','/rewards','/classement','/profil','/notifications']){

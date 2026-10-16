@@ -22,15 +22,15 @@ async function navigate(page,path){
  // the actual screen and content rather than waiting for global network silence.
  await expect(page.locator('#root')).toBeVisible()
 }
-async function login(page){
+async function login(page,email=process.env.KINEO_E2E_EMAIL,password=process.env.KINEO_E2E_PASSWORD){
  await navigate(page,'/')
- await page.getByLabel('E-mail').fill(process.env.KINEO_E2E_EMAIL)
- await page.locator('input[type=password]').fill(process.env.KINEO_E2E_PASSWORD)
+ await page.getByLabel('E-mail').fill(email)
+ await page.locator('input[type=password]').fill(password)
  await page.getByRole('button',{name:'Se connecter',exact:true}).click()
  await expect(page.locator('.bottom-nav.v5-navigation')).toBeVisible({timeout:25000})
 }
 for(const [program,level,version] of [['kineo-fr','K2','default'],['kineo-es','ES1','default'],['ifsi-fr','S2','2009']]){
- test(`connected V5 ${program}: real login, navigation, content and logout`,async({page})=>{
+ test(`connected V5 ${program}: real login, navigation, content and logout`,async({page,browser})=>{
   test.setTimeout(120000)
   expect(base).toBe('https://leryko-v5-staging.stephangury.workers.dev')
   const errors=[],forbidden=[]
@@ -62,6 +62,24 @@ for(const [program,level,version] of [['kineo-fr','K2','default'],['kineo-es','E
   await expect(challengeTab).toHaveAttribute('aria-pressed','true',{timeout:20000})
   const sent=page.locator('.challenge-row').first()
   await expect(sent).toBeVisible({timeout:20000})
+  const recipientContext=await browser.newContext()
+  try{
+   await recipientContext.addInitScript(({origin,program,level,version})=>{
+    if(location.origin!==origin)return
+    localStorage.setItem('healthapp_program',program)
+    localStorage.setItem('healthapp_level_'+program,level)
+    localStorage.setItem('healthapp_curriculum_'+program,version)
+   },{origin:base,program,level,version})
+   const recipient=await recipientContext.newPage()
+   await recipient.route('**/kimtiyuytikyseuzmjbv.supabase.co/**',route=>{forbidden.push(route.request().url());return route.abort()})
+   recipient.on('pageerror',e=>errors.push(e.message))
+   await login(recipient,process.env.KINEO_E2E_FRIEND_EMAIL,process.env.KINEO_E2E_FRIEND_PASSWORD)
+   await navigate(recipient,'/amis')
+   const receivedTab=recipient.getByRole('button',{name:program==='kineo-es'?/^Retos ·/:/^Défis ·/})
+   await expect(receivedTab).toBeVisible({timeout:20000})
+   await receivedTab.click()
+   await expect(recipient.locator('.challenge-row').getByRole('button',{name:program==='kineo-es'?'Aceptar':'Accepter',exact:true})).toBeVisible({timeout:20000})
+  }finally{await recipientContext.close()}
   await sent.getByRole('button',{name:program==='kineo-es'?'Cancelar':'Annuler',exact:true}).click({timeout:20000})
   await expect(sent).toHaveCount(0,{timeout:20000})
   if(program==='kineo-fr'){
