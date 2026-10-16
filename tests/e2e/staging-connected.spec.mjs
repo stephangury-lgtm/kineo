@@ -62,7 +62,7 @@ for(const [program,level,version] of [['kineo-fr','K2','default'],['kineo-es','E
   await expect(challengeTab).toHaveAttribute('aria-pressed','true',{timeout:20000})
   const sent=page.locator('.challenge-row').first()
   await expect(sent).toBeVisible({timeout:20000})
-  await sent.getByRole('button',{name:'Annuler',exact:true}).click()
+  await sent.getByRole('button',{name:program==='kineo-es'?'Cancelar':'Annuler',exact:true}).click({timeout:20000})
   await expect(sent).toHaveCount(0,{timeout:20000})
   if(program==='kineo-fr'){
    await navigate(page,'/bibliotheque')
