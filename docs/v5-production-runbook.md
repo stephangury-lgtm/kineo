@@ -6,7 +6,7 @@ La V5 et l’interface actuelle restent dans le même code, sans migration de ba
 
 Une branche de sauvegarde `backup/leryko-production-before-v5-2026-10-16` conserve le commit `734606ddc56a06ec4466257432bec62290579acf`, identifié dans le `version.json` public de production le 16 octobre 2026. Cette branche conserve les sources ; elle ne sauvegarde pas la base de données ni l’identifiant de version Cloudflare. Ce dernier sera capturé par le workflow immédiatement avant la publication.
 
-La recette connectée sur un backend isolé n’est pas réalisée : le propriétaire avait demandé de préparer les fichiers seulement. Aucun projet Supabase supplémentaire n’est créé. Ne pas remplir les variables d’acceptation ci-dessous tant que cette recette n’a pas eu lieu.
+La recette connectée complète reste à terminer. Le projet `leryko-v5-staging` (`cyzdivbdgpvhwpmikeqh`, région `eu-west-1`) est créé et le schéma restreint installé après autorisation explicite du propriétaire. Cinq suites SQL passent sur des données synthétiques : isolation, régressions d’accès et réponses, challenge quotidien, rétention et scénarios des trois cursus. L’authentification HTTP, le stockage de PDF et la recette navigateur connectée restent à valider selon `docs/staging.md`. Ne pas remplir les variables d’acceptation ci-dessous avant la recette complète.
 
 ## Cohérence des trois cursus
 

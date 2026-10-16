@@ -1,0 +1,82 @@
+name: Leryko V5 connected staging acceptance
+on:
+  push:
+    branches: [feat/leryko-v5-interface]
+  workflow_dispatch:
+permissions:
+  contents: read
+  id-token: write
+concurrency:
+  group: leryko-staging-acceptance
+  cancel-in-progress: false
+jobs:
+  staging:
+    if: github.repository == 'stephangury-lgtm/kineo' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/feat/leryko-v5-interface')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      VITE_BACKEND_ENV: staging
+      VITE_SUPABASE_URL: https://cyzdivbdgpvhwpmikeqh.supabase.co
+      VITE_SUPABASE_PUBLISHABLE_KEY: sb_publishable_K3ijvLpXmXa4e4HcBRxYJQ_ANStjl_a
+      VITE_ENABLE_V5_PREVIEW: 'true'
+      VITE_V5_DEFAULT: 'true'
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run test:unit
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - name: Build and deploy previous interface to isolated Worker
+        run: |
+          VITE_ENABLE_V5_PREVIEW=false VITE_V5_DEFAULT=false npm run build
+          cp -R dist staging-release
+          npx wrangler deploy --config wrangler.staging.jsonc
+          npx wrangler deployments list --name leryko-v5-staging --json > staging-deployments.json
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      - name: Capture isolated Worker rollback target
+        run: node scripts/staging/capture-version.mjs
+      - name: Build V5 and exercise real Cloudflare rollback
+        run: |
+          verify() {
+            for attempt in 1 2 3 4 5 6; do
+              if EXPECTED_INTERFACE="$1" node scripts/check-production.mjs; then return 0; fi
+              sleep 3
+            done
+            return 1
+          }
+          npm run build
+          cp -R dist/. staging-release/
+          npx wrangler deploy --config wrangler.staging.jsonc
+          verify v5
+          npx wrangler rollback "$STAGING_PREVIOUS_VERSION" --name leryko-v5-staging --yes
+          verify legacy
+          npx wrangler deploy --config wrangler.staging.jsonc
+          verify v5
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          KINEO_BASE_URL: https://leryko-v5-staging.stephangury.workers.dev
+          EXPECTED_SHA: ${{ github.sha }}
+      - name: Create synthetic accounts and PDF fixtures
+        run: node scripts/staging/accounts.mjs create
+      - name: Connected V5 browser acceptance
+        run: npx playwright test tests/e2e/staging-connected.spec.mjs --reporter=line --retries=0
+        env:
+          LERYKO_STAGING_ACCEPTANCE: '1'
+          KINEO_E2E_BASE_URL: https://leryko-v5-staging.stephangury.workers.dev
+      - name: Clean up only this run's fixture accounts
+        if: always()
+        run: node scripts/staging/accounts.mjs cleanup
+      - name: Retain rollback evidence without credentials
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: staging-rollback-${{ github.sha }}
+          path: staging-rollback-target.json
+          if-no-files-found: ignore
+          retention-days: 90

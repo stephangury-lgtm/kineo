@@ -1,0 +1,10 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "leryko-v5-staging",
+  "compatibility_date": "2026-10-03",
+  "assets": {
+    "directory": "./staging-release",
+    "not_found_handling": "single-page-application"
+  },
+  "previews": {}
+}
