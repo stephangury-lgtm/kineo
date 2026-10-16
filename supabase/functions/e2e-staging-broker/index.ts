@@ -1,6 +1,7 @@
 import { createClient } from "npm:@supabase/supabase-js@2.117.2"
 import { createRemoteJWKSet, jwtVerify } from "npm:jose@5.9.6"
 import { verifyWorkflowClaims, canDeleteFixture } from './policy.mjs'
+import { createServerClient } from '../_shared/server-client.mjs'
 
 const audience='kineo-e2e'
 const jwks=createRemoteJWKSet(new URL('https://token.actions.githubusercontent.com/.well-known/jwks'))
@@ -28,10 +29,8 @@ Deno.serve(async(req)=>{
   const body=await req.json().catch(()=>({}))
   const action=String(body.action??'')
   const supabaseUrl=Deno.env.get('SUPABASE_URL')
-  const serviceKey=Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
-  if(!supabaseUrl||!serviceKey)throw new Error('Supabase admin environment unavailable')
   if(supabaseUrl!=='https://cyzdivbdgpvhwpmikeqh.supabase.co')throw new Error('Staging broker cannot run against another project')
-  const admin=createClient(supabaseUrl,serviceKey,{auth:{autoRefreshToken:false,persistSession:false}})
+  const admin=createServerClient(createClient,(name:string)=>Deno.env.get(name))
 
   if(action==='prepare-storage'){
    const text='Synthetic software test PDF. No medical content.'
@@ -153,4 +152,5 @@ Deno.serve(async(req)=>{
   return json({error:error instanceof Error?error.message:'E2E broker error'},403)
  }
 })
+
 
