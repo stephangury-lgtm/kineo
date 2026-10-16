@@ -37,20 +37,23 @@ export default function NotificationBell() {
     }
 
     refresh()
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') refresh()
+    }
     const unsubscribeRealtime = subscribeToNotificationChanges(() => {
       refresh()
       window.dispatchEvent(new Event('kineo-notifications-updated'))
     })
     window.addEventListener('kineo-notifications-updated', refresh)
     window.addEventListener('focus', refresh)
-    document.addEventListener('visibilitychange', refresh)
+    document.addEventListener('visibilitychange', onVisibility)
 
     return () => {
       active = false
       unsubscribeRealtime()
       window.removeEventListener('kineo-notifications-updated', refresh)
       window.removeEventListener('focus', refresh)
-      document.removeEventListener('visibilitychange', refresh)
+      document.removeEventListener('visibilitychange', onVisibility)
     }
   }, [])
 

@@ -10,3 +10,10 @@ supabase/.temp
 backups/
 *.dump
 *.leryko-backup
+release-candidates/
+release-before.json
+cloudflare-deployments.json
+test-results-rollback/
+staging-release/
+staging-deployments.json
+staging-rollback-target.json

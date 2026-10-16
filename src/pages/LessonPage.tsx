@@ -4,6 +4,7 @@ import { ReadableCourseContent } from '../components/ReadableCourseContent'
 import { getLessonV2,startLessonQuizV2,type LessonV2 } from '../services/curriculumApi'
 import { getLessonPersonalState,saveLessonNote,toggleLessonFavorite } from '../services/libraryApi'
 import { getCurrentProfile } from '../services/profileApi'
+import {useInterfaceVersion} from '../learning/InterfaceVersion'
 import '../course-reading.css'
 import './LessonPage.css'
 
@@ -11,9 +12,10 @@ function renderListItem(value:unknown,index:number){if(typeof value==='string')r
 function pageLabel(start:number|null,end:number|null){if(start==null)return null;if(end!=null&&end!==start)return`pages ${start}–${end}`;return`page ${start}`}
 
 export default function LessonPage(){
+ const {v5}=useInterfaceVersion()
  const{lessonId}=useParams();const navigate=useNavigate();const[lesson,setLesson]=useState<LessonV2|null>(null);const[profileYear,setProfileYear]=useState<number|null>(null);const[favorite,setFavorite]=useState(false);const[note,setNote]=useState('');const[noteSaved,setNoteSaved]=useState(true);const[busy,setBusy]=useState(false);const[personalBusy,setPersonalBusy]=useState(false);const[error,setError]=useState<string|null>(null)
  useEffect(()=>{if(!lessonId)return;Promise.all([getLessonV2(lessonId),getLessonPersonalState(lessonId),getCurrentProfile()]).then(([lessonData,state,profile])=>{setLesson(lessonData);setFavorite(state.favorite);setNote(state.note??'');setProfileYear(profile?.study_year??null)}).catch((err:Error)=>setError(err.message))},[lessonId])
- async function launchQuiz(){if(!lesson)return;setBusy(true);setError(null);try{const sessionId=await startLessonQuizV2(lesson.id,10);navigate(`/revision?mode=lesson&session=${encodeURIComponent(sessionId)}`)}catch(err){setError(err instanceof Error?err.message:'Impossible de démarrer le quiz.')}finally{setBusy(false)}}
+ async function launchQuiz(){if(!lesson)return;setBusy(true);setError(null);try{const sessionId=await startLessonQuizV2(lesson.id,10);navigate(`/revision?mode=lesson&session=${encodeURIComponent(sessionId)}${v5?`&lesson=${encodeURIComponent(lesson.id)}`:""}`)}catch(err){setError(err instanceof Error?err.message:'Impossible de démarrer le quiz.')}finally{setBusy(false)}}
  async function toggleFavorite(){if(!lesson)return;setPersonalBusy(true);try{setFavorite(await toggleLessonFavorite(lesson.id))}catch(err){setError(err instanceof Error?err.message:'Impossible de modifier le favori.')}finally{setPersonalBusy(false)}}
  async function saveNote(){if(!lesson)return;setPersonalBusy(true);try{setNote(await saveLessonNote(lesson.id,note));setNoteSaved(true)}catch(err){setError(err instanceof Error?err.message:'Impossible d’enregistrer la note.')}finally{setPersonalBusy(false)}}
  if(error&&!lesson)return<section className="card"><h1>Leçon indisponible</h1><p>{error}</p><Link className="secondary-button" to="/parcours">Retour au parcours</Link></section>

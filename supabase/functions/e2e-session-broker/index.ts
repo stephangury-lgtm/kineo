@@ -2,6 +2,7 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts"
 import { createClient } from "jsr:@supabase/supabase-js@2"
 import { createRemoteJWKSet, jwtVerify } from "npm:jose@5.9.6"
 import { verifyWorkflowClaims, canDeleteFixture } from './policy.mjs'
+import { createServerClient } from '../_shared/server-client.mjs'
 
 const audience='kineo-e2e'
 const jwks=createRemoteJWKSet(new URL('https://token.actions.githubusercontent.com/.well-known/jwks'))
@@ -29,9 +30,7 @@ Deno.serve(async(req)=>{
   const body=await req.json().catch(()=>({}))
   const action=String(body.action??'')
   const supabaseUrl=Deno.env.get('SUPABASE_URL')
-  const serviceKey=Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')
-  if(!supabaseUrl||!serviceKey)throw new Error('Supabase admin environment unavailable')
-  const admin=createClient(supabaseUrl,serviceKey,{auth:{autoRefreshToken:false,persistSession:false}})
+  const admin=createServerClient(createClient,(name:string)=>Deno.env.get(name))
 
   if(action==='operations-health'){
    const {data,error}=await admin.rpc('check_operations_health_v1')
@@ -138,4 +137,6 @@ Deno.serve(async(req)=>{
   return json({error:error instanceof Error?error.message:'E2E broker error'},403)
  }
 })
+
+
 

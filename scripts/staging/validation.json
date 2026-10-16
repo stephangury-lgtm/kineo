@@ -1,0 +1,14 @@
+{
+  "target_project": "cyzdivbdgpvhwpmikeqh",
+  "sha256": "4ec741d10b7dd56b04fbd5035bfa0e4731cde1b5c9216ebc7aaf03a61fa09a46",
+  "tables": 62,
+  "views": 6,
+  "functions": 161,
+  "policies": 71,
+  "authenticated_table_write_grants": 13,
+  "anonymous_application_grants": 0,
+  "static_checks": "passed",
+  "sql_execution": "not_verified",
+  "connected_tests": "not_run",
+  "note": "Checksum identifies this file; it is not an authenticity signature."
+}

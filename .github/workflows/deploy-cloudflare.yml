@@ -4,19 +4,49 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      interface:
+        description: Interface a deployer (inherit suit la variable du depot)
+        type: choice
+        options: [inherit, legacy, v5]
+        default: inherit
 
 permissions:
   contents: read
 
 concurrency:
   group: kineo-production
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:
+    if: github.ref == 'refs/heads/main'
+    environment: production
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
+      - name: Select release interface and enforce V5 acceptance
+        id: interface
+        env:
+          REQUESTED_INTERFACE: ${{ inputs.interface || 'inherit' }}
+          CONFIGURED_INTERFACE: ${{ vars.LERYKO_PRODUCTION_INTERFACE || 'legacy' }}
+          ACCEPTED_SHA: ${{ vars.LERYKO_V5_ACCEPTANCE_SHA }}
+          SINGLE_DEPLOYER: ${{ vars.LERYKO_SINGLE_DEPLOYER_CONFIRMED }}
+        run: |
+          selected="$REQUESTED_INTERFACE"
+          if [ "$selected" = inherit ]; then selected="$CONFIGURED_INTERFACE"; fi
+          case "$selected" in legacy|v5) ;; *) echo "Unknown interface"; exit 1 ;; esac
+          enabled=false
+          if [ "$selected" = v5 ]; then
+            if [ "$ACCEPTED_SHA" != "$GITHUB_SHA" ] || [ "$SINGLE_DEPLOYER" != true ]; then
+              echo "V5 requires connected acceptance for this exact commit and one production deployer."
+              exit 1
+            fi
+            enabled=true
+          fi
+          echo "interface=$selected" >> "$GITHUB_OUTPUT"
+          echo "enabled=$enabled" >> "$GITHUB_OUTPUT"
+
       - name: Checkout
         uses: actions/checkout@v5
 
@@ -46,9 +76,15 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          VITE_ENABLE_V5_PREVIEW: ${{ steps.interface.outputs.enabled }}
+          VITE_V5_DEFAULT: ${{ steps.interface.outputs.enabled }}
 
       - name: Production build smoke checks
         run: node scripts/check-build.mjs
+        env:
+          VITE_ENABLE_V5_PREVIEW: ${{ steps.interface.outputs.enabled }}
+          VITE_V5_DEFAULT: ${{ steps.interface.outputs.enabled }}
 
       - name: Preview route checks
         run: node scripts/check-preview.mjs
@@ -64,8 +100,48 @@ jobs:
             sleep 0.5
           done
           npx playwright test tests/e2e/public-smoke.spec.mjs tests/e2e/audit-regressions.spec.mjs --project=chromium --reporter=line
+          if [ "$RELEASE_INTERFACE" = v5 ]; then
+            LERYKO_TEST_V5=1 LERYKO_TEST_V5_DEFAULT=1 npx playwright test tests/e2e/v5-interface.spec.mjs --project=chromium --reporter=line
+          fi
+        env:
+          RELEASE_INTERFACE: ${{ steps.interface.outputs.interface }}
+
+      - name: Capture exact previous deployment
+        id: before
+        run: |
+          npx wrangler deployments list --name kineo --json > cloudflare-deployments.json
+          node scripts/release-safety.mjs capture
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Package verified release
+        run: |
+          node scripts/package-release.mjs
+          node scripts/package-release.mjs verify
+
+      - name: Preserve release and rollback target
+        uses: actions/upload-artifact@v4
+        with:
+          name: leryko-release-${{ github.sha }}-${{ steps.interface.outputs.interface }}
+          path: |
+            dist/
+            release-before.json
+          retention-days: 90
+          if-no-files-found: error
+
+      - name: Confirm deployment did not change
+        run: |
+          npx wrangler deployments list --name kineo --json > cloudflare-deployments.json
+          node scripts/release-safety.mjs assert-current
+          node scripts/package-release.mjs verify
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
 
       - name: Deploy to Cloudflare Workers
+        id: publish
+        continue-on-error: true
         run: npx wrangler deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -73,8 +149,10 @@ jobs:
 
       - name: Verify production routes and deployed version
         id: production_smoke
+        if: steps.publish.outcome == 'success'
         continue-on-error: true
         env:
+          EXPECTED_INTERFACE: ${{ steps.interface.outputs.interface }}
           EXPECTED_SHA: ${{ github.sha }}
         run: |
           for attempt in 1 2 3 4 5 6; do
@@ -84,14 +162,23 @@ jobs:
           exit 1
 
       - name: Roll back failed production deployment
-        if: steps.production_smoke.outcome == 'failure'
+        if: ${{ !cancelled() && (steps.publish.outcome == 'failure' || steps.production_smoke.outcome == 'failure') }}
         run: |
-          npx wrangler rollback --message "Automatic rollback after failed Kineo production smoke check"
-          sleep 5
-          KINEO_BASE_URL=https://kineo.stephangury.workers.dev npm run check:prod
+          npx wrangler rollback "$ROLLBACK_VERSION" --yes --message "Automatic rollback after failed Leryko publication"
+          for attempt in 1 2 3 4 5 6; do
+            if npm run check:prod; then exit 0; fi
+            sleep 3
+          done
+          exit 1
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          ROLLBACK_VERSION: ${{ steps.before.outputs.previous_version }}
+          EXPECTED_SHA: ${{ steps.before.outputs.previous_commit }}
+          EXPECTED_INTERFACE: ${{ steps.before.outputs.previous_interface }}
 
       - name: Fail workflow after rollback
-        if: steps.production_smoke.outcome == 'failure'
+        if: ${{ !cancelled() && (steps.publish.outcome == 'failure' || steps.production_smoke.outcome == 'failure') }}
         run: |
-          echo "Production smoke checks failed. Previous Cloudflare version was restored."
+          echo "Publication failed. Inspect the rollback step to confirm restoration of the captured version."
           exit 1

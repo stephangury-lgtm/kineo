@@ -1,0 +1,67 @@
+name: Prepare reversible Leryko releases
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: leryko-candidates-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  candidate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        interface: [legacy, v5]
+    env:
+      VITE_ENABLE_V5_PREVIEW: ${{ matrix.interface == 'v5' && 'true' || 'false' }}
+      VITE_V5_DEFAULT: ${{ matrix.interface == 'v5' && 'true' || 'false' }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm audit --audit-level=high
+      - run: npm run check:source
+      - run: npm run test:unit
+      - run: npm run build
+      - run: node scripts/check-build.mjs
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - name: Start isolated browser preview
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 --strictPort > /tmp/leryko-preview.log 2>&1 &
+          for attempt in {1..40}; do
+            if curl --fail --silent http://127.0.0.1:4173/ >/dev/null; then exit 0; fi
+            sleep 0.5
+          done
+          cat /tmp/leryko-preview.log
+          exit 1
+      - name: Public and audit regressions
+        run: npx playwright test tests/e2e/public-smoke.spec.mjs tests/e2e/audit-regressions.spec.mjs --project=chromium --reporter=line
+      - name: V5 three-engine regressions and default activation
+        if: matrix.interface == 'v5'
+        env:
+          LERYKO_TEST_V5: '1'
+          LERYKO_TEST_V5_DEFAULT: '1'
+        run: npx playwright test tests/e2e/v5-interface.spec.mjs --reporter=line
+      - name: Package release with checksums
+        if: matrix.interface == 'legacy'
+        run: |
+          node scripts/package-release.mjs
+          node scripts/package-release.mjs verify
+      - name: Exercise installed-app rollback locally
+        if: matrix.interface == 'v5'
+        run: |
+          npm run release:prepare
+          npm run test:rollback
+      - uses: actions/upload-artifact@v4
+        with:
+          name: leryko-candidate-${{ github.sha }}-${{ matrix.interface }}
+          path: dist/
+          retention-days: 90
+          if-no-files-found: error

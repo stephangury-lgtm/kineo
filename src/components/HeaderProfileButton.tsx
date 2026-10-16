@@ -17,6 +17,9 @@ export default function HeaderProfileButton() {
     }
 
     loadProfile()
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') loadProfile()
+    }
 
     const refresh = (event: Event) => {
       const detail = (event as CustomEvent<{ avatarUrl?: string | null }>).detail
@@ -28,11 +31,11 @@ export default function HeaderProfileButton() {
 
     window.addEventListener('kineo-profile-updated', refresh)
     window.addEventListener('focus', loadProfile)
-    document.addEventListener('visibilitychange', loadProfile)
+    document.addEventListener('visibilitychange', onVisibility)
     return () => {
       window.removeEventListener('kineo-profile-updated', refresh)
       window.removeEventListener('focus', loadProfile)
-      document.removeEventListener('visibilitychange', loadProfile)
+      document.removeEventListener('visibilitychange', onVisibility)
     }
   }, [])
 

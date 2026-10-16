@@ -1,5 +1,6 @@
 import fs from 'node:fs'
 import path from 'node:path'
+import {interfaceBuild} from './interface-build.mjs'
 
 const root=process.cwd()
 const dist=path.join(root,'dist')
@@ -13,13 +14,14 @@ for(const file of required){
 const version=JSON.parse(fs.readFileSync(path.join(dist,'version.json'),'utf8'))
 const expected=(process.env.GITHUB_SHA||process.env.KINEO_BUILD_SHA||'').slice(0,7)
 if(!version.version || !version.commit) throw new Error('version.json is missing version or commit')
+if(version.interface!==interfaceBuild(process.env))throw new Error('Build interface does not match environment')
 if(expected && !version.commit.startsWith(expected)){
  throw new Error(`Build stamp mismatch: expected ${expected}, got ${version.commit}`)
 }
 
 const sw=fs.readFileSync(path.join(dist,'sw.js'),'utf8')
 const shortCommit=version.commit.slice(0,7)
-if(!sw.includes(`kineo-shell-${shortCommit}`)){
+if(version.cache!==`kineo-shell-${shortCommit}-${version.interface}`||!sw.includes(`const CACHE = '${version.cache}'`)){
  throw new Error(`Service worker cache is not stamped with ${shortCommit}`)
 }
 if(!sw.includes('version.json')) throw new Error('Service worker does not handle version.json')
