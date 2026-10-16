@@ -53,6 +53,7 @@ for(const [program,level,version] of [['kineo-fr','K2','default'],['kineo-es','E
    await expect(page.locator('body')).not.toContainText('Une erreur est survenue')
   }
   await navigate(page,'/amis')
+  await expect(page.getByRole('button',{name:program==='kineo-es'?'Compartir la aplicación':'Partager l’application',exact:true})).toBeVisible({timeout:20000})
   await expect(page.locator('.person-row').filter({hasText:process.env.KINEO_E2E_FRIEND_USERNAME})).toBeVisible({timeout:20000})
   const friend=page.locator('.person-row').filter({hasText:process.env.KINEO_E2E_FRIEND_USERNAME})
   const duel=friend.locator('button.duel-button')
