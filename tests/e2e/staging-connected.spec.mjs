@@ -9,7 +9,9 @@ async function navigate(page,path){
   try{await page.goto(base+path,{waitUntil:'domcontentloaded'});break}
   catch(error){if(attempt||!/NS_BINDING_ABORTED|interrupted by another navigation/.test(String(error)))throw error}
  }
- await page.waitForLoadState('networkidle',{timeout:15000})
+ // Background profile/realtime requests may remain active. The caller checks
+ // the actual screen and content rather than waiting for global network silence.
+ await expect(page.locator('#root')).toBeVisible()
 }
 async function login(page){
  await navigate(page,'/')
@@ -17,7 +19,6 @@ async function login(page){
  await page.locator('input[type=password]').fill(process.env.KINEO_E2E_PASSWORD)
  await page.getByRole('button',{name:'Se connecter',exact:true}).click()
  await expect(page.locator('.bottom-nav.v5-navigation')).toBeVisible({timeout:25000})
- await page.waitForLoadState('networkidle',{timeout:15000})
 }
 for(const [program,level,version] of [['kineo-fr','K2','default'],['kineo-es','ES1','default'],['ifsi-fr','S2','2009']]){
  test(`connected V5 ${program}: real login, navigation, content and logout`,async({page})=>{
@@ -65,3 +66,4 @@ for(const [program,level,version] of [['kineo-fr','K2','default'],['kineo-es','E
   expect(errors).toEqual([])
  })
 }
+
