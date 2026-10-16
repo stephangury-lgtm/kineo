@@ -1,3 +1,18 @@
 .v5-preview-switch{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 16px;background:#e8f3ff;color:#24476c;font-size:.76rem}.v5-preview-switch button{padding:8px 10px;border:1px solid #a6c3e8;border-radius:10px;background:#fff;color:#24476c;min-height:40px}.v5-preview-switch button[aria-pressed=true]{background:#2458b4;color:#fff}.learning-v5 .card{border-radius:17px}.learning-v5 .home-v4-welcome{padding:16px;border-radius:17px;background:linear-gradient(110deg,#f4faff,#dfeeff)}.learning-v5 h1{font-size:clamp(1.3rem,4vw,1.8rem)}.learning-v5 .v5-next-action{padding:20px}.v5-actions,.v5-context{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.v5-context{margin:0 0 14px;font-size:.84rem}.v5-context a{color:var(--program-primary,#2458b4)}.v5-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.v5-metrics>div{display:grid;gap:6px}.v5-metrics span{color:#526783;font-size:.8rem}.v5-navigation a{min-width:0}.v5-navigation a>span:last-child{white-space:nowrap;letter-spacing:-.2px}.header-streak-badge{display:inline-flex;align-items:center;padding:6px 8px;border-radius:12px;background:#fff0dd;color:#9b410e;white-space:nowrap;font-size:.76rem;font-weight:750}@media(max-width:400px){.v5-navigation a{font-size:.6rem}.v5-metrics{grid-template-columns:1fr}.v5-preview-switch{padding:8px 12px}.header-streak-badge{font-size:.65rem;padding:5px}.v5-enabled .topbar-actions{flex-wrap:wrap;justify-content:flex-end}}
 .v5-section-nav{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 16px}.v5-section-nav button,.v5-section-nav a{min-height:44px;padding:10px 14px;border:1px solid #b8cce6;border-radius:12px;color:#24476c;background:#fff;font:inherit;text-decoration:none}.v5-section-nav button[aria-pressed=true]{background:#2458b4;color:#fff}.v5-section-nav button:focus-visible,.v5-section-nav a:focus-visible{outline:3px solid #e6a600;outline-offset:3px}#profile-sharing{scroll-margin-top:24px}
 .v5-enabled .card{border-radius:17px}.v5-enabled .hero-card,.v5-enabled .stats-hero,.v5-enabled .home-v4-welcome{border-radius:20px}.v5-enabled .hero-card h1,.v5-enabled .stats-hero h1,.v5-enabled .home-v4-welcome h1{font-size:clamp(1.3rem,4vw,1.8rem);line-height:1.2}.v5-enabled .primary-button,.v5-enabled .secondary-button{min-height:44px}.v5-navigation{flex-wrap:nowrap}.v5-navigation>a{flex:1 1 0}
+
+/* Keep community introductions short so friends and challenges remain close. */
+.v5-enabled .friends-hero{min-height:0;padding:14px 16px;grid-template-columns:minmax(0,1fr);gap:0}
+.v5-enabled .hero-card.friends-hero .hero-copy{align-self:auto;max-width:none;padding:0}
+.v5-enabled .friends-hero .hero-orbit{display:none}
+.v5-enabled .friends-hero .hero-kicker{font-size:.68rem;margin-bottom:4px}
+.v5-enabled .friends-hero h1{font-size:clamp(1.25rem,4vw,1.6rem);margin:0 0 6px;line-height:1.15}
+.v5-enabled .friends-hero p{font-size:.82rem;line-height:1.35;margin:0 0 10px}
+.v5-enabled .friends-hero .secondary-button{min-height:36px;padding:8px 12px;font-size:.78rem}
+.application-share-card{padding:14px 16px}
+.application-share-card h2{font-size:1.1rem;margin:0 0 6px}
+.application-share-card p{font-size:.82rem;line-height:1.35;margin:0 0 10px}
+.application-share-card .v5-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.application-share-card .v5-actions button{min-width:0;min-height:44px;padding:10px 8px;font-size:.8rem;line-height:1.25}
+.application-share-card [role=status]{margin:10px 0 0}
