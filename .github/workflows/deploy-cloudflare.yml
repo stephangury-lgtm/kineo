@@ -124,6 +124,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: leryko-release-${{ github.sha }}-${{ steps.interface.outputs.interface }}
+          include-hidden-files: true
           path: |
             dist/
             release-before.json

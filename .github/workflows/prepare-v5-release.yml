@@ -62,6 +62,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: leryko-candidate-${{ github.sha }}-${{ matrix.interface }}
+          include-hidden-files: true
           path: dist/
           retention-days: 90
           if-no-files-found: error

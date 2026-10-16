@@ -54,6 +54,16 @@ for(const [program,level,version] of [['kineo-fr','K2','default'],['kineo-es','E
   }
   await navigate(page,'/amis')
   await expect(page.locator('.person-row').filter({hasText:process.env.KINEO_E2E_FRIEND_USERNAME})).toBeVisible({timeout:20000})
+  const friend=page.locator('.person-row').filter({hasText:process.env.KINEO_E2E_FRIEND_USERNAME})
+  const duel=friend.locator('button.duel-button')
+  await expect(duel).toBeEnabled({timeout:20000})
+  await duel.click()
+  const challengeTab=page.getByRole('button',{name:program==='kineo-es'?/^Retos ·/:/^Défis ·/})
+  await expect(challengeTab).toHaveAttribute('aria-pressed','true',{timeout:20000})
+  const sent=page.locator('.challenge-row').first()
+  await expect(sent).toBeVisible({timeout:20000})
+  await sent.getByRole('button',{name:'Annuler',exact:true}).click()
+  await expect(sent).toHaveCount(0,{timeout:20000})
   if(program==='kineo-fr'){
    await navigate(page,'/bibliotheque')
    await page.getByRole('link',{name:/Document synthétique K2/}).click()

@@ -150,6 +150,8 @@ test('single-login authenticated critical journey',async({page,browser})=>{
  await login(friendPage,friendEmail,friendPassword)
  await program(friendPage,'kineo-fr','K2')
  await gotoStable(friendPage,'/amis')
+ const challengeTab=friendPage.getByRole('button',{name:/^Défis ·/})
+ if(await challengeTab.isVisible())await challengeTab.click()
  const incoming=friendPage.locator('.challenge-row').filter({has:friendPage.getByRole('button',{name:'Accepter'})}).first()
  if(await incoming.count())await incoming.getByRole('button',{name:'Accepter'}).click()
  await expect(friendPage.locator('.challenge-row').first()).toBeVisible({timeout:15000})
