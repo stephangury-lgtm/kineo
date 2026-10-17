@@ -16,7 +16,7 @@ Espagne et IFSI utilisent le pool cumulatif validé existant, avec au maximum di
 
 ## Réversibilité et déploiement
 
-Les changements visuels et la nouvelle navigation sont conditionnés à V5. Le sélecteur d’interface existant reste disponible. La compilation sans aperçu V5 conserve le parcours historique. Aucun déploiement en production n’est déclenché par la branche de travail ; la fusion reste soumise aux contrôles existants. L’acceptation connectée doit viser le commit final avant toute publication V5, conformément au workflow actuel.
+Les changements visuels et la nouvelle navigation sont conditionnés à V5. Le sélecteur d’interface est masqué dans la version V5 de production ; il reste disponible dans les compilations d’aperçu. Le retour arrière technique et les versions Cloudflare précédentes sont conservés. La compilation sans aperçu V5 conserve le parcours historique. Aucun déploiement en production n’est déclenché par la branche de travail ; la fusion reste soumise aux contrôles existants. L’acceptation connectée doit viser le commit final avant toute publication V5, conformément au workflow actuel.
 
 ## Recette
 
