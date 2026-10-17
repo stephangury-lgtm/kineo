@@ -5,7 +5,7 @@ import { getSafeCurriculumQuestions } from './curriculumQuizApi'
 import type { CurriculumAnswerPayload,CurriculumAnswerResult,CurriculumQuestionType,CurriculumQuizOption } from './programCatalogApi'
 
 export type FoundationMode='foundation'|'mix'
-export type FoundationScope={levelCode?:string;unitId?:string}
+export type FoundationScope={levelCode?:string;unitId?:string;resumeIds?:string[]}
 export type FoundationQuestion={
  id:string
  topic_id:string
@@ -110,6 +110,8 @@ export async function getFoundationQuestions(programId:ProgramId,mode:Foundation
   const level=levelByTopic.get(question.topic_id)
   return {...question,options:shuffle(question.options),level_code:level?.code??'?',level_order:level?.display_order??activeLevel.display_order,unit_id:unitByTopic.get(question.topic_id)??''}
  })
+ // Re-read current authorized content before restoring a local sequence.
+ if(scope.resumeIds){const byId=new Map(pool.map(question=>[question.id,question]));if(scope.resumeIds.every(id=>byId.has(id)))return scope.resumeIds.map(id=>byId.get(id)!);throw new Error(programId==='kineo-es'?'La sesión guardada ya no está disponible. Vuelve al inicio y reinicia la sesión.':'La séance sauvegardée n’est plus disponible. Reviens à l’accueil pour la recommencer.')}
  if(scope.unitId)return sampleBalancedByKey(pool,question=>question.topic_id,count)
  if(scope.levelCode)return sampleBalancedByUnit(pool,count)
  return sampleByMode(pool,activeLevel.display_order,mode,count)

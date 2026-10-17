@@ -17,3 +17,6 @@ test-results-rollback/
 staging-release/
 staging-deployments.json
 staging-rollback-target.json
+
+test-results-mobile-final/
+test-results-mobile-verified/

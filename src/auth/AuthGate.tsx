@@ -3,6 +3,8 @@ import type { Session } from '@supabase/supabase-js'
 import { supabase } from '../lib/supabase'
 import { PROGRAM_STORAGE_KEY, selectProgram, type ProgramId } from '../curriculum/programs'
 import LoginPage from '../pages/LoginPage'
+import {AuthenticatedStudent} from './AuthenticatedStudent'
+import {clearDailySnapshots} from '../learning/daily-session-storage'
 import ProfileSetupPage from '../pages/ProfileSetupPage'
 import ResetPasswordPage from '../pages/ResetPasswordPage'
 import { getCurrentProfile, markAppOpen, touchUserActivity, type StudentProfile } from '../services/profileApi'
@@ -99,6 +101,7 @@ export default function AuthGate({ children }: Props) {
     }).catch(() => { if (initialVersion === loadVersion.current) setLoading(false) })
 
     const { data } = supabase.auth.onAuthStateChange((event, nextSession) => {
+      if(event==='SIGNED_OUT')clearDailySnapshots()
       if (event === 'INITIAL_SESSION') return
       if (event === 'PASSWORD_RECOVERY') {
         ++loadVersion.current
@@ -180,5 +183,5 @@ export default function AuthGate({ children }: Props) {
     return <ProfileSetupPage current={profile} existingProgram={primaryProgram} onSaved={setProfile} />
   }
 
-  return <>{children}</>
+  return <AuthenticatedStudent.Provider value={session.user.id}>{children}</AuthenticatedStudent.Provider>
 }
