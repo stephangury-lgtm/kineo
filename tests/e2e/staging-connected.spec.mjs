@@ -9,10 +9,17 @@ async function navigate(page,path){
  // document reloads interrupt Auth/RPC requests and do not model tab navigation.
  const internal=page.locator(`a[href="${path}"]:visible`).first()
  if(page.url().startsWith(base+'/')&&await internal.count()){
-  await internal.click()
-  await expect(page).toHaveURL(base+path)
-  await expect(page.locator('#root')).toBeVisible()
-  return
+  try{
+   await internal.click({timeout:8000})
+   await expect(page).toHaveURL(base+path)
+   await expect(page.locator('#root')).toBeVisible()
+   return
+  }catch(error){
+   // A lazy route transition may remove a link from the previous screen.
+   // Only this obsolete locator falls back to direct navigation; real click
+   // failures (overlays, disabled controls, etc.) must still fail acceptance.
+   if(!String(error).includes('element was detached from the DOM'))throw error
+  }
  }
  for(let attempt=0;attempt<2;attempt++){
   try{await page.goto(base+path,{waitUntil:'domcontentloaded'});break}
