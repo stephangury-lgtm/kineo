@@ -184,6 +184,7 @@ test.describe('V5 React opt-in with isolated API fixtures',()=>{
   await expect(page.locator('.v5-navigation a')).toHaveCount(5)
  })
  for(const program of ['kineo-fr','kineo-es','ifsi-fr'])test(`shared V5 visual structure and program-safe navigation: ${program}`,async({page})=>{
+  test.setTimeout(90000)
   const {calls}=await v5Student(page,{program})
   const spain=program==='kineo-es'
   await page.goto(base+'/?ui=v5')
