@@ -23,3 +23,11 @@ Les changements visuels et la nouvelle navigation sont conditionnés à V5. Le s
 Tests de régression : échec de reprise, priorité de séance active, conservation d’une réponse/correction, fin de série après dix validations, absence de création à l’ouverture des cours, badges, communauté, partage, refus administrateur étudiant, retour à l’ancienne interface, rendu 320/390/1024 pixels et trois moteurs navigateur.
 
 Le déploiement distant de cette préversion n’a pas été effectué à ce stade. L’accès CLI Cloudflare local n’est pas authentifié ; ne pas contourner les contrôles de publication existants.
+
+## Résultats locaux du 17 octobre 2026
+
+- 26 tests unitaires réussis et invariants de source validés.
+- 60 scénarios V5 validés sur Chromium, WebKit et Firefox : 54 dans la passe générale, puis les neuf scénarios de séance (dont six corrigés dans le test) dans une passe dédiée sans échec ni reprise automatique. Les attentes synchronisent chaque nouvelle question ; le scénario de dix réponses dispose de 90 secondes pour couvrir toute la série sur les moteurs mobiles.
+- Vérifications visuelles sur les trois cursus, largeurs 320, 390 et 1024 pixels : cinq accès sur une ligne, bouton principal visible sans défilement, pas de débordement horizontal.
+- Compilations V5 et historique réussies. Les navigateurs utilisent des données fictives et des API interceptées : ces résultats ne remplacent pas la recette connectée sur staging avant publication.
+

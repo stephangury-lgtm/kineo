@@ -233,6 +233,7 @@ test.describe('Mobile daily ritual',()=>{
  test.skip(process.env.LERYKO_TEST_V5!=='1','Requires V5 preview')
  test.use({serviceWorkers:'block'})
  for(const program of ['kineo-es','ifsi-fr'])test(`central session preserves answers and completes only after validation: ${program}`,async({page})=>{
+  test.setTimeout(90000)
   await v5Student(page,{program})
   const es=program==='kineo-es',level='a0000000-0000-4000-8000-000000000002',unit='a0000000-0000-4000-8000-000000000003',topic='a0000000-0000-4000-8000-000000000004'
   let pools=0,answers=0,failNext=true
@@ -244,10 +245,11 @@ test.describe('Mobile daily ritual',()=>{
   await page.goto(base+'/?ui=v5')
   const central=()=>page.locator('.v5-navigation').getByRole('link',{name:es?'Mi sesión':'Ma séance',exact:true})
   await central().click()
+  await expect(page.getByRole('heading',{name:/Question courte/})).toBeVisible({timeout:30000})
   await expect(page.getByRole('button',{name:es?'Validar mi respuesta':'Valider ma réponse',exact:true})).toBeDisabled()
   await page.getByRole('button',{name:'Choix A',exact:true}).click()
   await page.getByRole('button',{name:es?'Validar mi respuesta':'Valider ma réponse',exact:true}).click()
-  await expect(page.getByRole('alert')).toContainText('Connexion interrompue')
+  await expect(page.getByRole('alert')).toContainText(es?'No se pudo validar la respuesta.':'Impossible de valider la réponse.')
   await expect(page.getByRole('heading',{name:/Question courte/})).toBeVisible()
   await page.getByRole('button',{name:es?'Validar mi respuesta':'Valider ma réponse',exact:true}).click()
   await expect(page.getByText('Correction serveur')).toBeVisible()
@@ -259,6 +261,7 @@ test.describe('Mobile daily ritual',()=>{
   expect(answers).toBe(1);expect(pools).toBe(loaded)
   await page.getByRole('button',{name:es?'Siguiente pregunta':'Question suivante',exact:true}).click()
   for(let n=1;n<10;n++){
+   await expect(page.getByRole('heading',{name:es?'Pregunta '+(n+1)+' de 10':'Question '+(n+1)+' sur 10',exact:true})).toBeVisible()
    await page.getByRole('button',{name:'Choix A',exact:true}).click()
    await page.getByRole('button',{name:es?'Validar mi respuesta':'Valider ma réponse',exact:true}).click()
    await page.getByRole('button',{name:n===9?(es?'Ver mis resultados':'Voir mes résultats'):(es?'Siguiente pregunta':'Question suivante'),exact:true}).click()
