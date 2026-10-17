@@ -1,13 +1,15 @@
 import {useEffect,useState,type ReactNode} from 'react'
 import {Link,Route,Routes,useLocation,type Location} from 'react-router-dom'
+import {useDailySession} from './DailySessionContext'
 
 // Keep one quiz mounted inside AuthGate while reading its supporting material.
 // Nothing is serialized: logout, refresh, version or program changes discard it.
 export default function QuizWorkspace({children}:{children:ReactNode}){
  const location=useLocation()
+ const {setResumePath}=useDailySession()
  const onQuiz=location.pathname==='/quiz'
  const [saved,setSaved]=useState<Location|null>(()=>onQuiz?location:null)
- useEffect(()=>{if(onQuiz)setSaved(location)},[location,onQuiz])
+ useEffect(()=>{if(onQuiz){setSaved(location);setResumePath(location.pathname+location.search)}},[location,onQuiz,setResumePath])
  const quizLocation=onQuiz?location:saved
  if(!quizLocation)return null
  const reading=['/parcours','/bibliotheque','/lesson/','/cours/','/document/'].some(prefix=>location.pathname.startsWith(prefix))
