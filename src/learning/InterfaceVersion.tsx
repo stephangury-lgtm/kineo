@@ -20,8 +20,8 @@ export function InterfaceVersionProvider({children}:{children:ReactNode}){
 export const useInterfaceVersion=()=>useContext(VersionContext)
 export function InterfaceVersionSwitch(){
  const {v5,available,setV5}=useInterfaceVersion()
- if(!available)return null
- const spain=getCurrentProgram().id==='kineo-es'
  const productionV5=(import.meta as ImportMeta&{env:Record<string,string>}).env.VITE_V5_DEFAULT==='true'
- return <div className="v5-preview-switch" role="group" aria-label={spain?"Versión de la interfaz":"Version de l’interface"}><span>{productionV5?(spain?'Puedes volver a la presentación anterior en cualquier momento.':'Tu peux revenir à l’ancienne présentation à tout moment.'):(spain?'Vista previa de la interfaz · las acciones usan el backend configurado':'Prévisualisation de l’interface · les actions utilisent le backend configuré')}</span><button type="button" aria-pressed={!v5} onClick={()=>setV5(false)}>{spain?'Interfaz anterior':'Interface actuelle'}</button><button type="button" aria-pressed={v5} onClick={()=>setV5(true)}>{spain?'Interfaz V5':'Interface V5'}</button></div>
+ if(!available||productionV5)return null
+ const spain=getCurrentProgram().id==='kineo-es'
+ return <div className="v5-preview-switch" role="group" aria-label={spain?"Versión de la interfaz":"Version de l’interface"}><span>{spain?'Vista previa de la interfaz · las acciones usan el backend configurado':'Prévisualisation de l’interface · les actions utilisent le backend configuré'}</span><button type="button" aria-pressed={!v5} onClick={()=>setV5(false)}>{spain?'Interfaz anterior':'Interface actuelle'}</button><button type="button" aria-pressed={v5} onClick={()=>setV5(true)}>{spain?'Interfaz V5':'Interface V5'}</button></div>
 }

@@ -39,10 +39,12 @@ test.describe('V5 React opt-in with isolated API fixtures',()=>{
   await page.getByRole('link',{name:'Progrès',exact:true}).click()
   await expect(page.getByRole('link',{name:'Ouvrir ma collection de badges'})).toHaveAttribute('href','/rewards')
   await expect(page.getByRole('main').getByText('⚡ 240 XP',{exact:true})).toBeVisible()
-  await page.getByRole('button',{name:'Interface actuelle',exact:true}).click()
+  if(process.env.LERYKO_TEST_V5_DEFAULT==='1')await page.goto(base+'/?ui=legacy')
+  else await page.getByRole('button',{name:'Interface actuelle',exact:true}).click()
   await expect(page.locator('.v5-navigation')).toHaveCount(0)
   await expect(page.locator('.bottom-nav').getByRole('link',{name:'Badges',exact:true})).toBeVisible()
-  await page.getByRole('button',{name:'Interface V5',exact:true}).click()
+  if(process.env.LERYKO_TEST_V5_DEFAULT==='1')await page.goto(base+'/?ui=v5')
+  else await page.getByRole('button',{name:'Interface V5',exact:true}).click()
   await expect(page.locator('.v5-navigation')).toBeVisible()
  })
  test('IFSI keeps its own curriculum without requesting France-only daily or library data',async({page})=>{
@@ -171,12 +173,13 @@ test.describe('V5 React opt-in with isolated API fixtures',()=>{
   await expect(page.getByRole('button',{name:'Copier le lien de l’application'})).toBeVisible()
   await expect(page.getByRole('link',{name:'Contenus',exact:true})).toHaveAttribute('href','#admin-content')
  })
- test('production V5 default permits a persistent return to the old interface',async({page})=>{
+ test('production hides the selector while retaining the technical fallback',async({page})=>{
   test.skip(process.env.LERYKO_TEST_V5_DEFAULT!=='1','Requires the V5-default release variant')
   await v5Student(page)
   await page.goto(base+'/')
   await expect(page.locator('.v5-navigation a')).toHaveCount(5)
-  await page.getByRole('button',{name:'Interface actuelle',exact:true}).click()
+  await expect(page.locator('.v5-preview-switch')).toHaveCount(0)
+  await page.goto(base+'/?ui=legacy')
   await page.reload()
   await expect(page.locator('.v5-navigation')).toHaveCount(0)
   await expect(page.locator('.bottom-nav').getByRole('link',{name:'Badges',exact:true})).toBeVisible()
@@ -219,7 +222,8 @@ test.describe('V5 React opt-in with isolated API fixtures',()=>{
   }
   await page.getByRole('link',{name:spain?'Abrir mi cuenta':'Ouvrir mon compte'}).click()
   await expect(page.getByRole('navigation',{name:spain?'Mi cuenta':'Mon compte'})).toBeVisible()
-  await expect(page.getByRole('button',{name:spain?'Interfaz anterior':'Interface actuelle',exact:true})).toBeVisible()
+  if(process.env.LERYKO_TEST_V5_DEFAULT==='1')await expect(page.locator('.v5-preview-switch')).toHaveCount(0)
+  else await expect(page.getByRole('button',{name:spain?'Interfaz anterior':'Interface actuelle',exact:true})).toBeVisible()
   if(program!=='kineo-fr'){
    await page.goto(base+'/revision/historique')
    await expect(page).toHaveURL(base+'/stats')
