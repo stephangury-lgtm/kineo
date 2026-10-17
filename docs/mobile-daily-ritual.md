@@ -2,7 +2,7 @@
 
 ## Comportement
 
-L’accueil V5 expose une action principale et deux raccourcis : cours et révision libre. La barre conserve cinq accès sur une seule ligne : Parcours, Amis, Ma séance, Progrès, Profil. Le bouton central ouvre ou reprend une séance ; le logo ramène à l’accueil. Les libellés sont adaptés au cursus Espagne. La flamme et les badges proviennent des services existants ; aucune valeur fictive n’est introduite.
+L’accueil V5 expose une action principale et deux raccourcis : cours et révision libre. La barre conserve cinq accès sur une seule ligne : Parcours, Amis, Ma séance, Progrès, Profil. Le bouton central ouvre ou reprend une séance ; le logo ramène à l’accueil. Les libellés sont adaptés au cursus Espagne. L’invitation aux rappels reste disponible dans le profil et ne précède plus la séance sur l’accueil V5. La flamme et les badges proviennent des services existants ; aucune valeur fictive n’est introduite.
 
 France conserve les séances et le défi quotidien côté serveur. Une séance déjà montée est reprise avec son URL exacte afin de conserver un choix non validé ou une correction déjà reçue. Sans séance en mémoire, le lecteur vérifie la séance serveur avant de proposer un nouveau défi ; un échec de lecture ne crée pas de séance supplémentaire.
 

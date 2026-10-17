@@ -196,7 +196,7 @@ test.describe('V5 React opt-in with isolated API fixtures',()=>{
    const geometry=await nav.evaluate(el=>({rows:new Set([...el.querySelectorAll('a')].map(a=>Math.round(a.getBoundingClientRect().bottom))).size,overflow:document.documentElement.scrollWidth>window.innerWidth,radius:getComputedStyle(document.querySelector('.v5-next-action')).borderRadius}))
    expect(geometry).toEqual({rows:1,overflow:false,radius:'22px'})
    const action=await page.locator('.v5-next-action .primary-button').boundingBox();const bar=await nav.boundingBox();expect(action.y+action.height).toBeLessThan(bar.y)
-   if(width===390)await page.screenshot({path:`test-results/ritual-${program}.png`})
+   if(width===390)await page.screenshot({path:`test-results/ritual-${test.info().project.name}-${program}.png`})
   }
   await page.locator('.v5-navigation').getByRole('link',{name:spain?'Progreso':'Progrès',exact:true}).click()
   await expect(page.getByRole('link',{name:spain?'Abrir mi colección':'Ouvrir ma collection de badges'})).toHaveAttribute('href','/rewards')
@@ -235,17 +235,20 @@ test.describe('Mobile daily ritual',()=>{
  for(const program of ['kineo-es','ifsi-fr'])test(`central session preserves answers and completes only after validation: ${program}`,async({page})=>{
   await v5Student(page,{program})
   const es=program==='kineo-es',level='a0000000-0000-4000-8000-000000000002',unit='a0000000-0000-4000-8000-000000000003',topic='a0000000-0000-4000-8000-000000000004'
-  let pools=0,answers=0
+  let pools=0,answers=0,failNext=true
   await page.route('**/rest/v1/academic_levels?**',route=>{const id=new URL(route.request().url()).searchParams.get('id');const value={id:level,code:es?'ES1':'S1',display_order:1};return route.fulfill({json:id?value:[value]})})
   await page.route('**/rest/v1/curriculum_units?**',route=>route.fulfill({json:[{id:unit,academic_level_id:level,program_id:program,curriculum_version:es?'default':'2009',name:'Matière test',code:'TEST',display_order:1,unit_type:'module',translation_mode:'none',description:null,content_language:es?'es':'fr'}]}))
   await page.route('**/rest/v1/curriculum_topics?**',route=>route.fulfill({json:[{id:topic,unit_id:unit,name:'Thème test',display_order:1}]}))
   await page.route('**/rest/v1/rpc/get_curriculum_quiz_questions_v1**',route=>{pools++;return route.fulfill({json:Array.from({length:10},(_,n)=>({id:'q'+n,topic_id:topic,question_text:'Question courte '+n,question_type:'mcq',options:[{text:'Choix A'},{text:'Choix B'}],difficulty:1,display_order:n,metadata:{}}))})})
-  await page.route('**/rest/v1/rpc/submit_curriculum_topic_answer_v3',route=>{answers++;return route.fulfill({json:{correct:true,correct_answer:'Choix A',explanation:'Correction serveur',xp_earned:0}})})
+  await page.route('**/rest/v1/rpc/submit_curriculum_topic_answer_v3',route=>{if(failNext){failNext=false;return route.fulfill({status:503,json:{message:'Connexion interrompue'}})}answers++;return route.fulfill({json:{correct:true,correct_answer:'Choix A',explanation:'Correction serveur',xp_earned:0}})})
   await page.goto(base+'/?ui=v5')
   const central=()=>page.locator('.v5-navigation').getByRole('link',{name:es?'Mi sesión':'Ma séance',exact:true})
   await central().click()
   await expect(page.getByRole('button',{name:es?'Validar mi respuesta':'Valider ma réponse',exact:true})).toBeDisabled()
   await page.getByRole('button',{name:'Choix A',exact:true}).click()
+  await page.getByRole('button',{name:es?'Validar mi respuesta':'Valider ma réponse',exact:true}).click()
+  await expect(page.getByRole('alert')).toContainText('Connexion interrompue')
+  await expect(page.getByRole('heading',{name:/Question courte/})).toBeVisible()
   await page.getByRole('button',{name:es?'Validar mi respuesta':'Valider ma réponse',exact:true}).click()
   await expect(page.getByText('Correction serveur')).toBeVisible()
   const loaded=pools

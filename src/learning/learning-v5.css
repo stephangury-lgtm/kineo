@@ -48,3 +48,6 @@
 .v5-session-tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;font-size:.82rem}.v5-session-tools a{min-height:44px;display:inline-flex;align-items:center;text-decoration:underline}
 @media(max-width:600px){.v5-enabled .topbar{padding:10px 12px;gap:8px}.v5-enabled .brand-lockup{min-width:0;gap:0}.v5-enabled .brand-context{display:none}.v5-enabled .brand-logo{max-width:125px;height:auto}.v5-enabled .topbar-actions{gap:6px;flex-wrap:nowrap}.v5-enabled .header-xp-badge{font-size:.68rem;padding:6px}.v5-preview-switch>span{display:none}.v5-preview-switch{justify-content:center;padding:6px 10px}.v5-enabled .content{margin-top:14px}.daily-ritual .ritual-hero{padding:20px}.v5-enabled .v5-context{font-size:.8rem}}
 @media(max-width:360px){.v5-enabled .brand-logo{max-width:103px}.v5-enabled .header-xp-badge{display:none}.daily-ritual .ritual-hero{padding:18px}.app-shell.v5-enabled>.v5-navigation>a{font-size:11px;letter-spacing:-.3px}}
+
+.v5-enabled .daily-ritual .ritual-hero .primary-button{background:#fff;color:#174d9b}
+.v5-enabled .daily-ritual .ritual-hero .eyebrow{color:#e3edff}
