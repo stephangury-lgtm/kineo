@@ -6,11 +6,11 @@ L’accueil V5 expose une action principale et deux raccourcis : cours et révis
 
 France conserve les séances et le défi quotidien côté serveur. Une séance déjà montée est reprise avec son URL exacte afin de conserver un choix non validé ou une correction déjà reçue. Sans séance en mémoire, le lecteur vérifie la séance serveur avant de proposer un nouveau défi ; un échec de lecture ne crée pas de séance supplémentaire.
 
-Espagne et IFSI utilisent le pool cumulatif validé existant, avec au maximum dix questions et un démarrage direct. La séance reste montée pendant les détours vers les cours, les PDF ou les autres onglets. Le bilan et l’état « objectif accompli » n’apparaissent qu’après validation de la série. Les réponses sont toujours validées par le service existant.
+Espagne et IFSI utilisent le pool cumulatif validé existant, avec au maximum dix questions et un démarrage direct. La séance reste montée pendant les détours vers les cours, les PDF ou les autres onglets. Un point de reprise dans sessionStorage conserve aussi la séquence, le choix et la correction reçue après actualisation. La clé sépare compte, cursus, niveau, référentiel et journée locale. Avant de reprendre, les questions sont relues dans le pool autorisé courant. Aucun point de reprise ne soumet une réponse ni n’attribue des points. La déconnexion efface ces points de reprise. Le bilan et l’état « objectif accompli » n’apparaissent qu’après validation de la série. Les réponses sont toujours validées par le service existant.
 
 ## Limites explicites
 
-- Pour Espagne et IFSI, la reprise est en mémoire dans l’onglet : une actualisation, une fermeture, une déconnexion, un changement de cursus ou d’interface l’effacent. Les réponses déjà envoyées restent gérées par le serveur. Cette modification ne crée pas de défi quotidien persistant, de compteur de défis ou de reprise multi-appareil pour ces cursus.
+- Pour Espagne et IFSI, la reprise après actualisation fonctionne dans le même onglet pendant la journée locale, si sessionStorage est disponible. Fermer l’onglet ou se déconnecter efface cette reprise. La reprise ne se synchronise pas entre appareils. Les réponses déjà envoyées restent gérées par le serveur. Un contenu retiré des accès provoque une erreur explicite avec possibilité de recommencer ; il n’est pas affiché depuis le stockage local. Les données locales ne constituent pas une preuve de progression serveur.
 - L’indication 8–10 minutes est une estimation ; aucun arrêt brutal ni garantie de durée maximale n’est imposé. Les séries comprennent au maximum dix questions, mais leur difficulté et le rythme de lecture font varier le temps réel.
 - Pas de modification des contenus, PDF, comptes, règles RLS, fonctions SQL, migrations ou mécanismes de récompense.
 
