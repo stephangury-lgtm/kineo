@@ -9,7 +9,7 @@ import {DailySessionProvider} from './learning/DailySessionContext'
 import CurriculumSessionWorkspace from './learning/CurriculumSessionWorkspace'
 import ProgressHubPage from './learning/ProgressHubPage'
 import './learning/learning-v5.css'
-import { Suspense, lazy } from 'react'
+import { Suspense, lazy, useEffect } from 'react'
 import { Link, NavLink, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import AdminGate from './auth/AdminGate'
 import AuthGate from './auth/AuthGate'
@@ -68,6 +68,7 @@ export default function App(){
 function AuthenticatedApp(){
  const {v5}=useInterfaceVersion()
  const {pathname}=useLocation()
+ useEffect(()=>{window.scrollTo({top:0,left:0,behavior:'instant'})},[pathname])
  const program=getCurrentProgram(),isKineoFrance=program.id==='kineo-fr',isSpain=program.id==='kineo-es'
  const navItems=isKineoFrance
   ?[{to:'/',label:'Accueil',icon:'⌂',end:true},{to:'/parcours',label:'Parcours',icon:'▦'},{to:'/revision',label:'Réviser',icon:'✦'},{to:'/stats',label:'Stats',icon:'↗'},{to:'/rewards',label:'Badges',icon:'◆'}]
