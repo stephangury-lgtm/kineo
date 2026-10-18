@@ -1,0 +1,347 @@
+{
+  "checkedAt": "2026-10-18",
+  "project": "Kineo production",
+  "summary": {
+    "new": 23,
+    "reviewed": 25,
+    "resolved": 96
+  },
+  "pending": [
+    {
+      "id": "b4877a66-cc39-425c-9d30-c9ddce7bf3cb",
+      "kind": "bug",
+      "status": "reviewed",
+      "page_path": "/revision?mode=subject&session=8d1c1449-78df-4e61-ab88-eb7673e97e63&subjectId=4c1b5c12-f7ca-46d0-ae6e-e4a761a7c17e&subject=Physiologie",
+      "created_at": "2026-10-07 19:53:33.040105+00"
+    },
+    {
+      "id": "a0ed3988-5b08-4282-b558-d3cc71c14ac1",
+      "kind": "bug",
+      "status": "reviewed",
+      "page_path": "/parcours",
+      "created_at": "2026-10-07 21:49:27.326009+00"
+    },
+    {
+      "id": "6b7eac05-f8fa-4094-ae18-ef0bf2cd641f",
+      "kind": "suggestion",
+      "status": "reviewed",
+      "page_path": "/stats",
+      "created_at": "2026-10-07 21:50:43.547587+00"
+    },
+    {
+      "id": "bd70c078-2842-4f64-8a75-b71e94b5c887",
+      "kind": "suggestion",
+      "status": "reviewed",
+      "page_path": "/revision",
+      "created_at": "2026-10-07 22:08:10.188223+00"
+    },
+    {
+      "id": "8d0c788c-c3dd-4262-a859-78516892d4c2",
+      "kind": "bug",
+      "status": "reviewed",
+      "page_path": "/stats",
+      "created_at": "2026-10-07 22:39:22.699568+00"
+    },
+    {
+      "id": "13aae8e2-5391-406e-a054-0393f7d8974d",
+      "kind": "bug",
+      "status": "reviewed",
+      "page_path": "/revision",
+      "created_at": "2026-10-07 22:47:50.013596+00"
+    },
+    {
+      "id": "9ebb9ee5-3fd6-4ab9-b304-7838d1c60387",
+      "kind": "bug",
+      "status": "reviewed",
+      "page_path": "/profil",
+      "created_at": "2026-10-07 22:50:30.061644+00"
+    },
+    {
+      "id": "1b6868c4-b0f2-4136-bd4b-03b3b03aca8a",
+      "kind": "bug",
+      "status": "reviewed",
+      "page_path": "/revision",
+      "created_at": "2026-10-07 22:55:50.201504+00"
+    },
+    {
+      "id": "6cfd3898-bb19-4a08-a95d-684b8f823445",
+      "kind": "content",
+      "status": "reviewed",
+      "page_path": "/revision?mode=daily",
+      "created_at": "2026-10-08 05:49:15.472116+00"
+    },
+    {
+      "id": "fa830214-e289-40d8-a836-a7ed24af04f3",
+      "kind": "bug",
+      "status": "reviewed",
+      "page_path": "/revision?mode=daily",
+      "created_at": "2026-10-08 05:49:45.643517+00"
+    },
+    {
+      "id": "0511e982-1122-4eba-b581-c5dbbaa5b2dc",
+      "kind": "bug",
+      "status": "reviewed",
+      "page_path": "/",
+      "created_at": "2026-10-08 05:51:00.26639+00"
+    },
+    {
+      "id": "74f8cff3-0e2e-48d8-bd0f-904ba66e82c0",
+      "kind": "bug",
+      "status": "reviewed",
+      "page_path": "/stats",
+      "created_at": "2026-10-08 05:52:31.271892+00"
+    },
+    {
+      "id": "c1322e6e-1a0e-4d03-b4c4-16fe9fcaa9f1",
+      "kind": "bug",
+      "status": "reviewed",
+      "page_path": "/rewards",
+      "created_at": "2026-10-08 06:11:11.154465+00"
+    },
+    {
+      "id": "ecee5a63-d575-48ca-b0af-e7e15940d69d",
+      "kind": "bug",
+      "status": "reviewed",
+      "page_path": "/parcours",
+      "created_at": "2026-10-08 07:40:56.626405+00"
+    },
+    {
+      "id": "404044e5-5732-4286-b67a-cf977720dcaf",
+      "kind": "content",
+      "status": "reviewed",
+      "page_path": "/defi-cursus/2cd6bfe2-cf18-4595-8d3b-27203d1005d2",
+      "created_at": "2026-10-08 08:42:42.380282+00"
+    },
+    {
+      "id": "163ca04d-f763-4ccd-9fc4-e05732030206",
+      "kind": "bug",
+      "status": "reviewed",
+      "page_path": "/quiz",
+      "created_at": "2026-10-08 15:31:48.203926+00"
+    },
+    {
+      "id": "9ecabd46-ade5-499e-864e-5e6f9476b67f",
+      "kind": "bug",
+      "status": "reviewed",
+      "page_path": "/quiz",
+      "created_at": "2026-10-08 15:33:38.249177+00"
+    },
+    {
+      "id": "f78c0348-079b-43e8-8975-8ea0038aa25c",
+      "kind": "bug",
+      "status": "reviewed",
+      "page_path": "/quiz?mode=visual&session=01701686-35d2-4f25-9061-f0bb8a95f3be",
+      "created_at": "2026-10-08 15:37:59.078796+00"
+    },
+    {
+      "id": "5fe700c3-13aa-4e30-b924-dbb558f19018",
+      "kind": "bug",
+      "status": "reviewed",
+      "page_path": "/quiz?mode=weak&session=66e9b64d-b4d4-4d3f-b2cc-91072dbc7ec3",
+      "created_at": "2026-10-08 15:40:59.495754+00"
+    },
+    {
+      "id": "0dd0afd3-2991-44b6-be29-7794887a565f",
+      "kind": "bug",
+      "status": "reviewed",
+      "page_path": "/revision/historique",
+      "created_at": "2026-10-08 16:30:49.446952+00"
+    },
+    {
+      "id": "07432f08-57e9-4bae-897e-db2757c75bf6",
+      "kind": "suggestion",
+      "status": "reviewed",
+      "page_path": "/revision",
+      "created_at": "2026-10-08 16:31:35.915906+00"
+    },
+    {
+      "id": "20920e8e-0681-4784-81ba-929c11c04f87",
+      "kind": "suggestion",
+      "status": "reviewed",
+      "page_path": "/parcours",
+      "created_at": "2026-10-08 16:36:11.054819+00"
+    },
+    {
+      "id": "f324ab28-981f-46c2-8ae3-eb6b2edccdab",
+      "kind": "content",
+      "status": "reviewed",
+      "page_path": "/cours/83283e28-c0df-4d30-ba44-36f1b9a23fe7",
+      "created_at": "2026-10-08 16:37:13.346445+00"
+    },
+    {
+      "id": "feaed2fc-a08b-4e00-b074-1800221bd236",
+      "kind": "bug",
+      "status": "reviewed",
+      "page_path": "/revision",
+      "created_at": "2026-10-08 16:40:22.275536+00"
+    },
+    {
+      "id": "74d5fecf-653a-413e-b413-9345adea1b6d",
+      "kind": "suggestion",
+      "status": "reviewed",
+      "page_path": "/rewards",
+      "created_at": "2026-10-08 16:59:38.239274+00"
+    },
+    {
+      "id": "74122a48-0a9d-4bb8-9269-5f4bc8961590",
+      "kind": "suggestion",
+      "status": "new",
+      "page_path": "/rewards",
+      "created_at": "2026-10-08 17:04:46.767775+00"
+    },
+    {
+      "id": "8e9ebbfe-acf1-49cf-93ff-0e5d6cba30a7",
+      "kind": "content",
+      "status": "new",
+      "page_path": "/quiz?mode=lesson&session=12aa0339-71dc-4164-9a40-c98e8cfb66eb",
+      "created_at": "2026-10-08 19:38:36.775502+00"
+    },
+    {
+      "id": "183c2c3d-9470-4e7a-b71b-d2dd61b0d4cf",
+      "kind": "content",
+      "status": "new",
+      "page_path": "/quiz?mode=lesson&session=12aa0339-71dc-4164-9a40-c98e8cfb66eb",
+      "created_at": "2026-10-08 19:42:56.558691+00"
+    },
+    {
+      "id": "95afefd0-b811-47cb-b3f8-cb329b65018e",
+      "kind": "content",
+      "status": "new",
+      "page_path": "/quiz?mode=lesson&session=12aa0339-71dc-4164-9a40-c98e8cfb66eb",
+      "created_at": "2026-10-08 19:44:15.269774+00"
+    },
+    {
+      "id": "4e96a875-9445-4229-ae0b-08b034376036",
+      "kind": "suggestion",
+      "status": "new",
+      "page_path": "/quiz?mode=lesson&session=12aa0339-71dc-4164-9a40-c98e8cfb66eb",
+      "created_at": "2026-10-08 19:45:37.481269+00"
+    },
+    {
+      "id": "46e4ed77-fc41-4edd-9088-8d167d8565cb",
+      "kind": "suggestion",
+      "status": "new",
+      "page_path": "/session/12aa0339-71dc-4164-9a40-c98e8cfb66eb",
+      "created_at": "2026-10-08 19:47:24.349669+00"
+    },
+    {
+      "id": "62d5b1bf-ee7c-4508-95b4-6d8d7f2d636d",
+      "kind": "suggestion",
+      "status": "new",
+      "page_path": "/session/12aa0339-71dc-4164-9a40-c98e8cfb66eb",
+      "created_at": "2026-10-08 19:53:40.471873+00"
+    },
+    {
+      "id": "943d79a5-0184-43ed-9850-957dd518bb65",
+      "kind": "suggestion",
+      "status": "new",
+      "page_path": "/notifications",
+      "created_at": "2026-10-08 19:54:33.652165+00"
+    },
+    {
+      "id": "15efe740-6ec5-41bb-9d5d-3cdfbddd7cea",
+      "kind": "suggestion",
+      "status": "new",
+      "page_path": "/quiz?mode=lesson&session=b5102543-a408-414a-9371-7898cf15e4e1",
+      "created_at": "2026-10-08 20:01:22.742814+00"
+    },
+    {
+      "id": "e9fe573e-97d6-405d-9c7d-74b0d8b2928c",
+      "kind": "suggestion",
+      "status": "new",
+      "page_path": "/",
+      "created_at": "2026-10-08 20:03:17.497025+00"
+    },
+    {
+      "id": "42127b48-e7a0-4aca-8470-e2689755d6f1",
+      "kind": "content",
+      "status": "new",
+      "page_path": "/quiz?mode=resume&session=b5102543-a408-414a-9371-7898cf15e4e1",
+      "created_at": "2026-10-08 20:06:47.130638+00"
+    },
+    {
+      "id": "9bea878e-fb5c-4832-8a77-08a2500b22d8",
+      "kind": "content",
+      "status": "new",
+      "page_path": "/quiz?mode=resume&session=b5102543-a408-414a-9371-7898cf15e4e1",
+      "created_at": "2026-10-08 20:08:39.363267+00"
+    },
+    {
+      "id": "20b8bf23-83f8-4cbc-ad61-d22596ddd39b",
+      "kind": "content",
+      "status": "new",
+      "page_path": "/quiz?mode=resume&session=b5102543-a408-414a-9371-7898cf15e4e1",
+      "created_at": "2026-10-08 20:10:54.993606+00"
+    },
+    {
+      "id": "8be27859-b399-481a-9425-d5ebfbf5923d",
+      "kind": "bug",
+      "status": "new",
+      "page_path": "/parcours",
+      "created_at": "2026-10-09 17:27:13.092218+00"
+    },
+    {
+      "id": "18b4f11d-6aa3-4de2-911e-ea4873c9a416",
+      "kind": "bug",
+      "status": "new",
+      "page_path": "/fondamentaux?mode=mix",
+      "created_at": "2026-10-12 10:04:44.366545+00"
+    },
+    {
+      "id": "72af5079-6297-465a-9cc0-c6492881a915",
+      "kind": "suggestion",
+      "status": "new",
+      "page_path": "/progres",
+      "created_at": "2026-10-16 18:48:40.213496+00"
+    },
+    {
+      "id": "e9822876-c356-40f6-be85-4fb48869ca2c",
+      "kind": "bug",
+      "status": "new",
+      "page_path": "/document/b0faff17-ae7b-4136-89f7-57df78d6e62b",
+      "created_at": "2026-10-16 18:51:29.327122+00"
+    },
+    {
+      "id": "59bd279f-2cfa-4fc0-85cb-9edeef5cfba5",
+      "kind": "bug",
+      "status": "new",
+      "page_path": "/parcours",
+      "created_at": "2026-10-16 18:52:06.323244+00"
+    },
+    {
+      "id": "fb7c5c44-954f-4785-975a-8703cf0ddd59",
+      "kind": "suggestion",
+      "status": "new",
+      "page_path": "/quiz?mode=daily",
+      "created_at": "2026-10-17 11:56:55.484274+00"
+    },
+    {
+      "id": "96071eff-6bc9-4239-95fb-ecff692b23c6",
+      "kind": "bug",
+      "status": "new",
+      "page_path": "/quiz?mode=daily",
+      "created_at": "2026-10-17 11:57:34.809849+00"
+    },
+    {
+      "id": "2ec8cc27-46c1-4e5d-bd78-642e98b93e7a",
+      "kind": "bug",
+      "status": "new",
+      "page_path": "/progres",
+      "created_at": "2026-10-17 11:58:21.773663+00"
+    },
+    {
+      "id": "ec2907a7-5922-4947-80ef-2b388fc4a137",
+      "kind": "bug",
+      "status": "new",
+      "page_path": "/amis",
+      "created_at": "2026-10-17 11:59:06.921628+00"
+    },
+    {
+      "id": "e3183b47-a403-4574-88bc-7a58ece7928b",
+      "kind": "suggestion",
+      "status": "new",
+      "page_path": "/profil",
+      "created_at": "2026-10-17 13:25:08.195074+00"
+    }
+  ]
+}

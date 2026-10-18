@@ -3,6 +3,10 @@
 .profile-stack .profile-hero,.profile-stack .card{box-sizing:border-box}
 .profile-stack .profile-chip,.profile-stack .revision-summary-year{min-height:32px}
 .profile-stack .auth-form .primary-button{min-height:44px}
+.profile-stack .profile-hero{min-height:0;padding:16px 20px;gap:8px}
+.profile-stack .profile-hero h1{font-size:1.4rem;margin:4px 0}
+.profile-stack .profile-hero p{margin:0;font-size:.9rem;line-height:1.4}
+.profile-stack .profile-hero .hero-orbit{display:none}
 @media(max-width:620px){
  .profile-stack .profile-hero{padding:18px 16px}
  .profile-stack .profile-photo-wrap{align-items:center}
