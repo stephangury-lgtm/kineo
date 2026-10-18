@@ -15,10 +15,13 @@
     "check:security": "node scripts/check-security-contracts.mjs",
     "test:unit": "node --test tests/unit/curriculum-quiz-api.test.cjs tests/unit/*.test.mjs",
     "release:prepare": "node scripts/build-release-candidates.mjs",
-    "test:rollback": "playwright test --config=playwright.rollback.config.mjs"
+    "test:rollback": "playwright test --config=playwright.rollback.config.mjs",
+    "prebuild": "node scripts/prepare-pdf-assets.mjs",
+    "predev": "node scripts/prepare-pdf-assets.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "2.117.2",
+    "pdfjs-dist": "6.4.299",
     "qrcode": "1.5.4",
     "react": "19.3.0",
     "react-dom": "19.3.0",

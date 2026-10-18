@@ -22,6 +22,7 @@ export default defineConfig(({mode})=>{
       output: {
         manualChunks(id) {
           if (!id.includes('node_modules')) return
+          if (id.includes('/pdfjs-dist/')) return 'vendor-pdfjs'
           if (id.includes('/react/') || id.includes('/react-dom/') || id.includes('/react-router') || id.includes('/scheduler/')) return 'vendor-react'
           if (id.includes('/@supabase/')) return 'vendor-supabase'
         },

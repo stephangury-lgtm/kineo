@@ -203,7 +203,7 @@ test.describe('private course documents',()=>{
   })
   await page.goto(base+'/document/'+documentId)
   await expect(page.getByRole('heading',{name:'Protected anatomy course'})).toBeVisible()
-  await expect(page.locator('iframe')).toHaveAttribute('src',/\/storage\/v1\/object\/sign\/documents\//)
+  await expect(page.locator('.course-pdf-reader')).toBeVisible()
   await expect(page.getByRole('link',{name:'Ouvrir le PDF'})).not.toHaveAttribute('href',/google|\/public\//)
   await page.getByRole('button',{name:'Actualiser l’accès'}).click()
   await expect.poll(()=>signedRequests).toBe(2)

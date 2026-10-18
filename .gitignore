@@ -1,4 +1,7 @@
 node_modules
+public/pdf-assets/
+test-results-feedback-recheck/
+test-results-real-pdf/
 dist
 .env
 .env.local
