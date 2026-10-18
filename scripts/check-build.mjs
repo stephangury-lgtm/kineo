@@ -28,6 +28,7 @@ if(!sw.includes('version.json')) throw new Error('Service worker does not handle
 
 const html=fs.readFileSync(path.join(dist,'index.html'),'utf8')
 if(!/<div\s+id=["']root["'][^>]*>/.test(html)) throw new Error('Production index is missing React root')
+if(html.includes('vendor-pdfjs-'))throw new Error('PDF renderer must remain lazy-loaded outside the initial app shell')
 
 const assets=path.join(dist,'assets')
 const jsFiles=fs.readdirSync(assets).filter(file=>file.endsWith('.js'))
@@ -35,7 +36,8 @@ const maxChunkBytes=320*1024
 const maxEntryBytes=100*1024
 for(const file of jsFiles){
  const size=fs.statSync(path.join(assets,file)).size
- if(size>maxChunkBytes) throw new Error(`JavaScript chunk budget exceeded: ${file} is ${(size/1024).toFixed(1)} kB (limit 320 kB)`)
+ const budget=file.startsWith('vendor-pdfjs-')?480*1024:maxChunkBytes
+ if(size>budget) throw new Error(`JavaScript chunk budget exceeded: ${file} is ${(size/1024).toFixed(1)} kB (limit ${budget/1024} kB)`)
  if(file.startsWith('index-')&&size>maxEntryBytes) throw new Error(`Initial app bundle budget exceeded: ${file} is ${(size/1024).toFixed(1)} kB (limit 100 kB)`)
 }
 
