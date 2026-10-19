@@ -14,6 +14,7 @@ export async function v5Student(page,{program='kineo-fr',active=null,failActive=
   if(path.endsWith('/get_content_quality_summary_v1'))return send({years:[],quality:{published_total:0,published_without_source:0,published_incomplete_source:0,visual_quarantined:0},feedback:{new_feedback:0,reviewed_feedback:0,resolved_feedback:0},documents:{total:0,validated:0}})
   if(path.endsWith('/get_content_review_queue_v4'))return send({counts:{review:0,validated:0,published:0,quarantined_visual:0},questions:[]})
   if(path==='/rest/v1/profile_programs')return send([{program_id:program,academic_level_id:level,is_primary:true,curriculum_version:program==='ifsi-fr'?'2009':'default',academic_levels:{code:program==='ifsi-fr'?'S1':program==='kineo-es'?'ES1':'K2'}}])
+  if(path.endsWith('/get_active_daily_revision_session_v1'))return send(null)
   if(path.endsWith('/get_active_revision_session_v1'))return state.failActive?send({message:'Fixture failure'},500):send(state.active)
   if(path.endsWith('/get_user_dashboard_v3'))return send({daily:{completed:state.dailyDone,question_count:10}})
   if(path.endsWith('/get_revision_mode_availability_v1'))return send({total_questions:10,can_weak:false,can_visual:false,can_exam:false})
