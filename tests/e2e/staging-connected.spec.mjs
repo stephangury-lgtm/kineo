@@ -1,36 +1,13 @@
+import {navigateConnected} from '../helpers/connected-navigation.mjs'
 import {test,expect} from '@playwright/test'
 test.describe.configure({retries:0})
 test.use({trace:'off',video:'off',screenshot:'off'})
 test.skip(process.env.LERYKO_STAGING_ACCEPTANCE!=='1','Requires isolated staging accounts')
 const base=process.env.KINEO_E2E_BASE_URL
 const backend='https://cyzdivbdgpvhwpmikeqh.supabase.co'
-async function navigate(page,path){
- // Exercise the application's router when its link is available. Repeated
- // document reloads interrupt Auth/RPC requests and do not model tab navigation.
- const internal=page.locator(`a[href="${path}"]:visible`).first()
- if(page.url().startsWith(base+'/')&&await internal.count()){
-  try{
-   await internal.click({timeout:8000})
-   await expect(page).toHaveURL(base+path)
-   await expect(page.locator('#root')).toBeVisible()
-   return
-  }catch(error){
-   // A lazy route transition may remove a link from the previous screen.
-   // Only this obsolete locator falls back to direct navigation; real click
-   // failures (overlays, disabled controls, etc.) must still fail acceptance.
-   if(!String(error).includes('element was detached from the DOM'))throw error
-  }
- }
- for(let attempt=0;attempt<2;attempt++){
-  try{await page.goto(base+path,{waitUntil:'domcontentloaded'});break}
-  catch(error){if(attempt||!/NS_BINDING_ABORTED|interrupted by another navigation/.test(String(error)))throw error}
- }
- // Background profile/realtime requests may remain active. The caller checks
- // the actual screen and content rather than waiting for global network silence.
- await expect(page.locator('#root')).toBeVisible()
-}
+const navigate=(page,path)=>navigateConnected(page,base,path)
 async function login(page,email=process.env.KINEO_E2E_EMAIL,password=process.env.KINEO_E2E_PASSWORD){
- await navigate(page,'/')
+ await page.goto(base+'/',{waitUntil:'domcontentloaded'})
  await page.getByLabel('E-mail').fill(email)
  await page.locator('input[type=password]').fill(password)
  await page.getByRole('button',{name:'Se connecter',exact:true}).click()
