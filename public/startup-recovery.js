@@ -2,11 +2,18 @@
 (function () {
   var key = 'leryko_startup_recovery_at';
   var recovering = false;
+  var leaving = false;
+  // A failed asset can be the result of leaving the document. Do not let the
+  // asynchronous cache cleanup send the next navigation back to this page.
+  window.addEventListener('beforeunload', function () { leaving = true; });
+  window.addEventListener('pagehide', function () { leaving = true; });
+  window.addEventListener('pageshow', function () { leaving = false; });
   function recover() {
-    if (recovering || navigator.onLine === false) return;
+    if (recovering || leaving || navigator.onLine === false) return;
     var now = Date.now();
     // The URL marker also prevents reload loops when iOS blocks sessionStorage.
-    var url = new URL(location.href);
+    var sourceUrl = location.href;
+    var url = new URL(sourceUrl);
     var lastRecovery = Number(url.searchParams.get('recovery') || 0);
     if (lastRecovery && now - lastRecovery < 120000) return;
     try {
@@ -26,6 +33,10 @@
       }));
     }
     Promise.all(cleanup.map(function (operation) { return operation.catch(function () { return null; }); })).then(function () {
+      if (leaving || location.href !== sourceUrl) {
+        recovering = false;
+        return;
+      }
       url.searchParams.set('recovery', String(now));
       location.replace(url.toString());
     });
