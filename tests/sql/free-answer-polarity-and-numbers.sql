@@ -1,0 +1,32 @@
+BEGIN;
+\ir ../../supabase/migrations/20261019115826_guard_free_answer_polarity_and_numbers.sql
+DO $tests$ BEGIN
+IF public.quiz_text_equivalent_v1('externe','externe') IS DISTINCT FROM true THEN RAISE EXCEPTION 'Grading regression case 1'; END IF;
+IF public.quiz_text_equivalent_v1('ExTérne','externe') IS DISTINCT FROM true THEN RAISE EXCEPTION 'Grading regression case 2'; END IF;
+IF public.quiz_text_equivalent_v1('pas externe','externe') IS DISTINCT FROM false THEN RAISE EXCEPTION 'Grading regression case 3'; END IF;
+IF public.quiz_text_equivalent_v1('externe','pas externe') IS DISTINCT FROM false THEN RAISE EXCEPTION 'Grading regression case 4'; END IF;
+IF public.quiz_text_equivalent_v1('n''est pas externe','externe') IS DISTINCT FROM false THEN RAISE EXCEPTION 'Grading regression case 5'; END IF;
+IF public.quiz_text_equivalent_v1('sans douleur','douleur') IS DISTINCT FROM false THEN RAISE EXCEPTION 'Grading regression case 6'; END IF;
+IF public.quiz_text_equivalent_v1('aucune douleur','douleur') IS DISTINCT FROM false THEN RAISE EXCEPTION 'Grading regression case 7'; END IF;
+IF public.quiz_text_equivalent_v1('absence de douleur','douleur') IS DISTINCT FROM false THEN RAISE EXCEPTION 'Grading regression case 8'; END IF;
+IF public.quiz_text_equivalent_v1('no lateral','lateral') IS DISTINCT FROM false THEN RAISE EXCEPTION 'Grading regression case 9'; END IF;
+IF public.quiz_text_equivalent_v1('sin dolor','dolor') IS DISTINCT FROM false THEN RAISE EXCEPTION 'Grading regression case 10'; END IF;
+IF public.quiz_text_equivalent_v1('not lateral','lateral') IS DISTINCT FROM false THEN RAISE EXCEPTION 'Grading regression case 11'; END IF;
+IF public.quiz_text_equivalent_v1('without pain','pain') IS DISTINCT FROM false THEN RAISE EXCEPTION 'Grading regression case 12'; END IF;
+IF public.quiz_text_equivalent_v1('pas externe mais interne','pas interne mais externe') IS DISTINCT FROM false THEN RAISE EXCEPTION 'Grading regression case 13'; END IF;
+IF public.quiz_text_equivalent_v1('pas de douleur','pas de douleur') IS DISTINCT FROM true THEN RAISE EXCEPTION 'Grading regression case 14'; END IF;
+IF public.quiz_text_equivalent_v1('15s','15 secondes') IS DISTINCT FROM true THEN RAISE EXCEPTION 'Grading regression case 15'; END IF;
+IF public.quiz_text_equivalent_v1('15sec','15 secondes') IS DISTINCT FROM true THEN RAISE EXCEPTION 'Grading regression case 16'; END IF;
+IF public.quiz_text_equivalent_v1('20 secondes maximum','15 secondes maximum') IS DISTINCT FROM false THEN RAISE EXCEPTION 'Grading regression case 17'; END IF;
+IF public.quiz_text_equivalent_v1('-10','10') IS DISTINCT FROM false THEN RAISE EXCEPTION 'Grading regression case 18'; END IF;
+IF public.quiz_text_equivalent_v1('10','−10') IS DISTINCT FROM false THEN RAISE EXCEPTION 'Grading regression case 19'; END IF;
+IF public.quiz_text_equivalent_v1('−10','-10') IS DISTINCT FROM true THEN RAISE EXCEPTION 'Grading regression case 20'; END IF;
+IF public.quiz_text_equivalent_v1('10','+10') IS DISTINCT FROM true THEN RAISE EXCEPTION 'Grading regression case 21'; END IF;
+IF public.quiz_text_equivalent_v1('1,50','1.5') IS DISTINCT FROM true THEN RAISE EXCEPTION 'Grading regression case 22'; END IF;
+IF public.quiz_text_equivalent_v1('05','5') IS DISTINCT FROM true THEN RAISE EXCEPTION 'Grading regression case 23'; END IF;
+IF public.quiz_text_equivalent_v1('5 mg par jour','5 g par jour') IS DISTINCT FROM false THEN RAISE EXCEPTION 'Grading regression case 24'; END IF;
+IF public.quiz_text_equivalent_v1('','externe') IS DISTINCT FROM false THEN RAISE EXCEPTION 'Grading regression case 25'; END IF;
+IF public.quiz_text_equivalent_v1('ses compétences et son statut d''étudiant','son statut d''étudiant et ses compétences') IS DISTINCT FROM true THEN RAISE EXCEPTION 'Grading regression case 26'; END IF;
+END $tests$;
+SELECT true passed,26 cases;
+ROLLBACK;
