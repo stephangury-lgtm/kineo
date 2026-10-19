@@ -1,9 +1,10 @@
+import {getFranceActiveSession,franceResumePath} from './france-resume'
 import {useEffect} from 'react'
 import RitualFrame from './RitualFrame'
 import {useDailySession} from './DailySessionContext'
 import {Link} from 'react-router-dom'
 import {getCurrentProgram} from '../curriculum/programs'
-import {getActiveRevisionSessionV1,getDashboardV2,getRevisionModeAvailabilityV1} from '../services/kineoApi'
+import {getDashboardV2,getRevisionModeAvailabilityV1} from '../services/kineoApi'
 import {useReadResource} from './useReadResource'
 
 export default function TodayPage(){
@@ -16,11 +17,11 @@ function CurriculumToday({spain}:{spain:boolean}){
 }
 function FranceToday(){
  const {update,setResumePath}=useDailySession()
- const active=useReadResource(getActiveRevisionSessionV1,'kineo-fr')
+ const active=useReadResource(getFranceActiveSession,'kineo-fr')
  const modes=useReadResource(getRevisionModeAvailabilityV1,'kineo-fr')
  const dashboard=useReadResource(getDashboardV2,'kineo-fr')
  const session=active.data&&active.data.answered_count<active.data.question_count?active.data:null
  const dailyDone=dashboard.data?.daily?.completed===true||dashboard.data?.daily?.status==='completed'
  useEffect(()=>{if(!active.loading&&!active.error&&!dashboard.loading&&!dashboard.error){update({status:session?'in_progress':dailyDone?'completed':'ready',answered:session?.answered_count??0,total:session?.question_count??10});if(!session)setResumePath(null)}},[active.loading,active.error,dashboard.loading,dashboard.error,session,dailyDone,update,setResumePath])
- return <RitualFrame complete={dailyDone&&!session}>{active.loading?<p role="status">Recherche de ta séance en cours…</p>:active.error?<><h2>Vérifie ta séance avant de recommencer</h2><p role="alert">Impossible de vérifier si une séance est déjà en cours.</p><button className="secondary-button" onClick={active.retry}>Réessayer la reprise</button></>:session?<><p className="eyebrow">Ta séance en cours</p><h2>Reprends là où tu en étais</h2><p>{session.answered_count} questions traitées sur {session.question_count}.</p><Link className="primary-button" to={'/quiz?mode=resume&session='+encodeURIComponent(session.id)}>Reprendre ma séance</Link></>:modes.loading?<p role="status">Recherche des exercices disponibles…</p>:modes.error?<><h2>Disponibilité à vérifier</h2><p role="alert">Les exercices ne peuvent pas être vérifiés pour le moment.</p><button className="secondary-button" onClick={modes.retry}>Réessayer les exercices</button></>:!modes.data?.total_questions?<><h2>Les questions de ton niveau sont en préparation</h2><p>Consulte les supports actuellement disponibles dans ton parcours.</p><Link className="primary-button" to="/parcours">Voir mon parcours</Link></>:dailyDone?<><h2>Ton défi du jour est terminé</h2><p>Tu peux consulter tes progrès ou choisir un entraînement supplémentaire.</p><Link className="primary-button" to="/progres">Voir mes progrès</Link><p><Link to="/revision">Choisir un autre entraînement</Link></p></>:<><p className="eyebrow">Ta séance du jour</p><h2>Consolide tes connaissances</h2><p>Les questions disponibles sont sélectionnées pour ton niveau.</p><Link className="primary-button" to="/ma-seance">Commencer ma séance</Link></>}</RitualFrame>
+ return <RitualFrame complete={dailyDone&&!session}>{active.loading?<p role="status">Recherche de ta séance en cours…</p>:active.error?<><h2>Vérifie ta séance avant de recommencer</h2><p role="alert">Impossible de vérifier si une séance est déjà en cours.</p><button className="secondary-button" onClick={active.retry}>Réessayer la reprise</button></>:session?<><p className="eyebrow">Ta séance en cours</p><h2>Reprends là où tu en étais</h2><p>{session.answered_count} questions traitées sur {session.question_count}.</p><Link className="primary-button" to={franceResumePath(session)}>Reprendre ma séance</Link></>:modes.loading?<p role="status">Recherche des exercices disponibles…</p>:modes.error?<><h2>Disponibilité à vérifier</h2><p role="alert">Les exercices ne peuvent pas être vérifiés pour le moment.</p><button className="secondary-button" onClick={modes.retry}>Réessayer les exercices</button></>:!modes.data?.total_questions?<><h2>Les questions de ton niveau sont en préparation</h2><p>Consulte les supports actuellement disponibles dans ton parcours.</p><Link className="primary-button" to="/parcours">Voir mon parcours</Link></>:dailyDone?<><h2>Ton défi du jour est terminé</h2><p>Tu peux consulter tes progrès ou choisir un entraînement supplémentaire.</p><Link className="primary-button" to="/progres">Voir mes progrès</Link><p><Link to="/revision">Choisir un autre entraînement</Link></p></>:<><p className="eyebrow">Ta séance du jour</p><h2>Consolide tes connaissances</h2><p>Les questions disponibles sont sélectionnées pour ton niveau.</p><Link className="primary-button" to="/ma-seance">Commencer ma séance</Link></>}</RitualFrame>
 }
