@@ -36,6 +36,11 @@
 .parcours-redesign .curriculum-topic-actions a{position:static!important;display:inline-flex!important;flex:0 1 auto;min-height:44px;transform:none!important}
 
 /* v4: genuinely replace legacy blue hero with a neutral course-first header */
+@media(max-width:600px){
+ .parcours-redesign .program-units-card>.section-heading{flex-wrap:wrap;align-items:flex-start}
+ .parcours-redesign .program-units-card>.section-heading>div:first-child{flex:1 1 180px;min-width:0}
+ .parcours-redesign .program-units-card>.section-heading>.program-status{flex:0 0 auto;white-space:nowrap;max-width:100%}
+}
 .parcours-redesign .parcours-page-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;background:#fff;border:1px solid #dce8f3;border-radius:16px;box-shadow:none;color:#0b2545}
 .parcours-redesign .parcours-page-heading h1{margin:4px 0 6px;font-size:clamp(1.35rem,3vw,1.8rem);line-height:1.15;color:#0b2545}
 .parcours-redesign .parcours-page-heading p:last-child{margin:0;color:#5c6f82;font-size:.9rem;line-height:1.4}
