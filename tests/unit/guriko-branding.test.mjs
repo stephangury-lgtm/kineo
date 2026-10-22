@@ -20,3 +20,12 @@ test('GURIKO: accessible and reduced-motion-friendly mascot component', () => {
   assert.match(component, /aria-hidden/)
   assert.match(component, /mascotMessage/)
 })
+
+
+test('GURIKO: daily session integrates mascot in all curricula', () => {
+  const page = readFileSync(new URL('../../src/learning/TodayPage.tsx', import.meta.url), 'utf8')
+  assert.match(page, /import Mascot from/)
+  assert.match(page, /program=\{spain\?'kineo-es':'ifsi-fr'\}/)
+  assert.match(page, /program="kineo-fr"/)
+  for (const state of ['success', 'progress', 'daily-challenge']) assert.ok(page.includes("'" + state + "'"))
+})
