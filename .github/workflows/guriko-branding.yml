@@ -22,4 +22,5 @@ jobs:
           cache: npm
       - run: npm ci
       - run: node --test tests/unit/guriko-branding.test.mjs
+      - run: node scripts/check-guriko-release.mjs
       - run: npm run build
