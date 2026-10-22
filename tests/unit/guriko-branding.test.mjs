@@ -29,3 +29,10 @@ test('GURIKO: daily session integrates mascot in all curricula', () => {
   assert.match(page, /program="kineo-fr"/)
   for (const state of ['success', 'progress', 'daily-challenge']) assert.ok(page.includes("'" + state + "'"))
 })
+
+
+test('GURIKO: missing illustration assets do not trigger implicit 404 requests', () => {
+  assert.match(component, /assetSrc\?: string/)
+  assert.match(component, /\{assetSrc && <img/)
+  assert.doesNotMatch(component, /src=\{\x60\/branding\/mascot\//)
+})
