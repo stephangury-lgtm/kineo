@@ -9,10 +9,12 @@ export type MascotProps = {
   decorative?: boolean
   className?: string
   children?: ReactNode
+  /** Only provide a URL once the approved asset exists in public/. */
+  assetSrc?: string
 }
 
 /** Accessible mascot with per-state illustrations and a resilient fallback. */
-export default function Mascot({ state, program, size = 'medium', decorative = false, className = '', children }: MascotProps) {
+export default function Mascot({ state, program, size = 'medium', decorative = false, className = '', children, assetSrc }: MascotProps) {
   const theme = mascotThemes[program]
   const message = mascotMessage(state, program)
   const style = {
@@ -23,7 +25,7 @@ export default function Mascot({ state, program, size = 'medium', decorative = f
   return (
     <figure className={['guriko-mascot', 'guriko-mascot--' + size, className].filter(Boolean).join(' ')} style={style}
       aria-hidden={decorative || undefined}>
-      <span className="guriko-mascot__symbol" role={decorative ? undefined : "img"} aria-label={decorative ? undefined : message} aria-hidden={decorative || undefined}><img className="guriko-mascot__image" src={`/branding/mascot/${state}.webp`} alt="" loading="lazy" onError={(event) => { event.currentTarget.hidden = true }} /><span className="guriko-mascot__fallback">✦</span></span>
+      <span className="guriko-mascot__symbol" role={decorative ? undefined : "img"} aria-label={decorative ? undefined : message} aria-hidden={decorative || undefined}>{assetSrc && <img className="guriko-mascot__image" src={assetSrc} alt="" loading="lazy" onError={(event) => { event.currentTarget.hidden = true }} />}<span className="guriko-mascot__fallback">✦</span></span>
       {!decorative && <figcaption className="guriko-mascot__caption">{children ?? message}</figcaption>}
     </figure>
   )
