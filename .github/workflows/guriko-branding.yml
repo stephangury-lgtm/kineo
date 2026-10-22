@@ -1,0 +1,25 @@
+name: GURIKO branding validation
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/branding/**'
+      - 'src/learning/TodayPage.tsx'
+      - 'tests/unit/guriko-branding.test.mjs'
+      - 'public/manifest.webmanifest'
+      - 'index.html'
+      - '.github/workflows/guriko-branding.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: node --test tests/unit/guriko-branding.test.mjs
+      - run: npm run build
