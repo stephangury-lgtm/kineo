@@ -33,6 +33,9 @@ jobs:
       - name: Dependency vulnerability gate
         run: npm audit --audit-level=high
 
+      - name: Approved GURIKO PWA assets
+        run: node scripts/check-guriko-release.mjs
+
       - name: Critical source invariants
         run: npm run check:source
 

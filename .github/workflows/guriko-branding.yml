@@ -7,9 +7,15 @@ on:
       - 'src/learning/TodayPage.tsx'
       - 'tests/unit/guriko-branding.test.mjs'
       - 'public/manifest.webmanifest'
+      - 'public/icons/**'
+      - 'public/sw.js'
+      - 'scripts/check-guriko-release.mjs'
+      - 'tests/e2e/guriko-pwa.spec.mjs'
       - 'index.html'
       - '.github/workflows/guriko-branding.yml'
   workflow_dispatch:
+permissions:
+  contents: read
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -24,3 +30,12 @@ jobs:
       - run: node --test tests/unit/guriko-branding.test.mjs
       - run: node scripts/check-guriko-release.mjs
       - run: npm run build
+      - run: npx playwright install --with-deps chromium webkit
+      - name: Android and iPhone PWA checks
+        run: |
+          npm run preview -- --host 127.0.0.1 --port 4173 --strictPort > /tmp/guriko-preview.log 2>&1 &
+          for attempt in {1..40}; do
+            if curl --fail --silent http://127.0.0.1:4173/ >/dev/null; then break; fi
+            sleep 0.5
+          done
+          npx playwright test tests/e2e/guriko-pwa.spec.mjs --project=chromium --project=webkit --reporter=line
