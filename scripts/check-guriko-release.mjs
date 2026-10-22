@@ -1,5 +1,16 @@
 import { existsSync, readFileSync } from 'node:fs'
 import assert from 'node:assert/strict'
+import { createHash } from 'node:crypto'
+
+const approvedHashes = {
+  180: '67f0e3213281bc96020911cd3d7836b9a78f82f96697cc1424a1898004beae54',
+  192: '60b246df1625f18b47c8eb2dafb188a271eff21e85fdcfef05973771be6bacf5',
+  512: '641b44a4474e94f91a03b7647799b8f74d846a6d0a370a0fc79e3d76c9fe0543',
+  1024: 'dd60eb38dba5e439a6819beaa5aecbd8698a21895e7b26643d909b075d6e8cdd',
+}
+for (const [size, hash] of Object.entries(approvedHashes)) {
+  assert.equal(createHash('sha256').update(readFileSync(`public/icons/guriko-${size}.png`)).digest('hex'), hash, `Approved source altered: ${size}`)
+}
 
 const manifest = JSON.parse(readFileSync('public/manifest.webmanifest', 'utf8'))
 const html = readFileSync('index.html', 'utf8')
