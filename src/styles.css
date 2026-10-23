@@ -98,3 +98,7 @@ body{background:#f5f9ff;color:#0B2545}
 .program-theme .bottom-nav a.active{color:var(--program-primary);background:var(--program-soft)}
 .brand-logo{width:132px;max-height:48px;object-fit:contain}
 @media(max-width:520px){.brand-logo{width:106px;max-height:40px}}
+
+/* Decorative surfaces share the active curriculum palette. Keep semantic success/error colours. */
+.program-theme{--program-strong:color-mix(in srgb,var(--program-primary) 65%,var(--program-navy))}
+.program-theme .home-v3-shortcut:nth-child(n){background:linear-gradient(145deg,#fff,var(--program-soft))}

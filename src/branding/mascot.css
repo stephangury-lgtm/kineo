@@ -4,13 +4,13 @@
 
 /* A full-width companion row keeps the illustration and message on the card's axis. */
 .ritual-hero .guriko-mascot{display:grid;grid-template-columns:104px minmax(0,1fr);align-items:center;gap:18px;width:100%;margin:4px 0 20px;text-align:left}
-.ritual-hero .guriko-mascot__symbol{width:104px;height:104px;border:0;border-radius:26px;background:transparent;box-shadow:0 8px 22px #072e6533}
+.ritual-hero .guriko-mascot__symbol{width:104px;height:104px;border:0;border-radius:26px;background:transparent;box-shadow:0 8px 22px var(--program-glow)}
 .ritual-hero .guriko-mascot__caption{max-width:24ch;font-size:1.05rem;font-weight:750;line-height:1.35;text-wrap:balance}
-.guriko-mascot__symbol{overflow:hidden;background:#f7fbfc;border:0;border-radius:18px}
+.guriko-mascot__symbol{overflow:hidden;background:var(--mascot-secondary);border:0;border-radius:18px}
 .guriko-mascot--small .guriko-mascot__symbol{width:88px;height:96px}
 .guriko-mascot--medium .guriko-mascot__symbol{width:112px;height:122px}
 .guriko-mascot--large .guriko-mascot__symbol{width:128px;height:140px}
-.ritual-hero .guriko-mascot__symbol{width:104px;height:114px;background:#f7fbfc;border-radius:18px}
+.ritual-hero .guriko-mascot__symbol{width:104px;height:114px;background:var(--mascot-secondary);border-radius:18px}
 .guriko-mascot--context{display:flex;flex-direction:row;text-align:left;gap:16px;margin:0 0 18px}
 .guriko-mascot--context .guriko-mascot__caption{font-size:.95rem;font-weight:700;max-width:30ch}
 .session-complete>.guriko-mascot{display:flex;margin:0 auto 16px}
