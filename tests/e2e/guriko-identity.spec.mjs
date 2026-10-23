@@ -11,6 +11,13 @@ for(const program of ['kineo-fr','kineo-es','ifsi-fr'])for(const width of [320,3
  const mascot=page.locator('.guriko-mascot__image');await expect(mascot).toBeVisible()
  await expect(mascot).toHaveAttribute('src','/icons/guriko-192.png')
  await mascot.evaluate(i=>i.decode());expect(await mascot.evaluate(i=>i.naturalWidth)).toBe(192)
+ const layout=await page.evaluate(()=>{
+  const card=document.querySelector('.ritual-hero').getBoundingClientRect(),row=document.querySelector('.ritual-hero .guriko-mascot').getBoundingClientRect(),image=document.querySelector('.guriko-mascot__image').getBoundingClientRect(),logo=document.querySelector('.brand-logo img').getBoundingClientRect()
+  return {mascotWidth:image.width,logoWidth:logo.width,centerOffset:Math.abs((row.left+row.right-card.left-card.right)/2)}
+ })
+ expect(layout.mascotWidth).toBeGreaterThanOrEqual(88)
+ expect(layout.logoWidth).toBeGreaterThanOrEqual(40)
+ expect(layout.centerOffset).toBeLessThanOrEqual(1)
  await expect(page.locator('.v5-next-action a.primary-button')).toBeVisible()
  await expect(page.locator('.v5-navigation a')).toHaveCount(5)
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true)

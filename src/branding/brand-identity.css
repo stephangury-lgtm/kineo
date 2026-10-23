@@ -1,1 +1,8 @@
-.guriko-identity.brand-logo,.guriko-identity.auth-brand-logo{display:inline-flex;align-items:center;justify-content:flex-start;gap:.45rem;width:auto;height:auto;color:#063b55;font-weight:850;letter-spacing:.02em;line-height:1;white-space:nowrap}.guriko-identity.brand-logo{font-size:1.3rem;max-height:48px}.guriko-identity img{display:block;flex:none;object-fit:contain;border-radius:25%;width:36px;height:36px}.guriko-identity.auth-brand-logo{font-size:2.25rem;max-width:100%}.guriko-identity.auth-brand-logo img{width:64px;height:64px}.brand-lockup>a{flex-shrink:0;text-decoration:none}@media(max-width:480px){.guriko-identity.brand-logo{font-size:1.05rem;gap:.3rem}.guriko-identity.brand-logo img{width:28px;height:28px}}
+.guriko-identity.brand-logo,.guriko-identity.auth-brand-logo{display:inline-flex;align-items:center;justify-content:flex-start;gap:.5rem;width:auto;height:auto;color:#063b55;font-weight:850;letter-spacing:.02em;line-height:1;white-space:nowrap}
+.guriko-identity.brand-logo{font-size:1.5rem;max-width:none;max-height:none}
+.v5-enabled .guriko-identity.brand-logo{max-width:none;max-height:none}
+.guriko-identity img{display:block;flex:none;object-fit:contain;border-radius:25%;width:48px;height:48px}
+.guriko-identity.auth-brand-logo{font-size:2.25rem;max-width:100%}
+.guriko-identity.auth-brand-logo img{width:72px;height:72px}
+.brand-lockup>a{flex-shrink:0;text-decoration:none}
+@media(max-width:600px){.guriko-identity.brand-logo{font-size:1.15rem;gap:.4rem}.guriko-identity.brand-logo img{width:40px;height:40px}}
