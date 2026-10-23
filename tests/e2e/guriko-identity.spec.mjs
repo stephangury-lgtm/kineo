@@ -43,3 +43,15 @@ for(const program of ['kineo-fr','kineo-es','ifsi-fr'])for(const width of [320,3
  await home.click();await expect(mascot).toBeVisible()
  if(process.env.GURIKO_SCREENSHOT_DIR)await page.screenshot({path:process.env.GURIKO_SCREENSHOT_DIR+'/'+program+'-'+width+'.png',fullPage:true})
 })
+
+test('French course filters keep K codes and show the corresponding IFMK year',async({page})=>{
+ await v5Student(page,{program:'kineo-fr',role:'admin'})
+ await page.route('**/rest/v1/rpc/get_curriculum_v2',route=>route.fulfill({status:200,contentType:'application/json',body:JSON.stringify([2,3,4,5].map(number=>({id:'year-'+number,number,name:'K'+number,description:null,subjects:[]})))}))
+ await page.goto(base+'/parcours')
+ const years=page.getByRole('combobox',{name:'Année affichée'})
+ await expect(years).toContainText('K2 · 1re année IFMK')
+ await expect(years).toContainText('K5 · 4e année IFMK')
+ await years.selectOption('5')
+ await expect(page.locator('.curriculum-year-card .eyebrow')).toHaveText('4e année IFMK')
+ await expect(page.locator('.curriculum-year-card h2')).toHaveText('K5')
+})

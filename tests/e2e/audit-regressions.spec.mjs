@@ -117,6 +117,14 @@ test.describe('audit regressions with isolated API fixtures',()=>{
   await expect(page.locator('.bottom-nav')).toBeVisible()
  })
 
+ test('setup opened from a protected deep link finishes on the home page',async({page})=>{
+  await mockStudent(page)
+  await page.goto(base+'/profil')
+  await page.getByRole('button',{name:'Créer mon espace étudiant'}).click()
+  await expect(page).toHaveURL(base+'/')
+  await expect(page.locator('.bottom-nav')).toBeVisible()
+ })
+
  test('unresponsive setup stops waiting and offers an explicit retry',async({page})=>{
   const {state}=await mockStudent(page)
   state.holdSetup=true

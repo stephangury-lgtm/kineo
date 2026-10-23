@@ -39,7 +39,7 @@ export default function ProfileSetupPage({ current, onSaved, existingProgram }: 
       selectProgram(program.id)
       localStorage.setItem(`healthapp_level_${program.id}`,selectedLevel.shortLabel)
       onSaved(saved)
-      window.location.reload()
+      window.location.replace('/')
     } catch (err) {
       const message=err instanceof Error?err.message:typeof err==='object'&&err!==null&&'message' in err?String(err.message):''
       setError(message || 'Impossible d’enregistrer ton profil. Vérifie ta connexion puis réessaie.')
