@@ -31,8 +31,15 @@ test('GURIKO: daily session integrates mascot in all curricula', () => {
 })
 
 
-test('GURIKO: missing illustration assets do not trigger implicit 404 requests', () => {
+test('GURIKO: illustrations use the approved board, never the installation icon', () => {
   assert.match(component, /assetSrc\?: string/)
-  assert.match(component, /\{assetSrc && <img/)
-  assert.doesNotMatch(component, /src=\{\x60\/branding\/mascot\//)
+  assert.match(component, /viewBox=\{mascotArtwork\[state\]\}/)
+  assert.doesNotMatch(component, /icons\/guriko/)
+  const artwork=readFileSync(new URL('../../src/branding/mascotArtwork.ts',import.meta.url),'utf8')
+  const boxes=[...artwork.matchAll(/:'([\d ]+)'/g)].map(m=>m[1].split(' ').map(Number))
+  assert.equal(boxes.length,13)
+  assert.equal(new Set(boxes.map(b=>b.join(' '))).size,13)
+  for(const [x,y,w,h] of boxes){assert.ok(w>0&&h>0&&x>=0&&y>=0&&x+w<=1536&&y+h<=1024)}
+  const png=readFileSync(new URL('../../public/branding/guriko-approved-board.png',import.meta.url))
+  assert.equal(png.readUInt32BE(16),1536);assert.equal(png.readUInt32BE(20),1024)
 })

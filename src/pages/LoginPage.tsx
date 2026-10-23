@@ -1,3 +1,4 @@
+import Mascot from '../branding/Mascot'
 import BrandIdentity from '../branding/BrandIdentity'
 import { useState, type FormEvent } from 'react'
 import { supabase } from '../lib/supabase'
@@ -91,7 +92,7 @@ export default function LoginPage() {
   return (
     <main className="auth-shell">
       <section className="auth-visual">
-        <BrandIdentity className="auth-brand-logo" />
+        <BrandIdentity className="auth-brand-logo" /><Mascot program="kineo-fr" state="welcome" size="large" decorative />
         <p className="eyebrow light">GURIKO · Plateforme santé</p>
         <h1>Progresse un peu chaque jour.</h1>
         <p>Des révisions courtes et gamifiées pour les étudiants en kinésithérapie et en soins infirmiers, en France et en Espagne.</p>
