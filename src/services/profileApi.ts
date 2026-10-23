@@ -32,10 +32,15 @@ export async function updateStudyProfile(params:{firstName?:string;username?:str
 export async function setupStudentProfile(params:{programId:string;levelCode:string;firstName:string;username:string}){
  const username=params.username.trim()
  if(username&&!/^[a-zA-Z0-9._-]{3,24}$/.test(username))throw new Error('Le pseudo doit contenir 3 à 24 caractères : lettres, chiffres, point, tiret ou underscore.')
- const {data,error}=await supabase.rpc('setup_student_profile_v1',{
+ const controller=new AbortController()
+ const timeout=window.setTimeout(()=>controller.abort(),20_000)
+ let result
+ try{result=await supabase.rpc('setup_student_profile_v1',{
   p_program_id:params.programId,p_level_code:params.levelCode,
   p_first_name:params.firstName.trim(),p_username:username,
- })
+ }).abortSignal(controller.signal)}finally{window.clearTimeout(timeout)}
+ if(controller.signal.aborted)throw new Error('Le serveur met trop de temps à répondre. Vérifie ta connexion puis réessaie avec le même parcours ; ton compte est conservé.')
+ const {data,error}=result
  if(error)throw error
  if(!data?.id)throw new Error('Le profil n’a pas pu être enregistré.')
  window.dispatchEvent(new Event('kineo-profile-updated'))

@@ -42,7 +42,7 @@ export const programs:Program[]=[
  {
   id:'kineo-fr',name:'Kiné France',shortName:'Kiné France',country:'France',flag:'🇫🇷',
   subtitle:'Kinésithérapie · K2 à K5',accent:'K',status:'live',levelKind:'year',primaryLanguage:'fr',
-  levels:numberedYearLevels('k',[2,3,4,5],'fr')
+  levels:numberedYearLevels('k',[2,3,4,5],'fr').map((level,index)=>({...level,label:`${index+1}${index===0?'re':'e'} année IFMK`}))
  },
  {
   id:'kineo-es',name:'Fisioterapia España',shortName:'Fisio España',country:'Espagne',flag:'🇪🇸',
