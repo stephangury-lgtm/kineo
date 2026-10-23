@@ -20,6 +20,10 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      VITE_ENABLE_V5_PREVIEW: 'true'
+      VITE_V5_DEFAULT: 'true'
+      LERYKO_TEST_V5: '1'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -38,4 +42,4 @@ jobs:
             if curl --fail --silent http://127.0.0.1:4173/ >/dev/null; then break; fi
             sleep 0.5
           done
-          npx playwright test tests/e2e/guriko-pwa.spec.mjs --project=chromium --project=webkit --reporter=line
+          npx playwright test tests/e2e/guriko-pwa.spec.mjs tests/e2e/guriko-identity.spec.mjs --project=chromium --project=webkit --reporter=line

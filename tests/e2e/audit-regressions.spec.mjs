@@ -62,11 +62,11 @@ test.describe('audit regressions with isolated API fixtures',()=>{
   await expect(page.getByRole('link',{name:'stephangury@gmail.com'}).first()).toHaveAttribute('href','mailto:stephangury@gmail.com')
   await expect(page.getByRole('heading',{name:'Garder le contrôle de ses données'})).toBeVisible()
   await expect(page.locator('input[type="password"]')).toHaveCount(0)
-  await page.getByRole('link',{name:'Retour à Leryko'}).click()
+  await page.getByRole('link',{name:'Retour à GURIKO'}).click()
   await expect(page.getByRole('link',{name:'Informations, confidentialité & assistance'})).toBeVisible()
  })
 
- for(const [programId,programName,levelCode] of [['ifsi-fr','IFSI','S1'],['ifsi-fr','IFSI','S2'],['kineo-es','Kineo España','ES1']]){
+ for(const [programId,programName,levelCode] of [['ifsi-fr','IFSI','S1'],['ifsi-fr','IFSI','S2'],['kineo-es','Fisioterapia España','ES1']]){
   test(`first-year setup ${programId}/${levelCode} uses one atomic save`,async({page})=>{
    const {calls}=await mockStudent(page)
    await page.goto(base)

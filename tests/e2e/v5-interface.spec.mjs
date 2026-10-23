@@ -150,7 +150,7 @@ test.describe('V5 React opt-in with isolated API fixtures',()=>{
   await expect(page.locator('.application-share-card input')).toHaveCount(0)
   await expect(page.locator('.application-share-card')).not.toContainText(new URL(base).origin)
   await page.getByRole('button',{name:'Partager l’application',exact:true}).click()
-  expect(await page.evaluate(()=>window.shareCalls)).toEqual([{title:'Leryko',text:'Réviser et progresser avec Leryko',url:new URL(base).origin+'/'}])
+  expect(await page.evaluate(()=>window.shareCalls)).toEqual([{title:'GURIKO',text:'Réviser et progresser avec GURIKO',url:new URL(base).origin+'/'}])
   await page.evaluate(()=>Object.defineProperty(navigator,'share',{configurable:true,value:undefined}))
   await page.getByRole('button',{name:'Partager l’application',exact:true}).click()
   await expect(page.locator('.application-share-card').getByRole('status')).toHaveText('Lien copié.')
@@ -204,7 +204,7 @@ test.describe('V5 React opt-in with isolated API fixtures',()=>{
   }
   await page.locator('.v5-navigation').getByRole('link',{name:spain?'Progreso':'Progrès',exact:true}).click()
   await expect(page.getByRole('link',{name:spain?'Abrir mi colección':'Ouvrir ma collection de badges'})).toHaveAttribute('href','/rewards')
-  await page.getByRole('link',{name:spain?'Leryko, volver al inicio':'Leryko, retour à l’accueil',exact:true}).click()
+  await page.getByRole('link',{name:spain?'GURIKO, volver al inicio':'GURIKO, retour à l’accueil',exact:true}).click()
   await page.getByRole('link',{name:spain?'Repasar libremente':'Réviser librement',exact:false}).click()
   await expect(page.getByRole('heading',{name:spain?'¿Qué quieres repasar hoy ?':'Comment veux-tu réviser aujourd’hui ?'})).toBeVisible()
   if(program!=='kineo-fr')expect(calls.some(path=>/get_active_revision_session_v1|get_recent_revision_sessions_v1|get_revision_mode_availability_v1|get_user_dashboard_v3/.test(path))).toBe(false)

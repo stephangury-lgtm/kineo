@@ -20,3 +20,11 @@ Un appareil réel Android/iPhone n’est pas validé par une émulation Playwrig
 - `guriko-192.png` : SHA-256 `60b246df1625f18b47c8eb2dafb188a271eff21e85fdcfef05973771be6bacf5`
 - `guriko-512.png` : SHA-256 `641b44a4474e94f91a03b7647799b8f74d846a6d0a370a0fc79e3d76c9fe0543`
 - `guriko-1024.png` : SHA-256 `dd60eb38dba5e439a6819beaa5aecbd8698a21895e7b26643d909b075d6e8cdd`
+
+## Finalisation du 23 octobre 2026
+
+À la demande de Stéphan, la PR 40 est complétée : nom GURIKO dans la connexion, l’en-tête, le partage et les informations publiques ; image de mascotte approuvée fournie par le pack, affichée sur le rituel des trois cursus. L’en-tête associe l’icône d’origine à un nom d’application en texte, sans créer un nouveau dessin de logo. Les fichiers d’origine et leurs SHA-256 restent inchangés.
+
+Une seule illustration approuvée est disponible : elle accompagne les messages localisés de progression, réussite et défi quotidien. Cette livraison ne prétend pas ajouter des poses différentes qui n’ont pas été fournies. Les états, les thèmes et la réduction des animations restent disponibles. Aucun changement des identifiants de cursus, de la base, des clés de session, des routes ni des URL de production.
+
+Les six scénarios de marque (trois cursus × 320/390 px) vérifient l’image décodable, le nom visible, le retour accueil, le partage localisé, cinq onglets et l’absence de débordement. Ils sont ajoutés aux contrôles V5 et Android/iPhone. Le retour arrière conserve les ressources précédentes. La préparation d’identité n’est pas une validation juridique de disponibilité de marque ou de domaine.

@@ -105,7 +105,7 @@ jobs:
           npx playwright test tests/e2e/public-smoke.spec.mjs tests/e2e/audit-regressions.spec.mjs --project=chromium --reporter=line
           npx playwright test tests/e2e/guriko-pwa.spec.mjs --project=chromium --project=webkit --reporter=line
           if [ "$RELEASE_INTERFACE" = v5 ]; then
-            LERYKO_TEST_V5=1 LERYKO_TEST_V5_DEFAULT=1 npx playwright test tests/e2e/v5-interface.spec.mjs --project=chromium --reporter=line
+            LERYKO_TEST_V5=1 LERYKO_TEST_V5_DEFAULT=1 npx playwright test tests/e2e/v5-interface.spec.mjs tests/e2e/guriko-identity.spec.mjs --project=chromium --reporter=line
           fi
         env:
           RELEASE_INTERFACE: ${{ steps.interface.outputs.interface }}

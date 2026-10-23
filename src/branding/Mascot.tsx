@@ -14,7 +14,7 @@ export type MascotProps = {
 }
 
 /** Accessible mascot with per-state illustrations and a resilient fallback. */
-export default function Mascot({ state, program, size = 'medium', decorative = false, className = '', children, assetSrc }: MascotProps) {
+export default function Mascot({ state, program, size = 'medium', decorative = false, className = '', children, assetSrc = '/icons/guriko-192.png' }: MascotProps) {
   const theme = mascotThemes[program]
   const message = mascotMessage(state, program)
   const style = {

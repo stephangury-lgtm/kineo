@@ -1,6 +1,6 @@
 # GURIKO — plan d'intégration (préproduction)
 
-Statut : identité provisoire ; aucune modification de production avant validation des domaines et marques France/Espagne/UE.
+Statut initial du 22 octobre : identité provisoire. Mise à jour du 23 octobre : Stéphan demande l’intégration du nom et de la mascotte via la PR 40 ; les contrôles et le rollback restent obligatoires. Cette intégration ne vaut pas validation juridique des marques ou domaines.
 
 ## Principes
 - Préserver les cursus `kineo-fr`, `kineo-es` et IFSI, les données Supabase, l'authentification et les contenus pédagogiques.
