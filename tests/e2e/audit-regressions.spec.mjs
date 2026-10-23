@@ -10,7 +10,7 @@ const game={xp_total:0,level:{number:1,name:'Débutant',progress_percent:0},stre
 // All Supabase traffic is intercepted. These tests never create real accounts.
 async function mockStudent(page,{assigned=false,programId='ifsi-fr',levelCode='S1',profileYear}={}){
  const calls=[]
- const state={assigned,programId,levelCode,failProfile:false,holdProfile:false,releaseProfile:()=>{}}
+ const state={assigned,programId,levelCode,failProfile:false,holdProfile:false,releaseProfile:()=>{},setupError:null,holdSetup:false,releaseSetup:()=>{}}
  let profile={id:userId,first_name:'Audit',username:'audit.student',avatar_url:null,study_year:profileYear!==undefined?profileYear:assigned?1:null,role:'student'}
  const expiry=Math.floor(Date.now()/1000)+3600
  const user={id:userId,aud:'authenticated',role:'authenticated',email:'audit@example.invalid',app_metadata:{provider:'email'},user_metadata:{},created_at:new Date().toISOString()}
@@ -33,9 +33,11 @@ async function mockStudent(page,{assigned=false,programId='ifsi-fr',levelCode='S
   }
   if(pathname==='/rest/v1/profile_programs')return send(state.assigned?[{program_id:state.programId,academic_level_id:levelId,is_primary:true,curriculum_version:state.programId==='ifsi-fr'?'2009':'default',academic_levels:{code:state.levelCode}}]:[])
   if(pathname.endsWith('/setup_student_profile_v1')){
+   if(state.holdSetup)await new Promise(resolve=>{state.releaseSetup=resolve})
+   if(state.setupError)return route.fulfill({status:400,contentType:'application/json',body:JSON.stringify({message:state.setupError})})
    const body=request.postDataJSON()
    state.assigned=true;state.programId=body.p_program_id;state.levelCode=body.p_level_code
-   profile={...profile,first_name:body.p_first_name,username:body.p_username,study_year:1}
+   profile={...profile,first_name:body.p_first_name,username:body.p_username,study_year:body.p_program_id==='kineo-fr'?Number(body.p_level_code.slice(1)):1}
    return send(profile)
   }
   if(pathname.endsWith('/get_gamification_summary_v2'))return send(game)
@@ -46,6 +48,8 @@ async function mockStudent(page,{assigned=false,programId='ifsi-fr',levelCode='S
   if(pathname.endsWith('/get_inactivity_reminder_preference_v1'))return send([{opted_in:true}])
   if(pathname.endsWith('/can_review_visuals_v1'))return send(false)
   if(pathname.endsWith('/get_user_dashboard_v3'))return send({})
+  if(pathname.endsWith('/get_study_priorities_v1'))return send({study_year:profile.study_year,items:[]})
+  if(pathname.endsWith('/get_revision_mode_availability_v1'))return send({total_questions:0,can_weak:false,can_visual:false,can_exam:false})
   if(pathname.includes('/rpc/'))return send([])
   if(pathname==='/rest/v1/curriculum_topics')return send({id:topicId,unit_id:unitId,name:'Audit chapter',curriculum_units:{program_id:state.programId,academic_level_id:levelId,curriculum_version:state.programId==='ifsi-fr'?'2009':'default'}})
   if(pathname==='/rest/v1/academic_levels')return send([{id:levelId,display_order:1}])
@@ -66,7 +70,7 @@ test.describe('audit regressions with isolated API fixtures',()=>{
   await expect(page.getByRole('link',{name:'Informations, confidentialité & assistance'})).toBeVisible()
  })
 
- for(const [programId,programName,levelCode] of [['ifsi-fr','IFSI','S1'],['ifsi-fr','IFSI','S2'],['kineo-es','Fisioterapia España','ES1']]){
+ for(const [programId,programName,levelCode] of [['kineo-fr','Kiné France','K2'],['kineo-fr','Kiné France','K5'],['ifsi-fr','IFSI','S1'],['ifsi-fr','IFSI','S2'],['kineo-es','Fisioterapia España','ES1']]){
   test(`first-year setup ${programId}/${levelCode} uses one atomic save`,async({page})=>{
    const {calls}=await mockStudent(page)
    await page.goto(base)
@@ -81,6 +85,58 @@ test.describe('audit regressions with isolated API fixtures',()=>{
    expect(calls.filter(call=>call.pathname==='/rest/v1/profile_programs'&&call.method!=='GET')).toHaveLength(0)
   })
  }
+
+ test('setup failure is visible on mobile and retry completes the account',async({page})=>{
+  await page.setViewportSize({width:320,height:640})
+  const {state,calls}=await mockStudent(page)
+  state.setupError='Ce pseudo est déjà utilisé'
+  await page.goto(base)
+  await expect(page.getByRole('combobox')).toContainText('K2 · 1re année IFMK')
+  await expect(page.getByRole('combobox')).toContainText('K5 · 4e année IFMK')
+  await page.getByLabel('Pseudo (facultatif)').fill('already.used')
+  await page.getByRole('button',{name:'Créer mon espace étudiant'}).click()
+  await expect(page.getByRole('alert')).toHaveText('Ce pseudo est déjà utilisé')
+  await expect(page.getByRole('alert')).toBeFocused()
+  await expect(page.getByRole('button',{name:'Créer mon espace étudiant'})).toBeEnabled()
+  state.setupError=null
+  await page.getByLabel('Pseudo (facultatif)').fill('new.student')
+  await page.getByLabel('Pseudo (facultatif)').press('Enter')
+  await expect(page.locator('.bottom-nav')).toBeVisible()
+  expect(calls.filter(c=>c.pathname.endsWith('/setup_student_profile_v1'))).toHaveLength(2)
+ })
+
+ test('pending setup shows feedback and prevents duplicate submissions',async({page})=>{
+  const {state,calls}=await mockStudent(page)
+  state.holdSetup=true
+  await page.goto(base)
+  await page.getByRole('button',{name:'Créer mon espace étudiant'}).click()
+  await expect(page.getByRole('status')).toHaveText('Enregistrement de ton parcours en cours…')
+  await expect(page.getByRole('button',{name:'Création du parcours…'})).toBeDisabled()
+  await expect.poll(()=>calls.filter(c=>c.pathname.endsWith('/setup_student_profile_v1')).length).toBe(1)
+  state.releaseSetup()
+  await expect(page.locator('.bottom-nav')).toBeVisible()
+ })
+
+ test('setup opened from a protected deep link finishes on the home page',async({page})=>{
+  await mockStudent(page)
+  await page.goto(base+'/profil')
+  await page.getByRole('button',{name:'Créer mon espace étudiant'}).click()
+  await expect(page).toHaveURL(base+'/')
+  await expect(page.locator('.bottom-nav')).toBeVisible()
+ })
+
+ test('unresponsive setup stops waiting and offers an explicit retry',async({page})=>{
+  const {state}=await mockStudent(page)
+  state.holdSetup=true
+  await page.clock.install()
+  await page.goto(base)
+  await page.getByRole('button',{name:'Créer mon espace étudiant'}).click()
+  await expect(page.getByRole('button',{name:'Création du parcours…'})).toBeDisabled()
+  await page.clock.runFor(20_001)
+  await expect(page.getByRole('alert')).toContainText('Le serveur met trop de temps à répondre')
+  await expect(page.getByRole('button',{name:'Créer mon espace étudiant'})).toBeEnabled()
+  state.releaseSetup()
+ })
 
  test('partial setup resumes the existing assigned curriculum',async({page})=>{
   const {calls}=await mockStudent(page,{assigned:true,profileYear:null})

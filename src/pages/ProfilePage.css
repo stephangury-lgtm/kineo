@@ -19,3 +19,5 @@
  .profile-stack .profile-chip,.profile-stack .revision-summary-year{min-height:30px;padding:5px 9px}
  .profile-stack .auth-form input,.profile-stack .auth-form select{min-height:44px}
 }
+
+.profile-stack .profile-hero{display:flex;align-items:center}.profile-stack .profile-hero .hero-copy{flex:1;min-width:0}.profile-stack .profile-mascot{flex:none;margin:0}.profile-stack .profile-mascot .guriko-mascot__symbol{width:72px;height:80px}@media(max-width:360px){.profile-stack .profile-mascot .guriko-mascot__symbol{width:60px;height:66px}}
