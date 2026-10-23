@@ -37,3 +37,32 @@ for(const program of ['kineo-fr','kineo-es','ifsi-fr'])for(const width of [320,3
  await home.click();await expect(mascot).toBeVisible()
  if(process.env.GURIKO_SCREENSHOT_DIR)await page.screenshot({path:process.env.GURIKO_SCREENSHOT_DIR+'/'+program+'-'+width+'.png',fullPage:true})
 })
+
+// Computed styles catch fixed blue/green decoration leaking into another curriculum.
+for(const program of ['kineo-fr','kineo-es','ifsi-fr'])test(`Curriculum colours follow the active theme across pages: ${program}`,async({page})=>{
+ await v5Student(page,{program})
+ await page.goto(base+'/?ui=v5')
+ const palette=await page.locator('.program-theme').evaluate(el=>{
+  const s=getComputedStyle(el)
+  return {primary:s.getPropertyValue('--program-primary').trim(),soft:s.getPropertyValue('--program-soft').trim()}
+ })
+ const resolve=async colour=>page.evaluate(colour=>{
+  const el=document.createElement('span');el.style.color=colour;document.body.append(el)
+  const value=getComputedStyle(el).color;el.remove();return value
+ },colour)
+ const primary=await resolve(palette.primary),soft=await resolve(palette.soft)
+ const hero=page.locator('.ritual-hero')
+ await expect(hero).toBeVisible()
+ expect(await hero.evaluate(el=>getComputedStyle(el).backgroundImage)).toContain(primary)
+ for(const route of ['/','/progres','/rewards','/amis']){
+  await page.goto(base+route+'?ui=v5')
+  const symbol=page.locator('.guriko-mascot__symbol').first()
+  await expect(symbol).toBeVisible()
+  expect(await symbol.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe(soft)
+ }
+ await page.goto(base+'/revision?ui=v5')
+ const quick=page.locator('.revision-hub-option')
+ await expect(quick.first()).toBeVisible()
+ expect(await quick.count()).toBeGreaterThan(0)
+ for(let i=0;i<await quick.count();i++)expect(await quick.nth(i).evaluate(el=>getComputedStyle(el).backgroundImage)).toContain(soft)
+})

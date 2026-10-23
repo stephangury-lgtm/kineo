@@ -20,8 +20,8 @@ export default function Mascot({ state, program, size = 'medium', decorative = f
   const theme = mascotThemes[program]
   const message = mascotMessage(state, program)
   const style = {
-    '--mascot-primary': theme.primary,
-    '--mascot-secondary': theme.secondary,
+    '--mascot-primary': 'var(--program-primary, ' + theme.primary + ')',
+    '--mascot-secondary': 'var(--program-soft, ' + theme.secondary + ')',
     '--mascot-accent': theme.accent,
   } as CSSProperties
   return (

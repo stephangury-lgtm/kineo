@@ -15,9 +15,9 @@
 .parcours-redesign .subject-list>details,.parcours-redesign .subject-list>.curriculum-unit{border:1px solid #dce8f3;border-radius:14px!important;background:#fff!important;overflow:hidden}
 .parcours-redesign .subject-list>details[open],.parcours-redesign .subject-list>.curriculum-unit.open{border-color:var(--program-primary,var(--brand));box-shadow:0 5px 16px rgba(17,42,78,.06)}
 .parcours-redesign .subject-list summary,.parcours-redesign .curriculum-unit-toggle{min-height:72px;padding:16px!important;cursor:pointer;background:#fff}
-.parcours-redesign .subject-list summary:hover,.parcours-redesign .curriculum-unit-toggle:hover{background:#f5faff}
+.parcours-redesign .subject-list summary:hover,.parcours-redesign .curriculum-unit-toggle:hover{background:var(--program-soft)}
 .parcours-redesign .subject-list summary strong,.parcours-redesign .curriculum-unit-title strong{font-size:1rem}
-.parcours-redesign .subject-course-button,.parcours-redesign .curriculum-unit-action{border:1px solid #cfe0f0;border-radius:10px;padding:9px 12px;background:#eef6ff;font-size:.78rem}
+.parcours-redesign .subject-course-button,.parcours-redesign .curriculum-unit-action{border:1px solid var(--program-line);border-radius:10px;padding:9px 12px;background:var(--program-soft);font-size:.78rem}
 .parcours-redesign .curriculum-topic-list{border-top:1px solid #e6eef5;padding:12px 16px}
 .parcours-redesign .curriculum-topic{padding:14px 4px;border-bottom:1px solid #edf1f6}
 .parcours-redesign .curriculum-topic:last-child{border-bottom:0}
@@ -45,7 +45,7 @@
 .parcours-redesign .parcours-page-heading h1{margin:4px 0 6px;font-size:clamp(1.35rem,3vw,1.8rem);line-height:1.15;color:#0b2545}
 .parcours-redesign .parcours-page-heading p:last-child{margin:0;color:#5c6f82;font-size:.9rem;line-height:1.4}
 .parcours-redesign .parcours-page-heading .eyebrow{margin:0;color:var(--program-primary,var(--brand));font-size:.72rem;letter-spacing:.08em;font-weight:800}
-.parcours-redesign .parcours-level-chip{flex-shrink:0;padding:10px 14px;border-radius:12px;background:#edf5fc;color:#0b2545;font-weight:900;font-size:1rem}
+.parcours-redesign .parcours-level-chip{flex-shrink:0;padding:10px 14px;border-radius:12px;background:var(--program-soft);color:#0b2545;font-weight:900;font-size:1rem}
 @media(max-width:600px){.parcours-redesign .parcours-page-heading{padding:14px;align-items:flex-start}.parcours-redesign .parcours-page-heading h1{font-size:1.35rem}.parcours-redesign .parcours-page-heading p:last-child{font-size:.78rem}.parcours-redesign .parcours-level-chip{padding:8px 10px;font-size:.85rem}}
 
 /* Feedback 2026-10-09: prevent UE blocks and controls overflowing narrow phones. */

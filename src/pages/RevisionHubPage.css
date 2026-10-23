@@ -13,3 +13,5 @@
 .revision-history-row .session-replay-mini:disabled{opacity:.5;cursor:wait}
 .revision-history-row .session-replay-mini:focus-visible{outline:2px solid var(--program-primary,#2867cc);outline-offset:2px}
 @media(max-width:480px){.revision-history-card{padding:13px}.revision-history-heading h2{font-size:1rem}.revision-history-row{gap:8px}.revision-history-row .session-replay-mini{padding:5px 8px}}
+
+.program-theme .revision-hub-option{background:linear-gradient(145deg,#fff,var(--program-soft));border-color:var(--program-line)}
