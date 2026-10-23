@@ -61,6 +61,8 @@ for(const program of ['kineo-fr','kineo-es','ifsi-fr'])test(`Curriculum colours 
   expect(await symbol.evaluate(el=>getComputedStyle(el).backgroundColor)).toBe(soft)
  }
  await page.goto(base+'/revision?ui=v5')
- const quick=page.locator('.revision-play-home .quick-card')
+ const quick=page.locator('.revision-hub-option')
+ await expect(quick.first()).toBeVisible()
+ expect(await quick.count()).toBeGreaterThan(0)
  for(let i=0;i<await quick.count();i++)expect(await quick.nth(i).evaluate(el=>getComputedStyle(el).backgroundImage)).toContain(soft)
 })
