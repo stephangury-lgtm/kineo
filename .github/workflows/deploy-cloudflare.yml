@@ -62,6 +62,9 @@ jobs:
       - name: Dependency vulnerability gate
         run: npm audit --audit-level=high
 
+      - name: Approved GURIKO PWA assets
+        run: node scripts/check-guriko-release.mjs
+
       - name: Critical source invariants
         run: npm run check:source
 
@@ -89,8 +92,8 @@ jobs:
       - name: Preview route checks
         run: node scripts/check-preview.mjs
 
-      - name: Install Chromium
-        run: npx playwright install --with-deps chromium
+      - name: Install Android and iPhone browsers
+        run: npx playwright install --with-deps chromium webkit
 
       - name: Browser regressions before publication
         run: |
@@ -100,8 +103,9 @@ jobs:
             sleep 0.5
           done
           npx playwright test tests/e2e/public-smoke.spec.mjs tests/e2e/audit-regressions.spec.mjs --project=chromium --reporter=line
+          npx playwright test tests/e2e/guriko-pwa.spec.mjs --project=chromium --project=webkit --reporter=line
           if [ "$RELEASE_INTERFACE" = v5 ]; then
-            LERYKO_TEST_V5=1 LERYKO_TEST_V5_DEFAULT=1 npx playwright test tests/e2e/v5-interface.spec.mjs --project=chromium --reporter=line
+            LERYKO_TEST_V5=1 LERYKO_TEST_V5_DEFAULT=1 npx playwright test tests/e2e/v5-interface.spec.mjs tests/e2e/guriko-identity.spec.mjs --project=chromium --reporter=line
           fi
         env:
           RELEASE_INTERFACE: ${{ steps.interface.outputs.interface }}
@@ -157,7 +161,10 @@ jobs:
           EXPECTED_SHA: ${{ github.sha }}
         run: |
           for attempt in 1 2 3 4 5 6; do
-            if npm run check:prod; then exit 0; fi
+            if npm run check:prod; then
+              KINEO_E2E_BASE_URL=https://kineo.stephangury.workers.dev npx playwright test tests/e2e/guriko-pwa.spec.mjs --project=chromium --project=webkit --reporter=line
+              exit $?
+            fi
             sleep 3
           done
           exit 1

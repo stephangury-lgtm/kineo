@@ -1,5 +1,9 @@
 const CACHE = 'kineo-shell-v11'
 const SHELL = [
+  '/icons/guriko-180.png',
+  '/icons/guriko-192.png',
+  '/icons/guriko-512.png',
+  '/icons/guriko-maskable-512.png',
   '/manifest.webmanifest',
   '/offline.html',
   '/startup-recovery.js',

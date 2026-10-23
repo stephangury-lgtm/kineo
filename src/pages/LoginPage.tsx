@@ -1,3 +1,4 @@
+import BrandIdentity from '../branding/BrandIdentity'
 import { useState, type FormEvent } from 'react'
 import { supabase } from '../lib/supabase'
 import { Link } from 'react-router-dom'
@@ -90,8 +91,8 @@ export default function LoginPage() {
   return (
     <main className="auth-shell">
       <section className="auth-visual">
-        <img className="auth-brand-logo" src="/leryko-brand-logo.svg" alt="Leryko" />
-        <p className="eyebrow light">Leryko · Plateforme santé</p>
+        <BrandIdentity className="auth-brand-logo" />
+        <p className="eyebrow light">GURIKO · Plateforme santé</p>
         <h1>Progresse un peu chaque jour.</h1>
         <p>Des révisions courtes et gamifiées pour les étudiants en kinésithérapie et en soins infirmiers, en France et en Espagne.</p>
         

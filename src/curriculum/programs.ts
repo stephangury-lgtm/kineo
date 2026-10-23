@@ -40,12 +40,12 @@ const semesterLevels=(count:number,language:string):ProgramLevel[]=>Array.from({
 
 export const programs:Program[]=[
  {
-  id:'kineo-fr',name:'Kineo France',shortName:'Kineo',country:'France',flag:'🇫🇷',
+  id:'kineo-fr',name:'Kiné France',shortName:'Kiné France',country:'France',flag:'🇫🇷',
   subtitle:'Kinésithérapie · K2 à K5',accent:'K',status:'live',levelKind:'year',primaryLanguage:'fr',
   levels:numberedYearLevels('k',[2,3,4,5],'fr')
  },
  {
-  id:'kineo-es',name:'Kineo España',shortName:'Kineo España',country:'Espagne',flag:'🇪🇸',
+  id:'kineo-es',name:'Fisioterapia España',shortName:'Fisio España',country:'Espagne',flag:'🇪🇸',
   subtitle:'Fisioterapia · 4 años · FR/ES',accent:'E',status:'foundation',levelKind:'year',primaryLanguage:'es',secondaryLanguage:'fr',
   levels:numberedYearLevels('es',[1,2,3,4],'es','fr')
  },

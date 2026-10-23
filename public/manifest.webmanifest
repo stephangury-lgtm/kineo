@@ -1,13 +1,13 @@
 {
   "id": "/",
-  "name": "LERYKO — Révisions Santé",
-  "short_name": "LERYKO",
+  "name": "GURIKO — Révisions Santé",
+  "short_name": "GURIKO",
   "description": "Plateforme de révision gamifiée pour étudiants en kinésithérapie et en soins infirmiers",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "background_color": "#f5f8f6",
-  "theme_color": "#0f4c3a",
+  "theme_color": "#063B55",
   "lang": "fr",
   "dir": "ltr",
   "orientation": "portrait-primary",
@@ -18,15 +18,21 @@
   "prefer_related_applications": false,
   "icons": [
     {
-      "src": "/icons/leryko-launch.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "/icons/guriko-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icons/leryko-launch-maskable.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "/icons/guriko-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/guriko-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "maskable"
     }
   ],
@@ -34,7 +40,7 @@
     {
       "name": "Réviser maintenant",
       "short_name": "Réviser",
-      "description": "Lancer une session de révision Kineo",
+      "description": "Lancer une session de révision GURIKO",
       "url": "/"
     },
     {
