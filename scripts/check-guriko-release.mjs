@@ -39,3 +39,14 @@ assert.match(html, /sizes="180x180" href="\/icons\/guriko-180\.png"/)
 assert.match(html, /rel="icon" href="\/icons\/guriko-192\.png"/)
 assert.ok(manifest.icons.every(icon => icon.src.startsWith('/icons/guriko-') && icon.type === 'image/png'))
 console.log('GURIKO approved assets and PWA manifest validated')
+
+// Safari may probe the root icon when a shortcut is created from another page.
+for(const name of ['apple-touch-icon.png','apple-touch-icon-precomposed.png','apple-touch-icon-180x180.png']){
+  const path='public/'+name
+  assert.equal(createHash('sha256').update(readFileSync(path)).digest('hex'),approvedHashes[180], 'Apple fallback must be the approved icon: '+path)
+  assert.ok(readFileSync('public/sw.js','utf8').includes('/'+name),'Apple fallback missing from offline shell: '+name)
+}
+const repair=readFileSync('public/repair.html','utf8')
+assert.match(repair,/name="apple-mobile-web-app-title" content="GURIKO"/)
+assert.match(repair,/rel="apple-touch-icon" sizes="180x180" href="\/icons\/guriko-180\.png"/)
+assert.match(repair,/rel="manifest" href="\/manifest\.webmanifest"/)

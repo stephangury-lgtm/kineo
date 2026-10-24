@@ -41,3 +41,24 @@ test('installed GURIKO precaches the current installation icons', async ({ page,
   })
   for (const path of ['/icons/guriko-180.png', '/icons/guriko-192.png', '/icons/guriko-512.png', '/icons/guriko-maskable-512.png']) expect(paths).toContain(path)
 })
+
+test('Safari root icon fallbacks return the approved PNG rather than the SPA HTML', async ({request}) => {
+ const canonical=await request.get(base+'/icons/guriko-180.png')
+ const expected=await canonical.body()
+ for(const path of ['/apple-touch-icon.png','/apple-touch-icon-precomposed.png','/apple-touch-icon-180x180.png']){
+  const response=await request.get(base+path)
+  expect(response.ok()).toBeTruthy()
+  expect(response.headers()['content-type']).toContain('image/png')
+  expect(await response.body()).toEqual(expected)
+ }
+})
+
+test('app and recovery entry pages declare the same iPhone home-screen icon', async ({page}) => {
+ for(const path of ['/','/profil','/repair.html']){
+  await page.goto(base+path,{waitUntil:'domcontentloaded'})
+  await expect(page.locator('meta[name="apple-mobile-web-app-title"]')).toHaveAttribute('content','GURIKO')
+  await expect(page.locator('meta[name="apple-mobile-web-app-capable"]')).toHaveAttribute('content','yes')
+  await expect(page.locator('link[rel="manifest"]')).toHaveAttribute('href','/manifest.webmanifest')
+  await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveAttribute('href','/icons/guriko-180.png')
+ }
+})
