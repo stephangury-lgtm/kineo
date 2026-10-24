@@ -21,5 +21,5 @@ test('excludes unfinished, declined and cancelled challenges and incomplete scor
 test('keeps opponents separate and orders recent results by completion date without mutating input',()=>{
  const input=[duel('old',0,100,{completed_at:'2026-10-22'}),duel('other',0,0,{opponent:{id:'other'}}),duel('new',100,0,{completed_at:'2026-10-24'})]
  const result=getDuelRivalries(input)
- assert.equal(result.length,2);assert.equal(result[0].opponent.id,'friend');assert.equal(result[0].recent.join(','),'W,L');assert.equal(input[0].id,'old')
+ assert.equal(result.length,2);assert.equal(result[0].opponent.id,'friend');assert.equal(result[0].latestChallengeId,'new');assert.equal(result[0].recent.join(','),'W,L');assert.equal(input[0].id,'old')
 })

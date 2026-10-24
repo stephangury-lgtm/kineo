@@ -79,7 +79,7 @@ begin
  if v_body is null or char_length(v_body) not between 1 and 240 or p_request_id is null then
  raise exception 'Écris entre 1 et 240 caractères / Escribe entre 1 y 240 caracteres.'; end if;
  -- Serialize sender requests across all threads, including retries and rate checks.
- perform 1 from public.profiles where id=v_uid for update;
+ perform 1 from public.profiles where id=v_uid for no key update;
  select * into v_existing from public.friend_challenge_messages where sender_id=v_uid and client_request_id=p_request_id;
  if found then
   if v_existing.program_id=p_program_id and coalesce(v_existing.challenge_id,v_existing.curriculum_challenge_id)=p_challenge_id and v_existing.body=v_body then return v_existing.id; end if;

@@ -8,6 +8,8 @@ import './DuelConversation.css'
 type Props = {duel:FriendChallenge; programId:string; isSpain:boolean; canRematch:boolean; onClose:()=>void; onRematch:()=>void}
 export default function DuelConversation({duel,programId,isSpain,canRematch,onClose,onRematch}:Props) {
  const dialog=useRef<HTMLDialogElement>(null)
+ const log=useRef<HTMLDivElement>(null)
+ const lastVisibleMessage=useRef<string|null>(null)
  const request=useRef<{body:string;id:string}|null>(null)
  const mounted=useRef(true)
  const refreshing=useRef(false)
@@ -34,6 +36,13 @@ export default function DuelConversation({duel,programId,isSpain,canRematch,onCl
   window.addEventListener('focus',update);document.addEventListener('visibilitychange',update)
   return()=>{mounted.current=false;modal?.close();unsubscribe();window.clearInterval(timer);window.removeEventListener('focus',update);document.removeEventListener('visibilitychange',update)}
  },[duel.id,programId])
+ useEffect(()=>{
+  const node=log.current;const last=data?.messages.at(-1)
+  if(node&&last&&last.id!==lastVisibleMessage.current){
+   if(!lastVisibleMessage.current||last.is_mine||node.scrollHeight-node.clientHeight-node.scrollTop<180)node.scrollTop=node.scrollHeight
+   lastVisibleMessage.current=last.id
+  }
+ },[data])
  async function send(rematch=false) {
   if(sending.current||!data?.can_send)return
   const body=draft.trim().replace(/\s+/g,' ')
@@ -55,7 +64,8 @@ export default function DuelConversation({duel,programId,isSpain,canRematch,onCl
  return <dialog ref={dialog} className="duel-conversation" aria-labelledby="duel-conversation-title" onCancel={e=>{if(busy){e.preventDefault();return}onClose()}}>
   <header><div><p className="eyebrow">{t('Après le duel','Después del duelo')}</p><h2 id="duel-conversation-title">💬 {name}</h2></div><button type="button" className="secondary-button compact-button" disabled={busy} onClick={onClose}>{t('Fermer','Cerrar')}</button></header>
   <p>{t('Une petite taquinerie, un encouragement… on progresse ensemble. Reste sympa !','Una broma amable, unas palabras de ánimo… aprendemos juntos. ¡Con respeto!')}</p>
-  <div className="duel-message-list" role="log" aria-label={t('Messages du duel','Mensajes del duelo')} aria-live="polite">
+  <p className="field-hint">{t('Ton score','Tu resultado')} : {duel.direction==='sent'?duel.challenger_score:duel.challenged_score} % · {name} : {duel.direction==='sent'?duel.challenged_score:duel.challenger_score} %</p>
+  <div ref={log} className="duel-message-list" role="log" aria-label={t('Messages du duel','Mensajes del duelo')} aria-live="polite">
    {!data&&!error&&<p>{t('Chargement…','Cargando…')}</p>}
    {data?.messages.length===0&&<p>{t('Le duel est fini, la bonne humeur continue. À toi le premier mot !','El duelo ha terminado, el buen humor continúa. ¡Di la primera palabra!')}</p>}
    {data?.messages.length===100&&<p>{t('Les 100 derniers messages','Los últimos 100 mensajes')}</p>}
