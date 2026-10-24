@@ -21,7 +21,7 @@ for(const program of ['kineo-fr','kineo-es','ifsi-fr'])test(`${program}: cumulat
  await expect(card).toContainText(program==='kineo-es'?'Vas por delante':'Tu mènes')
  await expect(card.locator('.duel-score')).toContainText('1')
  await card.getByRole('button',{name:program==='kineo-es'?'Revancha':'Revanche',exact:true}).click()
- await expect(card.getByRole('button')).toBeDisabled()
+ await expect(card.getByRole('button',{name:program==='kineo-es'?'Reto en curso':'Défi en cours',exact:true})).toBeDisabled()
  expect(sent).toBe(true)
 })
 test('received challenge appears in the application and opens the challenges tab',async({page})=>{

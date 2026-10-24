@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getUnreadNotificationCount, getLatestUnreadChallengeNotification, markNotificationRead, subscribeToNotificationChanges, type KineoNotification } from '../services/notificationApi'
+import { challengeNotificationDestination, getUnreadNotificationCount, getLatestUnreadChallengeNotification, markNotificationRead, subscribeToNotificationChanges, type KineoNotification } from '../services/notificationApi'
 import { getCurrentProgram } from '../curriculum/programs'
 import './NotificationBell.css'
 
@@ -68,7 +68,7 @@ export default function NotificationBell() {
       <span aria-hidden="true">🔔</span>
       {count > 0 && <strong aria-live="polite">{count > 9 ? '9+' : count}</strong>}
     </Link>
-    {challenge&&<aside className="challenge-notice" aria-live="polite"><span>⚔️ {challenge.type==='challenge_completed'?challenge.title:(isSpain?'¡Has recibido un reto!':'Tu as reçu un défi !')}</span>{challenge.body&&<p>{challenge.body}</p>}<Link to="/amis?tab=challenges" onClick={()=>{void markNotificationRead(challenge.id).catch(()=>undefined);setChallenge(null)}}>{challenge.type==='challenge_completed'?(isSpain?'Ver el resultado':'Voir le résultat'):(isSpain?'Ver el reto':'Voir le défi')} →</Link></aside>}
+    {challenge&&<aside className="challenge-notice" aria-live="polite"><span>⚔️ {challenge.type!=='challenge_received'?challenge.title:(isSpain?'¡Has recibido un reto!':'Tu as reçu un défi !')}</span>{challenge.body&&<p>{challenge.body}</p>}<Link to={challengeNotificationDestination(challenge)} onClick={()=>{void markNotificationRead(challenge.id).catch(()=>undefined);setChallenge(null)}}>{challenge.type==='challenge_message'?(isSpain?'Leer el mensaje':'Lire le message'):challenge.type==='challenge_completed'?(isSpain?'Ver el resultado':'Voir le résultat'):(isSpain?'Ver el reto':'Voir le défi')} →</Link></aside>}
     </>
   )
 }

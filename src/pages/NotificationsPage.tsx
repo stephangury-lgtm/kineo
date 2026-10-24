@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getCurrentProgram } from '../curriculum/programs'
-import { getNotifications, markAllNotificationsRead, markNotificationRead, subscribeToNotificationChanges, type KineoNotification } from '../services/notificationApi'
+import { challengeNotificationDestination, getNotifications, markAllNotificationsRead, markNotificationRead, subscribeToNotificationChanges, type KineoNotification } from '../services/notificationApi'
 import './NotificationsPage.css'
 
 function iconFor(type: string) {
@@ -14,7 +14,7 @@ function iconFor(type: string) {
 }
 
 function destination(notification: KineoNotification) {
-  if (notification.type.includes('challenge')) return '/amis?tab=challenges'
+  if (notification.type.includes('challenge')) return challengeNotificationDestination(notification)
   if (notification.type.includes('friend')) return '/amis?tab=requests'
   if (notification.type.includes('badge') || notification.type.includes('streak') || notification.type.includes('level')) return '/rewards'
   return '/'
