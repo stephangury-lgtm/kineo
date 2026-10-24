@@ -46,9 +46,9 @@ test('a cold launch without cache gives an explicit offline response after a sta
  assert.equal((await pending).status,503)
 })
 
-test('opening the independent repair page never replaces the cached application shell',async()=>{
+for(const path of ['/repair.html','/repair'])test(`opening ${path} never replaces the cached application shell`,async()=>{
  const f=fixture(async()=>new Response('repair page'))
- await f.request('/repair.html')
+ await f.request(path)
  await new Promise(resolve=>setImmediate(resolve))
  assert.deepEqual(f.puts,['/repair.html'])
 })
