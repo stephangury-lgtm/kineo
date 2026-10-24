@@ -2,11 +2,12 @@ import {test,expect} from '@playwright/test'
 import {createServer} from 'node:http'
 import {readFile} from 'node:fs/promises'
 import {extname,resolve} from 'node:path'
-let server,base,stallAssets=false
+let server,base,stallAssets=false,originUnavailable=false,unavailableRequests=0
 const sockets=new Set()
 const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.png':'image/png','.svg':'image/svg+xml','.json':'application/json','.webmanifest':'application/manifest+json'}
 test.beforeAll(async()=>{
  server=createServer(async(req,res)=>{
+  if(originUnavailable){unavailableRequests++;res.destroy();return}
   const url=new URL(req.url,'http://localhost')
   if(url.searchParams.get('stallNavigation')==='1'||(stallAssets&&url.pathname.startsWith('/assets/')))return
   // Cloudflare canonicalizes .html URLs. Exercise that redirect with an
@@ -26,7 +27,7 @@ test.beforeAll(async()=>{
  base='http://127.0.0.1:'+server.address().port
 })
 test.afterAll(async()=>{for(const socket of sockets)socket.destroy();await new Promise(resolve=>server.close(resolve))})
-test.beforeEach(()=>{stallAssets=false})
+test.beforeEach(()=>{stallAssets=false;originUnavailable=false;unavailableRequests=0})
 async function install(page){
  await page.route('https://kimtiyuytikyseuzmjbv.supabase.co/**',route=>route.fulfill({json:[]}))
  await page.goto(base)
@@ -72,15 +73,19 @@ test('startup and repair instructions match the real device platform',async({pag
  await expect(page.locator('#device-guidance')).not.toContainText(ios?'Chrome':'Safari')
 })
 
-test('installed Safari can open a canonicalized repair page online and from cache',async({page,context})=>{
+test('installed app opens a canonicalized repair page online and during an origin outage',async({page})=>{
  await install(page)
  await page.goto(base+'/repair.html',{waitUntil:'domcontentloaded'})
  await expect(page.getByRole('heading',{name:'Relançons GURIKO'})).toBeVisible()
  await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveAttribute('href','/icons/guriko-180.png')
- await context.setOffline(true)
- await page.reload({waitUntil:'domcontentloaded'})
- await expect(page.getByRole('heading',{name:'Relançons GURIKO'})).toBeVisible()
- await page.goto(base+'/repair',{waitUntil:'domcontentloaded'})
- await expect(page.getByRole('heading',{name:'Relançons GURIKO'})).toBeVisible()
- await context.setOffline(false)
+ // Drop real origin connections. Browser offline switches can suppress the
+ // worker's response in Firefox/WebKit before its fallback is even evaluated.
+ originUnavailable=true
+ try{
+  await page.reload({waitUntil:'domcontentloaded'})
+  await expect(page.getByRole('heading',{name:'Relançons GURIKO'})).toBeVisible()
+  await page.goto(base+'/repair',{waitUntil:'domcontentloaded'})
+  await expect(page.getByRole('heading',{name:'Relançons GURIKO'})).toBeVisible()
+  expect(unavailableRequests).toBeGreaterThan(0)
+ }finally{originUnavailable=false}
 })
