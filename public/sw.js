@@ -72,19 +72,30 @@ function fetchWithDeadline(request) {
     .finally(() => clearTimeout(timer))
 }
 
+// Navigation responses must not carry a followed-redirect flag. WebKit rejects
+// them before rendering the page, including when they came from Cache Storage.
+function navigationResponse(response) {
+  return response && response.redirected
+    ? new Response(response.body, { status: response.status, statusText: response.statusText, headers: response.headers })
+    : response
+}
+
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return
   const url = new URL(event.request.url)
   if (url.origin !== self.location.origin) return
 
   if (event.request.mode === 'navigate') {
+    const cacheKey = ['/repair', '/repair.html'].includes(url.pathname) ? '/repair.html' : '/'
     event.respondWith(
       fetchWithDeadline(event.request)
+        .then(navigationResponse)
         .then((response) => {
-          cacheResponse(event, ['/repair', '/repair.html'].includes(url.pathname) ? '/repair.html' : '/', response)
+          cacheResponse(event, cacheKey, response)
           return response
         })
-        .catch(async () => (await caches.match(event.request)) || (await caches.match('/')) || (await caches.match('/offline.html')) || new Response('Connexion Internet nécessaire.', { status: 503, headers: { 'Content-Type': 'text/plain; charset=utf-8' } })),
+        .catch(async () => (await caches.match(event.request)) || (await caches.match(cacheKey)) || (await caches.match('/')) || (await caches.match('/offline.html')) || new Response('Connexion Internet nécessaire.', { status: 503, headers: { 'Content-Type': 'text/plain; charset=utf-8' } }))
+        .then(navigationResponse),
     )
     return
   }

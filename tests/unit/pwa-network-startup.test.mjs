@@ -52,3 +52,32 @@ for(const path of ['/repair.html','/repair'])test(`opening ${path} never replace
  await new Promise(resolve=>setImmediate(resolve))
  assert.deepEqual(f.puts,['/repair.html'])
 })
+
+function redirectedResponse(){
+ const response=new Response('redirected page',{headers:{'Content-Type':'text/html','X-Content-Type-Options':'nosniff'}})
+ Object.defineProperty(response,'redirected',{value:true})
+ return response
+}
+test('a followed navigation redirect becomes a readable response without the redirect flag',async()=>{
+ const f=fixture(async()=>redirectedResponse())
+ const response=await f.request('/repair.html')
+ assert.equal(response.redirected,false)
+ assert.equal(response.headers.get('X-Content-Type-Options'),'nosniff')
+ assert.equal(await response.text(),'redirected page')
+})
+test('an older cached redirected response is safe to render offline',async()=>{
+ const f=fixture(async()=>{throw new Error('offline')})
+ f.cached.set('/',redirectedResponse())
+ const response=await f.request('/')
+ assert.equal(response.redirected,false)
+ assert.equal(await response.text(),'redirected page')
+})
+
+test('the canonical repair URL uses its own cached document offline',async()=>{
+ const f=fixture(async()=>{throw new Error('offline')})
+ f.cached.set('/repair.html',redirectedResponse())
+ f.cached.set('/',new Response('main application'))
+ const response=await f.request('/repair')
+ assert.equal(response.redirected,false)
+ assert.equal(await response.text(),'redirected page')
+})
