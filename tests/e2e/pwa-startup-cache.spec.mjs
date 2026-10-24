@@ -9,7 +9,10 @@ test.beforeAll(async()=>{
  server=createServer(async(req,res)=>{
   const url=new URL(req.url,'http://localhost')
   if(url.searchParams.get('stallNavigation')==='1'||(stallAssets&&url.pathname.startsWith('/assets/')))return
-  const path=resolve('dist','.'+url.pathname)
+  // Cloudflare canonicalizes .html URLs. Exercise that redirect with an
+  // already installed worker instead of only testing Vite's direct file route.
+  if(url.pathname==='/repair.html'){res.writeHead(301,{Location:'/repair'});res.end();return}
+  const path=resolve('dist','.'+(url.pathname==='/repair'?'/repair.html':url.pathname))
   try{
    const data=await readFile(path)
    res.writeHead(200,{'Content-Type':mime[extname(path)]||'application/octet-stream','Cache-Control':'no-store'});res.end(data)
@@ -67,4 +70,15 @@ test('startup and repair instructions match the real device platform',async({pag
  await expect(page.locator('#device-guidance')).toContainText(ios?'Sur iPhone/iPad':'Sur Android')
  await expect(page.locator('#device-guidance')).toContainText(ios?'Safari':'Chrome')
  await expect(page.locator('#device-guidance')).not.toContainText(ios?'Chrome':'Safari')
+})
+
+test('installed Safari can open a canonicalized repair page online and from cache',async({page,context})=>{
+ await install(page)
+ await page.goto(base+'/repair.html',{waitUntil:'domcontentloaded'})
+ await expect(page.getByRole('heading',{name:'Relançons GURIKO'})).toBeVisible()
+ await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveAttribute('href','/icons/guriko-180.png')
+ await context.setOffline(true)
+ await page.reload({waitUntil:'domcontentloaded'})
+ await expect(page.getByRole('heading',{name:'Relançons GURIKO'})).toBeVisible()
+ await context.setOffline(false)
 })
