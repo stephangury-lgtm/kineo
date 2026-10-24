@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getUnreadNotificationCount, subscribeToNotificationChanges } from '../services/notificationApi'
+import { getUnreadNotificationCount, getLatestUnreadChallengeNotification, markNotificationRead, subscribeToNotificationChanges, type KineoNotification } from '../services/notificationApi'
 import { getCurrentProgram } from '../curriculum/programs'
 import './NotificationBell.css'
 
@@ -23,20 +23,23 @@ function syncAppBadge(count: number) {
 export default function NotificationBell() {
   const isSpain=getCurrentProgram().id==='kineo-es'
   const [count, setCount] = useState(0)
+  const [challenge, setChallenge] = useState<KineoNotification|null>(null)
 
   useEffect(() => {
     let active = true
     const refresh = () => {
-      void getUnreadNotificationCount()
-        .then((value) => {
+      void Promise.all([getUnreadNotificationCount(),getLatestUnreadChallengeNotification()])
+        .then(([value,latest]) => {
           if (!active) return
           setCount(value)
+          setChallenge(latest)
           syncAppBadge(value)
         })
         .catch(() => undefined)
     }
 
     refresh()
+    const timer=window.setInterval(()=>{if(document.visibilityState==='visible')refresh()},30000)
     const onVisibility = () => {
       if (document.visibilityState === 'visible') refresh()
     }
@@ -50,6 +53,7 @@ export default function NotificationBell() {
 
     return () => {
       active = false
+      window.clearInterval(timer)
       unsubscribeRealtime()
       window.removeEventListener('kineo-notifications-updated', refresh)
       window.removeEventListener('focus', refresh)
@@ -59,9 +63,12 @@ export default function NotificationBell() {
 
   const notificationLabel=count>0?(isSpain?`${count} notificación${count>1?'es':''} sin leer`:`${count} notification${count > 1 ? 's' : ''} non lue${count > 1 ? 's' : ''}`):(isSpain?'Notificaciones':'Notifications')
   return (
+    <>
     <Link className={`notification-bell${count > 0 ? ' has-unread' : ''}`} to="/notifications" aria-label={notificationLabel} title={notificationLabel}>
       <span aria-hidden="true">🔔</span>
       {count > 0 && <strong aria-live="polite">{count > 9 ? '9+' : count}</strong>}
     </Link>
+    {challenge&&<aside className="challenge-notice" aria-live="polite"><span>⚔️ {isSpain?'¡Has recibido un reto!':'Tu as reçu un défi !'}</span>{challenge.body&&<p>{challenge.body}</p>}<Link to="/amis?tab=challenges" onClick={()=>{void markNotificationRead(challenge.id).catch(()=>undefined);setChallenge(null)}}>{isSpain?'Ver el reto':'Voir le défi'} →</Link></aside>}
+    </>
   )
 }
