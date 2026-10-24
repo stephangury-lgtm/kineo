@@ -53,3 +53,18 @@ test('independent repair removes only app shell caches and preserves stored acco
  const saved=await page.evaluate(async()=>({progress:localStorage.getItem('repair-test-progress'),session:sessionStorage.getItem('repair-test-session'),otherCache:(await caches.keys()).includes('unrelated-cache')}))
  expect(saved).toEqual({progress:'kept',session:'kept',otherCache:true})
 })
+
+test('startup and repair instructions match the real device platform',async({page,browserName})=>{
+ test.skip(browserName==='firefox','Mobile instructions are exercised on Pixel and iPhone projects')
+ const ios=browserName==='webkit'
+ await page.route('**/assets/*.js',()=>{})
+ const navigation=page.goto(base,{waitUntil:'commit'})
+ await navigation
+ await expect(page.locator('#startup-help')).toContainText(ios?'Sur iPhone/iPad':'Sur Android')
+ await expect(page.locator('#startup-help')).toContainText(ios?'Safari':'Chrome')
+ await expect(page.locator('#startup-help')).not.toContainText(ios?'Chrome':'Safari')
+ await page.goto(base+'/repair.html')
+ await expect(page.locator('#device-guidance')).toContainText(ios?'Sur iPhone/iPad':'Sur Android')
+ await expect(page.locator('#device-guidance')).toContainText(ios?'Safari':'Chrome')
+ await expect(page.locator('#device-guidance')).not.toContainText(ios?'Chrome':'Safari')
+})

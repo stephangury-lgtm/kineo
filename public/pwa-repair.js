@@ -1,6 +1,15 @@
 // Deliberately independent of React and of authenticated APIs: recovery must
 // work even when the main entry bundle never executes. Never clear user storage.
 (function () {
+  var ua = navigator.userAgent || '';
+  var ios = /iPad|iPhone|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var android = !ios && /Android/i.test(ua);
+  var guidance = document.getElementById('device-guidance');
+  if (guidance) guidance.textContent = ios
+    ? 'Sur iPhone/iPad : si l’icône reste bloquée après la réparation, retire-la, ouvre GURIKO dans Safari puis utilise Partager → Sur l’écran d’accueil. Reconnecte-toi avec ton compte pour retrouver ta progression enregistrée.'
+    : android
+      ? 'Sur Android : ouvre cette page dans Chrome, utilise le bouton de réparation, puis ferme complètement GURIKO et rouvre-la.'
+      : 'Après la réparation, ferme complètement l’application installée, puis rouvre-la.';
   var button = document.getElementById('repair');
   var status = document.getElementById('status');
   var leaving = false;
