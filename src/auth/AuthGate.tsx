@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { withStartupDeadline } from './startupDeadline'
 import type { Session } from '@supabase/supabase-js'
 import { supabase } from '../lib/supabase'
 import { PROGRAM_STORAGE_KEY, selectProgram, type ProgramId } from '../curriculum/programs'
@@ -18,6 +19,8 @@ export default function AuthGate({ children }: Props) {
   const [primaryProgram,setPrimaryProgram]=useState<PrimaryProgram|null>(null)
   const [loading, setLoading] = useState(true)
   const [slowLoading, setSlowLoading] = useState(false)
+  const [sessionError, setSessionError] = useState(false)
+  const [sessionAttempt, setSessionAttempt] = useState(0)
   const loadVersion = useRef(0)
   const slowTimer = useRef<number | null>(null)
   const [profileError, setProfileError] = useState<string | null>(null)
@@ -45,7 +48,7 @@ export default function AuthGate({ children }: Props) {
 
     try {
       const userId=nextSession.user.id
-      const [nextProfile,accessiblePrograms]=await Promise.all([getCurrentProfile(userId),getAccessiblePrograms(userId)])
+      const [nextProfile,accessiblePrograms]=await withStartupDeadline(Promise.all([getCurrentProfile(userId),getAccessiblePrograms(userId)]))
       if (version !== loadVersion.current) return
       void markAppOpen().catch(()=>undefined)
       const primary=accessiblePrograms.find(program=>program.is_primary)??null
@@ -93,34 +96,53 @@ export default function AuthGate({ children }: Props) {
   }
 
   useEffect(() => {
+    let active = true
+    const deferred = new Set<number>()
     const initialVersion = loadVersion.current
-    supabase.auth.getSession().then(({ data, error }) => {
-      if (initialVersion !== loadVersion.current) return
+    setLoading(true)
+    setSessionError(false)
+    withStartupDeadline(supabase.auth.getSession()).then(({ data, error }) => {
+      if (!active || initialVersion !== loadVersion.current) return
       if (error) throw error
       return loadProfile(data.session)
-    }).catch(() => { if (initialVersion === loadVersion.current) setLoading(false) })
+    }).catch(() => {
+      if (active && initialVersion === loadVersion.current) {
+        ++loadVersion.current
+        setSessionError(true)
+        setLoading(false)
+      }
+    })
 
     const { data } = supabase.auth.onAuthStateChange((event, nextSession) => {
-      if(event==='SIGNED_OUT')clearDailySnapshots()
-      if (event === 'INITIAL_SESSION') return
-      if (event === 'PASSWORD_RECOVERY') {
-        ++loadVersion.current
-        if (slowTimer.current !== null) window.clearTimeout(slowTimer.current)
-        setPasswordRecovery(true)
-        setSession(nextSession)
-        setLoading(false)
-        return
-      }
-      if (!nextSession) setPasswordRecovery(false)
-      void loadProfile(nextSession)
+      if (!active || event === 'INITIAL_SESSION') return
+      // Run API requests after Supabase has finished dispatching its auth event.
+      const timer = window.setTimeout(() => {
+        deferred.delete(timer)
+        if (!active) return
+        setSessionError(false)
+        if(event==='SIGNED_OUT')clearDailySnapshots()
+        if (event === 'PASSWORD_RECOVERY') {
+          ++loadVersion.current
+          if (slowTimer.current !== null) window.clearTimeout(slowTimer.current)
+          setPasswordRecovery(true)
+          setSession(nextSession)
+          setLoading(false)
+          return
+        }
+        if (!nextSession) setPasswordRecovery(false)
+        void loadProfile(nextSession)
+      }, 0)
+      deferred.add(timer)
     })
 
     return () => {
+      active = false
+      deferred.forEach(timer => window.clearTimeout(timer))
       ++loadVersion.current
       if (slowTimer.current !== null) window.clearTimeout(slowTimer.current)
       data.subscription.unsubscribe()
     }
-  }, [])
+  }, [sessionAttempt])
 
   useEffect(()=>{
     if(!session)return
@@ -167,6 +189,10 @@ export default function AuthGate({ children }: Props) {
 
   if (passwordRecovery && session) {
     return <ResetPasswordPage onDone={() => setPasswordRecovery(false)} />
+  }
+
+  if (sessionError) {
+    return <main className="auth-shell"><section className="card centered"><h1>Connexion interrompue</h1><p>La vérification de ta connexion prend trop de temps. Vérifie ton accès Internet puis réessaie.</p><button className="primary-button" onClick={() => setSessionAttempt(value => value + 1)}>Réessayer</button><button className="secondary-button" onClick={() => window.location.reload()}>Relancer l’application</button></section></main>
   }
 
   if (!session) return <LoginPage />
