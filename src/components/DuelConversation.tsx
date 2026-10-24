@@ -30,7 +30,7 @@ export default function DuelConversation({duel,programId,isSpain,canRematch,onCl
   mounted.current=true
   const modal=dialog.current;modal?.showModal()
   const update=()=>{if(document.visibilityState==='visible')void refresh().catch(()=>undefined)}
-  void refresh().then(()=>window.dispatchEvent(new Event('kineo-notifications-updated'))).catch((e:Error)=>{if(mounted.current)setError(e.message)})
+  void refresh().catch((e:Error)=>{if(mounted.current)setError(e.message)})
   const unsubscribe=subscribeToNotificationChanges(update)
   const timer=window.setInterval(update,15000)
   window.addEventListener('focus',update);document.addEventListener('visibilitychange',update)

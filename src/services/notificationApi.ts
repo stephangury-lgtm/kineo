@@ -31,6 +31,10 @@ export async function getUnreadNotificationCount() {
   return count ?? 0
 }
 
+export function notifyNotificationsUpdated() {
+  window.dispatchEvent(new Event('kineo-notifications-updated'))
+}
+
 export async function markNotificationRead(notificationId: string) {
   const { error } = await supabase
     .from('notifications')
@@ -39,7 +43,7 @@ export async function markNotificationRead(notificationId: string) {
     .is('read_at', null)
 
   if (error) throw error
-  window.dispatchEvent(new Event('kineo-notifications-updated'))
+  notifyNotificationsUpdated()
 }
 
 export async function markAllNotificationsRead() {
@@ -49,7 +53,7 @@ export async function markAllNotificationsRead() {
     .is('read_at', null)
 
   if (error) throw error
-  window.dispatchEvent(new Event('kineo-notifications-updated'))
+  notifyNotificationsUpdated()
 }
 
 let notificationSubscriptionId = 0
