@@ -86,14 +86,15 @@ self.addEventListener('fetch', (event) => {
   if (url.origin !== self.location.origin) return
 
   if (event.request.mode === 'navigate') {
+    const cacheKey = ['/repair', '/repair.html'].includes(url.pathname) ? '/repair.html' : '/'
     event.respondWith(
       fetchWithDeadline(event.request)
         .then(navigationResponse)
         .then((response) => {
-          cacheResponse(event, ['/repair', '/repair.html'].includes(url.pathname) ? '/repair.html' : '/', response)
+          cacheResponse(event, cacheKey, response)
           return response
         })
-        .catch(async () => (await caches.match(event.request)) || (await caches.match('/')) || (await caches.match('/offline.html')) || new Response('Connexion Internet nécessaire.', { status: 503, headers: { 'Content-Type': 'text/plain; charset=utf-8' } }))
+        .catch(async () => (await caches.match(event.request)) || (await caches.match(cacheKey)) || (await caches.match('/')) || (await caches.match('/offline.html')) || new Response('Connexion Internet nécessaire.', { status: 503, headers: { 'Content-Type': 'text/plain; charset=utf-8' } }))
         .then(navigationResponse),
     )
     return

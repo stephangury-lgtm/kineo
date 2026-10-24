@@ -80,5 +80,7 @@ test('installed Safari can open a canonicalized repair page online and from cach
  await context.setOffline(true)
  await page.reload({waitUntil:'domcontentloaded'})
  await expect(page.getByRole('heading',{name:'Relançons GURIKO'})).toBeVisible()
+ await page.goto(base+'/repair',{waitUntil:'domcontentloaded'})
+ await expect(page.getByRole('heading',{name:'Relançons GURIKO'})).toBeVisible()
  await context.setOffline(false)
 })
