@@ -15,15 +15,16 @@ create table public.friend_challenge_messages (
 create index friend_messages_fr_thread_idx on public.friend_challenge_messages(challenge_id,created_at) where challenge_id is not null;
 create index friend_messages_curriculum_thread_idx on public.friend_challenge_messages(curriculum_challenge_id,created_at) where curriculum_challenge_id is not null;
 create index friend_messages_sender_time_idx on public.friend_challenge_messages(sender_id,created_at);
+create index friend_messages_program_idx on public.friend_challenge_messages(program_id);
 alter table public.friend_challenge_messages enable row level security;
 revoke all on public.friend_challenge_messages from public,anon,authenticated;
 grant select on public.friend_challenge_messages to authenticated;
 create policy participants_read_completed_messages on public.friend_challenge_messages for select to authenticated using (
  exists(select 1 from public.challenges c where c.id=challenge_id and c.status='completed' and c.challenger_score is not null and c.challenged_score is not null
- and auth.uid() in(c.challenger_id,c.challenged_id) and sender_id in(c.challenger_id,c.challenged_id))
+ and (select auth.uid()) in(c.challenger_id,c.challenged_id) and sender_id in(c.challenger_id,c.challenged_id))
  or exists(select 1 from public.curriculum_friend_challenges c where c.id=curriculum_challenge_id and c.program_id=friend_challenge_messages.program_id
  and c.status='completed' and c.challenger_score is not null and c.challenged_score is not null
- and auth.uid() in(c.challenger_id,c.challenged_id) and sender_id in(c.challenger_id,c.challenged_id))
+ and (select auth.uid()) in(c.challenger_id,c.challenged_id) and sender_id in(c.challenger_id,c.challenged_id))
 );
 
 create function public.read_friend_challenge_messages_v1(p_challenge_id uuid,p_program_id text) returns jsonb
