@@ -21,8 +21,8 @@ export default function CurriculumChallengePage(){
  },[challengeId])
 
  if(loading)return<section className="card skeleton-card"><p>Préparation du défi {program.shortName}…</p></section>
- if(error)return<div className="stack"><section className="card"><p className="eyebrow">{program.shortName}</p><h1>Défi indisponible</h1><p>{error}</p></section><Link className="secondary-button" to="/amis">Retour aux amis</Link></div>
- if(questions.length===0)return<div className="stack"><section className="hero-card"><div className="hero-copy"><span className="hero-kicker">Défi terminé · {program.shortName}</span><h1>Ton passage est déjà enregistré ✓</h1><p>Ton score est conservé dans ce cursus. Le résultat final apparaîtra dès que ton ami aura joué.</p></div><div className="hero-orbit"><span>⚔️</span></div></section><Link className="primary-button" to="/amis">Voir mes défis</Link></div>
+ if(error)return<div className="stack"><section className="card"><p className="eyebrow">{program.shortName}</p><h1>Défi indisponible</h1><p>{error}</p></section><Link className="secondary-button" to="/amis?tab=challenges">Retour aux amis</Link></div>
+ if(questions.length===0)return<div className="stack"><section className="hero-card"><div className="hero-copy"><span className="hero-kicker">Défi terminé · {program.shortName}</span><h1>Ton passage est déjà enregistré ✓</h1><p>Ton score est conservé dans ce cursus. Tu recevras une notification avec les résultats quand ton ami aura joué.</p></div><div className="hero-orbit"><span>⚔️</span></div></section><Link className="primary-button" to="/amis?tab=challenges">Voir mes défis</Link></div>
 
  const question=questions[index]
  const finished=!question
@@ -38,7 +38,7 @@ export default function CurriculumChallengePage(){
  function next(){setSelected(null);setResult(null);setIndex(v=>v+1)}
 
  if(finished){
-  return <div className="stack"><section className="hero-card"><div className="hero-copy"><span className="hero-kicker">Défi terminé · {program.shortName}</span><h1>{finalResult?.score!=null?`${finalResult.score}%`:'Score enregistré'} ⚔️</h1><p>{finalResult?.challenge_completed?'Les deux participants ont joué : le résultat final est disponible dans Amis & défis.':'Ton score est enregistré dans ce cursus. Le résultat final apparaîtra lorsque ton ami aura terminé.'}</p></div><div className="hero-orbit"><span>🏁</span></div></section><Link className="primary-button" to="/amis">Voir le résultat</Link></div>
+  return <div className="stack"><section className="hero-card"><div className="hero-copy"><span className="hero-kicker">Défi terminé · {program.shortName}</span><h1>{finalResult?.score!=null?`${finalResult.score}%`:'Score enregistré'} ⚔️</h1><p>{finalResult?.challenge_completed?'Les deux participants ont joué : le résultat final est disponible dans Amis & défis.':'Ton score est enregistré dans ce cursus. Tu peux quitter l’application : une notification t’avertira avec les résultats quand ton ami aura terminé.'}</p></div><div className="hero-orbit"><span>🏁</span></div></section><Link className="primary-button" to="/amis?tab=challenges">Voir le résultat</Link></div>
  }
 
  return <div className="stack">
