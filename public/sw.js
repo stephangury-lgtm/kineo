@@ -78,7 +78,7 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetchWithDeadline(event.request)
         .then((response) => {
-          cacheResponse(event, '/', response)
+          cacheResponse(event, url.pathname === '/repair.html' ? '/repair.html' : '/', response)
           return response
         })
         .catch(async () => (await caches.match(event.request)) || (await caches.match('/')) || (await caches.match('/offline.html')) || new Response('Connexion Internet nécessaire.', { status: 503, headers: { 'Content-Type': 'text/plain; charset=utf-8' } })),

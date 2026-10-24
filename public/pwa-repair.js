@@ -3,7 +3,12 @@
 (function () {
   var button = document.getElementById('repair');
   var status = document.getElementById('status');
+  var leaving = false;
+  window.addEventListener('pagehide', function () { leaving = true; });
+  window.addEventListener('beforeunload', function () { leaving = true; });
+  window.addEventListener('pageshow', function () { leaving = false; });
   button.addEventListener('click', function () {
+    var sourceUrl = location.href;
     button.disabled = true;
     status.textContent = 'Renouvellement des fichiers de démarrage…';
     var tasks = [];
@@ -25,6 +30,7 @@
     }, 6000);
     Promise.all(tasks).then(function () {
       window.clearTimeout(timer);
+      if (leaving || location.href !== sourceUrl) return;
       status.textContent = 'Fichiers renouvelés. Ouverture de GURIKO…';
       location.replace('/?repaired=' + Date.now());
     }).catch(function () {
