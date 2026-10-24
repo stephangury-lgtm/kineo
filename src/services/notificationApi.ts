@@ -52,14 +52,17 @@ export async function markAllNotificationsRead() {
   window.dispatchEvent(new Event('kineo-notifications-updated'))
 }
 
+let notificationSubscriptionId = 0
+
 export function subscribeToNotificationChanges(onChange: () => void) {
   let active = true
+  const subscriptionId = ++notificationSubscriptionId
   let channel: ReturnType<typeof supabase.channel> | null = null
 
   void supabase.auth.getUser().then(({ data }) => {
     if (!active || !data.user) return
     channel = supabase
-      .channel(`kineo-notifications-${data.user.id}`)
+      .channel(`kineo-notifications-${data.user.id}-${subscriptionId}`)
       .on('postgres_changes', {
         event: '*',
         schema: 'public',
@@ -78,7 +81,7 @@ export function subscribeToNotificationChanges(onChange: () => void) {
 export async function getLatestUnreadChallengeNotification() {
   const { data, error } = await supabase.from('notifications')
     .select('id,type,title,body,data,read_at,created_at')
-    .eq('type', 'challenge_received').is('read_at', null)
+    .in('type', ['challenge_received','challenge_completed']).is('read_at', null)
     .order('created_at', { ascending: false }).limit(1)
   if (error) throw error
   return (data?.[0] ?? null) as KineoNotification | null

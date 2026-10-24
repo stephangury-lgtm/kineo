@@ -47,6 +47,11 @@ for(const [program,level,version] of [['kineo-fr','K2','default'],['kineo-es','E
   await expect(challengeTab).toHaveAttribute('aria-pressed','true',{timeout:20000})
   const sent=page.locator('.challenge-row').first()
   await expect(sent).toBeVisible({timeout:20000})
+  // The sender starts while the recipient has no browser session yet.
+  await sent.getByRole('button',{name:program==='kineo-es'?'Jugar ahora':'Jouer maintenant',exact:true}).click()
+  await expect(page.locator('.quiz-card')).toBeVisible({timeout:20000})
+  await page.goto(base+'/amis?tab=challenges',{waitUntil:'domcontentloaded'})
+  await expect(sent).toBeVisible({timeout:20000})
   const recipientContext=await browser.newContext()
   try{
    await recipientContext.addInitScript(({origin,program,level,version})=>{
