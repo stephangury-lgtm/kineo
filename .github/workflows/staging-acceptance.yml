@@ -1,7 +1,7 @@
 name: Leryko V5 connected staging acceptance
 on:
   push:
-    branches: [feat/leryko-v5-interface]
+    branches: [main, feat/leryko-v5-interface]
   workflow_dispatch:
 permissions:
   contents: read

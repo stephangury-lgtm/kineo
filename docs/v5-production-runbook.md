@@ -60,3 +60,11 @@ Avant publication, le workflow capture la version Cloudflare actuellement à 100
 ## Après la bascule
 
 Contrôler la connexion et un parcours réel autorisé, surveiller les workflows de santé existants, les erreurs applicatives et les retours utilisateurs. Vérifier également une installation PWA déjà utilisée sur téléphone. Garder le compte rendu du déploiement et son artefact `release-before.json`. Le comportement sur des appareils hors ligne reste lié à leur reconnexion et à la mise à jour du service worker.
+
+## Validation connectée automatique après fusion
+
+La recette `staging-acceptance.yml` est également déclenchée après chaque push sur main. Elle conserve le backend et le Worker isolés, les comptes synthétiques bornés au run OIDC et leur nettoyage, la recette réelle des trois cursus et l'exercice de restauration Cloudflare.
+
+Le déploiement de production attend la réussite de cette recette via `workflow_run`. `scripts/verify-staging-acceptance.mjs` relit le run dans l'API GitHub avec un token en lecture : dépôt source et destination, chemin exact du workflow, événement autorisé, branche main, conclusion réussie et SHA identique au main à publier sont obligatoires. Un événement ancien, étranger, issu d'une PR ou d'un autre workflow est refusé. Si main a avancé entre-temps, le run ne peut pas autoriser un commit différent.
+
+Cette preuve de recette connectée remplace uniquement la mise à jour manuelle de `LERYKO_V5_ACCEPTANCE_SHA` pour le déploiement déclenché par sa réussite. Le mode manuel continue à exiger cette variable pour le SHA exact. `LERYKO_SINGLE_DEPLOYER_CONFIRMED=true`, l'environnement production, les tests avant publication, la capture et la vérification de la version précédente, l'archivage et le rollback restent obligatoires et inchangés. Une recette échouée n'autorise aucune publication.

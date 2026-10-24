@@ -1,7 +1,9 @@
 name: Deploy Kineo to Cloudflare
 
 on:
-  push:
+  workflow_run:
+    workflows: ["Leryko V5 connected staging acceptance"]
+    types: [completed]
     branches: [main]
   workflow_dispatch:
     inputs:
@@ -13,6 +15,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: kineo-production
@@ -20,11 +23,14 @@ concurrency:
 
 jobs:
   deploy:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
     environment: production
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
       - name: Select release interface and enforce V5 acceptance
         id: interface
         env:
@@ -32,13 +38,19 @@ jobs:
           CONFIGURED_INTERFACE: ${{ vars.LERYKO_PRODUCTION_INTERFACE || 'legacy' }}
           ACCEPTED_SHA: ${{ vars.LERYKO_V5_ACCEPTANCE_SHA }}
           SINGLE_DEPLOYER: ${{ vars.LERYKO_SINGLE_DEPLOYER_CONFIRMED }}
+          GH_TOKEN: ${{ github.token }}
         run: |
+          acceptance=false
+          if [ "$GITHUB_EVENT_NAME" = workflow_run ]; then
+            node scripts/verify-staging-acceptance.mjs
+            acceptance=true
+          fi
           selected="$REQUESTED_INTERFACE"
           if [ "$selected" = inherit ]; then selected="$CONFIGURED_INTERFACE"; fi
           case "$selected" in legacy|v5) ;; *) echo "Unknown interface"; exit 1 ;; esac
           enabled=false
           if [ "$selected" = v5 ]; then
-            if [ "$ACCEPTED_SHA" != "$GITHUB_SHA" ] || [ "$SINGLE_DEPLOYER" != true ]; then
+            if { [ "$ACCEPTED_SHA" != "$GITHUB_SHA" ] && [ "$acceptance" != true ]; } || [ "$SINGLE_DEPLOYER" != true ]; then
               echo "V5 requires connected acceptance for this exact commit and one production deployer."
               exit 1
             fi
@@ -46,9 +58,6 @@ jobs:
           fi
           echo "interface=$selected" >> "$GITHUB_OUTPUT"
           echo "enabled=$enabled" >> "$GITHUB_OUTPUT"
-
-      - name: Checkout
-        uses: actions/checkout@v5
 
       - name: Setup Node
         uses: actions/setup-node@v5
