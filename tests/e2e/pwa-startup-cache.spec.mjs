@@ -1,0 +1,55 @@
+import {test,expect} from '@playwright/test'
+import {createServer} from 'node:http'
+import {readFile} from 'node:fs/promises'
+import {extname,resolve} from 'node:path'
+let server,base,stallAssets=false
+const sockets=new Set()
+const mime={'.html':'text/html','.js':'text/javascript','.css':'text/css','.png':'image/png','.svg':'image/svg+xml','.json':'application/json','.webmanifest':'application/manifest+json'}
+test.beforeAll(async()=>{
+ server=createServer(async(req,res)=>{
+  const url=new URL(req.url,'http://localhost')
+  if(url.searchParams.get('stallNavigation')==='1'||(stallAssets&&url.pathname.startsWith('/assets/')))return
+  const path=resolve('dist','.'+url.pathname)
+  try{
+   const data=await readFile(path)
+   res.writeHead(200,{'Content-Type':mime[extname(path)]||'application/octet-stream','Cache-Control':'no-store'});res.end(data)
+  }catch{
+   if(extname(url.pathname)){res.writeHead(404);res.end();return}
+   res.writeHead(200,{'Content-Type':'text/html','Cache-Control':'no-store'});res.end(await readFile('dist/index.html'))
+  }
+ })
+ server.on('connection',socket=>{sockets.add(socket);socket.on('close',()=>sockets.delete(socket))})
+ await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve))
+ base='http://127.0.0.1:'+server.address().port
+})
+test.afterAll(async()=>{for(const socket of sockets)socket.destroy();await new Promise(resolve=>server.close(resolve))})
+test.beforeEach(()=>{stallAssets=false})
+async function install(page){
+ await page.route('https://kimtiyuytikyseuzmjbv.supabase.co/**',route=>route.fulfill({json:[]}))
+ await page.goto(base)
+ await expect(page.getByRole('button',{name:'Se connecter',exact:true})).toBeVisible()
+ await page.evaluate(()=>navigator.serviceWorker.ready)
+ await expect.poll(()=>page.evaluate(()=>Boolean(navigator.serviceWorker.controller))).toBe(true)
+}
+test('installed app leaves the launch screen even when navigation and startup asset network requests stall',async({page})=>{
+ await install(page)
+ stallAssets=true
+ await page.goto(base+'/amis?stallNavigation=1',{waitUntil:'domcontentloaded',timeout:12000})
+ await expect(page.getByRole('button',{name:'Se connecter',exact:true})).toBeVisible()
+ await expect(page.locator('#startup-help')).toHaveCount(0)
+})
+test('independent repair removes only app shell caches and preserves stored account and learning data',async({page})=>{
+ await install(page)
+ await page.evaluate(async()=>{
+  localStorage.setItem('repair-test-progress','kept')
+  sessionStorage.setItem('repair-test-session','kept')
+  await caches.open('unrelated-cache')
+ })
+ await page.goto(base+'/repair.html')
+ await expect(page.getByRole('heading',{name:'Relançons GURIKO'})).toBeVisible()
+ await page.getByRole('button',{name:'Réparer et ouvrir GURIKO'}).click()
+ await expect(page).toHaveURL(/[?]repaired=\d+/)
+ await expect(page.getByRole('button',{name:'Se connecter',exact:true})).toBeVisible()
+ const saved=await page.evaluate(async()=>({progress:localStorage.getItem('repair-test-progress'),session:sessionStorage.getItem('repair-test-session'),otherCache:(await caches.keys()).includes('unrelated-cache')}))
+ expect(saved).toEqual({progress:'kept',session:'kept',otherCache:true})
+})

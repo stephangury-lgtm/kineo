@@ -71,7 +71,7 @@ jobs:
           exit 1
 
       - name: Public and audit browser regressions
-        run: npx playwright test tests/e2e/public-smoke.spec.mjs tests/e2e/startup-session.spec.mjs tests/e2e/audit-regressions.spec.mjs tests/e2e/single-correction.spec.mjs --project=chromium --reporter=line
+        run: npx playwright test tests/e2e/public-smoke.spec.mjs tests/e2e/pwa-startup-cache.spec.mjs tests/e2e/startup-session.spec.mjs tests/e2e/audit-regressions.spec.mjs tests/e2e/single-correction.spec.mjs --project=chromium --reporter=line
 
       - name: Build opt-in V5 preview for isolated regression tests
         run: npm run build
