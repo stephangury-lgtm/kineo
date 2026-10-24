@@ -74,3 +74,12 @@ export function subscribeToNotificationChanges(onChange: () => void) {
     if (channel) void supabase.removeChannel(channel)
   }
 }
+
+export async function getLatestUnreadChallengeNotification() {
+  const { data, error } = await supabase.from('notifications')
+    .select('id,type,title,body,data,read_at,created_at')
+    .eq('type', 'challenge_received').is('read_at', null)
+    .order('created_at', { ascending: false }).limit(1)
+  if (error) throw error
+  return (data?.[0] ?? null) as KineoNotification | null
+}

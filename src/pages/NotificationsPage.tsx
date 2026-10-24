@@ -14,7 +14,8 @@ function iconFor(type: string) {
 }
 
 function destination(notification: KineoNotification) {
-  if (notification.type.includes('challenge') || notification.type.includes('friend')) return '/amis'
+  if (notification.type.includes('challenge')) return '/amis?tab=challenges'
+  if (notification.type.includes('friend')) return '/amis?tab=requests'
   if (notification.type.includes('badge') || notification.type.includes('streak') || notification.type.includes('level')) return '/rewards'
   return '/'
 }
