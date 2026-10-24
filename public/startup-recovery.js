@@ -1,5 +1,16 @@
 // Runs before the application bundle so an outdated iOS home-screen installation can recover.
 (function () {
+  var ua = navigator.userAgent || '';
+  var ios = /iPad|iPhone|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var android = !ios && /Android/i.test(ua);
+  var initialHelp = typeof document !== 'undefined' && document.getElementById('startup-help');
+  if (initialHelp) {
+    initialHelp.textContent = ios
+      ? 'Chargement de GURIKO… Sur iPhone/iPad, si cet écran persiste, ouvre le site dans Safari et actualise la page.'
+      : android
+        ? 'Chargement de GURIKO… Sur Android, si cet écran persiste, ouvre le site dans Chrome et actualise la page.'
+        : 'Chargement de GURIKO… Si cet écran persiste, ouvre le site dans ton navigateur et actualise la page.';
+  }
   var key = 'leryko_startup_recovery_at';
   var recovering = false;
   var leaving = false;

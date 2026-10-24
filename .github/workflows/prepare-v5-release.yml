@@ -42,13 +42,13 @@ jobs:
           cat /tmp/leryko-preview.log
           exit 1
       - name: Public and audit regressions
-        run: npx playwright test tests/e2e/public-smoke.spec.mjs tests/e2e/audit-regressions.spec.mjs tests/e2e/single-correction.spec.mjs --project=chromium --reporter=line
+        run: npx playwright test tests/e2e/public-smoke.spec.mjs tests/e2e/pwa-startup-cache.spec.mjs tests/e2e/audit-regressions.spec.mjs tests/e2e/single-correction.spec.mjs --project=chromium --reporter=line
       - name: V5 three-engine regressions and default activation
         if: matrix.interface == 'v5'
         env:
           LERYKO_TEST_V5: '1'
           LERYKO_TEST_V5_DEFAULT: '1'
-        run: npx playwright test tests/e2e/v5-interface.spec.mjs tests/e2e/mobile-feedback.spec.mjs tests/e2e/route-readiness.spec.mjs tests/e2e/resume-progress.spec.mjs tests/e2e/daily-resume.spec.mjs tests/e2e/guriko-identity.spec.mjs tests/e2e/duel-rivalries.spec.mjs tests/e2e/duel-messages.spec.mjs --reporter=line
+        run: npx playwright test tests/e2e/pwa-startup-cache.spec.mjs tests/e2e/v5-interface.spec.mjs tests/e2e/mobile-feedback.spec.mjs tests/e2e/route-readiness.spec.mjs tests/e2e/resume-progress.spec.mjs tests/e2e/daily-resume.spec.mjs tests/e2e/guriko-identity.spec.mjs tests/e2e/duel-rivalries.spec.mjs tests/e2e/duel-messages.spec.mjs --reporter=line
       - name: Package release with checksums
         if: matrix.interface == 'legacy'
         run: |

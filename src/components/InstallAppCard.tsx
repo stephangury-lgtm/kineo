@@ -21,7 +21,7 @@ export default function InstallAppCard(){
     const ua=navigator.userAgent
     const ios=/iPad|iPhone|iPod/.test(ua) || (navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1)
     setShowIos(ios)
-    const before=(event:Event)=>{event.preventDefault();setPromptEvent(event as InstallPromptEvent)}
+    const before=(event:Event)=>{if(ios)return;event.preventDefault();setPromptEvent(event as InstallPromptEvent)}
     const done=()=>{setInstalled(true);setPromptEvent(null);setShowIos(false)}
     window.addEventListener('beforeinstallprompt',before)
     window.addEventListener('appinstalled',done)
@@ -36,5 +36,5 @@ export default function InstallAppCard(){
   }
 
   if(installed||(!promptEvent&&!showIos))return null
-  return <section className="card challenge-card"><div className="challenge-icon">📲</div><div className="challenge-copy"><p className="eyebrow">{isSpain?'Instalar Kineo':'Installer Kineo'}</p><h2>{isSpain?'Kineo directamente en tu pantalla de inicio':'Kineo directement sur ton écran d’accueil'}</h2><p>{showIos&&!promptEvent?(isSpain?'En iPhone/iPad: pulsa Compartir y luego «Añadir a pantalla de inicio».':'Sur iPhone/iPad : touche Partager puis « Sur l’écran d’accueil ».'):(isSpain?'Instala la PWA para abrirla como una aplicación y utilizar más fácilmente el modo sin conexión.':'Installe la PWA pour l’ouvrir comme une application et profiter plus facilement du mode hors ligne.')}</p></div>{promptEvent&&<button className="secondary-button" onClick={()=>void install()}>{isSpain?'Instalar':'Installer'}</button>}</section>
+  return <section className="card challenge-card"><div className="challenge-icon">📲</div><div className="challenge-copy"><p className="eyebrow">{isSpain?'Instalar Kineo':'Installer Kineo'}</p><h2>{isSpain?'Kineo directamente en tu pantalla de inicio':'Kineo directement sur ton écran d’accueil'}</h2><p>{showIos?(isSpain?'En iPhone/iPad: pulsa Compartir y luego «Añadir a pantalla de inicio».':'Sur iPhone/iPad : touche Partager puis « Sur l’écran d’accueil ».'):(isSpain?'Instala la PWA para abrirla como una aplicación y utilizar más fácilmente el modo sin conexión.':'Installe la PWA pour l’ouvrir comme une application et profiter plus facilement du mode hors ligne.')}</p></div>{promptEvent&&!showIos&&<button className="secondary-button" onClick={()=>void install()}>{isSpain?'Instalar':'Installer'}</button>}</section>
 }

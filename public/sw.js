@@ -8,6 +8,8 @@ const SHELL = [
   '/manifest.webmanifest',
   '/offline.html',
   '/startup-recovery.js',
+  '/repair.html',
+  '/pwa-repair.js',
   '/leryko-brand-logo.svg',
   '/icons/leryko-launch.svg',
   '/kineo-icon.svg',
@@ -43,10 +45,29 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((keys) => Promise.all(keys.filter((key) => key !== CACHE).map((key) => caches.delete(key)))),
+    caches.keys().then((keys) => Promise.all(keys.filter((key) => key.startsWith('kineo-shell-') && key !== CACHE).map((key) => caches.delete(key)))),
   )
   self.clients.claim()
 })
+
+// A suspended connection can remain pending while Android displays its launch
+// screen. Rejection-only fallback never runs in that case, so bound the wait.
+function fetchWithDeadline(request) {
+  const controller = new AbortController()
+  let timer
+  const deadline = new Promise((_, reject) => {
+    timer = setTimeout(() => {
+      controller.abort()
+      reject(new Error('Application network timeout'))
+    }, 4000)
+  })
+  return Promise.race([fetch(request, { cache: 'no-store', signal: controller.signal }), deadline])
+    .then((response) => {
+      if (!response.ok) throw new Error('Application response unavailable')
+      return response
+    })
+    .finally(() => clearTimeout(timer))
+}
 
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return
@@ -55,9 +76,9 @@ self.addEventListener('fetch', (event) => {
 
   if (event.request.mode === 'navigate') {
     event.respondWith(
-      fetch(event.request, { cache: 'no-store' })
+      fetchWithDeadline(event.request)
         .then((response) => {
-          cacheResponse(event, '/', response)
+          cacheResponse(event, url.pathname === '/repair.html' ? '/repair.html' : '/', response)
           return response
         })
         .catch(async () => (await caches.match(event.request)) || (await caches.match('/')) || (await caches.match('/offline.html')) || new Response('Connexion Internet nécessaire.', { status: 503, headers: { 'Content-Type': 'text/plain; charset=utf-8' } })),
@@ -67,7 +88,7 @@ self.addEventListener('fetch', (event) => {
 
   if (url.pathname === '/manifest.webmanifest' || url.pathname === '/version.json') {
     event.respondWith(
-      fetch(event.request, { cache: 'no-store' })
+      fetchWithDeadline(event.request)
         .then((response) => {
           cacheResponse(event, event.request, response)
           return response
@@ -79,7 +100,7 @@ self.addEventListener('fetch', (event) => {
 
   if (url.pathname.startsWith('/quiz-assets/')) {
     event.respondWith(
-      fetch(event.request, { cache: 'no-store' })
+      fetchWithDeadline(event.request)
         .then((response) => {
           cacheResponse(event, event.request, response)
           return response
@@ -90,8 +111,17 @@ self.addEventListener('fetch', (event) => {
   }
 
   if (['script', 'style'].includes(event.request.destination)) {
+    // Vite filenames contain their content hash. The exact cached URL is safe
+    // to reuse and must not wait on the network on every installed-app launch.
+    if (url.pathname.startsWith('/assets/')) {
+      event.respondWith(caches.match(event.request).then((cached) => cached || fetchWithDeadline(event.request).then((response) => {
+        cacheResponse(event, event.request, response)
+        return response
+      })))
+      return
+    }
     event.respondWith(
-      fetch(event.request, { cache: 'no-store' })
+      fetchWithDeadline(event.request)
         .then((response) => {
           cacheResponse(event, event.request, response)
           return response
