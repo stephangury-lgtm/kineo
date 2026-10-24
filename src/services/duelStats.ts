@@ -1,7 +1,7 @@
 import type { FriendChallenge } from './challengeApi'
 
 export function getDuelRivalries(challenges: FriendChallenge[]) {
-  type Rivalry = { opponent: FriendChallenge['opponent']; duels: number; wins: number; losses: number; draws: number; recent: Array<'W'|'L'|'D'> }
+  type Rivalry = { opponent: FriendChallenge['opponent']; latestChallengeId: string; duels: number; wins: number; losses: number; draws: number; recent: Array<'W'|'L'|'D'> }
   const rows = new Map<string, Rivalry>()
   const seen = new Set<string>()
   const completed = challenges.filter(c => c.status === 'completed' && c.challenger_score != null && c.challenged_score != null)
@@ -11,7 +11,7 @@ export function getDuelRivalries(challenges: FriendChallenge[]) {
     seen.add(item.id)
     const mine = item.direction === 'sent' ? item.challenger_score! : item.challenged_score!
     const other = item.direction === 'sent' ? item.challenged_score! : item.challenger_score!
-    const row = rows.get(item.opponent.id) ?? { opponent: item.opponent, duels: 0, wins: 0, losses: 0, draws: 0, recent: [] }
+    const row = rows.get(item.opponent.id) ?? { opponent: item.opponent, latestChallengeId: item.id, duels: 0, wins: 0, losses: 0, draws: 0, recent: [] }
     row.duels++
     if (mine > other) { row.wins++; row.recent.push('W') }
     else if (mine < other) { row.losses++; row.recent.push('L') }

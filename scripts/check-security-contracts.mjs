@@ -40,6 +40,8 @@ const protectedCalls=[
  ['get_badges_v2',{}],
  ['get_friend_leaderboard_v2',{p_program_id:'kineo-es'}],
  ['get_friend_challenges_v3',{}],
+ ['read_friend_challenge_messages_v1',{p_challenge_id:'00000000-0000-0000-0000-000000000000',p_program_id:'kineo-fr'}],
+ ['send_friend_challenge_message_v1',{p_challenge_id:'00000000-0000-0000-0000-000000000000',p_program_id:'kineo-fr',p_body:'ci-anon-security-probe',p_request_id:'00000000-0000-0000-0000-000000000000'}],
  ['get_friendships_v3',{p_program_id:'kineo-es'}],
  ['get_curriculum_progress_v1',{p_program_id:'kineo-es'}],
  ['report_client_error_v1',{p_message:'ci-anon-security-probe',p_component_stack:null,p_page_path:'/ci',p_app_version:'ci'}],

@@ -1,9 +1,9 @@
 import type { FriendChallenge } from '../services/challengeApi'
 import { getDuelRivalries } from '../services/duelStats'
 
-type Props = { challenges: FriendChallenge[]; isSpain: boolean; onChallenge: (id:string)=>void; canChallenge: (id:string)=>boolean; busy: boolean }
+type Props = { challenges: FriendChallenge[]; isSpain: boolean; onChallenge: (id:string)=>void; canChallenge: (id:string)=>boolean; busy: boolean; onMessage?: (id:string)=>void }
 
-export default function DuelHeadToHead({challenges,isSpain,onChallenge,canChallenge,busy}:Props) {
+export default function DuelHeadToHead({challenges,isSpain,onChallenge,canChallenge,busy,onMessage}:Props) {
  const rows=getDuelRivalries(challenges)
  if(!rows.length)return null
  const totals=rows.reduce((sum,row)=>({duels:sum.duels+row.duels,wins:sum.wins+row.wins,losses:sum.losses+row.losses,draws:sum.draws+row.draws}),{duels:0,wins:0,losses:0,draws:0})
@@ -22,6 +22,7 @@ export default function DuelHeadToHead({challenges,isSpain,onChallenge,canChalle
      <span>{isSpain?'Últimos resultados':'Derniers résultats'} : {row.recent.slice(0,5).map((value,i)=><b key={i} style={{marginRight:6}} title={value==='W'?(isSpain?'Victoria':'Victoire'):value==='L'?(isSpain?'Derrota':'Défaite'):(isSpain?'Empate':'Égalité')}>{value==='W'?'🏆':value==='L'?'●':'🤝'}</b>)}</span>
     </div>
     <div className="rivalry-actions"><div className="duel-score" aria-label={isSpain?'Victorias tuyas y de tu rival':'Victoires de toi et de ton adversaire'}><strong>{row.wins}</strong><span>—</span><strong>{row.losses}</strong></div>
+     <button className="secondary-button compact-button" onClick={()=>onMessage?.(row.latestChallengeId)}>{isSpain?'💬 Conversar':'💬 Échanger'}</button>
      <button className="primary-button compact-button" disabled={busy||active||!canChallenge(row.opponent.id)} onClick={()=>onChallenge(row.opponent.id)}>{active?(isSpain?'Reto en curso':'Défi en cours'):(isSpain?'Revancha':'Revanche')}</button>
     </div>
    </article>
