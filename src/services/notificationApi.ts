@@ -10,10 +10,19 @@ export type KineoNotification = {
   created_at: string
 }
 
+async function currentNotificationUserId() {
+  const { data, error } = await supabase.auth.getUser()
+  if (error) throw error
+  if (!data.user) throw new Error('Connexion requise / Inicia sesión.')
+  return data.user.id
+}
+
 export async function getNotifications(limit = 40) {
+  const userId = await currentNotificationUserId()
   const { data, error } = await supabase
     .from('notifications')
     .select('id,type,title,body,data,read_at,created_at')
+    .eq('user_id', userId)
     .order('created_at', { ascending: false })
     .limit(limit)
 
@@ -22,9 +31,11 @@ export async function getNotifications(limit = 40) {
 }
 
 export async function getUnreadNotificationCount() {
+  const userId = await currentNotificationUserId()
   const { count, error } = await supabase
     .from('notifications')
     .select('id', { count: 'exact', head: true })
+    .eq('user_id', userId)
     .is('read_at', null)
 
   if (error) throw error
@@ -36,9 +47,11 @@ export function notifyNotificationsUpdated() {
 }
 
 export async function markNotificationRead(notificationId: string) {
+  const userId = await currentNotificationUserId()
   const { error } = await supabase
     .from('notifications')
     .update({ read_at: new Date().toISOString() })
+    .eq('user_id', userId)
     .eq('id', notificationId)
     .is('read_at', null)
 
@@ -47,9 +60,11 @@ export async function markNotificationRead(notificationId: string) {
 }
 
 export async function markAllNotificationsRead() {
+  const userId = await currentNotificationUserId()
   const { error } = await supabase
     .from('notifications')
     .update({ read_at: new Date().toISOString() })
+    .eq('user_id', userId)
     .is('read_at', null)
 
   if (error) throw error
@@ -83,8 +98,10 @@ export function subscribeToNotificationChanges(onChange: () => void) {
 }
 
 export async function getLatestUnreadChallengeNotification() {
+  const userId = await currentNotificationUserId()
   const { data, error } = await supabase.from('notifications')
     .select('id,type,title,body,data,read_at,created_at')
+    .eq('user_id', userId)
     .in('type', ['challenge_received','challenge_completed','challenge_message']).is('read_at', null)
     .order('created_at', { ascending: false }).limit(1)
   if (error) throw error
