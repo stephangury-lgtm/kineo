@@ -49,3 +49,17 @@ for(const program of ['kineo-fr','kineo-es','ifsi-fr'])test(`${program}: the not
  await expect(page).toHaveURL(/tab=challenges/)
  await expect(banner).toHaveCount(0)
 })
+
+test('MTP is displayed in full while matching answers retain their server keys',async({page})=>{
+ await v5Student(page)
+ let answer
+ await page.route('**/rest/v1/rpc/get_quiz_questions_v4',route=>route.fulfill({json:[{id:'technique',type:'matching',question_text:'Associe le MTP',difficulty:1,display_order:1,metadata:{left_items:['MTP'],right_items:['Technique MTP']},question_options:[]}]}))
+ await page.route('**/rest/v1/rpc/submit_quiz_answer_v5',route=>{answer=route.request().postDataJSON().p_answer;return route.fulfill({json:{submitted:true,correct:true,correction:{explanation:'Le MTP est une technique de massage.'}}})})
+ await page.goto(base+'/quiz?mode=lesson&session=technique&ui=v5')
+ await expect(page.getByRole('heading',{name:'Associe le massage transversal profond',exact:true})).toBeVisible()
+ const select=page.getByRole('combobox',{name:'massage transversal profond',exact:true})
+ await select.selectOption({label:'Technique massage transversal profond'})
+ await page.getByRole('button',{name:'Valider ma réponse',exact:true}).click()
+ await expect(page.getByText('Le massage transversal profond est une technique de massage.')).toBeVisible()
+ expect(answer).toEqual({pairs:[{left:'MTP',right:'Technique MTP'}]})
+})
