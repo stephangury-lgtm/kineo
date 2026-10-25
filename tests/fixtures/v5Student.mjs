@@ -1,6 +1,6 @@
-export async function v5Student(page,{program='kineo-fr',active=null,failActive=false,failGame=false,dailyDone=false,role='student'}={}){
+export async function v5Student(page,{program='kineo-fr',active=null,failActive=false,failGame=false,dailyDone=false,role='student',userId='a0000000-0000-4000-8000-000000000001'}={}){
  const state={active,failActive,failGame,dailyDone},calls=[]
- const id='a0000000-0000-4000-8000-000000000001',level='a0000000-0000-4000-8000-000000000002'
+ const id=userId,level='a0000000-0000-4000-8000-000000000002'
  const expires=Math.floor(Date.now()/1000)+3600
  const user={id,aud:'authenticated',role:'authenticated',email:'v5@example.invalid',app_metadata:{provider:'email'},user_metadata:{},created_at:new Date().toISOString()}
  const token=[{alg:'HS256',typ:'JWT'},{sub:id,role:'authenticated',exp:expires}].map(x=>Buffer.from(JSON.stringify(x)).toString('base64url')).join('.')+'.local-test-signature'

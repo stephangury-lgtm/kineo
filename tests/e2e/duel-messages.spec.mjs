@@ -187,3 +187,45 @@ test('failed acknowledgement keeps the unread banner available and offers a retr
  await expect(banner).toHaveCount(0)
  await expect(page.locator('.notification-bell strong')).toHaveCount(0)
 })
+
+for(const program of ['kineo-fr','kineo-es','ifsi-fr'])test(`${program}: participants independently dismiss their own result notification`,async({browser})=>{
+ const participants=['a0000000-0000-4000-8000-000000000001','b0000000-0000-4000-8000-000000000001']
+ const rows=participants.map((user_id,i)=>({id:`c0000000-0000-4000-8000-00000000000${i+1}`,user_id,type:'challenge_completed',title:'Résultat du défi',body:'Votre défi est terminé.',data:{program_id:program,challenge_id:id},read_at:null,created_at:new Date().toISOString()}))
+ const contexts=await Promise.all(participants.map(()=>browser.newContext({serviceWorkers:'block'})))
+ try{
+  const pages=await Promise.all(contexts.map(context=>context.newPage()))
+  for(const [i,page] of pages.entries()){
+   await v5Student(page,{program,userId:participants[i]})
+   await page.route('**/rest/v1/notifications*',async route=>{
+    const req=route.request(),url=new URL(req.url())
+    expect(url.searchParams.get('user_id')).toBe('eq.'+participants[i])
+    const visible=rows.filter(row=>row.user_id===participants[i]&&(!url.searchParams.has('read_at')||!row.read_at))
+    if(req.method()==='HEAD')return route.fulfill({status:200,headers:{'content-range':'*/'+visible.length,'access-control-expose-headers':'content-range'}})
+    if(req.method()==='PATCH'){
+     const notificationId=url.searchParams.get('id')?.replace(/^eq\./,'')
+     for(const row of visible)if(!notificationId||row.id===notificationId)row.read_at=new Date().toISOString()
+     return route.fulfill({status:204})
+    }
+    return route.fulfill({json:visible})
+   })
+   await page.goto(base+'/amis?ui=v5')
+   await expect(page.locator('.challenge-notice')).toBeVisible()
+  }
+  const closeLabel=program==='kineo-es'?'Marcar como leída':'Marquer comme lue'
+  await pages[0].locator('.challenge-notice').getByRole('button',{name:closeLabel}).click()
+  await expect(pages[0].locator('.challenge-notice')).toHaveCount(0)
+  expect(rows[0].read_at).not.toBeNull()
+  expect(rows[1].read_at).toBeNull()
+  await pages[0].reload()
+  await expect(pages[0].locator('.app-shell')).toBeVisible()
+  await expect(pages[0].locator('.challenge-notice')).toHaveCount(0)
+  await pages[1].reload()
+  await expect(pages[1].locator('.challenge-notice')).toBeVisible()
+  await pages[1].locator('.challenge-notice').getByRole('button',{name:closeLabel}).click()
+  await expect(pages[1].locator('.challenge-notice')).toHaveCount(0)
+  expect(rows[1].read_at).not.toBeNull()
+  await pages[0].reload()
+  await expect(pages[0].locator('.app-shell')).toBeVisible()
+  await expect(pages[0].locator('.challenge-notice')).toHaveCount(0)
+ }finally{await Promise.all(contexts.map(context=>context.close()))}
+})
