@@ -79,6 +79,6 @@ jobs:
           VITE_ENABLE_V5_PREVIEW: 'true'
 
       - name: V5 browser regressions with mocked APIs only
-        run: npx playwright test tests/e2e/v5-interface.spec.mjs tests/e2e/feedback-daily.spec.mjs tests/e2e/pdf-reader.spec.mjs tests/e2e/mobile-feedback.spec.mjs tests/e2e/route-readiness.spec.mjs tests/e2e/resume-progress.spec.mjs tests/e2e/daily-resume.spec.mjs tests/e2e/guriko-identity.spec.mjs tests/e2e/duel-rivalries.spec.mjs tests/e2e/duel-messages.spec.mjs --project=chromium --reporter=line
+        run: npx playwright test tests/e2e/v5-interface.spec.mjs tests/e2e/feedback-daily.spec.mjs tests/e2e/pdf-reader.spec.mjs tests/e2e/mobile-feedback.spec.mjs tests/e2e/route-readiness.spec.mjs tests/e2e/resume-progress.spec.mjs tests/e2e/daily-resume.spec.mjs tests/e2e/guriko-identity.spec.mjs tests/e2e/duel-rivalries.spec.mjs tests/e2e/duel-messages.spec.mjs tests/e2e/feedback-oct25.spec.mjs --project=chromium --reporter=line
         env:
           LERYKO_TEST_V5: '1'
