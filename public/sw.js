@@ -1,7 +1,8 @@
 const CACHE = 'kineo-shell-v12'
 const SHELL = [
-  '/branding/guriko-v2-approved-board.png',
+  '/branding/guriko-approved-board.png',
   '/icons/guriko-v2-180.png',
+  '/icons/guriko-v2-32.png',
   '/apple-touch-icon.png',
   '/apple-touch-icon-precomposed.png',
   '/apple-touch-icon-180x180.png',
