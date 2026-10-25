@@ -24,13 +24,31 @@ export default function NotificationBell() {
   const isSpain=getCurrentProgram().id==='kineo-es'
   const [count, setCount] = useState(0)
   const [challenge, setChallenge] = useState<KineoNotification|null>(null)
+  const [marking, setMarking] = useState(false)
+  const [readErrorId, setReadErrorId] = useState<string|null>(null)
+
+  async function readBanner(id: string) {
+    setMarking(true)
+    setReadErrorId(null)
+    try {
+      await markNotificationRead(id)
+      setChallenge(current => current?.id === id ? null : current)
+    } catch {
+      setReadErrorId(id)
+    } finally {
+      setMarking(false)
+    }
+  }
 
   useEffect(() => {
     let active = true
+    let requestVersion = 0
     const refresh = () => {
+      const version = ++requestVersion
       void Promise.all([getUnreadNotificationCount(),getLatestUnreadChallengeNotification()])
         .then(([value,latest]) => {
-          if (!active) return
+          // A read acknowledgement invalidates every request started before it.
+          if (!active || version !== requestVersion) return
           setCount(value)
           setChallenge(latest)
           syncAppBadge(value)
@@ -44,7 +62,6 @@ export default function NotificationBell() {
       if (document.visibilityState === 'visible') refresh()
     }
     const unsubscribeRealtime = subscribeToNotificationChanges(() => {
-      refresh()
       window.dispatchEvent(new Event('kineo-notifications-updated'))
     })
     window.addEventListener('kineo-notifications-updated', refresh)
@@ -53,6 +70,7 @@ export default function NotificationBell() {
 
     return () => {
       active = false
+      ++requestVersion
       window.clearInterval(timer)
       unsubscribeRealtime()
       window.removeEventListener('kineo-notifications-updated', refresh)
@@ -68,7 +86,7 @@ export default function NotificationBell() {
       <span aria-hidden="true">🔔</span>
       {count > 0 && <strong aria-live="polite">{count > 9 ? '9+' : count}</strong>}
     </Link>
-    {challenge&&<aside className="challenge-notice" aria-live="polite"><span>⚔️ {challenge.type!=='challenge_received'?challenge.title:(isSpain?'¡Has recibido un reto!':'Tu as reçu un défi !')}</span>{challenge.body&&<p>{challenge.body}</p>}<Link to={challengeNotificationDestination(challenge)} onClick={()=>{void markNotificationRead(challenge.id).catch(()=>undefined);setChallenge(null)}}>{challenge.type==='challenge_message'?(isSpain?'Leer el mensaje':'Lire le message'):challenge.type==='challenge_completed'?(isSpain?'Ver el resultado':'Voir le résultat'):(isSpain?'Ver el reto':'Voir le défi')} →</Link></aside>}
+    {challenge&&<aside className="challenge-notice" aria-live="polite"><button className="challenge-notice-read" type="button" disabled={marking} aria-label={isSpain?'Marcar como leída':'Marquer comme lue'} title={isSpain?'Marcar como leída':'Marquer comme lue'} onClick={()=>void readBanner(challenge.id)}>×</button><span>⚔️ {challenge.type!=='challenge_received'?challenge.title:(isSpain?'¡Has recibido un reto!':'Tu as reçu un défi !')}</span>{challenge.body&&<p>{challenge.body}</p>}<Link to={challengeNotificationDestination(challenge)} onClick={()=>void readBanner(challenge.id)}>{challenge.type==='challenge_message'?(isSpain?'Leer el mensaje':'Lire le message'):challenge.type==='challenge_completed'?(isSpain?'Ver el resultado':'Voir le résultat'):(isSpain?'Ver el reto':'Voir le défi')} →</Link>{readErrorId===challenge.id&&<p role="alert">{isSpain?'No se pudo guardar la lectura. Vuelve a intentarlo.':'La lecture n’a pas pu être enregistrée. Réessaie.'}</p>}</aside>}
     </>
   )
 }
