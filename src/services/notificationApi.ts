@@ -102,7 +102,7 @@ export async function getLatestUnreadChallengeNotification() {
   const { data, error } = await supabase.from('notifications')
     .select('id,type,title,body,data,read_at,created_at')
     .eq('user_id', userId)
-    .in('type', ['challenge_received','challenge_completed','challenge_message']).is('read_at', null)
+    .in('type', ['challenge_received','challenge_completed','challenge_message','tiebreak_received','tiebreak_completed']).is('read_at', null)
     .order('created_at', { ascending: false }).limit(1)
   if (error) throw error
   return (data?.[0] ?? null) as KineoNotification | null
@@ -110,6 +110,8 @@ export async function getLatestUnreadChallengeNotification() {
 
 export function challengeNotificationDestination(notification: KineoNotification) {
  const id=notification.data.challenge_id??notification.data.curriculum_challenge_id
+ if(['challenge_completed','tiebreak_received','tiebreak_completed'].includes(notification.type)&&typeof id==='string'&&/^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(id))return `/amis?tab=challenges&result=${encodeURIComponent(id)}${['kineo-fr','kineo-es','ifsi-fr'].includes(String(notification.data.program_id))?`&program=${notification.data.program_id}`:''}${notification.type.startsWith('tiebreak_')?'&tiebreak=1':''}`
  return notification.type==='challenge_message'&&typeof id==='string'&&/^[0-9a-f]{8}(-[0-9a-f]{4}){3}-[0-9a-f]{12}$/i.test(id)
   ? `/amis?tab=challenges&discussion=${encodeURIComponent(id)}${['kineo-fr','kineo-es','ifsi-fr'].includes(String(notification.data.program_id))?`&program=${notification.data.program_id}`:''}` : '/amis?tab=challenges'
 }
+

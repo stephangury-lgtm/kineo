@@ -13,10 +13,12 @@ export function getDuelRivalries(challenges: FriendChallenge[]) {
     const other = item.direction === 'sent' ? item.challenged_score! : item.challenger_score!
     const row = rows.get(item.opponent.id) ?? { opponent: item.opponent, latestChallengeId: item.id, duels: 0, wins: 0, losses: 0, draws: 0, recent: [] }
     row.duels++
-    if (mine > other) { row.wins++; row.recent.push('W') }
-    else if (mine < other) { row.losses++; row.recent.push('L') }
+    const myId=item.direction==='sent'?item.challenger_id:item.challenged_id
+    if (item.tiebreak_winner_id ? item.tiebreak_winner_id===myId : mine > other) { row.wins++; row.recent.push('W') }
+    else if (item.tiebreak_winner_id ? item.tiebreak_winner_id!==myId : mine < other) { row.losses++; row.recent.push('L') }
     else { row.draws++; row.recent.push('D') }
     rows.set(item.opponent.id, row)
   }
   return [...rows.values()].sort((a,b) => b.duels-a.duels || b.wins-a.wins || a.opponent.id.localeCompare(b.opponent.id))
 }
+
