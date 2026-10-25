@@ -77,7 +77,7 @@ test('installed app opens a canonicalized repair page online and during an origi
  await install(page)
  await page.goto(base+'/repair.html',{waitUntil:'domcontentloaded'})
  await expect(page.getByRole('heading',{name:'Relançons GURIKO'})).toBeVisible()
- await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveAttribute('href','/icons/guriko-180.png')
+ await expect(page.locator('link[rel="apple-touch-icon"]')).toHaveAttribute('href','/icons/guriko-v2-180.png')
  // Drop real origin connections. Browser offline switches can suppress the
  // worker's response in Firefox/WebKit before its fallback is even evaluated.
  originUnavailable=true
