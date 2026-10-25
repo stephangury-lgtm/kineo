@@ -63,3 +63,13 @@ test('MTP is displayed in full while matching answers retain their server keys',
  await expect(page.getByText('Le massage transversal profond est une technique de massage.')).toBeVisible()
  expect(answer).toEqual({pairs:[{left:'MTP',right:'Technique MTP'}]})
 })
+
+test('an explanation repeating the expected answer is displayed once',async({page})=>{
+ await v5Student(page)
+ await page.route('**/rest/v1/rpc/get_quiz_questions_v4',route=>route.fulfill({json:[{id:'single-answer',type:'short_answer',question_text:'Cite les principes',difficulty:1,metadata:{},question_options:[],display_order:1}]}))
+ await page.route('**/rest/v1/rpc/submit_quiz_answer_v5',route=>route.fulfill({json:{submitted:true,correct:false,correction:{correct_answer:'Respect, écoute et adaptation',explanation:'Réponse attendue : respect, écoute et adaptation.'}}}))
+ await page.goto(base+'/quiz?mode=lesson&session=duplicate&ui=v5')
+ await page.locator('textarea.text-answer').fill('Autre réponse')
+ await page.getByRole('button',{name:'Valider ma réponse',exact:true}).click()
+ await expect(page.locator('.result-box p').filter({hasText:/respect, écoute et adaptation/i})).toHaveCount(1)
+})
