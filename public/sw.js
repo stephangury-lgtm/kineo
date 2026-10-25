@@ -1,13 +1,13 @@
-const CACHE = 'kineo-shell-v11'
+const CACHE = 'kineo-shell-v12'
 const SHELL = [
-  '/branding/guriko-approved-board.png',
-  '/icons/guriko-180.png',
+  '/branding/guriko-v2-approved-board.png',
+  '/icons/guriko-v2-180.png',
   '/apple-touch-icon.png',
   '/apple-touch-icon-precomposed.png',
   '/apple-touch-icon-180x180.png',
-  '/icons/guriko-192.png',
-  '/icons/guriko-512.png',
-  '/icons/guriko-maskable-512.png',
+  '/icons/guriko-v2-192.png',
+  '/icons/guriko-v2-512.png',
+  '/icons/guriko-v2-maskable-512.png',
   '/manifest.webmanifest',
   '/offline.html',
   '/startup-recovery.js',
