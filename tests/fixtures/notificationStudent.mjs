@@ -12,7 +12,7 @@ export async function notificationStudent(page,{program='kineo-fr',unread=true}=
  await page.route('**/rest/v1/notifications*',async route=>{
   const request=route.request(),url=new URL(request.url())
   const pending=()=>state.notifications.filter(row=>!row.read_at)
-  if(request.method()==='HEAD')return route.fulfill({status:200,headers:{'content-range':'*/'+pending().length}})
+  if(request.method()==='HEAD')return route.fulfill({status:200,headers:{'content-range':'*/'+pending().length,'access-control-expose-headers':'content-range'}})
   if(request.method()==='PATCH'){
    state.patches++
    if(state.failPatch)return route.fulfill({status:503,json:{message:'Temporary acknowledgement failure'}})

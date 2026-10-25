@@ -121,6 +121,7 @@ for(const program of ['kineo-fr','kineo-es','ifsi-fr'])test(`${program}: acknowl
  await page.goto(`${base}/amis?ui=v5`)
  const banner=page.locator('.challenge-notice')
  await expect(banner).toBeVisible()
+ await expect(page.locator('.notification-bell strong')).toHaveText('1')
  await banner.getByRole('button',{name:program==='kineo-es'?'Marcar como leída':'Marquer comme lue'}).click()
  await expect(banner).toHaveCount(0)
  await expect(page.locator('.notification-bell strong')).toHaveCount(0)
