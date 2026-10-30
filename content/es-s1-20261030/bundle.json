@@ -1,0 +1,2602 @@
+{
+  "content": {
+    "batch": "es-s1-20261030",
+    "verified_at": "2026-10-30",
+    "scope": "Material original de entrenamiento; no son apuntes oficiales ni exámenes de UVic. Primer semestre, primer curso.",
+    "sources": {
+      "anatomy": "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues",
+      "physiology": "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane",
+      "fund": "https://www.uvic.cat/es/assignatura/4412",
+      "psych": "https://www.uvic.cat/es/assignatura/4409",
+      "classical": "https://openstax.org/books/psychology-2e/pages/6-2-classical-conditioning",
+      "operant": "https://openstax.org/books/psychology-2e/pages/6-3-operant-conditioning",
+      "culture": "https://www.uvic.cat/es/assignatura/4410",
+      "who": "https://www.who.int/es/news-room/fact-sheets/detail/social-determinants-of-health"
+    },
+    "lessons": [
+      {
+        "key": "anatomy",
+        "topic_id": "e784bdd3-43aa-4c2a-a61f-32bd4b93192b",
+        "existing_id": "502486f5-ff65-4a23-82fe-40d4408de8d1",
+        "title": "Anatomía I: organización, tejidos y membranas",
+        "summary": "Relaciona células, tejidos y órganos; distingue los cuatro tejidos básicos y las membranas corporales.",
+        "content": "### Objetivos de repaso\nDistinguir célula, tejido y órgano; reconocer las funciones generales de los cuatro tejidos básicos; diferenciar una membrana celular de una membrana tisular.\n\n### De la célula al órgano\nLas células son unidades vivas que se especializan. Un tejido es una agrupación organizada de células y material extracelular que participa en funciones relacionadas. Un órgano combina varios tejidos: nombrar un órgano no equivale a identificar un único tejido. La histología estudia los tejidos al microscopio.\n\n### Los cuatro tejidos básicos\nEl epitelial recubre superficies, reviste cavidades y forma glándulas. El conectivo sostiene, une y protege; su matriz extracelular tiene un papel destacado. El muscular produce fuerza mediante la contracción: comprende músculo esquelético, cardíaco y liso. El nervioso permite la comunicación mediante señales electroquímicas. Clasifica por estructura y función, sin suponer que un órgano contiene un solo tipo.\n\n### Membranas tisulares\nLas mucosas revisten vías que comunican con el exterior, como el tubo digestivo. Las serosas revisten cavidades internas cerradas y recubren órganos; ayudan a reducir el rozamiento. Pleura, pericardio y peritoneo son ejemplos de serosas. La membrana cutánea es la piel. Las membranas sinoviales son membranas de tejido conectivo relacionadas con articulaciones móviles. Estas láminas de tejidos son distintas de la membrana plasmática de una célula.\n\n### Primeras bases de embriología\nLas tres capas germinales son ectodermo, mesodermo y endodermo. El tejido nervioso deriva principalmente del ectodermo; el muscular, del mesodermo. El epitelio puede tener origen en las tres capas, según su localización: «todo epitelio procede del ectodermo» es una simplificación incorrecta.\n\n### Aplicación y errores frecuentes\nEn una pared de un órgano pueden coexistir revestimiento epitelial, soporte conectivo, músculo y estructuras nerviosas. Identificar el tejido exige precisar qué componente se observa.\nNo confundas membrana plasmática con mucosa, ni tejido muscular con órgano completo.\n\n### Autoevaluación\nExplica qué diferencia un tejido de un órgano y compara mucosa, serosa y sinovial con un ejemplo de cada una.\n\nMaterial de repaso original basado en las fuentes enlazadas; no es una reproducción del curso ni un examen oficial.",
+        "key_points": [
+          "Cuatro tejidos: epitelial, conectivo, muscular y nervioso.",
+          "Un órgano combina varios tejidos.",
+          "Mucosa: vías abiertas al exterior; serosa: cavidades cerradas.",
+          "La membrana sinovial es de tejido conectivo.",
+          "Ectodermo, mesodermo y endodermo son capas germinales."
+        ],
+        "questions": [
+          {
+            "question_text": "Una muestra reviste la superficie interna de una cavidad. ¿Qué tejido cumple principalmente esta función?",
+            "answer": "Epitelial",
+            "distractors": [
+              "Muscular",
+              "Nervioso",
+              "Conectivo exclusivamente"
+            ],
+            "explanation": "El tejido epitelial cubre superficies y reviste cavidades.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "anatomy",
+            "id": "b7301030-2026-4000-8003-000000000001",
+            "options": [
+              {
+                "text": "Epitelial",
+                "correct": true
+              },
+              {
+                "text": "Muscular",
+                "correct": false
+              },
+              {
+                "text": "Nervioso",
+                "correct": false
+              },
+              {
+                "text": "Conectivo exclusivamente",
+                "correct": false
+              }
+            ],
+            "display_order": 1001,
+            "source_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué característica orienta hacia tejido conectivo?",
+            "answer": "Una matriz extracelular que participa en el soporte",
+            "distractors": [
+              "La ausencia obligatoria de matriz",
+              "La contracción como única función",
+              "La transmisión exclusiva de impulsos nerviosos"
+            ],
+            "explanation": "El tejido conectivo une y sostiene, y su matriz extracelular es un componente importante.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "anatomy",
+            "id": "b7301030-2026-4000-8003-000000000002",
+            "options": [
+              {
+                "text": "La ausencia obligatoria de matriz",
+                "correct": false
+              },
+              {
+                "text": "La contracción como única función",
+                "correct": false
+              },
+              {
+                "text": "La transmisión exclusiva de impulsos nerviosos",
+                "correct": false
+              },
+              {
+                "text": "Una matriz extracelular que participa en el soporte",
+                "correct": true
+              }
+            ],
+            "display_order": 1002,
+            "source_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Cuál de estas parejas distingue correctamente tejido y órgano?",
+            "answer": "Tejido muscular — corazón",
+            "distractors": [
+              "Corazón — tejido muscular",
+              "Pulmón — riñón",
+              "Célula — membrana plasmática"
+            ],
+            "explanation": "El corazón es un órgano compuesto por varios tejidos, entre ellos tejido muscular.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "anatomy",
+            "id": "b7301030-2026-4000-8003-000000000003",
+            "options": [
+              {
+                "text": "Pulmón — riñón",
+                "correct": false
+              },
+              {
+                "text": "Célula — membrana plasmática",
+                "correct": false
+              },
+              {
+                "text": "Tejido muscular — corazón",
+                "correct": true
+              },
+              {
+                "text": "Corazón — tejido muscular",
+                "correct": false
+              }
+            ],
+            "display_order": 1003,
+            "source_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué tejido está especializado en transmitir señales electroquímicas?",
+            "answer": "Nervioso",
+            "distractors": [
+              "Epitelial",
+              "Adiposo",
+              "Óseo"
+            ],
+            "explanation": "El tejido nervioso permite la comunicación entre regiones corporales mediante señales electroquímicas.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "anatomy",
+            "id": "b7301030-2026-4000-8003-000000000004",
+            "options": [
+              {
+                "text": "Óseo",
+                "correct": false
+              },
+              {
+                "text": "Nervioso",
+                "correct": true
+              },
+              {
+                "text": "Epitelial",
+                "correct": false
+              },
+              {
+                "text": "Adiposo",
+                "correct": false
+              }
+            ],
+            "display_order": 1004,
+            "source_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué conjunto contiene los tres tipos generales de tejido muscular?",
+            "answer": "Esquelético, cardíaco y liso",
+            "distractors": [
+              "Epitelial, glandular y cutáneo",
+              "Óseo, cartilaginoso y adiposo",
+              "Sensitivo, seroso y mucoso"
+            ],
+            "explanation": "El músculo se clasifica en esquelético, cardíaco y liso.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "anatomy",
+            "id": "b7301030-2026-4000-8003-000000000005",
+            "options": [
+              {
+                "text": "Esquelético, cardíaco y liso",
+                "correct": true
+              },
+              {
+                "text": "Epitelial, glandular y cutáneo",
+                "correct": false
+              },
+              {
+                "text": "Óseo, cartilaginoso y adiposo",
+                "correct": false
+              },
+              {
+                "text": "Sensitivo, seroso y mucoso",
+                "correct": false
+              }
+            ],
+            "display_order": 1005,
+            "source_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué membrana reviste un conducto que comunica con el exterior, como el tubo digestivo?",
+            "answer": "Mucosa",
+            "distractors": [
+              "Serosa",
+              "Sinovial",
+              "Membrana nuclear"
+            ],
+            "explanation": "Las mucosas revisten vías abiertas al exterior; las serosas se relacionan con cavidades cerradas.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "anatomy",
+            "id": "b7301030-2026-4000-8003-000000000006",
+            "options": [
+              {
+                "text": "Serosa",
+                "correct": false
+              },
+              {
+                "text": "Sinovial",
+                "correct": false
+              },
+              {
+                "text": "Membrana nuclear",
+                "correct": false
+              },
+              {
+                "text": "Mucosa",
+                "correct": true
+              }
+            ],
+            "display_order": 1006,
+            "source_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué serosa se relaciona con los pulmones?",
+            "answer": "Pleura",
+            "distractors": [
+              "Peritoneo",
+              "Pericardio",
+              "Membrana sinovial"
+            ],
+            "explanation": "La pleura recubre los pulmones y reviste su cavidad; el pericardio corresponde al corazón.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "anatomy",
+            "id": "b7301030-2026-4000-8003-000000000007",
+            "options": [
+              {
+                "text": "Pericardio",
+                "correct": false
+              },
+              {
+                "text": "Membrana sinovial",
+                "correct": false
+              },
+              {
+                "text": "Pleura",
+                "correct": true
+              },
+              {
+                "text": "Peritoneo",
+                "correct": false
+              }
+            ],
+            "display_order": 1007,
+            "source_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Cómo se clasifica una membrana sinovial?",
+            "answer": "Membrana de tejido conectivo",
+            "distractors": [
+              "Epitelio de la epidermis",
+              "Membrana plasmática de una neurona",
+              "Capa germinal"
+            ],
+            "explanation": "Las membranas sinoviales pertenecen al grupo de membranas de tejido conectivo.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "anatomy",
+            "id": "b7301030-2026-4000-8003-000000000008",
+            "options": [
+              {
+                "text": "Capa germinal",
+                "correct": false
+              },
+              {
+                "text": "Membrana de tejido conectivo",
+                "correct": true
+              },
+              {
+                "text": "Epitelio de la epidermis",
+                "correct": false
+              },
+              {
+                "text": "Membrana plasmática de una neurona",
+                "correct": false
+              }
+            ],
+            "display_order": 1008,
+            "source_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿De qué capa germinal deriva principalmente el tejido nervioso?",
+            "answer": "Ectodermo",
+            "distractors": [
+              "Endodermo exclusivamente",
+              "Mesodermo exclusivamente",
+              "Peritoneo"
+            ],
+            "explanation": "El tejido nervioso deriva principalmente del ectodermo.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "anatomy",
+            "id": "b7301030-2026-4000-8003-000000000009",
+            "options": [
+              {
+                "text": "Ectodermo",
+                "correct": true
+              },
+              {
+                "text": "Endodermo exclusivamente",
+                "correct": false
+              },
+              {
+                "text": "Mesodermo exclusivamente",
+                "correct": false
+              },
+              {
+                "text": "Peritoneo",
+                "correct": false
+              }
+            ],
+            "display_order": 1009,
+            "source_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "En una pared visceral se observan epitelio, conectivo y músculo. ¿Qué interpretación es correcta?",
+            "answer": "Un órgano puede integrar varios tejidos",
+            "distractors": [
+              "La muestra debe contener tres órganos distintos",
+              "Todos los componentes son epiteliales",
+              "La presencia de músculo excluye el epitelio"
+            ],
+            "explanation": "Los tejidos se combinan en órganos y conservan funciones diferentes dentro de una misma estructura.",
+            "question_type": "clinical_case",
+            "difficulty": 2,
+            "source_key": "anatomy",
+            "id": "b7301030-2026-4000-8003-000000000010",
+            "options": [
+              {
+                "text": "La muestra debe contener tres órganos distintos",
+                "correct": false
+              },
+              {
+                "text": "Todos los componentes son epiteliales",
+                "correct": false
+              },
+              {
+                "text": "La presencia de músculo excluye el epitelio",
+                "correct": false
+              },
+              {
+                "text": "Un órgano puede integrar varios tejidos",
+                "correct": true
+              }
+            ],
+            "display_order": 1010,
+            "source_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          }
+        ],
+        "sources": [
+          "https://www.uvic.cat/es/assignatura/4402",
+          "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues"
+        ],
+        "id": "502486f5-ff65-4a23-82fe-40d4408de8d1",
+        "source_files": [
+          {
+            "url": "https://www.uvic.cat/es/assignatura/4402",
+            "label": "UVic-UCC · Plan docente · alcance de la asignatura",
+            "verified_at": "2026-10-30"
+          },
+          {
+            "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-1-types-of-tissues",
+            "label": "OpenStax · Texto académico abierto · fundamento del repaso",
+            "verified_at": "2026-10-30"
+          }
+        ]
+      },
+      {
+        "key": "physiology",
+        "topic_id": "c2449f10-323d-4ba2-b438-fdc1f452dbf3",
+        "existing_id": "21afcaf4-82c8-4ea6-8778-dd0ee108ec6b",
+        "title": "Fisiología I: membrana y transporte celular",
+        "summary": "Comprende la permeabilidad selectiva y diferencia difusión, ósmosis y transporte activo.",
+        "content": "### Objetivos de repaso\nExplicar por qué una membrana selecciona qué sustancias la atraviesan y comparar los mecanismos básicos de transporte. Este bloque desarrolla la fisiología celular incluida en Fisiología I; no resume por sí solo toda la asignatura.\n\n### Estructura de la membrana\nLa membrana plasmática delimita el interior celular. Está formada principalmente por una bicapa de fosfolípidos con proteínas y colesterol. Las cabezas hidrófilas se orientan hacia los medios acuosos; las colas hidrófobas quedan enfrentadas hacia el interior de la bicapa. La membrana es dinámica, no una pared rígida.\n\n### Permeabilidad selectiva\nMoléculas pequeñas no polares como oxígeno y dióxido de carbono pueden atravesar la bicapa. Los iones y muchas sustancias hidrosolubles requieren proteínas para cruzarla. Un canal crea una vía selectiva; un transportador se une a una sustancia y cambia de conformación. No todas las sustancias utilizan el mismo mecanismo.\n\n### Transporte pasivo\nNo exige gasto directo de energía celular para impulsar el transporte. La difusión simple desplaza partículas a favor de su gradiente de concentración. La difusión facilitada también es pasiva, aunque utilice proteínas: «usa proteína» no significa «usa ATP».\nLa ósmosis es el movimiento neto de agua a través de una membrana selectivamente permeable. En condiciones comparables, el agua se desplaza hacia el lado con mayor concentración de solutos que no pueden atravesar la membrana.\n\n### Transporte activo\nRequiere energía y puede mover sustancias en contra de su gradiente. En el transporte activo primario la proteína utiliza ATP directamente. En el secundario, el movimiento de una sustancia aprovecha el gradiente de otra; la energía procede indirectamente de un gradiente mantenido por mecanismos activos.\n\n### Aplicación razonada\nSi un soluto cruza mediante una proteína a favor de su gradiente sin aporte energético directo, puede ser difusión facilitada. Para clasificar un transporte pregunta: ¿qué se mueve?, ¿en qué dirección respecto al gradiente?, ¿qué proteína interviene?, ¿de dónde procede la energía?\n\n### Errores frecuentes\nÓsmosis describe agua, no cualquier soluto. Difusión facilitada no es sinónimo de transporte activo. Un gradiente es una diferencia, no una estructura.\n\n### Autoevaluación\nCompara difusión simple, difusión facilitada y transporte activo con los criterios anteriores.\n\nMaterial de entrenamiento original basado en fuentes; no es un examen oficial.",
+        "key_points": [
+          "Bicapa con cabezas hidrófilas y colas hidrófobas.",
+          "Difusión facilitada: proteína y transporte pasivo.",
+          "Ósmosis: movimiento neto de agua.",
+          "Transporte activo primario: uso directo de ATP.",
+          "Transporte activo secundario: acoplamiento a otro gradiente."
+        ],
+        "questions": [
+          {
+            "question_text": "¿Hacia dónde se orientan las colas hidrófobas de los fosfolípidos en la bicapa?",
+            "answer": "Hacia el interior de la bicapa",
+            "distractors": [
+              "Hacia el líquido extracelular únicamente",
+              "Hacia el núcleo exclusivamente",
+              "Hacia el agua en ambas superficies"
+            ],
+            "explanation": "Las colas hidrófobas se enfrentan en el interior; las cabezas contactan con el agua.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "physiology",
+            "id": "b7301030-2026-4000-8003-000000000011",
+            "options": [
+              {
+                "text": "Hacia el interior de la bicapa",
+                "correct": true
+              },
+              {
+                "text": "Hacia el líquido extracelular únicamente",
+                "correct": false
+              },
+              {
+                "text": "Hacia el núcleo exclusivamente",
+                "correct": false
+              },
+              {
+                "text": "Hacia el agua en ambas superficies",
+                "correct": false
+              }
+            ],
+            "display_order": 1001,
+            "source_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué molécula puede atravesar la bicapa por difusión simple con relativa facilidad?",
+            "answer": "Oxígeno",
+            "distractors": [
+              "Un ion sodio sin canal",
+              "Una proteína plasmática",
+              "Una molécula de ADN"
+            ],
+            "explanation": "El oxígeno es pequeño y no polar; los iones requieren vías proteicas para cruzar con facilidad.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "physiology",
+            "id": "b7301030-2026-4000-8003-000000000012",
+            "options": [
+              {
+                "text": "Un ion sodio sin canal",
+                "correct": false
+              },
+              {
+                "text": "Una proteína plasmática",
+                "correct": false
+              },
+              {
+                "text": "Una molécula de ADN",
+                "correct": false
+              },
+              {
+                "text": "Oxígeno",
+                "correct": true
+              }
+            ],
+            "display_order": 1002,
+            "source_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "Una sustancia cruza mediante una proteína a favor de su gradiente, sin gasto directo de ATP. ¿Qué mecanismo describe?",
+            "answer": "Difusión facilitada",
+            "distractors": [
+              "Transporte activo primario",
+              "Fagocitosis",
+              "Síntesis proteica"
+            ],
+            "explanation": "La participación de una proteína no convierte por sí sola el transporte en activo.",
+            "question_type": "clinical_case",
+            "difficulty": 2,
+            "source_key": "physiology",
+            "id": "b7301030-2026-4000-8003-000000000013",
+            "options": [
+              {
+                "text": "Fagocitosis",
+                "correct": false
+              },
+              {
+                "text": "Síntesis proteica",
+                "correct": false
+              },
+              {
+                "text": "Difusión facilitada",
+                "correct": true
+              },
+              {
+                "text": "Transporte activo primario",
+                "correct": false
+              }
+            ],
+            "display_order": 1003,
+            "source_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué se desplaza en la ósmosis?",
+            "answer": "Agua",
+            "distractors": [
+              "Solo proteínas",
+              "Solo iones sodio",
+              "Cromosomas"
+            ],
+            "explanation": "La ósmosis es el movimiento neto de agua a través de una membrana selectivamente permeable.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "physiology",
+            "id": "b7301030-2026-4000-8003-000000000014",
+            "options": [
+              {
+                "text": "Cromosomas",
+                "correct": false
+              },
+              {
+                "text": "Agua",
+                "correct": true
+              },
+              {
+                "text": "Solo proteínas",
+                "correct": false
+              },
+              {
+                "text": "Solo iones sodio",
+                "correct": false
+              }
+            ],
+            "display_order": 1004,
+            "source_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué caracteriza al transporte activo primario?",
+            "answer": "El uso directo de ATP por la proteína transportadora",
+            "distractors": [
+              "La ausencia total de aporte energético",
+              "El paso exclusivo por la bicapa sin proteínas",
+              "El movimiento obligatorio de agua"
+            ],
+            "explanation": "En el transporte activo primario, el transportador utiliza ATP directamente.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "physiology",
+            "id": "b7301030-2026-4000-8003-000000000015",
+            "options": [
+              {
+                "text": "El uso directo de ATP por la proteína transportadora",
+                "correct": true
+              },
+              {
+                "text": "La ausencia total de aporte energético",
+                "correct": false
+              },
+              {
+                "text": "El paso exclusivo por la bicapa sin proteínas",
+                "correct": false
+              },
+              {
+                "text": "El movimiento obligatorio de agua",
+                "correct": false
+              }
+            ],
+            "display_order": 1005,
+            "source_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué significa gradiente de concentración?",
+            "answer": "Una diferencia de concentración entre dos zonas",
+            "distractors": [
+              "Una capa de fosfolípidos",
+              "Una clase de receptor",
+              "Un tipo de tejido"
+            ],
+            "explanation": "Un gradiente expresa una diferencia de concentración que puede impulsar transporte pasivo.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "physiology",
+            "id": "b7301030-2026-4000-8003-000000000016",
+            "options": [
+              {
+                "text": "Una capa de fosfolípidos",
+                "correct": false
+              },
+              {
+                "text": "Una clase de receptor",
+                "correct": false
+              },
+              {
+                "text": "Un tipo de tejido",
+                "correct": false
+              },
+              {
+                "text": "Una diferencia de concentración entre dos zonas",
+                "correct": true
+              }
+            ],
+            "display_order": 1006,
+            "source_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Cuál de estas afirmaciones sobre difusión facilitada es correcta?",
+            "answer": "Utiliza proteínas sin requerir ATP directamente para impulsar el paso",
+            "distractors": [
+              "Siempre consume ATP en el transportador",
+              "Ocurre sin ninguna proteína",
+              "Mueve obligatoriamente sustancias contra su gradiente"
+            ],
+            "explanation": "La difusión facilitada es un mecanismo pasivo mediado por proteínas.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "physiology",
+            "id": "b7301030-2026-4000-8003-000000000017",
+            "options": [
+              {
+                "text": "Ocurre sin ninguna proteína",
+                "correct": false
+              },
+              {
+                "text": "Mueve obligatoriamente sustancias contra su gradiente",
+                "correct": false
+              },
+              {
+                "text": "Utiliza proteínas sin requerir ATP directamente para impulsar el paso",
+                "correct": true
+              },
+              {
+                "text": "Siempre consume ATP en el transportador",
+                "correct": false
+              }
+            ],
+            "display_order": 1007,
+            "source_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "Dos compartimentos contienen distintas concentraciones de un soluto impermeante. Si solo el agua puede cruzar, ¿hacia qué lado se moverá netamente, en condiciones comparables?",
+            "answer": "Hacia el lado con mayor concentración de ese soluto",
+            "distractors": [
+              "Hacia el lado con menor concentración de ese soluto",
+              "Siempre hacia la izquierda",
+              "No puede moverse en ninguna dirección"
+            ],
+            "explanation": "La diferencia de solutos no permeantes genera movimiento osmótico neto de agua hacia el medio más concentrado.",
+            "question_type": "clinical_case",
+            "difficulty": 2,
+            "source_key": "physiology",
+            "id": "b7301030-2026-4000-8003-000000000018",
+            "options": [
+              {
+                "text": "No puede moverse en ninguna dirección",
+                "correct": false
+              },
+              {
+                "text": "Hacia el lado con mayor concentración de ese soluto",
+                "correct": true
+              },
+              {
+                "text": "Hacia el lado con menor concentración de ese soluto",
+                "correct": false
+              },
+              {
+                "text": "Siempre hacia la izquierda",
+                "correct": false
+              }
+            ],
+            "display_order": 1008,
+            "source_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué componente contribuye a modular la fluidez de la membrana plasmática?",
+            "answer": "Colesterol",
+            "distractors": [
+              "Colágeno extracelular únicamente",
+              "Hemoglobina circulante",
+              "ADN nuclear"
+            ],
+            "explanation": "El colesterol es un componente de la membrana que contribuye a sus propiedades de fluidez.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "physiology",
+            "id": "b7301030-2026-4000-8003-000000000019",
+            "options": [
+              {
+                "text": "Colesterol",
+                "correct": true
+              },
+              {
+                "text": "Colágeno extracelular únicamente",
+                "correct": false
+              },
+              {
+                "text": "Hemoglobina circulante",
+                "correct": false
+              },
+              {
+                "text": "ADN nuclear",
+                "correct": false
+              }
+            ],
+            "display_order": 1009,
+            "source_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué fuente impulsa inmediatamente un transporte activo secundario acoplado?",
+            "answer": "El gradiente de otra sustancia",
+            "distractors": [
+              "La contracción de una serosa",
+              "La desaparición de todas las proteínas",
+              "El ATP consumido directamente por cada cotransportador"
+            ],
+            "explanation": "El transporte secundario aprovecha otro gradiente; su mantenimiento depende indirectamente de mecanismos que utilizan energía.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "physiology",
+            "id": "b7301030-2026-4000-8003-000000000020",
+            "options": [
+              {
+                "text": "La contracción de una serosa",
+                "correct": false
+              },
+              {
+                "text": "La desaparición de todas las proteínas",
+                "correct": false
+              },
+              {
+                "text": "El ATP consumido directamente por cada cotransportador",
+                "correct": false
+              },
+              {
+                "text": "El gradiente de otra sustancia",
+                "correct": true
+              }
+            ],
+            "display_order": 1010,
+            "source_url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          }
+        ],
+        "sources": [
+          "https://www.uvic.cat/es/assignatura/4405",
+          "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane"
+        ],
+        "id": "21afcaf4-82c8-4ea6-8778-dd0ee108ec6b",
+        "source_files": [
+          {
+            "url": "https://www.uvic.cat/es/assignatura/4405",
+            "label": "UVic-UCC · Plan docente · alcance de la asignatura",
+            "verified_at": "2026-10-30"
+          },
+          {
+            "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/3-1-the-cell-membrane",
+            "label": "OpenStax · Texto académico abierto · fundamento del repaso",
+            "verified_at": "2026-10-30"
+          }
+        ]
+      },
+      {
+        "key": "fund",
+        "topic_id": "276218a0-f41a-4e03-b152-024f9eea80fb",
+        "existing_id": "ab7d1b48-00b2-45f3-97ae-c055c7a6a0e0",
+        "title": "Fundamentos: razonamiento, intervención y responsabilidad profesional",
+        "summary": "Relaciona valoración, diagnóstico funcional, plan de intervención y reevaluación desde un enfoque biopsicosocial.",
+        "content": "### Objetivos de repaso\nComprender el proceso de atención en fisioterapia, justificar una intervención y reconocer los factores personales y del entorno. Este repaso desarrolla competencias del programa; no sustituye los bloques de historia y técnicas de la asignatura.\n\n### Un proceso de atención razonado\nLa historia clínica organiza información sobre el motivo de consulta, la evolución y las dificultades que experimenta la persona. La entrevista y la exploración aportan información que se analiza conjuntamente. El diagnóstico de fisioterapia se fundamenta en la valoración y el razonamiento clínico, e identifica problemas relevantes para el funcionamiento.\n\n### Del diagnóstico al plan\nLa intervención se construye considerando la valoración, la evidencia científica disponible, las aportaciones de otros profesionales y la participación del paciente. Los objetivos deben responder a las necesidades de esa persona. Aplicar una técnica sin relacionarla con un problema identificado impide justificar su elección y valorar su utilidad.\n\n### Funcionamiento y contexto\nLa recuperación no depende solamente de una estructura corporal. Los factores psicosociales y ambientales también pueden influir. Una barrera arquitectónica puede dificultar que una persona participe en una actividad aunque su capacidad física mejore. El enfoque biopsicosocial obliga a recoger información sobre la persona y su entorno, sin atribuir automáticamente sus dificultades a una única causa.\n\n### Reevaluación y equipo\nEl plan requiere seguimiento. Comparar los resultados con la valoración inicial y dialogar con el paciente permite reajustarlo. Trabajar de forma interdisciplinar exige coordinar información relevante y reconocer las competencias de cada profesional. Si la situación supera las propias competencias, se solicita ayuda adecuada.\n\n### Responsabilidad y comunicación\nLa conducta profesional incluye respeto por la intimidad, confidencialidad y trato equitativo. El consentimiento informado requiere información comprensible y participación en las decisiones. Una firma aislada no reemplaza la comunicación. El registro debe ser pertinente para la atención y transmitirse por canales adecuados.\n\n### Caso de aplicación\nUna persona mejora en una prueba física, pero sigue sin poder acceder a su vivienda por las escaleras. La reevaluación debe considerar esa dificultad concreta y el entorno, además de la prueba. La mejoría de una medida no demuestra por sí sola que se hayan alcanzado todos los objetivos.\n\n### Autoevaluación\nExplica cómo se conectan valoración, diagnóstico, objetivos, intervención y reevaluación. Propón un factor del entorno que pueda modificar el plan.\n\nEjercicios originales de entrenamiento; no son preguntas de examen autenticadas.",
+        "key_points": [
+          "La valoración fundamenta el diagnóstico de fisioterapia.",
+          "El plan integra evidencia, persona, entorno y equipo.",
+          "Los factores psicosociales y ambientales pueden influir en la recuperación.",
+          "La reevaluación orienta ajustes del plan.",
+          "Intimidad, confidencialidad y comunicación forman parte de la práctica."
+        ],
+        "questions": [
+          {
+            "question_text": "¿Qué secuencia expresa mejor el razonamiento del proceso de atención?",
+            "answer": "Recoger información, valorar, formular el diagnóstico y planificar la intervención",
+            "distractors": [
+              "Elegir una técnica y omitir la valoración",
+              "Tratar primero y registrar solo si fracasa",
+              "Decidir el alta sin conocer la situación inicial"
+            ],
+            "explanation": "La valoración y el análisis de información relevante fundamentan el diagnóstico y el plan.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "fund",
+            "id": "b7301030-2026-4000-8003-000000000021",
+            "options": [
+              {
+                "text": "Recoger información, valorar, formular el diagnóstico y planificar la intervención",
+                "correct": true
+              },
+              {
+                "text": "Elegir una técnica y omitir la valoración",
+                "correct": false
+              },
+              {
+                "text": "Tratar primero y registrar solo si fracasa",
+                "correct": false
+              },
+              {
+                "text": "Decidir el alta sin conocer la situación inicial",
+                "correct": false
+              }
+            ],
+            "display_order": 1001,
+            "source_url": "https://www.uvic.cat/es/assignatura/4412",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://www.uvic.cat/es/assignatura/4412"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué papel tiene la evidencia científica disponible al diseñar el plan?",
+            "answer": "Se integra con la valoración y la participación del paciente",
+            "distractors": [
+              "Sustituye toda información del paciente",
+              "Se usa solo después del alta",
+              "Permite ignorar los aspectos de seguridad"
+            ],
+            "explanation": "El programa integra evidencia, diagnóstico, aportaciones profesionales y participación del usuario.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "fund",
+            "id": "b7301030-2026-4000-8003-000000000022",
+            "options": [
+              {
+                "text": "Sustituye toda información del paciente",
+                "correct": false
+              },
+              {
+                "text": "Se usa solo después del alta",
+                "correct": false
+              },
+              {
+                "text": "Permite ignorar los aspectos de seguridad",
+                "correct": false
+              },
+              {
+                "text": "Se integra con la valoración y la participación del paciente",
+                "correct": true
+              }
+            ],
+            "display_order": 1002,
+            "source_url": "https://www.uvic.cat/es/assignatura/4412",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://www.uvic.cat/es/assignatura/4412"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "Una medida física mejora, pero la persona no logra una tarea prioritaria. ¿Qué procede?",
+            "answer": "Reevaluar la tarea, el contexto y los objetivos con la persona",
+            "distractors": [
+              "Dar por alcanzados todos los objetivos",
+              "Ignorar la dificultad referida",
+              "Repetir el mismo plan sin revisar resultados"
+            ],
+            "explanation": "La evaluación del plan y el diálogo con el paciente permiten ajustar la intervención a sus necesidades.",
+            "question_type": "clinical_case",
+            "difficulty": 2,
+            "source_key": "fund",
+            "id": "b7301030-2026-4000-8003-000000000023",
+            "options": [
+              {
+                "text": "Ignorar la dificultad referida",
+                "correct": false
+              },
+              {
+                "text": "Repetir el mismo plan sin revisar resultados",
+                "correct": false
+              },
+              {
+                "text": "Reevaluar la tarea, el contexto y los objetivos con la persona",
+                "correct": true
+              },
+              {
+                "text": "Dar por alcanzados todos los objetivos",
+                "correct": false
+              }
+            ],
+            "display_order": 1003,
+            "source_url": "https://www.uvic.cat/es/assignatura/4412",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://www.uvic.cat/es/assignatura/4412"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué ejemplo describe una barrera arquitectónica relevante para la recuperación funcional?",
+            "answer": "Una entrada con escaleras que la persona no puede utilizar",
+            "distractors": [
+              "Una preferencia musical",
+              "El nombre comercial de una técnica",
+              "La fecha de impresión de un manual"
+            ],
+            "explanation": "Las barreras arquitectónicas son elementos del entorno que pueden dificultar la actividad y la participación.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "fund",
+            "id": "b7301030-2026-4000-8003-000000000024",
+            "options": [
+              {
+                "text": "La fecha de impresión de un manual",
+                "correct": false
+              },
+              {
+                "text": "Una entrada con escaleras que la persona no puede utilizar",
+                "correct": true
+              },
+              {
+                "text": "Una preferencia musical",
+                "correct": false
+              },
+              {
+                "text": "El nombre comercial de una técnica",
+                "correct": false
+              }
+            ],
+            "display_order": 1004,
+            "source_url": "https://www.uvic.cat/es/assignatura/4412",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://www.uvic.cat/es/assignatura/4412"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué conducta expresa trabajo interdisciplinar?",
+            "answer": "Coordinar la atención con otros profesionales según las necesidades",
+            "distractors": [
+              "Duplicar intervenciones sin comunicarlo",
+              "Suponer que una profesión resuelve todos los problemas",
+              "Compartir información clínica en cualquier canal público"
+            ],
+            "explanation": "La colaboración interdisciplinar implica coordinación y uso de canales de comunicación adecuados.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "fund",
+            "id": "b7301030-2026-4000-8003-000000000025",
+            "options": [
+              {
+                "text": "Coordinar la atención con otros profesionales según las necesidades",
+                "correct": true
+              },
+              {
+                "text": "Duplicar intervenciones sin comunicarlo",
+                "correct": false
+              },
+              {
+                "text": "Suponer que una profesión resuelve todos los problemas",
+                "correct": false
+              },
+              {
+                "text": "Compartir información clínica en cualquier canal público",
+                "correct": false
+              }
+            ],
+            "display_order": 1005,
+            "source_url": "https://www.uvic.cat/es/assignatura/4412",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://www.uvic.cat/es/assignatura/4412"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué información complementa los datos físicos desde un enfoque biopsicosocial?",
+            "answer": "Factores psicosociales y ambientales relevantes",
+            "distractors": [
+              "Solo la marca del material disponible",
+              "Solo la fecha de nacimiento",
+              "Solo el diagnóstico de otra persona"
+            ],
+            "explanation": "Los factores psicosociales y del entorno pueden influir en la recuperación y deben considerarse.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "fund",
+            "id": "b7301030-2026-4000-8003-000000000026",
+            "options": [
+              {
+                "text": "Solo la marca del material disponible",
+                "correct": false
+              },
+              {
+                "text": "Solo la fecha de nacimiento",
+                "correct": false
+              },
+              {
+                "text": "Solo el diagnóstico de otra persona",
+                "correct": false
+              },
+              {
+                "text": "Factores psicosociales y ambientales relevantes",
+                "correct": true
+              }
+            ],
+            "display_order": 1006,
+            "source_url": "https://www.uvic.cat/es/assignatura/4412",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://www.uvic.cat/es/assignatura/4412"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué pregunta favorece la participación del paciente al definir el plan?",
+            "answer": "¿Qué actividad le gustaría recuperar y qué dificultades encuentra?",
+            "distractors": [
+              "¿Acepta todo sin preguntas?",
+              "¿Podemos omitir sus preferencias?",
+              "¿Está de acuerdo en no conocer los objetivos?"
+            ],
+            "explanation": "Preguntar por necesidades y actividades facilita construir un plan con participación de la persona.",
+            "question_type": "clinical_case",
+            "difficulty": 2,
+            "source_key": "fund",
+            "id": "b7301030-2026-4000-8003-000000000027",
+            "options": [
+              {
+                "text": "¿Podemos omitir sus preferencias?",
+                "correct": false
+              },
+              {
+                "text": "¿Está de acuerdo en no conocer los objetivos?",
+                "correct": false
+              },
+              {
+                "text": "¿Qué actividad le gustaría recuperar y qué dificultades encuentra?",
+                "correct": true
+              },
+              {
+                "text": "¿Acepta todo sin preguntas?",
+                "correct": false
+              }
+            ],
+            "display_order": 1007,
+            "source_url": "https://www.uvic.cat/es/assignatura/4412",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://www.uvic.cat/es/assignatura/4412"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Para qué sirve comparar los resultados con la valoración inicial?",
+            "answer": "Para evaluar la evolución y reajustar el plan si hace falta",
+            "distractors": [
+              "Para evitar cualquier diálogo",
+              "Para justificar siempre la misma técnica",
+              "Para reemplazar la confidencialidad"
+            ],
+            "explanation": "La reevaluación crítica permite revisar los efectos de la intervención y realizar ajustes.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "fund",
+            "id": "b7301030-2026-4000-8003-000000000028",
+            "options": [
+              {
+                "text": "Para reemplazar la confidencialidad",
+                "correct": false
+              },
+              {
+                "text": "Para evaluar la evolución y reajustar el plan si hace falta",
+                "correct": true
+              },
+              {
+                "text": "Para evitar cualquier diálogo",
+                "correct": false
+              },
+              {
+                "text": "Para justificar siempre la misma técnica",
+                "correct": false
+              }
+            ],
+            "display_order": 1008,
+            "source_url": "https://www.uvic.cat/es/assignatura/4412",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://www.uvic.cat/es/assignatura/4412"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué práctica protege la intimidad y la confidencialidad?",
+            "answer": "Comunicar información pertinente por un canal asistencial adecuado",
+            "distractors": [
+              "Comentar datos identificativos en una sala pública",
+              "Publicar historias clínicas sin protección",
+              "Reenviar todo el expediente a cualquier conocido"
+            ],
+            "explanation": "La comunicación profesional debe respetar la intimidad y el secreto profesional.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "fund",
+            "id": "b7301030-2026-4000-8003-000000000029",
+            "options": [
+              {
+                "text": "Comunicar información pertinente por un canal asistencial adecuado",
+                "correct": true
+              },
+              {
+                "text": "Comentar datos identificativos en una sala pública",
+                "correct": false
+              },
+              {
+                "text": "Publicar historias clínicas sin protección",
+                "correct": false
+              },
+              {
+                "text": "Reenviar todo el expediente a cualquier conocido",
+                "correct": false
+              }
+            ],
+            "display_order": 1009,
+            "source_url": "https://www.uvic.cat/es/assignatura/4412",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://www.uvic.cat/es/assignatura/4412"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué elemento permite justificar la elección de una intervención?",
+            "answer": "Su relación con un problema identificado y los objetivos acordados",
+            "distractors": [
+              "Que sea la única técnica que se conoce",
+              "Que se aplique igual a todos",
+              "Que evite medir resultados"
+            ],
+            "explanation": "El plan se construye a partir de la valoración y el diagnóstico; debe poder evaluarse en relación con las necesidades de la persona.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "fund",
+            "id": "b7301030-2026-4000-8003-000000000030",
+            "options": [
+              {
+                "text": "Que sea la única técnica que se conoce",
+                "correct": false
+              },
+              {
+                "text": "Que se aplique igual a todos",
+                "correct": false
+              },
+              {
+                "text": "Que evite medir resultados",
+                "correct": false
+              },
+              {
+                "text": "Su relación con un problema identificado y los objetivos acordados",
+                "correct": true
+              }
+            ],
+            "display_order": 1010,
+            "source_url": "https://www.uvic.cat/es/assignatura/4412",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://www.uvic.cat/es/assignatura/4412"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          }
+        ],
+        "sources": [
+          "https://www.uvic.cat/es/assignatura/4412"
+        ],
+        "id": "ab7d1b48-00b2-45f3-97ae-c055c7a6a0e0",
+        "source_files": [
+          {
+            "url": "https://www.uvic.cat/es/assignatura/4412",
+            "label": "UVic-UCC · Plan docente · alcance de la asignatura",
+            "verified_at": "2026-10-30"
+          }
+        ]
+      },
+      {
+        "key": "psych",
+        "topic_id": "b7301030-2026-4000-8001-000000000001",
+        "existing_id": null,
+        "title": "Psicología: aprendizaje y relación terapéutica",
+        "summary": "Diferencia condicionamiento clásico y operante y aplica sus conceptos sin confundir refuerzo con castigo.",
+        "content": "### Objetivos de repaso\nDistinguir aprendizaje por asociación de estímulos y aprendizaje por consecuencias; utilizar correctamente refuerzo positivo, refuerzo negativo y castigo. Este bloque complementa los modelos y la comunicación del programa de Psicología.\n\n### Dos formas de aprendizaje\nEn el condicionamiento clásico se aprende una relación entre estímulos. Un estímulo inicialmente neutro, después de asociarse con otro que provoca una respuesta, puede terminar desencadenando una respuesta aprendida.\nEn el condicionamiento operante se relaciona una conducta con sus consecuencias: estas pueden aumentar o disminuir su probabilidad futura.\n\n### Vocabulario del condicionamiento clásico\nEl estímulo incondicionado desencadena una respuesta sin aprendizaje previo. La respuesta incondicionada es esa reacción no aprendida. El estímulo condicionado adquiere su efecto mediante la asociación; la respuesta condicionada es la respuesta aprendida.\nNo confundas estímulo, que se presenta, con respuesta, que hace el organismo. Una reacción anticipatoria aprendida no demuestra por sí sola una nueva lesión.\n\n### Refuerzo y castigo\nRefuerzo significa que aumenta la probabilidad de una conducta. Castigo significa que disminuye. Positivo indica que se añade un estímulo; negativo, que se retira. Estas palabras no equivalen a bueno y malo.\nRefuerzo positivo: se añade una consecuencia y la conducta aumenta. Refuerzo negativo: se retira una consecuencia aversiva y la conducta aumenta. Castigo negativo: se retira una consecuencia agradable y la conducta disminuye. Por tanto, refuerzo negativo y castigo no son sinónimos.\n\n### Moldeamiento\nConsiste en reforzar aproximaciones sucesivas a la conducta objetivo. En lugar de exigir desde el principio una ejecución completa, se reconocen pasos cada vez más cercanos al objetivo. Es un concepto de aprendizaje, no una prescripción automática de ejercicio para cualquier paciente.\n\n### Relación terapéutica\nEl programa incluye comunicación, obstáculos comunicativos y adherencia. Comprender el comportamiento ayuda a formular preguntas sobre dificultades reales y adaptar la explicación. Se mantiene el respeto por la persona y sus decisiones; conocer un mecanismo de aprendizaje no autoriza a manipularla.\n\n### Aplicación\nSi un reconocimiento verbal tras una práctica se acompaña de un aumento de esa conducta, encaja con refuerzo positivo. Para clasificar el mecanismo hay que comprobar qué se añade o retira y cómo cambia la conducta; la intención del profesional no basta.\n\n### Autoevaluación\nConstruye una tabla de dos criterios: añadir o retirar, aumentar o disminuir. Explica por qué retirar un estímulo no significa siempre castigar.\n\nMaterial de entrenamiento original, no examen oficial.",
+        "key_points": [
+          "Clásico: asociación entre estímulos.",
+          "Operante: conducta y consecuencias.",
+          "Refuerzo aumenta; castigo disminuye.",
+          "Positivo añade; negativo retira.",
+          "Moldeamiento: aproximaciones sucesivas."
+        ],
+        "questions": [
+          {
+            "question_text": "¿Qué relación se aprende principalmente en el condicionamiento clásico?",
+            "answer": "Una asociación entre estímulos",
+            "distractors": [
+              "La estructura de una articulación",
+              "El efecto exclusivo de una consecuencia tras una conducta",
+              "La composición de una membrana"
+            ],
+            "explanation": "El condicionamiento clásico asocia estímulos y permite anticipar acontecimientos.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "classical",
+            "id": "b7301030-2026-4000-8003-000000000031",
+            "options": [
+              {
+                "text": "Una asociación entre estímulos",
+                "correct": true
+              },
+              {
+                "text": "La estructura de una articulación",
+                "correct": false
+              },
+              {
+                "text": "El efecto exclusivo de una consecuencia tras una conducta",
+                "correct": false
+              },
+              {
+                "text": "La composición de una membrana",
+                "correct": false
+              }
+            ],
+            "display_order": 1,
+            "source_url": "https://openstax.org/books/psychology-2e/pages/6-2-classical-conditioning",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/psychology-2e/pages/6-2-classical-conditioning"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué caracteriza al condicionamiento operante?",
+            "answer": "La asociación entre una conducta y sus consecuencias",
+            "distractors": [
+              "La asociación exclusiva entre dos estímulos sin atender a conductas",
+              "La ausencia de aprendizaje",
+              "La clasificación de tejidos"
+            ],
+            "explanation": "Las consecuencias pueden aumentar o disminuir la probabilidad de repetir la conducta.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "operant",
+            "id": "b7301030-2026-4000-8003-000000000032",
+            "options": [
+              {
+                "text": "La asociación exclusiva entre dos estímulos sin atender a conductas",
+                "correct": false
+              },
+              {
+                "text": "La ausencia de aprendizaje",
+                "correct": false
+              },
+              {
+                "text": "La clasificación de tejidos",
+                "correct": false
+              },
+              {
+                "text": "La asociación entre una conducta y sus consecuencias",
+                "correct": true
+              }
+            ],
+            "display_order": 2,
+            "source_url": "https://openstax.org/books/psychology-2e/pages/6-3-operant-conditioning",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/psychology-2e/pages/6-3-operant-conditioning"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "En condicionamiento operante, ¿qué significa refuerzo?",
+            "answer": "Aumento de la probabilidad de una conducta",
+            "distractors": [
+              "Disminución obligatoria de la conducta",
+              "Añadir siempre un estímulo desagradable",
+              "Retirar siempre un premio"
+            ],
+            "explanation": "Refuerzo se define por el aumento de la conducta, tanto si es positivo como negativo.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "operant",
+            "id": "b7301030-2026-4000-8003-000000000033",
+            "options": [
+              {
+                "text": "Añadir siempre un estímulo desagradable",
+                "correct": false
+              },
+              {
+                "text": "Retirar siempre un premio",
+                "correct": false
+              },
+              {
+                "text": "Aumento de la probabilidad de una conducta",
+                "correct": true
+              },
+              {
+                "text": "Disminución obligatoria de la conducta",
+                "correct": false
+              }
+            ],
+            "display_order": 3,
+            "source_url": "https://openstax.org/books/psychology-2e/pages/6-3-operant-conditioning",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/psychology-2e/pages/6-3-operant-conditioning"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué significa negativo en refuerzo negativo?",
+            "answer": "Que se retira un estímulo",
+            "distractors": [
+              "Que la conducta siempre disminuye",
+              "Que se aplica necesariamente un castigo",
+              "Que el aprendizaje es imposible"
+            ],
+            "explanation": "Negativo indica retirada; refuerzo indica aumento de la conducta.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "operant",
+            "id": "b7301030-2026-4000-8003-000000000034",
+            "options": [
+              {
+                "text": "Que el aprendizaje es imposible",
+                "correct": false
+              },
+              {
+                "text": "Que se retira un estímulo",
+                "correct": true
+              },
+              {
+                "text": "Que la conducta siempre disminuye",
+                "correct": false
+              },
+              {
+                "text": "Que se aplica necesariamente un castigo",
+                "correct": false
+              }
+            ],
+            "display_order": 4,
+            "source_url": "https://openstax.org/books/psychology-2e/pages/6-3-operant-conditioning",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/psychology-2e/pages/6-3-operant-conditioning"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "Después de una conducta se añade una consecuencia agradable y la conducta aumenta. ¿Cómo se clasifica?",
+            "answer": "Refuerzo positivo",
+            "distractors": [
+              "Castigo positivo",
+              "Castigo negativo",
+              "Estímulo incondicionado"
+            ],
+            "explanation": "Se añade un estímulo y aumenta la conducta: son los dos criterios del refuerzo positivo.",
+            "question_type": "clinical_case",
+            "difficulty": 2,
+            "source_key": "operant",
+            "id": "b7301030-2026-4000-8003-000000000035",
+            "options": [
+              {
+                "text": "Refuerzo positivo",
+                "correct": true
+              },
+              {
+                "text": "Castigo positivo",
+                "correct": false
+              },
+              {
+                "text": "Castigo negativo",
+                "correct": false
+              },
+              {
+                "text": "Estímulo incondicionado",
+                "correct": false
+              }
+            ],
+            "display_order": 5,
+            "source_url": "https://openstax.org/books/psychology-2e/pages/6-3-operant-conditioning",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/psychology-2e/pages/6-3-operant-conditioning"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "Se retira una consecuencia aversiva tras una conducta y esta aumenta. ¿Qué mecanismo es?",
+            "answer": "Refuerzo negativo",
+            "distractors": [
+              "Castigo negativo",
+              "Castigo positivo",
+              "Ausencia de aprendizaje"
+            ],
+            "explanation": "Retirar un estímulo aversivo aumentando la conducta corresponde a refuerzo negativo.",
+            "question_type": "clinical_case",
+            "difficulty": 2,
+            "source_key": "operant",
+            "id": "b7301030-2026-4000-8003-000000000036",
+            "options": [
+              {
+                "text": "Castigo negativo",
+                "correct": false
+              },
+              {
+                "text": "Castigo positivo",
+                "correct": false
+              },
+              {
+                "text": "Ausencia de aprendizaje",
+                "correct": false
+              },
+              {
+                "text": "Refuerzo negativo",
+                "correct": true
+              }
+            ],
+            "display_order": 6,
+            "source_url": "https://openstax.org/books/psychology-2e/pages/6-3-operant-conditioning",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/psychology-2e/pages/6-3-operant-conditioning"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "Se retira una consecuencia agradable y la conducta disminuye. ¿Qué concepto corresponde?",
+            "answer": "Castigo negativo",
+            "distractors": [
+              "Refuerzo negativo",
+              "Refuerzo positivo",
+              "Condicionamiento clásico necesariamente"
+            ],
+            "explanation": "En esta clasificación, retirar es negativo y disminuir una conducta es castigo.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "operant",
+            "id": "b7301030-2026-4000-8003-000000000037",
+            "options": [
+              {
+                "text": "Refuerzo positivo",
+                "correct": false
+              },
+              {
+                "text": "Condicionamiento clásico necesariamente",
+                "correct": false
+              },
+              {
+                "text": "Castigo negativo",
+                "correct": true
+              },
+              {
+                "text": "Refuerzo negativo",
+                "correct": false
+              }
+            ],
+            "display_order": 7,
+            "source_url": "https://openstax.org/books/psychology-2e/pages/6-3-operant-conditioning",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/psychology-2e/pages/6-3-operant-conditioning"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué describe el moldeamiento?",
+            "answer": "Reforzar aproximaciones sucesivas a una conducta objetivo",
+            "distractors": [
+              "Exigir solo el resultado final desde el primer intento",
+              "Aplicar siempre un castigo físico",
+              "Confundir estímulos con respuestas"
+            ],
+            "explanation": "El moldeamiento refuerza progresivamente respuestas cada vez más cercanas al objetivo.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "operant",
+            "id": "b7301030-2026-4000-8003-000000000038",
+            "options": [
+              {
+                "text": "Confundir estímulos con respuestas",
+                "correct": false
+              },
+              {
+                "text": "Reforzar aproximaciones sucesivas a una conducta objetivo",
+                "correct": true
+              },
+              {
+                "text": "Exigir solo el resultado final desde el primer intento",
+                "correct": false
+              },
+              {
+                "text": "Aplicar siempre un castigo físico",
+                "correct": false
+              }
+            ],
+            "display_order": 8,
+            "source_url": "https://openstax.org/books/psychology-2e/pages/6-3-operant-conditioning",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/psychology-2e/pages/6-3-operant-conditioning"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué distingue una respuesta condicionada de una respuesta incondicionada?",
+            "answer": "La respuesta condicionada se adquiere mediante aprendizaje asociativo",
+            "distractors": [
+              "La respuesta condicionada nunca depende del aprendizaje",
+              "Ambas palabras significan un estímulo externo",
+              "La respuesta incondicionada exige siempre entrenamiento"
+            ],
+            "explanation": "La respuesta condicionada es aprendida; la incondicionada no necesita ese aprendizaje previo.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "classical",
+            "id": "b7301030-2026-4000-8003-000000000039",
+            "options": [
+              {
+                "text": "La respuesta condicionada se adquiere mediante aprendizaje asociativo",
+                "correct": true
+              },
+              {
+                "text": "La respuesta condicionada nunca depende del aprendizaje",
+                "correct": false
+              },
+              {
+                "text": "Ambas palabras significan un estímulo externo",
+                "correct": false
+              },
+              {
+                "text": "La respuesta incondicionada exige siempre entrenamiento",
+                "correct": false
+              }
+            ],
+            "display_order": 9,
+            "source_url": "https://openstax.org/books/psychology-2e/pages/6-2-classical-conditioning",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/psychology-2e/pages/6-2-classical-conditioning"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "Un profesional añade una felicitación, pero la conducta no aumenta. ¿Qué puede concluirse con esos datos?",
+            "answer": "No se ha demostrado que la felicitación funcione como refuerzo",
+            "distractors": [
+              "Toda felicitación es necesariamente un refuerzo eficaz",
+              "Se ha probado un castigo negativo",
+              "Se ha demostrado una lesión"
+            ],
+            "explanation": "El refuerzo se identifica por su efecto sobre la conducta, no solo por la intención de quien lo ofrece.",
+            "question_type": "clinical_case",
+            "difficulty": 2,
+            "source_key": "operant",
+            "id": "b7301030-2026-4000-8003-000000000040",
+            "options": [
+              {
+                "text": "Toda felicitación es necesariamente un refuerzo eficaz",
+                "correct": false
+              },
+              {
+                "text": "Se ha probado un castigo negativo",
+                "correct": false
+              },
+              {
+                "text": "Se ha demostrado una lesión",
+                "correct": false
+              },
+              {
+                "text": "No se ha demostrado que la felicitación funcione como refuerzo",
+                "correct": true
+              }
+            ],
+            "display_order": 10,
+            "source_url": "https://openstax.org/books/psychology-2e/pages/6-3-operant-conditioning",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://openstax.org/books/psychology-2e/pages/6-3-operant-conditioning"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          }
+        ],
+        "sources": [
+          "https://www.uvic.cat/es/assignatura/4409",
+          "https://openstax.org/books/psychology-2e/pages/6-2-classical-conditioning",
+          "https://openstax.org/books/psychology-2e/pages/6-3-operant-conditioning"
+        ],
+        "new_unit_id": "b7301030-2026-4000-8000-000000000001",
+        "id": "b7301030-2026-4000-8002-000000000001",
+        "source_files": [
+          {
+            "url": "https://www.uvic.cat/es/assignatura/4409",
+            "label": "UVic-UCC · Plan docente · alcance de la asignatura",
+            "verified_at": "2026-10-30"
+          },
+          {
+            "url": "https://openstax.org/books/psychology-2e/pages/6-2-classical-conditioning",
+            "label": "OpenStax · Texto académico abierto · fundamento del repaso",
+            "verified_at": "2026-10-30"
+          },
+          {
+            "url": "https://openstax.org/books/psychology-2e/pages/6-3-operant-conditioning",
+            "label": "OpenStax · Texto académico abierto · fundamento del repaso",
+            "verified_at": "2026-10-30"
+          }
+        ]
+      },
+      {
+        "key": "culture",
+        "topic_id": "b7301030-2026-4000-8001-000000000002",
+        "existing_id": null,
+        "title": "Cultura, Sociedad y Salud: determinantes, diversidad y equidad",
+        "summary": "Analiza barreras sociales y culturales sin reducir los problemas de salud a decisiones individuales.",
+        "content": "### Objetivos de repaso\nReconocer determinantes sociales de la salud, analizar barreras de acceso y comprender la diversidad sin convertirla en estereotipos. Este bloque desarrolla contenidos de desigualdad y comunicación intercultural.\n\n### Salud y condiciones de vida\nLos determinantes sociales son las condiciones en que las personas nacen, crecen, viven, trabajan y envejecen, junto con las fuerzas sociales, políticas y económicas que las configuran. Incluyen vivienda, educación, alimentación, trabajo y protección social. La atención sanitaria importa, pero no agota las causas de la salud.\n\n### Gradiente social\nLas diferencias de salud no se limitan a una separación entre pobreza extrema y el resto de la población. El gradiente social describe una relación progresiva entre desventaja social y peores resultados de salud. Es una relación poblacional; no permite predecir con certeza la salud de cada individuo.\n\n### Desigualdad y equidad\nDescribir una diferencia es un primer paso. Analizar la equidad exige preguntarse por la distribución de recursos, oportunidades y barreras. Ofrecer exactamente el mismo recurso puede dejar sin acceso a quienes encuentran obstáculos distintos. Mejorar el acceso puede requerir respuestas adaptadas al contexto.\n\n### Diversidad y comunicación\nLa antropología de la salud estudia las creencias y prácticas relacionadas con salud, enfermedad y cuidados dentro de su contexto. Una nacionalidad no determina por sí sola lo que cree una persona. Conviene explorar cómo entiende su problema, qué espera de la atención y qué dificultades comunicativas existen, con respeto y sin suposiciones.\n\n### Género, estigma y discriminación\nEl programa incluye estas dimensiones porque pueden influir en experiencias y oportunidades. Un análisis respetuoso evita culpar a un colectivo y examina barreras y relaciones sociales. La participación de la persona en la atención ayuda a comprender su situación concreta.\n\n### Aplicación en fisioterapia\nUna persona no acude porque sus turnos laborales y el transporte dificultan la asistencia. Antes de atribuirlo a falta de interés, se exploran esas barreras y las opciones de coordinación. Una vivienda inadecuada o la dificultad para costear desplazamientos también pueden condicionar el seguimiento.\n\n### Autoevaluación\nSepara en un caso lo observado de lo supuesto. Identifica una barrera social, una pregunta para comprenderla y una posible adaptación que deba discutirse con la persona y el equipo.\n\nMaterial original de entrenamiento basado en UVic y OMS; no es un examen oficial.",
+        "key_points": [
+          "Los determinantes sociales van más allá de la atención sanitaria.",
+          "El gradiente social es progresivo y poblacional.",
+          "Las barreras de acceso pueden exigir respuestas adaptadas.",
+          "La diversidad no permite presuponer creencias individuales.",
+          "Explorar barreras antes de atribuir falta de interés."
+        ],
+        "questions": [
+          {
+            "question_text": "¿Cuál es un determinante social de la salud?",
+            "answer": "Las condiciones de vivienda",
+            "distractors": [
+              "La secuencia de una proteína aislada",
+              "El diámetro de una mitocondria",
+              "La forma de una válvula cardíaca"
+            ],
+            "explanation": "La vivienda forma parte de las condiciones de vida que influyen en la salud.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "who",
+            "id": "b7301030-2026-4000-8003-000000000041",
+            "options": [
+              {
+                "text": "Las condiciones de vivienda",
+                "correct": true
+              },
+              {
+                "text": "La secuencia de una proteína aislada",
+                "correct": false
+              },
+              {
+                "text": "El diámetro de una mitocondria",
+                "correct": false
+              },
+              {
+                "text": "La forma de una válvula cardíaca",
+                "correct": false
+              }
+            ],
+            "display_order": 1,
+            "source_url": "https://www.who.int/es/news-room/fact-sheets/detail/social-determinants-of-health",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://www.who.int/es/news-room/fact-sheets/detail/social-determinants-of-health"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué expresa el gradiente social de la salud?",
+            "answer": "Una relación progresiva entre desventaja social y peores resultados de salud",
+            "distractors": [
+              "Que solo existe diferencia entre dos grupos extremos",
+              "Que la salud depende exclusivamente de la genética",
+              "Que todas las personas tienen idénticas condiciones"
+            ],
+            "explanation": "La OMS describe una relación entre desventaja, ingresos, educación y salud a lo largo de la escala social.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "who",
+            "id": "b7301030-2026-4000-8003-000000000042",
+            "options": [
+              {
+                "text": "Que solo existe diferencia entre dos grupos extremos",
+                "correct": false
+              },
+              {
+                "text": "Que la salud depende exclusivamente de la genética",
+                "correct": false
+              },
+              {
+                "text": "Que todas las personas tienen idénticas condiciones",
+                "correct": false
+              },
+              {
+                "text": "Una relación progresiva entre desventaja social y peores resultados de salud",
+                "correct": true
+              }
+            ],
+            "display_order": 2,
+            "source_url": "https://www.who.int/es/news-room/fact-sheets/detail/social-determinants-of-health",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://www.who.int/es/news-room/fact-sheets/detail/social-determinants-of-health"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "Una persona falta a sesiones por turnos laborales y falta de transporte. ¿Qué interpretación está mejor fundamentada?",
+            "answer": "Existen barreras sociales de acceso que deben explorarse",
+            "distractors": [
+              "Se demuestra que no quiere recuperarse",
+              "La nacionalidad explica toda la conducta",
+              "La fisiología celular deja de ser relevante"
+            ],
+            "explanation": "El trabajo y las condiciones de acceso pueden limitar la asistencia; no debe inferirse desinterés sin explorarlos.",
+            "question_type": "clinical_case",
+            "difficulty": 2,
+            "source_key": "who",
+            "id": "b7301030-2026-4000-8003-000000000043",
+            "options": [
+              {
+                "text": "La nacionalidad explica toda la conducta",
+                "correct": false
+              },
+              {
+                "text": "La fisiología celular deja de ser relevante",
+                "correct": false
+              },
+              {
+                "text": "Existen barreras sociales de acceso que deben explorarse",
+                "correct": true
+              },
+              {
+                "text": "Se demuestra que no quiere recuperarse",
+                "correct": false
+              }
+            ],
+            "display_order": 3,
+            "source_url": "https://www.who.int/es/news-room/fact-sheets/detail/social-determinants-of-health",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://www.who.int/es/news-room/fact-sheets/detail/social-determinants-of-health"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué estudia la antropología de la salud?",
+            "answer": "Representaciones y prácticas de salud, enfermedad y cuidados en su contexto",
+            "distractors": [
+              "Solo la forma de los huesos",
+              "Solo las reacciones químicas celulares",
+              "Solo los resultados de una radiografía"
+            ],
+            "explanation": "El programa aborda las creencias, prácticas e instituciones vinculadas al proceso salud-enfermedad-atención.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "culture",
+            "id": "b7301030-2026-4000-8003-000000000044",
+            "options": [
+              {
+                "text": "Solo los resultados de una radiografía",
+                "correct": false
+              },
+              {
+                "text": "Representaciones y prácticas de salud, enfermedad y cuidados en su contexto",
+                "correct": true
+              },
+              {
+                "text": "Solo la forma de los huesos",
+                "correct": false
+              },
+              {
+                "text": "Solo las reacciones químicas celulares",
+                "correct": false
+              }
+            ],
+            "display_order": 4,
+            "source_url": "https://www.uvic.cat/es/assignatura/4410",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://www.uvic.cat/es/assignatura/4410"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué pregunta favorece una comunicación intercultural respetuosa?",
+            "answer": "¿Cómo entiende su problema y qué espera de la atención?",
+            "distractors": [
+              "Por su origen, usted debe pensar lo mismo que todos",
+              "¿Podemos ignorar sus dudas?",
+              "¿Acepta que no le expliquemos el plan?"
+            ],
+            "explanation": "Explorar el significado y las expectativas de la persona evita imponer supuestos sobre su cultura.",
+            "question_type": "clinical_case",
+            "difficulty": 2,
+            "source_key": "culture",
+            "id": "b7301030-2026-4000-8003-000000000045",
+            "options": [
+              {
+                "text": "¿Cómo entiende su problema y qué espera de la atención?",
+                "correct": true
+              },
+              {
+                "text": "Por su origen, usted debe pensar lo mismo que todos",
+                "correct": false
+              },
+              {
+                "text": "¿Podemos ignorar sus dudas?",
+                "correct": false
+              },
+              {
+                "text": "¿Acepta que no le expliquemos el plan?",
+                "correct": false
+              }
+            ],
+            "display_order": 5,
+            "source_url": "https://www.uvic.cat/es/assignatura/4410",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://www.uvic.cat/es/assignatura/4410"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué afirmación distingue una relación poblacional de una predicción individual?",
+            "answer": "El gradiente social no determina con certeza la salud de cada persona",
+            "distractors": [
+              "Todas las personas con el mismo ingreso enferman igual",
+              "La educación determina cada diagnóstico con certeza",
+              "La vivienda nunca influye en la salud"
+            ],
+            "explanation": "Un patrón de desigualdad poblacional no es un destino individual ni una prueba diagnóstica.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "who",
+            "id": "b7301030-2026-4000-8003-000000000046",
+            "options": [
+              {
+                "text": "Todas las personas con el mismo ingreso enferman igual",
+                "correct": false
+              },
+              {
+                "text": "La educación determina cada diagnóstico con certeza",
+                "correct": false
+              },
+              {
+                "text": "La vivienda nunca influye en la salud",
+                "correct": false
+              },
+              {
+                "text": "El gradiente social no determina con certeza la salud de cada persona",
+                "correct": true
+              }
+            ],
+            "display_order": 6,
+            "source_url": "https://www.who.int/es/news-room/fact-sheets/detail/social-determinants-of-health",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://www.who.int/es/news-room/fact-sheets/detail/social-determinants-of-health"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué grupo de factores incluye condiciones sociales relevantes para la salud?",
+            "answer": "Educación, empleo y protección social",
+            "distractors": [
+              "Solo grupo sanguíneo y ADN",
+              "Solo frecuencia cardíaca y temperatura",
+              "Solo tipo de tejido y membrana"
+            ],
+            "explanation": "La OMS incluye educación, condiciones laborales y protección social entre los determinantes.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "who",
+            "id": "b7301030-2026-4000-8003-000000000047",
+            "options": [
+              {
+                "text": "Solo frecuencia cardíaca y temperatura",
+                "correct": false
+              },
+              {
+                "text": "Solo tipo de tejido y membrana",
+                "correct": false
+              },
+              {
+                "text": "Educación, empleo y protección social",
+                "correct": true
+              },
+              {
+                "text": "Solo grupo sanguíneo y ADN",
+                "correct": false
+              }
+            ],
+            "display_order": 7,
+            "source_url": "https://www.who.int/es/news-room/fact-sheets/detail/social-determinants-of-health",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://www.who.int/es/news-room/fact-sheets/detail/social-determinants-of-health"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "Dos personas reciben el mismo horario, pero una no puede acceder por su empleo. ¿Qué análisis favorece la equidad?",
+            "answer": "Examinar la barrera y valorar opciones de acceso adaptadas",
+            "distractors": [
+              "Suponer que el mismo horario garantiza el mismo acceso",
+              "Excluirla sin explorar alternativas",
+              "Atribuirlo automáticamente a una creencia cultural"
+            ],
+            "explanation": "La igualdad formal del recurso no elimina diferencias de acceso derivadas de las condiciones de vida.",
+            "question_type": "clinical_case",
+            "difficulty": 2,
+            "source_key": "who",
+            "id": "b7301030-2026-4000-8003-000000000048",
+            "options": [
+              {
+                "text": "Atribuirlo automáticamente a una creencia cultural",
+                "correct": false
+              },
+              {
+                "text": "Examinar la barrera y valorar opciones de acceso adaptadas",
+                "correct": true
+              },
+              {
+                "text": "Suponer que el mismo horario garantiza el mismo acceso",
+                "correct": false
+              },
+              {
+                "text": "Excluirla sin explorar alternativas",
+                "correct": false
+              }
+            ],
+            "display_order": 8,
+            "source_url": "https://www.who.int/es/news-room/fact-sheets/detail/social-determinants-of-health",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://www.who.int/es/news-room/fact-sheets/detail/social-determinants-of-health"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Por qué no basta con mejorar únicamente los servicios clínicos para abordar los determinantes sociales?",
+            "answer": "Porque vivienda, educación y condiciones laborales también influyen en la salud",
+            "distractors": [
+              "Porque la atención sanitaria carece de utilidad",
+              "Porque los determinantes sociales son exclusivamente genéticos",
+              "Porque todas las barreras se resuelven con una prueba física"
+            ],
+            "explanation": "La salud depende también de condiciones no médicas y de la distribución de recursos y oportunidades.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "who",
+            "id": "b7301030-2026-4000-8003-000000000049",
+            "options": [
+              {
+                "text": "Porque vivienda, educación y condiciones laborales también influyen en la salud",
+                "correct": true
+              },
+              {
+                "text": "Porque la atención sanitaria carece de utilidad",
+                "correct": false
+              },
+              {
+                "text": "Porque los determinantes sociales son exclusivamente genéticos",
+                "correct": false
+              },
+              {
+                "text": "Porque todas las barreras se resuelven con una prueba física",
+                "correct": false
+              }
+            ],
+            "display_order": 9,
+            "source_url": "https://www.who.int/es/news-room/fact-sheets/detail/social-determinants-of-health",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://www.who.int/es/news-room/fact-sheets/detail/social-determinants-of-health"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          },
+          {
+            "question_text": "¿Qué conducta evita un estereotipo cultural durante la entrevista?",
+            "answer": "Preguntar por la experiencia de esa persona sin deducirla de su origen",
+            "distractors": [
+              "Asignarle creencias por su apellido",
+              "Suponer que su grupo es homogéneo",
+              "Interpretar el silencio siempre del mismo modo"
+            ],
+            "explanation": "La comprensión sociocultural requiere contextualizar la experiencia individual y evitar generalizaciones automáticas.",
+            "question_type": "mcq",
+            "difficulty": 1,
+            "source_key": "culture",
+            "id": "b7301030-2026-4000-8003-000000000050",
+            "options": [
+              {
+                "text": "Asignarle creencias por su apellido",
+                "correct": false
+              },
+              {
+                "text": "Suponer que su grupo es homogéneo",
+                "correct": false
+              },
+              {
+                "text": "Interpretar el silencio siempre del mismo modo",
+                "correct": false
+              },
+              {
+                "text": "Preguntar por la experiencia de esa persona sin deducirla de su origen",
+                "correct": true
+              }
+            ],
+            "display_order": 10,
+            "source_url": "https://www.uvic.cat/es/assignatura/4410",
+            "metadata": {
+              "content_batch": "es-s1-20261030",
+              "academic_semester": 1,
+              "academic_year": 1,
+              "language": "es",
+              "origin": "original_training",
+              "external_expert_review": "pending",
+              "source_urls": [
+                "https://www.uvic.cat/es/assignatura/4410"
+              ],
+              "verified_at": "2026-10-30"
+            }
+          }
+        ],
+        "sources": [
+          "https://www.uvic.cat/es/assignatura/4410",
+          "https://www.who.int/es/news-room/fact-sheets/detail/social-determinants-of-health"
+        ],
+        "new_unit_id": "b7301030-2026-4000-8000-000000000002",
+        "id": "b7301030-2026-4000-8002-000000000002",
+        "source_files": [
+          {
+            "url": "https://www.uvic.cat/es/assignatura/4410",
+            "label": "UVic-UCC · Plan docente · alcance de la asignatura",
+            "verified_at": "2026-10-30"
+          },
+          {
+            "url": "https://www.who.int/es/news-room/fact-sheets/detail/social-determinants-of-health",
+            "label": "OMS · Determinantes sociales de la salud",
+            "verified_at": "2026-10-30"
+          }
+        ]
+      }
+    ],
+    "new_units": [
+      {
+        "id": "b7301030-2026-4000-8000-000000000001",
+        "code": "PSICO_ES1",
+        "name": "Psicología · Semestre 1",
+        "icon": "🧠",
+        "display_order": 7
+      },
+      {
+        "id": "b7301030-2026-4000-8000-000000000002",
+        "code": "CULTURA_ES1",
+        "name": "Cultura, Sociedad y Salud · Semestre 1",
+        "icon": "🌍",
+        "display_order": 8
+      }
+    ]
+  },
+  "previous_lessons": [
+    {
+      "id": "21afcaf4-82c8-4ea6-8778-dd0ee108ec6b",
+      "topic_id": "c2449f10-323d-4ba2-b438-fdc1f452dbf3",
+      "title": "Fisiología I: bases del funcionamiento normal",
+      "summary": "Introduction aux bases moléculaires, cellulaires et aux fonctions des systèmes.",
+      "content": "### En pocas palabras\n\nIntroduction aux bases moléculaires, cellulaires et aux fonctions des systèmes.\n\n### Contenido esencial\n\nFisiología I introduce la estructura y el funcionamiento normal del cuerpo humano. La asignatura busca relacionar las bases moleculares y fisiológicas de células y tejidos con las funciones de los diferentes aparatos y sistemas, utilizando correctamente la terminología médica.\n\n### Vocabulario y puntos clave\n\n- bases moleculares y fisiológicas\n- células y tejidos\n- funciones de aparatos y sistemas\n- terminología médica\n\n### Para memorizar\n\nLee primero el contenido esencial, después repasa los términos clave y comprueba que puedes explicarlos sin mirar.\n\n### Approfondissement\nLa fisiología estudia cómo funcionan normalmente las células, los tejidos y los sistemas. Comprender estos mecanismos permite interpretar después los cambios que aparecen con el ejercicio, la enfermedad o la lesión. En primer curso, es importante construir vínculos entre nivel celular, tejido y función global, utilizando una terminología médica precisa.",
+      "key_points": [
+        "bases moleculares y fisiológicas",
+        "células y tejidos",
+        "funciones de aparatos y sistemas",
+        "terminología médica"
+      ],
+      "source_files": [
+        {
+          "url": "https://kineo.stephangury.workers.dev/document/7a63b9fc-3dca-53e4-9db1-8a94ceb276fc",
+          "label": "PDF de repaso · Fisiología I: funciones del organismo — revisión externa pendiente",
+          "title": "PDF de repaso · Fisiología I: funciones del organismo — revisión externa pendiente"
+        },
+        {
+          "url": "https://www.uvic.cat/assignatura/4405",
+          "label": "UVic-UCC — Fisiologia I 2026-2027"
+        }
+      ],
+      "display_order": 1,
+      "validation_status": "source_validated",
+      "is_published": true,
+      "created_at": "2026-10-05 10:31:15.81117+00",
+      "updated_at": "2026-10-17 09:19:01.188043+00"
+    },
+    {
+      "id": "502486f5-ff65-4a23-82fe-40d4408de8d1",
+      "topic_id": "e784bdd3-43aa-4c2a-a61f-32bd4b93192b",
+      "title": "Anatomía I: organización del cuerpo y sistemas",
+      "summary": "Repères fondamentaux d’anatomie générale et vocabulaire des grands systèmes.",
+      "content": "### En pocas palabras\n\nRepères fondamentaux d’anatomie générale et vocabulaire des grands systèmes.\n\n### Contenido esencial\n\nAnatomía I aborda la organización del cuerpo humano, los procesos vitales, las cavidades corporales, la terminología anatómica básica, la célula, los tejidos, la embriología y los aparatos cardiovascular, linfático, respiratorio, urinario, digestivo y genital.\n\n### Vocabulario y puntos clave\n\n- organización del cuerpo humano\n- terminología anatómica básica\n- célula y tejidos\n- embriología\n- aparato cardiovascular\n- aparato respiratorio\n- aparato urinario\n- aparato digestivo\n- aparato genital\n\n### Para memorizar\n\nLee primero el contenido esencial, después repasa los términos clave y comprueba que puedes explicarlos sin mirar.\n\nEstos sistemas no se estudian de forma aislada: la anatomía general proporciona el lenguaje necesario para ubicar estructuras y comprender relaciones entre tejidos, cavidades y aparatos. Dominar la terminología básica facilita después la fisiología, la exploración y la comunicación clínica.",
+      "key_points": [
+        "organización del cuerpo humano",
+        "terminología anatómica básica",
+        "célula y tejidos",
+        "embriología",
+        "aparato cardiovascular",
+        "aparato respiratorio",
+        "aparato urinario",
+        "aparato digestivo",
+        "aparato genital"
+      ],
+      "source_files": [
+        {
+          "url": "https://kineo.stephangury.workers.dev/document/e0272115-0d7b-56b2-99b1-20e809f71baa",
+          "label": "PDF de repaso · Anatomía I: organización y sistemas — revisión externa pendiente",
+          "title": "PDF de repaso · Anatomía I: organización y sistemas — revisión externa pendiente"
+        },
+        {
+          "url": "https://www.uvic.cat/assignatura/4402",
+          "label": "UVic-UCC — Anatomia I"
+        }
+      ],
+      "display_order": 1,
+      "validation_status": "source_validated",
+      "is_published": true,
+      "created_at": "2026-10-05 10:33:13.437334+00",
+      "updated_at": "2026-10-17 09:19:01.187426+00"
+    },
+    {
+      "id": "ab7d1b48-00b2-45f3-97ae-c055c7a6a0e0",
+      "topic_id": "276218a0-f41a-4e03-b152-024f9eea80fb",
+      "title": "Profesión y deontología",
+      "summary": "Concept, champs d’action et valeurs professionnelles.",
+      "content": "La fisioterapia es una profesión sanitaria con responsabilidades clínicas, éticas y de comunicación. El acto fisioterapéutico comprende la valoración, la toma de decisiones y la intervención dentro del ámbito profesional.\\n\\nLa deontología reúne principios que orientan la conducta profesional. El consentimiento informado implica que la persona recibe información comprensible y participa en las decisiones relacionadas con su atención.\\n\\nEn la práctica, el fisioterapeuta debe reconocer los límites de su actuación, respetar la autonomía de la persona y adaptar su comunicación al contexto asistencial.\n\n### Aplicación práctica\nEn una situación de atención, la conducta profesional combina competencia técnica, comunicación comprensible y respeto por la decisión de la persona. Antes de intervenir, conviene explicar qué se propone, comprobar que la información se ha entendido y adaptar el lenguaje al contexto. Si la situación supera el ámbito de actuación o requiere otra competencia, reconocer ese límite forma parte de una práctica segura. Así, valoración, decisión, consentimiento y comunicación no son elementos separados: forman parte del mismo acto fisioterapéutico.",
+      "key_points": [
+        "concepto de fisioterapia",
+        "acto fisioterapéutico",
+        "deontología",
+        "consentimiento informado",
+        "ámbitos de actuación"
+      ],
+      "source_files": [
+        {
+          "url": "https://kineo.stephangury.workers.dev/document/6f87a5e7-0448-5f1d-a3cd-5d289d40f7ff",
+          "label": "PDF de repaso · Profesión, deontología y modelos de intervención — revisión externa pendiente",
+          "title": "PDF de repaso · Profesión, deontología y modelos de intervención — revisión externa pendiente"
+        },
+        {
+          "url": "https://www.uvic.cat/assignatura/4412",
+          "label": "UVic-UCC — Fonaments de la Fisioteràpia 2026-2027"
+        }
+      ],
+      "display_order": 1,
+      "validation_status": "source_validated",
+      "is_published": true,
+      "created_at": "2026-10-05 10:31:15.81117+00",
+      "updated_at": "2026-10-17 09:19:01.187951+00"
+    }
+  ]
+}

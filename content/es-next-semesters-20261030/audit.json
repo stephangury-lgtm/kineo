@@ -1,0 +1,147 @@
+{
+  "verified_at": "2026-10-30",
+  "status": "audit commencé après publication S1; aucun enrichissement S2 publié par ce lot",
+  "sources": [
+    "https://www.uvic.cat/es/grado/fisioterapia",
+    "https://www.uvic.cat/es/assignatura/4403",
+    "https://www.uvic.cat/es/assignatura/7481",
+    "https://www.uvic.cat/es/assignatura/4404",
+    "https://www.uvic.cat/es/assignatura/4406",
+    "https://www.uvic.cat/es/assignatura/4431"
+  ],
+  "semester2_subjects": [
+    "Anatomía II (9 ECTS)",
+    "Bases de la Práctica en Fisioterapia (3 ECTS)",
+    "Biofísica y Biomecánica (6 ECTS)",
+    "Fisiología II (6 ECTS)",
+    "Inglés para las Ciencias de la Salud (6 ECTS)"
+  ],
+  "existing_target_topics": [
+    {
+      "topic_id": "80860ff8-4b96-4b94-a02e-90d83f74ad2b",
+      "name": "Fisiología II: neurociencia y control motor",
+      "lessons": 1,
+      "questions": 11,
+      "french_prompts_to_review": 3
+    },
+    {
+      "topic_id": "ab13dc74-5dd6-43bb-833b-1f90824ab765",
+      "name": "Ejercicio terapéutico y prescripción",
+      "lessons": 1,
+      "questions": 11,
+      "french_prompts_to_review": 3
+    },
+    {
+      "topic_id": "1f47e37b-8428-4aab-a4a8-dd5550a60023",
+      "name": "Anatomía II: aparato locomotor y palpación",
+      "lessons": 1,
+      "questions": 12,
+      "french_prompts_to_review": 5
+    },
+    {
+      "topic_id": "e25c4f7e-1650-43d3-a2a8-527b9ffe2457",
+      "name": "Biofísica y biomecánica: fundamentos",
+      "lessons": 1,
+      "questions": 10,
+      "french_prompts_to_review": 5
+    },
+    {
+      "topic_id": "803469a9-5351-45d9-bc08-afa03e7d1976",
+      "name": "Biofísica aplicada a la fisioterapia",
+      "lessons": 1,
+      "questions": 11,
+      "french_prompts_to_review": 6
+    },
+    {
+      "topic_id": "6bcac4ad-e3d1-41dd-92e3-101503b7e186",
+      "name": "Capacidades físicas básicas",
+      "lessons": 1,
+      "questions": 11,
+      "french_prompts_to_review": 6
+    },
+    {
+      "topic_id": "1961796a-77ad-41f3-a58e-f58895b59fb4",
+      "name": "Seguridad durante el ejercicio",
+      "lessons": 1,
+      "questions": 11,
+      "french_prompts_to_review": 4
+    },
+    {
+      "topic_id": "ad87ec15-0ae7-4d06-9562-eb1f951275d2",
+      "name": "Mini-casos de ejercicio terapéutico",
+      "lessons": 1,
+      "questions": 10,
+      "french_prompts_to_review": 5
+    },
+    {
+      "topic_id": "527cd0da-705e-44b0-8fa5-7c642a453d3b",
+      "name": "Ayudas técnicas y marcha",
+      "lessons": 1,
+      "questions": 10,
+      "french_prompts_to_review": 3
+    },
+    {
+      "topic_id": "70723aae-49e8-47b2-a531-55d2839d3391",
+      "name": "Progresión y tolerancia al ejercicio",
+      "lessons": 1,
+      "questions": 10,
+      "french_prompts_to_review": 3
+    },
+    {
+      "topic_id": "54f5d161-ccba-4419-af85-11a23b24522a",
+      "name": "Movilidad funcional y actividades diarias",
+      "lessons": 1,
+      "questions": 10,
+      "french_prompts_to_review": 3
+    },
+    {
+      "topic_id": "4d6ba993-2c86-45bd-ae64-f452eb4d2e74",
+      "name": "Evaluación funcional simple en stage",
+      "lessons": 1,
+      "questions": 10,
+      "french_prompts_to_review": 4
+    },
+    {
+      "topic_id": "ea726a09-b8a3-46d0-bd3b-7b340a39897b",
+      "name": "Evaluación funcional del hombro",
+      "lessons": 1,
+      "questions": 10,
+      "french_prompts_to_review": 3
+    },
+    {
+      "topic_id": "d59bc7ba-b203-4c82-a1ad-6b7c6e94a36e",
+      "name": "Cadena funcional: sentarse y levantarse",
+      "lessons": 1,
+      "questions": 10,
+      "french_prompts_to_review": 4
+    },
+    {
+      "topic_id": "c97d268f-e06a-4523-b425-2ada94ce253d",
+      "name": "Evaluación funcional básica",
+      "lessons": 1,
+      "questions": 10,
+      "french_prompts_to_review": 4
+    },
+    {
+      "topic_id": "f7458bc2-3170-45ca-bb2b-280a6f5278d9",
+      "name": "Objetivos de rehabilitación y función",
+      "lessons": 1,
+      "questions": 11,
+      "french_prompts_to_review": 3
+    }
+  ],
+  "summary": {
+    "topics": 16,
+    "questions": 168,
+    "french_prompts_to_review": 64,
+    "english_module_missing": true
+  },
+  "priorities": [
+    "Structurer S2 sans confondre ES2 (deuxième année) et S2 (première année)",
+    "Réviser les 64 énoncés français détectés dans ces 16 chapitres",
+    "Couvrir anatomie topographique et nerveuse, palpation, biofísica quantitative, neurophysiologie, prescription d'exercice",
+    "Créer le module d'anglais médical selon le plan UVic",
+    "Contrôler cours, questions, sources, scoring, accès et rollback avant publication",
+    "Continuer S3 à S8 selon les vrais semestres du plan UVic, sans traiter les niveaux ES2/ES3/ES4 comme des semestres"
+  ]
+}
