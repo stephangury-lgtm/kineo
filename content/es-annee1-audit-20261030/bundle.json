@@ -1,5 +1,5 @@
 {
-  "scope": "Compléments ciblés, couverture thématique introductive, pas certification d'exhaustivité des 60 ECTS.",
+  "scope": "Compléments ciblés au programme UVic 2026–2027, couverture thématique introductive, pas certification d'exhaustivité des 60 ECTS.",
   "created_at": "2026-10-30",
   "rows": {
     "topics": [
@@ -346,6 +346,42 @@
         "slug": "audit-a1-interferencias",
         "description": "Completar las relaciones de frecuencia y longitud con fase, reflexión y transporte de energía en modelos lineales.",
         "display_order": 11,
+        "content_language": "es",
+        "translation_language": null,
+        "translation_mode": "none",
+        "is_active": true
+      },
+      {
+        "id": "f7301030-2026-4000-8001-000000000030",
+        "unit_id": "e7301030-2026-4000-8000-000000000001",
+        "name": "Miembro superior: músculos, tendones y mano",
+        "slug": "audit-a1-mano",
+        "description": "Organizar músculos por región y acción; distinguir estabilización, movimiento y relaciones de tendones extrínsecos e intrínsecos.",
+        "display_order": 10,
+        "content_language": "es",
+        "translation_language": null,
+        "translation_mode": "none",
+        "is_active": true
+      },
+      {
+        "id": "f7301030-2026-4000-8001-000000000031",
+        "unit_id": "e7301030-2026-4000-8000-000000000001",
+        "name": "Miembro inferior: compartimentos, tendones y pie",
+        "slug": "audit-a1-pie",
+        "description": "Ordenar grupos musculares y relacionar sus acciones con marcha, rodilla y tobillo sin atribuir una tarea completa a un solo músculo.",
+        "display_order": 11,
+        "content_language": "es",
+        "translation_language": null,
+        "translation_mode": "none",
+        "is_active": true
+      },
+      {
+        "id": "f7301030-2026-4000-8001-000000000032",
+        "unit_id": "e7301030-2026-4000-8000-000000000001",
+        "name": "Pares craneales, meninges y circulación cerebral",
+        "slug": "audit-a1-craneales",
+        "description": "Relacionar doce pares craneales con funciones orientativas y distinguir circulación sanguínea, líquido cefalorraquídeo y cubiertas protectoras.",
+        "display_order": 12,
         "content_language": "es",
         "translation_language": null,
         "translation_mode": "none",
@@ -1228,6 +1264,77 @@
           },
           {
             "url": "https://openstax.org/books/university-physics-volume-1/pages/16-4-energy-and-power-of-a-wave",
+            "type": "web",
+            "checked_at": "2026-10-30"
+          }
+        ],
+        "display_order": 1,
+        "validation_status": "source_validated",
+        "is_published": true
+      },
+      {
+        "id": "f7301030-2026-4000-8002-000000000030",
+        "topic_id": "f7301030-2026-4000-8001-000000000030",
+        "title": "Miembro superior: músculos, tendones y mano",
+        "summary": "Organizar músculos por región y acción; distinguir estabilización, movimiento y relaciones de tendones extrínsecos e intrínsecos.",
+        "content": "### Objetivos\n\nOrganizar músculos por región y acción; distinguir estabilización, movimiento y relaciones de tendones extrínsecos e intrínsecos.\n\n### Hombro y codo\n\nEl manguito rotador reúne supraespinoso, infraespinoso, redondo menor y subescapular, con tendones que contribuyen a estabilidad glenohumeral. Deltoides no es parte del manguito. El tríceps extiende el codo; braquial y bíceps participan en flexión. El bíceps también participa en supinación. Acción de un músculo y movimiento observado dependen de posición y coordinación.\n\n### Antebrazo y mano\n\nLos grupos anteriores del antebrazo incluyen muchos flexores y pronadores; los posteriores, extensores y supinadores. Un músculo extrínseco de mano tiene vientre fuera de ella y tendones que llegan a los dedos; uno intrínseco tiene origen y localización dentro de la mano. Los tendones no son nervios ni ligamentos.\n\n### Tabla de orientación\n\n| Estructura o grupo | Relación funcional básica |\n|---|---|\n| Manguito rotador | Estabilidad y acciones de rotación/elevación según músculo |\n| Tríceps braquial | Extensión del codo |\n| Bíceps braquial | Flexión del codo y supinación |\n| Flexores extrínsecos de dedos | Vientres en antebrazo, tendones hacia mano |\n| Músculos tenares | Movimientos del pulgar |\n| Interóseos | Abducción y aducción de dedos respecto al eje de la mano |\n\nRelaciona nombres con atlas y figuras originales enlazadas. Preparar el reconocimiento no demuestra que sepas palpar o aislar una contracción. Evita deducir una lesión nerviosa por un único movimiento doloroso.\n\n### Repaso activo\n\nExplica los conceptos sin mirar. En el cuestionario, justifica la respuesta y el error de las alternativas. Si hay cálculos, escribe fórmula, unidades y resultado. Anota las dudas y revísalas en otra sesión.\n\nEntrenamiento original complementario al plan docente UVic 2026–2027; no son exámenes ni preguntas oficiales. La práctica clínica y las destrezas manuales requieren supervisión docente.",
+        "key_points": [
+          "Hombro y codo",
+          "Antebrazo y mano",
+          "Tabla de orientación"
+        ],
+        "source_files": [
+          {
+            "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs",
+            "type": "web",
+            "checked_at": "2026-10-30"
+          }
+        ],
+        "display_order": 1,
+        "validation_status": "source_validated",
+        "is_published": true
+      },
+      {
+        "id": "f7301030-2026-4000-8002-000000000031",
+        "topic_id": "f7301030-2026-4000-8001-000000000031",
+        "title": "Miembro inferior: compartimentos, tendones y pie",
+        "summary": "Ordenar grupos musculares y relacionar sus acciones con marcha, rodilla y tobillo sin atribuir una tarea completa a un solo músculo.",
+        "content": "### Objetivos\n\nOrdenar grupos musculares y relacionar sus acciones con marcha, rodilla y tobillo sin atribuir una tarea completa a un solo músculo.\n\n### Muslo\n\nEl cuádriceps comprende recto femoral y vastos lateral, medial e intermedio; todos participan en extensión de rodilla. El recto femoral también cruza cadera. Los isquiotibiales incluyen semitendinoso, semimembranoso y bíceps femoral; la cabeza corta del bíceps no cruza la cadera. La región medial del muslo contiene aductores.\n\n### Pierna y tendones\n\nEl tibial anterior participa en dorsiflexión e inversión. Gastrocnemio y sóleo contribuyen a flexión plantar mediante el tendón calcáneo; gastrocnemio también cruza rodilla. Los fibulares contribuyen a eversión. El complejo tendinoso transmite fuerza; no produce por sí solo potenciales de acción ni contracción activa.\n\n### Orientación y función\n\n| Grupo o estructura | Acción o relación de estudio |\n|---|---|\n| Cuádriceps | Extensión de rodilla |\n| Recto femoral | Cruza rodilla y cadera |\n| Isquiotibiales | Flexión de rodilla, con diferencias entre componentes |\n| Tibial anterior | Dorsiflexión e inversión |\n| Gastrocnemio y sóleo | Flexión plantar |\n| Fibulares | Eversión |\n\nEl pie combina músculos extrínsecos e intrínsecos. Los tendones hacia dedos y arcos no se comprenden como piezas aisladas de la marcha. Revisa figuras enlazadas y explica qué articulaciones cruza cada músculo antes de memorizar una acción. La palpación y valoración de fuerza necesitan práctica supervisada.\n\n### Repaso activo\n\nExplica los conceptos sin mirar. En el cuestionario, justifica la respuesta y el error de las alternativas. Si hay cálculos, escribe fórmula, unidades y resultado. Anota las dudas y revísalas en otra sesión.\n\nEntrenamiento original complementario al plan docente UVic 2026–2027; no son exámenes ni preguntas oficiales. La práctica clínica y las destrezas manuales requieren supervisión docente.",
+        "key_points": [
+          "Muslo",
+          "Pierna y tendones",
+          "Orientación y función"
+        ],
+        "source_files": [
+          {
+            "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-6-appendicular-muscles-of-the-pelvic-girdle-and-lower-limbs",
+            "type": "web",
+            "checked_at": "2026-10-30"
+          }
+        ],
+        "display_order": 1,
+        "validation_status": "source_validated",
+        "is_published": true
+      },
+      {
+        "id": "f7301030-2026-4000-8002-000000000032",
+        "topic_id": "f7301030-2026-4000-8001-000000000032",
+        "title": "Pares craneales, meninges y circulación cerebral",
+        "summary": "Relacionar doce pares craneales con funciones orientativas y distinguir circulación sanguínea, líquido cefalorraquídeo y cubiertas protectoras.",
+        "content": "### Objetivos\n\nRelacionar doce pares craneales con funciones orientativas y distinguir circulación sanguínea, líquido cefalorraquídeo y cubiertas protectoras.\n\n### Doce pares\n\nI olfatorio: olfato; II óptico: visión; III oculomotor, IV troclear y VI abducens: movimientos oculares; V trigémino: sensibilidad facial y masticación; VII facial: expresión facial y parte del gusto; VIII vestibulococlear: audición y equilibrio; IX glosofaríngeo y X vago: funciones faríngeas y viscerales entre otras; XI accesorio: músculos de cuello; XII hipogloso: musculatura lingual. Esta lista orienta, no agota todas sus funciones.\n\n### Cubiertas y líquido\n\nDe fuera hacia dentro: duramadre, aracnoides y piamadre. El espacio subaracnoideo contiene LCR. Los plexos coroideos participan en su producción dentro del sistema ventricular. LCR y sangre son fluidos y circuitos distintos; las meninges no son las capas de la pared cardíaca.\n\n### Aporte sanguíneo\n\nCarótidas internas y vertebrales aportan sangre al encéfalo. Las vertebrales se unen formando la basilar; conexiones del círculo arterial cerebral permiten vías colaterales con variabilidad individual y sin garantía absoluta de perfusión. No confundas circulación de LCR con flujo arterial ni interpretes síntomas neurológicos aislados como diagnóstico definitivo. La exploración de pares y la identificación en imágenes deben practicarse con supervisión.\n\n### Repaso activo\n\nExplica los conceptos sin mirar. En el cuestionario, justifica la respuesta y el error de las alternativas. Si hay cálculos, escribe fórmula, unidades y resultado. Anota las dudas y revísalas en otra sesión.\n\nEntrenamiento original complementario al plan docente UVic 2026–2027; no son exámenes ni preguntas oficiales. La práctica clínica y las destrezas manuales requieren supervisión docente.",
+        "key_points": [
+          "Doce pares",
+          "Cubiertas y líquido",
+          "Aporte sanguíneo"
+        ],
+        "source_files": [
+          {
+            "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-4-the-peripheral-nervous-system",
+            "type": "web",
+            "checked_at": "2026-10-30"
+          },
+          {
+            "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-3-circulation-and-the-central-nervous-system",
             "type": "web",
             "checked_at": "2026-10-30"
           }
@@ -13901,6 +14008,1276 @@
           "source_urls": [
             "https://openstax.org/books/university-physics-volume-1/pages/16-5-interference-of-waves",
             "https://openstax.org/books/university-physics-volume-1/pages/16-4-energy-and-power-of-a-wave"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000291",
+        "topic_id": "f7301030-2026-4000-8001-000000000030",
+        "question_text": "¿Qué conjunto forma el manguito rotador?",
+        "explanation": "Son cuatro músculos cuyos tendones se relacionan con la articulación glenohumeral.",
+        "options": [
+          {
+            "text": "Deltoides, bíceps, tríceps y braquial",
+            "correct": false
+          },
+          {
+            "text": "Supraespinoso, infraespinoso, redondo menor y subescapular",
+            "correct": true
+          },
+          {
+            "text": "Trapecio, dorsal ancho, romboides y serrato",
+            "correct": false
+          },
+          {
+            "text": "Solo los músculos de la mano",
+            "correct": false
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 1,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000292",
+        "topic_id": "f7301030-2026-4000-8001-000000000030",
+        "question_text": "¿Qué músculo queda fuera del manguito?",
+        "explanation": "El deltoides mueve el hombro, pero no pertenece al manguito.",
+        "options": [
+          {
+            "text": "Subescapular",
+            "correct": false
+          },
+          {
+            "text": "Infraespinoso",
+            "correct": false
+          },
+          {
+            "text": "Deltoides",
+            "correct": true
+          },
+          {
+            "text": "Redondo menor",
+            "correct": false
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 2,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000293",
+        "topic_id": "f7301030-2026-4000-8001-000000000030",
+        "question_text": "Además de flexionar codo, el bíceps participa en…",
+        "explanation": "El bíceps combina flexión de codo y supinación del antebrazo.",
+        "options": [
+          {
+            "text": "Pronación como acción principal",
+            "correct": false
+          },
+          {
+            "text": "Extensión de rodilla",
+            "correct": false
+          },
+          {
+            "text": "Flexión plantar",
+            "correct": false
+          },
+          {
+            "text": "Supinación",
+            "correct": true
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 3,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000294",
+        "topic_id": "f7301030-2026-4000-8001-000000000030",
+        "question_text": "¿Qué músculo participa principalmente en extensión del codo?",
+        "explanation": "El tríceps es el principal extensor del codo.",
+        "options": [
+          {
+            "text": "Tríceps braquial",
+            "correct": true
+          },
+          {
+            "text": "Braquial",
+            "correct": false
+          },
+          {
+            "text": "Bíceps como extensor principal",
+            "correct": false
+          },
+          {
+            "text": "Pronador redondo",
+            "correct": false
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 4,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000295",
+        "topic_id": "f7301030-2026-4000-8001-000000000030",
+        "question_text": "¿Qué caracteriza a un músculo extrínseco de la mano?",
+        "explanation": "Los tendones de músculos del antebrazo llegan a la mano.",
+        "options": [
+          {
+            "text": "Carece de tendón",
+            "correct": false
+          },
+          {
+            "text": "Su vientre se encuentra fuera de la mano",
+            "correct": true
+          },
+          {
+            "text": "Solo se encuentra en la palma",
+            "correct": false
+          },
+          {
+            "text": "Es siempre un ligamento",
+            "correct": false
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 5,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000296",
+        "topic_id": "f7301030-2026-4000-8001-000000000030",
+        "question_text": "¿Qué región se relaciona con músculos tenares?",
+        "explanation": "La eminencia tenar se asocia al movimiento del pulgar.",
+        "options": [
+          {
+            "text": "Talón",
+            "correct": false
+          },
+          {
+            "text": "Fosa poplítea",
+            "correct": false
+          },
+          {
+            "text": "Base del pulgar",
+            "correct": true
+          },
+          {
+            "text": "Cuello",
+            "correct": false
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 6,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000297",
+        "topic_id": "f7301030-2026-4000-8001-000000000030",
+        "question_text": "¿Qué acciones realizan los interóseos de la mano?",
+        "explanation": "Las acciones se describen respecto al eje funcional de la mano.",
+        "options": [
+          {
+            "text": "Solo flexión de cadera",
+            "correct": false
+          },
+          {
+            "text": "Solo supinación del antebrazo",
+            "correct": false
+          },
+          {
+            "text": "Solo elevación escapular",
+            "correct": false
+          },
+          {
+            "text": "Abducción y aducción de dedos",
+            "correct": true
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 7,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000298",
+        "topic_id": "f7301030-2026-4000-8001-000000000030",
+        "question_text": "¿Qué grupo predomina en compartimentos posteriores del antebrazo?",
+        "explanation": "La organización regional ayuda a estudiar funciones.",
+        "options": [
+          {
+            "text": "Extensores",
+            "correct": true
+          },
+          {
+            "text": "Solo flexores",
+            "correct": false
+          },
+          {
+            "text": "Solo aductores de cadera",
+            "correct": false
+          },
+          {
+            "text": "Solo músculos respiratorios",
+            "correct": false
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 8,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000299",
+        "topic_id": "f7301030-2026-4000-8001-000000000030",
+        "question_text": "¿Qué conecta un tendón muscular?",
+        "explanation": "No debe confundirse tendón con ligamento o nervio.",
+        "options": [
+          {
+            "text": "Siempre dos nervios",
+            "correct": false
+          },
+          {
+            "text": "Músculo con su inserción",
+            "correct": true
+          },
+          {
+            "text": "Solo dos capas de epidermis",
+            "correct": false
+          },
+          {
+            "text": "Siempre dos huesos como definición de ligamento",
+            "correct": false
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 9,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000300",
+        "topic_id": "f7301030-2026-4000-8001-000000000030",
+        "question_text": "¿Qué necesitas además del nombre para analizar acción muscular?",
+        "explanation": "La acción anatómica se integra en un movimiento coordinado.",
+        "options": [
+          {
+            "text": "Solo color del músculo en el atlas",
+            "correct": false
+          },
+          {
+            "text": "Solo edad del libro",
+            "correct": false
+          },
+          {
+            "text": "Posición, tarea y coordinación",
+            "correct": true
+          },
+          {
+            "text": "Solo número de preguntas",
+            "correct": false
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 10,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000301",
+        "topic_id": "f7301030-2026-4000-8001-000000000031",
+        "question_text": "¿Qué acción comparten los cuatro componentes del cuádriceps?",
+        "explanation": "El cuádriceps transmite fuerza extensora a la rodilla.",
+        "options": [
+          {
+            "text": "Flexión plantar",
+            "correct": false
+          },
+          {
+            "text": "Pronación del antebrazo",
+            "correct": false
+          },
+          {
+            "text": "Extensión de rodilla",
+            "correct": true
+          },
+          {
+            "text": "Extensión de codo",
+            "correct": false
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 1,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-6-appendicular-muscles-of-the-pelvic-girdle-and-lower-limbs"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000302",
+        "topic_id": "f7301030-2026-4000-8001-000000000031",
+        "question_text": "¿Qué componente del cuádriceps cruza también cadera?",
+        "explanation": "El recto femoral es biarticular.",
+        "options": [
+          {
+            "text": "Vasto intermedio",
+            "correct": false
+          },
+          {
+            "text": "Vasto medial",
+            "correct": false
+          },
+          {
+            "text": "Vasto lateral",
+            "correct": false
+          },
+          {
+            "text": "Recto femoral",
+            "correct": true
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 2,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-6-appendicular-muscles-of-the-pelvic-girdle-and-lower-limbs"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000303",
+        "topic_id": "f7301030-2026-4000-8001-000000000031",
+        "question_text": "¿Qué conjunto contiene músculos isquiotibiales?",
+        "explanation": "La región posterior del muslo contiene ese grupo.",
+        "options": [
+          {
+            "text": "Semitendinoso, semimembranoso y bíceps femoral",
+            "correct": true
+          },
+          {
+            "text": "Recto femoral y tres vastos",
+            "correct": false
+          },
+          {
+            "text": "Sóleo y tibial anterior",
+            "correct": false
+          },
+          {
+            "text": "Deltoides y supraespinoso",
+            "correct": false
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 3,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-6-appendicular-muscles-of-the-pelvic-girdle-and-lower-limbs"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000304",
+        "topic_id": "f7301030-2026-4000-8001-000000000031",
+        "question_text": "¿Qué cabeza del bíceps femoral no cruza cadera?",
+        "explanation": "La cabeza corta se origina en fémur y no actúa sobre cadera.",
+        "options": [
+          {
+            "text": "Larga",
+            "correct": false
+          },
+          {
+            "text": "Corta",
+            "correct": true
+          },
+          {
+            "text": "Ambas siempre cruzan cadera",
+            "correct": false
+          },
+          {
+            "text": "Ninguna tiene relación con rodilla",
+            "correct": false
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 4,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-6-appendicular-muscles-of-the-pelvic-girdle-and-lower-limbs"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000305",
+        "topic_id": "f7301030-2026-4000-8001-000000000031",
+        "question_text": "¿Qué músculo contribuye a dorsiflexión e inversión?",
+        "explanation": "El tibial anterior combina esas acciones.",
+        "options": [
+          {
+            "text": "Sóleo",
+            "correct": false
+          },
+          {
+            "text": "Gastrocnemio",
+            "correct": false
+          },
+          {
+            "text": "Tibial anterior",
+            "correct": true
+          },
+          {
+            "text": "Bíceps braquial",
+            "correct": false
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 5,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-6-appendicular-muscles-of-the-pelvic-girdle-and-lower-limbs"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000306",
+        "topic_id": "f7301030-2026-4000-8001-000000000031",
+        "question_text": "¿Qué acción comparten gastrocnemio y sóleo?",
+        "explanation": "Ambos contribuyen al impulso plantar.",
+        "options": [
+          {
+            "text": "Dorsiflexión como acción principal",
+            "correct": false
+          },
+          {
+            "text": "Extensión de codo",
+            "correct": false
+          },
+          {
+            "text": "Abducción de hombro",
+            "correct": false
+          },
+          {
+            "text": "Flexión plantar",
+            "correct": true
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 6,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-6-appendicular-muscles-of-the-pelvic-girdle-and-lower-limbs"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000307",
+        "topic_id": "f7301030-2026-4000-8001-000000000031",
+        "question_text": "¿Qué músculo de ese par cruza también rodilla?",
+        "explanation": "El gastrocnemio tiene origen proximal al nivel de la rodilla.",
+        "options": [
+          {
+            "text": "Gastrocnemio",
+            "correct": true
+          },
+          {
+            "text": "Sóleo",
+            "correct": false
+          },
+          {
+            "text": "Ambos siempre",
+            "correct": false
+          },
+          {
+            "text": "Ninguno",
+            "correct": false
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 7,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-6-appendicular-muscles-of-the-pelvic-girdle-and-lower-limbs"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000308",
+        "topic_id": "f7301030-2026-4000-8001-000000000031",
+        "question_text": "¿Qué acción se relaciona con los fibulares?",
+        "explanation": "Los fibulares participan en orientar la planta hacia lateral.",
+        "options": [
+          {
+            "text": "Supinación de antebrazo",
+            "correct": false
+          },
+          {
+            "text": "Eversión",
+            "correct": true
+          },
+          {
+            "text": "Flexión de codo",
+            "correct": false
+          },
+          {
+            "text": "Extensión de dedos de mano",
+            "correct": false
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 8,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-6-appendicular-muscles-of-the-pelvic-girdle-and-lower-limbs"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000309",
+        "topic_id": "f7301030-2026-4000-8001-000000000031",
+        "question_text": "¿Qué función cumple el tendón calcáneo?",
+        "explanation": "El tendón transmite tensión y se diferencia del músculo y nervio.",
+        "options": [
+          {
+            "text": "Producir por sí solo contracción muscular",
+            "correct": false
+          },
+          {
+            "text": "Conducir orina",
+            "correct": false
+          },
+          {
+            "text": "Transmitir fuerza de músculos de la pantorrilla al calcáneo",
+            "correct": true
+          },
+          {
+            "text": "Producir acetilcolina como una motoneurona",
+            "correct": false
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 9,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-6-appendicular-muscles-of-the-pelvic-girdle-and-lower-limbs"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000310",
+        "topic_id": "f7301030-2026-4000-8001-000000000031",
+        "question_text": "¿Qué pregunta ayuda a prever la acción de un músculo?",
+        "explanation": "Trayecto y articulaciones cruzadas ayudan al razonamiento anatómico.",
+        "options": [
+          {
+            "text": "¿Qué color le dieron en el dibujo?",
+            "correct": false
+          },
+          {
+            "text": "¿Cuántas páginas tiene el atlas?",
+            "correct": false
+          },
+          {
+            "text": "¿Cómo se ordena alfabéticamente?",
+            "correct": false
+          },
+          {
+            "text": "¿Qué articulaciones cruza y por dónde pasa?",
+            "correct": true
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 10,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-6-appendicular-muscles-of-the-pelvic-girdle-and-lower-limbs"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000311",
+        "topic_id": "f7301030-2026-4000-8001-000000000032",
+        "question_text": "¿Qué par craneal se relaciona con olfato?",
+        "explanation": "El I es olfatorio; el II se relaciona con visión.",
+        "options": [
+          {
+            "text": "II",
+            "correct": false
+          },
+          {
+            "text": "VIII",
+            "correct": false
+          },
+          {
+            "text": "XII",
+            "correct": false
+          },
+          {
+            "text": "I",
+            "correct": true
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 1,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-4-the-peripheral-nervous-system",
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-3-circulation-and-the-central-nervous-system"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000312",
+        "topic_id": "f7301030-2026-4000-8001-000000000032",
+        "question_text": "¿Qué par se relaciona con visión?",
+        "explanation": "El nervio óptico corresponde al par II.",
+        "options": [
+          {
+            "text": "II",
+            "correct": true
+          },
+          {
+            "text": "I",
+            "correct": false
+          },
+          {
+            "text": "VII",
+            "correct": false
+          },
+          {
+            "text": "XI",
+            "correct": false
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 2,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-4-the-peripheral-nervous-system",
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-3-circulation-and-the-central-nervous-system"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000313",
+        "topic_id": "f7301030-2026-4000-8001-000000000032",
+        "question_text": "¿Qué conjunto participa en movimientos oculares?",
+        "explanation": "Los pares oculomotor, troclear y abducens tienen funciones motoras oculares.",
+        "options": [
+          {
+            "text": "I, VIII y XII",
+            "correct": false
+          },
+          {
+            "text": "III, IV y VI",
+            "correct": true
+          },
+          {
+            "text": "V, X y XI únicamente",
+            "correct": false
+          },
+          {
+            "text": "Solo I",
+            "correct": false
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 3,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-4-the-peripheral-nervous-system",
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-3-circulation-and-the-central-nervous-system"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000314",
+        "topic_id": "f7301030-2026-4000-8001-000000000032",
+        "question_text": "¿Qué par combina sensibilidad facial y masticación?",
+        "explanation": "El trigémino tiene componentes sensitivos y motores.",
+        "options": [
+          {
+            "text": "VIII",
+            "correct": false
+          },
+          {
+            "text": "I",
+            "correct": false
+          },
+          {
+            "text": "V",
+            "correct": true
+          },
+          {
+            "text": "II",
+            "correct": false
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 4,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-4-the-peripheral-nervous-system",
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-3-circulation-and-the-central-nervous-system"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000315",
+        "topic_id": "f7301030-2026-4000-8001-000000000032",
+        "question_text": "¿Qué par participa en expresión facial?",
+        "explanation": "El facial controla músculos de expresión facial, entre otras funciones.",
+        "options": [
+          {
+            "text": "II",
+            "correct": false
+          },
+          {
+            "text": "I",
+            "correct": false
+          },
+          {
+            "text": "VIII",
+            "correct": false
+          },
+          {
+            "text": "VII",
+            "correct": true
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 5,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-4-the-peripheral-nervous-system",
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-3-circulation-and-the-central-nervous-system"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000316",
+        "topic_id": "f7301030-2026-4000-8001-000000000032",
+        "question_text": "¿Qué par se relaciona con audición y equilibrio?",
+        "explanation": "El vestibulococlear combina componentes auditivo y vestibular.",
+        "options": [
+          {
+            "text": "VIII",
+            "correct": true
+          },
+          {
+            "text": "XII",
+            "correct": false
+          },
+          {
+            "text": "III",
+            "correct": false
+          },
+          {
+            "text": "XI",
+            "correct": false
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 6,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-4-the-peripheral-nervous-system",
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-3-circulation-and-the-central-nervous-system"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000317",
+        "topic_id": "f7301030-2026-4000-8001-000000000032",
+        "question_text": "¿Qué par inerva principalmente musculatura de la lengua?",
+        "explanation": "El hipogloso se relaciona con movimiento lingual.",
+        "options": [
+          {
+            "text": "I",
+            "correct": false
+          },
+          {
+            "text": "XII",
+            "correct": true
+          },
+          {
+            "text": "II",
+            "correct": false
+          },
+          {
+            "text": "VIII",
+            "correct": false
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 7,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-4-the-peripheral-nervous-system",
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-3-circulation-and-the-central-nervous-system"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000318",
+        "topic_id": "f7301030-2026-4000-8001-000000000032",
+        "question_text": "¿Qué orden meníngeo va de fuera hacia dentro?",
+        "explanation": "Las tres meninges tienen ese orden anatómico.",
+        "options": [
+          {
+            "text": "Piamadre → duramadre → aracnoides",
+            "correct": false
+          },
+          {
+            "text": "Aracnoides → piamadre → duramadre",
+            "correct": false
+          },
+          {
+            "text": "Duramadre → aracnoides → piamadre",
+            "correct": true
+          },
+          {
+            "text": "Pericardio → pleura → peritoneo",
+            "correct": false
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 8,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-4-the-peripheral-nervous-system",
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-3-circulation-and-the-central-nervous-system"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000319",
+        "topic_id": "f7301030-2026-4000-8001-000000000032",
+        "question_text": "¿Qué espacio contiene LCR alrededor del sistema nervioso central?",
+        "explanation": "El LCR circula por espacios ventriculares y subaracnoideo.",
+        "options": [
+          {
+            "text": "Luz de la aorta",
+            "correct": false
+          },
+          {
+            "text": "Cavidad pleural",
+            "correct": false
+          },
+          {
+            "text": "Interior de un eritrocito",
+            "correct": false
+          },
+          {
+            "text": "Subaracnoideo",
+            "correct": true
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 9,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-4-the-peripheral-nervous-system",
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-3-circulation-and-the-central-nervous-system"
+          ],
+          "source_checked_at": "2026-10-30",
+          "official_exam": false,
+          "teacher_review": "pending",
+          "original_training": true
+        }
+      },
+      {
+        "id": "f7301030-2026-4000-8003-000000000320",
+        "topic_id": "f7301030-2026-4000-8001-000000000032",
+        "question_text": "¿Qué arterias confluyen para formar la basilar?",
+        "explanation": "Las dos vertebrales contribuyen al sistema vertebrobasilar.",
+        "options": [
+          {
+            "text": "Vertebrales",
+            "correct": true
+          },
+          {
+            "text": "Renales",
+            "correct": false
+          },
+          {
+            "text": "Femorales",
+            "correct": false
+          },
+          {
+            "text": "Radiales",
+            "correct": false
+          }
+        ],
+        "difficulty": 1,
+        "source_label": "Entrenamiento original · auditoría 1.er curso UVic 2026–2027",
+        "display_order": 10,
+        "validation_status": "source_validated",
+        "is_published": true,
+        "question_type": "mcq",
+        "accepted_answers": [],
+        "metadata": {
+          "batch": "es-a1-audit-20261030",
+          "language": "es",
+          "source_urls": [
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-4-the-peripheral-nervous-system",
+            "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-3-circulation-and-the-central-nervous-system"
           ],
           "source_checked_at": "2026-10-30",
           "official_exam": false,
