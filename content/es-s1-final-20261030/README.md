@@ -40,4 +40,4 @@ Les huit autres chapitres déjà créés changent de rubrique sans changement d'
 ## Retour arrière
 Ordre en cas d'annulation de toute la campagne : finalisation → suite → premier lot.
 Le rollback de finalisation désactive les nouveaux éléments au lieu de les supprimer. Il préserve les références des tentatives.
-Attention : si des tentatives ont été enregistrées après publication sur les trente questions réaffectées, leurs topic_id historiques nécessitent une analyse avant restauration du rattachement ; le script ne réécrit pas les tentatives utilisateur.
+Le script refuse la restauration si des tentatives ont depuis été enregistrées sur les trente questions réaffectées : une analyse de progression est alors nécessaire. Le script ne réécrit pas les tentatives utilisateur. L'essai de scoring utilise un SAVEPOINT pour annuler les 44 soumissions avant de tester ce garde-fou.
