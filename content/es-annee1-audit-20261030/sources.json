@@ -1,0 +1,396 @@
+{
+  "checked_at": "2026-10-30",
+  "note": "Les liens ayant retourné une erreur ou un contenu vide ont été exclus. Les plans UVic fixent le périmètre ; les autres sources appuient les explications. Exemples et questions originaux, non annales.",
+  "sources": [
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/1-6-anatomical-terminology",
+      "title": "1.6 Anatomical Terminology",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-2-epithelial-tissue",
+      "title": "4.2 Epithelial Tissue",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/4-3-connective-tissue-supports-and-protects",
+      "title": "4.3 Connective Tissue Supports and Protects",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/20-1-structure-and-function-of-blood-vessels",
+      "title": "20.1 Structure and Function of Blood Vessels",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/23-1-overview-of-the-digestive-system",
+      "title": "23.1 Overview of the Digestive System",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/25-3-gross-anatomy-of-the-kidney",
+      "title": "25.3 Gross Anatomy of the Kidney",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/24-1-overview-of-metabolic-reactions",
+      "title": "24.1 Overview of Metabolic Reactions",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/26-4-acid-base-balance",
+      "title": "26.4 Acid-Base Balance",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/18-5-hemostasis",
+      "title": "18.5 Hemostasis",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/18-6-blood-typing",
+      "title": "18.6 Blood Typing",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/20-2-blood-flow-blood-pressure-and-resistance",
+      "title": "20.2 Blood Flow, Blood Pressure, and Resistance",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/22-5-transport-of-gases",
+      "title": "22.5 Transport of Gases",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/17-4-the-thyroid-gland",
+      "title": "17.4 The Thyroid Gland",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/17-5-the-parathyroid-glands",
+      "title": "17.5 The Parathyroid Glands",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-4-axial-muscles-of-the-abdominal-wall-and-thorax",
+      "title": "11.4 Axial Muscles of the Abdominal Wall, and Thorax",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-4-the-peripheral-nervous-system",
+      "title": "13.4 The Peripheral Nervous System",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-2-the-central-nervous-system",
+      "title": "13.2 The Central Nervous System",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/10-3-muscle-fiber-contraction-and-relaxation",
+      "title": "10.3 Muscle Fiber Contraction and Relaxation",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/10-4-nervous-system-control-of-muscle-tension",
+      "title": "10.4 Nervous System Control of Muscle Tension",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/10-6-exercise-and-muscle-performance",
+      "title": "10.6 Exercise and Muscle Performance",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/university-physics-volume-2/pages/3-3-first-law-of-thermodynamics",
+      "title": "3.3 First Law of Thermodynamics",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/university-physics-volume-2/pages/5-3-coulombs-law",
+      "title": "5.3 Coulomb's Law",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/university-physics-volume-2/pages/13-1-faradays-law",
+      "title": "13.1 Faraday’s Law",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/university-physics-volume-1/pages/3-1-position-displacement-and-average-velocity",
+      "title": "3.1 Position, Displacement, and Average Velocity",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/university-physics-volume-1/pages/5-3-newtons-second-law",
+      "title": "5.3 Newton's Second Law",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/university-physics-volume-1/pages/14-4-archimedes-principle-and-buoyancy",
+      "title": "14.4 Archimedes’ Principle and Buoyancy",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/psychology-2e/pages/9-1-what-is-lifespan-development",
+      "title": "9.1 What Is Lifespan Development?",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/psychology-2e/pages/8-1-how-memory-functions",
+      "title": "8.1 How Memory Functions",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://world.physio/history",
+      "title": "Our history",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://www.ninds.nih.gov/health-information/disorders/aphasia",
+      "title": "-A-",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://www.nice.org.uk/guidance/ng197/chapter/Recommendations",
+      "title": "Shared decision making",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://learnenglish.britishcouncil.org/skills/writing/b1-writing/a-report-on-a-student-meeting",
+      "title": "A report on a student meeting",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/26-1-body-fluids-and-fluid-compartments",
+      "title": "26.1 Body Fluids and Fluid Compartments",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/2-5-organic-compounds-essential-to-human-functioning",
+      "title": "2.5 Organic Compounds Essential to Human Functioning",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/15-1-divisions-of-the-autonomic-nervous-system",
+      "title": "15.1 Divisions of the Autonomic Nervous System",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/14-3-motor-responses",
+      "title": "14.3 Motor Responses",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/university-physics-volume-1/pages/10-1-rotational-variables",
+      "title": "10.1 Rotational Variables",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/university-physics-volume-2/pages/2-1-molecular-model-of-an-ideal-gas",
+      "title": "2.1 Molecular Model of an Ideal Gas",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://www.boe.es/diario_boe/txt.php?id=BOE-A-1981-1226",
+      "title": "Agencia Estatal Boletín Oficial del Estado",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://boe.es/buscar/doc.php?id=BOE-A-1957-11318",
+      "title": "Agencia Estatal Boletín Oficial del Estado",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://www.who.int/news-room/fact-sheets/detail/falls",
+      "title": "Key facts",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://www.nhlbi.nih.gov/health/lungs/breathing-benefits",
+      "title": "How the Lungs Work What Breathing Does for the Body ---",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/psychology-2e/pages/3-3-parts-of-the-nervous-system",
+      "title": "3.3 Parts of the Nervous System",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/university-physics-volume-1/pages/12-3-stress-strain-and-elastic-modulus",
+      "title": "12.3 Stress, Strain, and Elastic Modulus",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://ocw.mit.edu/courses/2-002-mechanics-and-materials-ii-spring-2004/0278c01018c4f2281214a661d9c95c32_creep_viscoelast.pdf",
+      "title": "Source institutionnelle",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://www.ninds.nih.gov/health-information/disorders/spinal-cord-injury",
+      "title": "What is a spinal cord injury?",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://learnenglishteens.britishcouncil.org/exams/speaking-exams/oral-presentation",
+      "title": "Instructions",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://classics.mit.edu/Hippocrates/artic.1.1.html",
+      "title": "The Internet Classics Archive | On the Articulations by Hippocrates",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://classics.mit.edu/Hippocrates/artic.9.9.html",
+      "title": "The Internet Classics Archive | On the Articulations by Hippocrates",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://www.boe.es/buscar/doc.php?id=BOE-A-1990-9594",
+      "title": "BOE-A-1990-9594 Ley 7/1990, de 30 de marzo, de creación del Colegio Profesional de Fisioterapeutas de Cataluña.",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://world.physio/policy/ps-descriptionPT",
+      "title": "Description of physiotherapy",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/17-6-the-adrenal-glands",
+      "title": "17.6 The Adrenal Glands",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/22-4-gas-exchange",
+      "title": "22.4 Gas Exchange",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/16-4-the-sensory-and-motor-exams",
+      "title": "16.4 The Sensory and Motor Exams",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://www.ninds.nih.gov/health-information/public-education/brain-basics/brain-basics-understanding-sleep",
+      "title": "Brain Basics: Understanding Sleep",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/psychology-2e/pages/8-2-parts-of-the-brain-involved-with-memory",
+      "title": "8.2 Parts of the Brain Involved with Memory",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/university-physics-volume-1/pages/5-2-newtons-first-law",
+      "title": "5.2 Newton's First Law",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/university-physics-volume-1/pages/5-5-newtons-third-law",
+      "title": "5.5 Newton’s Third Law",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/university-physics-volume-1/pages/6-2-friction",
+      "title": "6.2 Friction",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/university-physics-volume-2/pages/1-5-phase-changes",
+      "title": "1.5 Phase Changes",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/university-physics-volume-2/pages/9-1-electrical-current",
+      "title": "9.1 Electrical Current",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/university-physics-volume-1/pages/12-2-examples-of-static-equilibrium",
+      "title": "12.2 Examples of Static Equilibrium",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/university-physics-volume-1/pages/16-5-interference-of-waves",
+      "title": "16.5 Interference of Waves",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/university-physics-volume-1/pages/16-4-energy-and-power-of-a-wave",
+      "title": "16.4 Energy and Power of a Wave",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://learnenglish.britishcouncil.org/skills/listening/b1-listening/a-phone-call-from-a-customer",
+      "title": "A phone call from a customer",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4403",
+      "title": "Titulación",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4404",
+      "title": "Titulación",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4406",
+      "title": "Titulación",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/7481",
+      "title": "Titulación",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4431",
+      "title": "Titulación",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4402",
+      "title": "Titulación",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4410",
+      "title": "Titulación",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4405",
+      "title": "Titulación",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4412",
+      "title": "Titulación",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4409",
+      "title": "Titulación",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs",
+      "title": "11.5 Muscles of the Pectoral Girdle and Upper Limbs",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/11-6-appendicular-muscles-of-the-pelvic-girdle-and-lower-limbs",
+      "title": "11.6 Appendicular Muscles of the Pelvic Girdle and Lower Limbs",
+      "checked_at": "2026-10-30"
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/13-3-circulation-and-the-central-nervous-system",
+      "title": "13.3 Circulation and the Central Nervous System",
+      "checked_at": "2026-10-30"
+    }
+  ]
+}
