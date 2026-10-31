@@ -1,6 +1,6 @@
 {
   "date": "2026-10-31",
-  "scope": "26 matières obligatoires, consolidation complémentaire S3-S8 ; optatividad 15 ECTS à adapter aux choix, pas couverture certifiée intégrale.",
+  "scope": "Consolidation des 26 matières obligatoires S3-S8. Optatividad 15 ECTS à adapter au choix ; pas certification de couverture complète des ECTS.",
   "unit_updates": [
     {
       "key": "UVIC12140_ES2",
@@ -902,7 +902,7 @@
       {
         "id": "b7311031-2026-4000-8001-000000000017",
         "unit_id": "b69fccea-46ab-49c8-a983-b5291fc0feb2",
-        "name": "Research workshop · Research workshop · From question to protocol",
+        "name": "Research workshop · From question to protocol",
         "slug": "s3-s8-proj-es3",
         "description": "Construir una pregunta investigable y distinguir búsqueda, selección, análisis y comunicación, con vocabulario en inglés.",
         "display_order": 3,
