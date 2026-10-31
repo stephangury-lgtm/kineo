@@ -1,0 +1,326 @@
+{
+  "consulted_at": "2026-10-31",
+  "plans": [
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4408",
+      "title": "Bioestadística y Sistemas de la Información | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4407",
+      "title": "Fisiopatología | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4416",
+      "title": "Fisioterapia del Sistema Musculo-esquelético I | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4415",
+      "title": "Valoración y Diagnóstico II | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4411",
+      "title": "Bioética | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4425",
+      "title": "Salud Pública | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4413",
+      "title": "Farmacología | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4417",
+      "title": "Fisioterapia del Sistema Musculo-esquelético II | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4423",
+      "title": "Fisioterapia en Neurología I | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4432",
+      "title": "Prácticum I | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4427",
+      "title": "Fisioterapia Comunitaria | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4418",
+      "title": "Fisioterapia del Sistema Musculo-esquelético III | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4424",
+      "title": "Fisioterapia en Neurología II | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4433",
+      "title": "Prácticum II | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4420",
+      "title": "Fisioterapia Cardiorrespiratoria | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4422",
+      "title": "Fisioterapia en Pediatría | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4430",
+      "title": "Elaboración de Proyectos | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4419",
+      "title": "Fisioterapia del Sistema Musculo-esquelético IV | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4421",
+      "title": "Fisioterapia en Geriatría | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4434",
+      "title": "Prácticum III | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4428",
+      "title": "Actividad Física y Salud I | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4429",
+      "title": "Atención Clínica Integral | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4426",
+      "title": "Gestión y Calidad | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4435",
+      "title": "Prácticum IV | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4436",
+      "title": "Prácticum V | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/es/assignatura/4437",
+      "title": "Trabajo de Fin de Grado | UVic"
+    },
+    {
+      "url": "https://www.uvic.cat/en/assignatura/4430",
+      "title": "Project Development | UVic"
+    }
+  ],
+  "sources": [
+    {
+      "url": "https://openstax.org/books/introductory-statistics-2e/pages/2-5-measures-of-the-center-of-the-data",
+      "title": "2.5 Measures of the Center of the Data - Introductory Statistics 2e | OpenStax",
+      "bytes": 11048
+    },
+    {
+      "url": "https://www.nice.org.uk/guidance/ng197/chapter/Recommendations",
+      "title": "Recommendations | Shared decision making | Guidance | NICE",
+      "bytes": 21013
+    },
+    {
+      "url": "https://www.nice.org.uk/guidance/ng193/chapter/Recommendations",
+      "title": "Recommendations | Chronic pain (primary and secondary) in over 16s: assessment of all chronic pain and management of chronic primary pain | Guidance | NICE",
+      "bytes": 16004
+    },
+    {
+      "url": "https://www.nice.org.uk/guidance/ng59/chapter/Recommendations",
+      "title": "Recommendations | Low back pain and sciatica in over 16s: assessment and management | Guidance | NICE",
+      "bytes": 11463
+    },
+    {
+      "url": "https://www.nice.org.uk/guidance/ng226/chapter/Recommendations",
+      "title": "Recommendations | Osteoarthritis in over 16s: diagnosis and management  | Guidance | NICE",
+      "bytes": 16026
+    },
+    {
+      "url": "https://www.nice.org.uk/guidance/ng236/chapter/Recommendations",
+      "title": "Recommendations | Stroke rehabilitation in adults | Guidance | NICE",
+      "bytes": 54513
+    },
+    {
+      "url": "https://www.nice.org.uk/guidance/ng249/chapter/Recommendations",
+      "title": "Recommendations | Falls: assessment and prevention in older people and in people 50 and over at higher risk | Guidance | NICE",
+      "bytes": 22043
+    },
+    {
+      "url": "https://www.who.int/standards/classifications/international-classification-of-functioning-disability-and-health",
+      "title": "International Classification of Functioning, Disability and Health (ICF)",
+      "bytes": 2155
+    },
+    {
+      "url": "https://www.who.int/news-room/fact-sheets/detail/patient-safety",
+      "title": "Patient safety",
+      "bytes": 14132
+    },
+    {
+      "url": "https://www.nice.org.uk/guidance/ng115/chapter/Recommendations",
+      "title": "Recommendations | Chronic obstructive pulmonary disease in over 16s: diagnosis and management  | Guidance | NICE",
+      "bytes": 96443
+    },
+    {
+      "url": "https://www.nice.org.uk/guidance/ng211/chapter/Recommendations",
+      "title": "Recommendations | Rehabilitation after traumatic injury   | Guidance | NICE",
+      "bytes": 115343
+    },
+    {
+      "url": "https://www.nice.org.uk/guidance/ng62/chapter/recommendations",
+      "title": "Recommendations | Cerebral palsy in under 25s: assessment and management | Guidance | NICE",
+      "bytes": 53444
+    },
+    {
+      "url": "https://www.who.int/news-room/fact-sheets/detail/physical-activity",
+      "title": "Physical activity",
+      "bytes": 10195
+    },
+    {
+      "url": "https://www.who.int/news-room/fact-sheets/detail/social-determinants-of-health",
+      "title": "Social determinants of health",
+      "bytes": 8413
+    },
+    {
+      "url": "https://training.cochrane.org/handbook/current/chapter-04",
+      "title": "Chapter 4: Searching for and selecting studies | Cochrane",
+      "bytes": 149163
+    },
+    {
+      "url": "https://www.prisma-statement.org/prisma-2020-statement",
+      "title": "PRISMA 2020 statement — PRISMA statement",
+      "bytes": 1713
+    },
+    {
+      "url": "https://www.who.int/news-room/fact-sheets/detail/infection-prevention-and-control",
+      "title": "Détail",
+      "bytes": 2326
+    },
+    {
+      "url": "https://www.who.int/teams/health-product-policy-and-standards/standards-and-specifications/health-promotion",
+      "title": "Health product and policy standards",
+      "bytes": 1688
+    },
+    {
+      "url": "https://www.nice.org.uk/guidance/ng5/chapter/Recommendations",
+      "title": "Recommendations | Medicines optimisation: the safe and effective use of medicines to enable the best possible outcomes  | Guidance | NICE",
+      "bytes": 15894
+    },
+    {
+      "url": "https://openstax.org/books/pharmacology/pages/2-2-pharmacokinetics-and-pharmacodynamics",
+      "title": "2.2 Pharmacokinetics and Pharmacodynamics - Pharmacology for Nurses | OpenStax",
+      "bytes": 31343
+    },
+    {
+      "url": "https://openstax.org/books/introductory-statistics-2e/pages/9-1-null-and-alternative-hypotheses",
+      "title": "9.1 Null and Alternative Hypotheses - Introductory Statistics 2e | OpenStax",
+      "bytes": 4059
+    },
+    {
+      "url": "https://openstax.org/books/introductory-statistics-2e/pages/9-5-additional-information-and-full-hypothesis-test-examples",
+      "title": "9.5 Additional Information and Full Hypothesis Test Examples - Introductory Statistics 2e | OpenStax",
+      "bytes": 32016
+    },
+    {
+      "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2002-22188",
+      "title": "BOE-A-2002-22188 Ley 41/2002, de 14 de noviembre, básica reguladora de la autonomía del paciente y de derechos y obligaciones en materia de información y documentación clínica.",
+      "bytes": 43384
+    },
+    {
+      "url": "https://pubmed.ncbi.nlm.nih.gov/help/",
+      "title": "Help - PubMed",
+      "bytes": 181965
+    },
+    {
+      "url": "https://www.cancer.gov/about-cancer/understanding/what-is-cancer",
+      "title": "What Is Cancer?",
+      "bytes": 14254
+    },
+    {
+      "url": "https://www.nhlbi.nih.gov/health/copd",
+      "title": "What Is COPD?",
+      "bytes": 4457
+    },
+    {
+      "url": "https://www.nhlbi.nih.gov/health/heart-failure",
+      "title": "What Is Heart Failure?",
+      "bytes": 2075
+    },
+    {
+      "url": "https://www.ihi.org/library/model-for-improvement",
+      "title": "Model for Improvement",
+      "bytes": 3197
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/10-4-nervous-system-control-of-muscle-tension",
+      "title": "10.4 Nervous System Control of Muscle Tension  - Anatomy and Physiology 2e | OpenStax",
+      "bytes": 15079
+    },
+    {
+      "url": "https://www.cdc.gov/physical-activity-basics/measuring/index.html",
+      "title": "How to Measure Physical Activity Intensity",
+      "bytes": 3344
+    },
+    {
+      "url": "https://www.who.int/news-room/fact-sheets/detail/ageing-and-health",
+      "title": "Ageing and health",
+      "bytes": 7249
+    },
+    {
+      "url": "https://www.nice.org.uk/guidance/ng71/chapter/Recommendations",
+      "title": "Recommendations | Parkinson’s disease in adults | Guidance | NICE",
+      "bytes": 26034
+    },
+    {
+      "url": "https://www.nice.org.uk/guidance/ng220/chapter/Recommendations",
+      "title": "Recommendations | Multiple sclerosis in adults: management  | Guidance | NICE",
+      "bytes": 42622
+    },
+    {
+      "url": "https://archive.cdc.gov/www_cdc_gov/csels/dsepd/ss1978/lesson3/section2.html",
+      "title": "Principles of Epidemiology | Lesson 3 - Section 2",
+      "bytes": 20853
+    },
+    {
+      "url": "https://www.cdc.gov/steadi/media/pdfs/STEADI-Assessment-TUG-508.pdf",
+      "title": "Assessment Timed Up & Go (TUG)",
+      "bytes": 1471
+    },
+    {
+      "url": "https://www.who.int/publications/m/item/five-moments-for-hand-hygiene",
+      "title": "Five moments for hand hygiene",
+      "bytes": 221
+    },
+    {
+      "url": "https://www.cosmin.nl/tools/guideline-conducting-systematic-review-outcome-measures/",
+      "title": "Guideline for Systematic Reviews of Outcome Measurement Instruments • COSMIN",
+      "bytes": 4729
+    },
+    {
+      "url": "https://openstax.org/books/anatomy-and-physiology-2e/pages/6-5-fractures-bone-repair",
+      "title": "6.5 Fractures: Bone Repair  - Anatomy and Physiology 2e | OpenStax",
+      "bytes": 4012
+    },
+    {
+      "url": "https://www.nice.org.uk/guidance/ng71/chapter/Recommendations",
+      "title": "Recommendations | Parkinson’s disease in adults | Guidance | NICE",
+      "bytes": 26034
+    },
+    {
+      "url": "https://www.who.int/campaigns/world-hand-hygiene-day/2025",
+      "title": "World Hand Hygiene Day 2025",
+      "bytes": 2755
+    },
+    {
+      "url": "https://www.who.int/campaigns/world-hand-hygiene-day/2025/frequently-asked-questions",
+      "title": "Frequently asked questions",
+      "bytes": 10069
+    },
+    {
+      "url": "https://www.who.int/news/item/05-05-2025-gloves-do-not-replace-hand-hygiene---reminder-from-who",
+      "title": "Gloves do not replace hand hygiene – reminder from WHO",
+      "bytes": 3306
+    }
+  ],
+  "excluded": "Erreur 404, page vide ou protection de navigateur exclues des références publiées. Traduction espagnole de Project Development signalée dépassée : original anglais consulté."
+}
