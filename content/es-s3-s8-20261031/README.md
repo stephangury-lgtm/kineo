@@ -107,7 +107,7 @@ Ces options restent à développer selon celles retenues. Elles ne sont ni compt
 
 ## Traçabilité
 
-- audit-initial.json : instantané du catalogue et anciennes valeurs des unités avant le lot.
+- audit-initial.json : volumes et empreintes du catalogue, anciennes valeurs des 26 unités avant le lot.
 - bundle.json : nouvelles lignes et modifications ciblées des 26 unités.
 - source-audit.json : consultations et sources.
 - publish.sql : publication transactionnelle protégée par empreintes et contrôle des anciens noms.
