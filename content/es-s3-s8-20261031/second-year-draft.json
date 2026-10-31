@@ -1,0 +1,1694 @@
+[
+  {
+    "key": "UVIC12140_ES2",
+    "title": "Datos, incertidumbre y búsqueda reproducible",
+    "aim": "Interpretar medidas descriptivas y decisiones estadísticas sin confundir significación con importancia clínica.",
+    "concepts": "### Objetivos\n\nInterpretar medidas descriptivas y decisiones estadísticas sin confundir significación con importancia clínica.\n\n### Describir antes de contrastar\n\nLa media suma valores y divide por su número; la mediana ocupa la posición central de una serie ordenada. Un valor extremo puede desplazar mucho la media. La dispersión informa de variabilidad: dos grupos con la misma media pueden diferir en distribución. Define variable, unidad y población antes de calcular.\n\n### Inferir y buscar\n\nUn contraste compara datos con una hipótesis bajo supuestos. No rechazar H0 no demuestra igualdad; un p pequeño tampoco mide tamaño del beneficio clínico. Una búsqueda reproducible registra base, fecha, términos y filtros. OR reúne sinónimos y AND combina conceptos; guardar referencias no sustituye leer y evaluar los estudios.\n\n### Puntos que debes poder justificar\n\n- Mediana es posición central; media promedia valores y las otras describen dispersión.\n- La sensibilidad de la media no justifica borrar datos sin criterio.\n- La decisión depende de datos, potencia y supuestos; no prueba igualdad.\n- OR amplía alternativas del mismo concepto; AND cruza conceptos.\n\nMaterial original complementario al plan UVic 2026–2027. Ejemplos y cifras didácticos, no datos de pacientes ni resultados de estudios reales. No son preguntas oficiales. La práctica clínica exige supervisión y protocolos del centro.",
+    "workshop": "### Taller de aplicación\n\n### Ejemplo resuelto\n\nDatos ficticios 2, 3, 4, 5 y 21: suma 35, media 7 y mediana 4. El 21 desplaza la media. La diferencia no autoriza eliminar el valor sin una regla justificada. Identifica si es error, dato válido o situación que requiere análisis de sensibilidad.\n\n### Interpretación\n\nCon alfa prefijado 0,05, p=0,03 permite rechazar H0 en ese contraste, con sus supuestos. No prueba un efecto grande ni que toda persona mejore. Para una búsqueda sobre ejercicio y artrosis, agrupa sinónimos de cada concepto antes de unir grupos con AND. Documenta resultados y selección.\n\n### Método de revisión\n\nResponde sin consultar la ficha. Anota el dato utilizado, la inferencia y su límite. En cada error distingue concepto, lectura o cálculo. Explica por qué una alternativa no encaja y vuelve a practicar en otra sesión. Completar un cuestionario no demuestra competencia práctica.\n\nMaterial original complementario al plan UVic 2026–2027. Ejemplos y cifras didácticos, no datos de pacientes ni resultados de estudios reales. No son preguntas oficiales. La práctica clínica exige supervisión y protocolos del centro.",
+    "urls": [
+      "https://www.uvic.cat/es/assignatura/4408",
+      "https://openstax.org/books/introductory-statistics-2e/pages/2-5-measures-of-the-center-of-the-data",
+      "https://openstax.org/books/introductory-statistics-2e/pages/9-5-additional-information-and-full-hypothesis-test-examples",
+      "https://pubmed.ncbi.nlm.nih.gov/help/"
+    ],
+    "questions": [
+      {
+        "question_text": "¿Qué medida ocupa el centro de una serie ordenada?",
+        "answer": "Mediana",
+        "distractors": [
+          "Media siempre",
+          "Rango",
+          "Desviación estándar"
+        ],
+        "explanation": "Mediana es posición central; media promedia valores y las otras describen dispersión.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué puede ocurrir con un valor extremo válido?",
+        "answer": "Desplazar mucho la media",
+        "distractors": [
+          "Hacer imposible toda mediana",
+          "Obligar a eliminarlo",
+          "Demostrar causalidad"
+        ],
+        "explanation": "La sensibilidad de la media no justifica borrar datos sin criterio.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué significa no rechazar H0?",
+        "answer": "Evidencia insuficiente para rechazarla en ese análisis",
+        "distractors": [
+          "Igualdad demostrada",
+          "Efecto clínico nulo demostrado",
+          "Muestra perfecta"
+        ],
+        "explanation": "La decisión depende de datos, potencia y supuestos; no prueba igualdad.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué operador agrupa sinónimos en una búsqueda?",
+        "answer": "OR",
+        "distractors": [
+          "AND exclusivamente",
+          "NOT para incluir ambos",
+          "Un porcentaje"
+        ],
+        "explanation": "OR amplía alternativas del mismo concepto; AND cruza conceptos.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Caso: 2,3,4,5,21. ¿Cuál es la media?",
+        "answer": "7",
+        "distractors": [
+          "4",
+          "21",
+          "5"
+        ],
+        "explanation": "La suma es 35 y n=5: 35/5=7; 4 es la mediana.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: p=0,03 y alfa=0,05 prefijado. ¿Qué decisión corresponde?",
+        "answer": "Rechazar H0 bajo supuestos",
+        "distractors": [
+          "Probar eficacia grande",
+          "Aceptar H0 como verdadera",
+          "Garantizar beneficio individual"
+        ],
+        "explanation": "p es menor que alfa; no cuantifica importancia clínica.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: dos grupos tienen media 10. ¿Qué falta para compararlos?",
+        "answer": "Variabilidad y contexto",
+        "distractors": [
+          "Solo afirmar identidad",
+          "Solo el título",
+          "Solo ordenar autores"
+        ],
+        "explanation": "La misma media puede ocultar distribuciones muy distintas.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: se quiere repetir una búsqueda publicada. ¿Qué registro ayuda?",
+        "answer": "Base, fecha, términos y filtros",
+        "distractors": [
+          "Solo número final",
+          "Solo conclusión",
+          "Solo nombre del estudiante"
+        ],
+        "explanation": "La trazabilidad permite reconstruir la estrategia.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Calcula la mediana de 1,3,8. Escribe solo el número.",
+        "accepted_answers": [
+          "3"
+        ],
+        "explanation": "El valor central ordenado es 3.",
+        "question_type": "fill_blank",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Para combinar dos conceptos distintos en una búsqueda suele usarse ___.",
+        "accepted_answers": [
+          "AND"
+        ],
+        "explanation": "AND exige coincidencia de ambos conceptos.",
+        "question_type": "fill_blank",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Relaciona medida y descripción.",
+        "pairs": [
+          {
+            "left": "Media",
+            "right": "Suma dividida por número"
+          },
+          {
+            "left": "Mediana",
+            "right": "Centro de serie ordenada"
+          },
+          {
+            "left": "Rango",
+            "right": "Máximo menos mínimo"
+          }
+        ],
+        "explanation": "Cada medida resume un aspecto diferente.",
+        "question_type": "matching",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Relaciona búsqueda y acción.",
+        "pairs": [
+          {
+            "left": "OR",
+            "right": "Reunir sinónimos"
+          },
+          {
+            "left": "AND",
+            "right": "Cruzar conceptos"
+          },
+          {
+            "left": "Fecha de búsqueda",
+            "right": "Documentar cuándo se consultó"
+          }
+        ],
+        "explanation": "La estrategia debe ser reconstruible.",
+        "question_type": "matching",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "key": "UVIC12139_ES2",
+    "title": "Mecanismos de enfermedad y repercusión funcional",
+    "aim": "Relacionar inflamación, neoplasia y alteraciones cardiorrespiratorias con funciones, sin diagnosticar por un síntoma aislado.",
+    "concepts": "### Objetivos\n\nRelacionar inflamación, neoplasia y alteraciones cardiorrespiratorias con funciones, sin diagnosticar por un síntoma aislado.\n\n### Lesión y respuesta\n\nInflamación es una respuesta a lesión y no equivale siempre a infección. El cáncer implica crecimiento celular descontrolado; metástasis es diseminación a lugares distantes. No todo tumor es maligno. Un diagnóstico patológico describe enfermedad, mientras que la valoración funcional describe cómo afecta a la persona.\n\n### Respiración y circulación\n\nEn EPOC hay daño de vías o tejido pulmonar y limitación del flujo aéreo. La insuficiencia cardíaca implica bombeo o llenado insuficiente para necesidades, no que el corazón esté parado. Disnea y fatiga pueden aparecer por causas distintas: hay que integrar historia, exploración y pruebas indicadas.\n\n### Puntos que debes poder justificar\n\n- La respuesta inflamatoria puede tener causas infecciosas o no infecciosas.\n- Metástasis no es sinónimo de cualquier masa o inflamación.\n- El mecanismo afecta vías o tejido pulmonar y dificulta respirar.\n- No es sinónimo de parada cardíaca.\n\nMaterial original complementario al plan UVic 2026–2027. Ejemplos y cifras didácticos, no datos de pacientes ni resultados de estudios reales. No son preguntas oficiales. La práctica clínica exige supervisión y protocolos del centro.",
+    "workshop": "### Taller de aplicación\n\n### Caso resuelto\n\nUna nota dice insuficiencia cardíaca y menor tolerancia al caminar. No significa parada cardíaca. Se distingue mecanismo circulatorio, síntomas y tarea limitada; la planificación depende del estado y de indicaciones del equipo, no del nombre aislado.\n\n### Comparación\n\nUn tejido inflamado no demuestra infección; una masa tampoco demuestra metástasis. Pregunta qué dato está confirmado y cuál necesita estudio. En rehabilitación se valoran riesgos, restricciones, evolución y objetivos funcionales. No se deduce un tratamiento individual de estas definiciones.\n\n### Método de revisión\n\nResponde sin consultar la ficha. Anota el dato utilizado, la inferencia y su límite. En cada error distingue concepto, lectura o cálculo. Explica por qué una alternativa no encaja y vuelve a practicar en otra sesión. Completar un cuestionario no demuestra competencia práctica.\n\nMaterial original complementario al plan UVic 2026–2027. Ejemplos y cifras didácticos, no datos de pacientes ni resultados de estudios reales. No son preguntas oficiales. La práctica clínica exige supervisión y protocolos del centro.",
+    "urls": [
+      "https://www.uvic.cat/es/assignatura/4407",
+      "https://www.nhlbi.nih.gov/health/copd",
+      "https://www.nhlbi.nih.gov/health/heart-failure",
+      "https://www.cancer.gov/about-cancer/understanding/what-is-cancer"
+    ],
+    "questions": [
+      {
+        "question_text": "¿Qué diferencia inflamación de infección?",
+        "answer": "No toda inflamación implica infección",
+        "distractors": [
+          "Son siempre sinónimos",
+          "Toda inflamación es bacteriana",
+          "La infección nunca inflama"
+        ],
+        "explanation": "La respuesta inflamatoria puede tener causas infecciosas o no infecciosas.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué describe metástasis?",
+        "answer": "Diseminación tumoral a lugares distantes",
+        "distractors": [
+          "Toda masa benigna",
+          "Solo inflamación local",
+          "Reparación muscular"
+        ],
+        "explanation": "Metástasis no es sinónimo de cualquier masa o inflamación.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué caracteriza EPOC?",
+        "answer": "Limitación del flujo aéreo por daño pulmonar",
+        "distractors": [
+          "Parada cardíaca por definición",
+          "Una fractura costal obligatoria",
+          "Ausencia de síntomas respiratorios"
+        ],
+        "explanation": "El mecanismo afecta vías o tejido pulmonar y dificulta respirar.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué significa insuficiencia cardíaca?",
+        "answer": "Problema de llenado o bombeo adecuado",
+        "distractors": [
+          "Corazón necesariamente detenido",
+          "Solo lesión de una válvula",
+          "Ausencia de necesidad de atención"
+        ],
+        "explanation": "No es sinónimo de parada cardíaca.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Caso: una persona presenta disnea. ¿Qué conclusión aislada es válida?",
+        "answer": "Requiere contexto para identificar causa",
+        "distractors": [
+          "Demuestra EPOC",
+          "Demuestra tumor",
+          "Excluye causa cardíaca"
+        ],
+        "explanation": "Disnea es un síntoma compartido por varios procesos.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: se identifica un tumor. ¿Qué dato no debe suponerse?",
+        "answer": "Que todo tumor sea maligno",
+        "distractors": [
+          "Que existe una masa",
+          "Que necesita caracterización",
+          "Que su naturaleza importa"
+        ],
+        "explanation": "La caracterización distingue tumores benignos y malignos.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: el diagnóstico limita caminar. ¿Qué describe caminar?",
+        "answer": "Actividad afectada",
+        "distractors": [
+          "Tipo histológico",
+          "Marcador tumoral",
+          "Antígeno"
+        ],
+        "explanation": "La actividad ayuda a conectar enfermedad y funcionamiento.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: cambia el estado clínico durante rehabilitación. ¿Qué corresponde?",
+        "answer": "Reevaluar seguridad y plan",
+        "distractors": [
+          "Mantenerlo por diagnóstico inicial",
+          "Ignorar evolución",
+          "Aumentar siempre intensidad"
+        ],
+        "explanation": "El nombre de la enfermedad no sustituye seguimiento.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "La diseminación de células cancerosas a un lugar distante se llama ___.",
+        "accepted_answers": [
+          "metástasis",
+          "metastasis"
+        ],
+        "explanation": "La diseminación distante se distingue del crecimiento local.",
+        "question_type": "fill_blank",
+        "difficulty": 2
+      },
+      {
+        "question_text": "La insuficiencia cardíaca no equivale por definición a una ___ cardíaca.",
+        "accepted_answers": [
+          "parada"
+        ],
+        "explanation": "Puede existir actividad cardíaca con bombeo o llenado inadecuados.",
+        "question_type": "fill_blank",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Relaciona concepto y significado.",
+        "pairs": [
+          {
+            "left": "Inflamación",
+            "right": "Respuesta a lesión"
+          },
+          {
+            "left": "Metástasis",
+            "right": "Diseminación distante"
+          },
+          {
+            "left": "EPOC",
+            "right": "Limitación del flujo aéreo"
+          }
+        ],
+        "explanation": "Los conceptos describen mecanismos distintos.",
+        "question_type": "matching",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Relaciona nivel de información y ejemplo.",
+        "pairs": [
+          {
+            "left": "Síntoma",
+            "right": "Disnea referida"
+          },
+          {
+            "left": "Enfermedad",
+            "right": "Diagnóstico de EPOC"
+          },
+          {
+            "left": "Actividad",
+            "right": "Caminar hasta una tienda"
+          }
+        ],
+        "explanation": "Síntoma, enfermedad y actividad no son intercambiables.",
+        "question_type": "matching",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "key": "UVIC12148_ES2",
+    "title": "Movimiento, carga y elección de procedimientos",
+    "aim": "Distinguir actividad muscular, movimiento asistido y objetivos de una intervención musculoesquelética.",
+    "concepts": "### Objetivos\n\nDistinguir actividad muscular, movimiento asistido y objetivos de una intervención musculoesquelética.\n\n### Cinesiterapia\n\nMovimiento activo implica participación muscular; asistido añade ayuda; pasivo se produce mediante fuerza externa. La elección depende de valoración, objetivo, restricciones y respuesta. Ninguna categoría es superior para todos los problemas. La contracción isométrica puede producir tensión sin cambio apreciable de longitud global.\n\n### Procedimientos y límites\n\nEstiramiento, masaje y agentes físicos tienen propósitos diferentes. Antes de aplicar se revisan sensibilidad, estado de tejidos, precauciones y consentimiento. Una respuesta inmediata no demuestra eficacia duradera ni corrección anatómica. La técnica y sus parámetros requieren aprendizaje supervisado y protocolos específicos.\n\n### Puntos que debes poder justificar\n\n- La ayuda complementa la participación de la persona.\n- La tensión no exige siempre movimiento visible.\n- La indicación se individualiza y se revisa.\n- La evolución necesita seguimiento y contexto.\n\nMaterial original complementario al plan UVic 2026–2027. Ejemplos y cifras didácticos, no datos de pacientes ni resultados de estudios reales. No son preguntas oficiales. La práctica clínica exige supervisión y protocolos del centro.",
+    "workshop": "### Taller de aplicación\n\n### Ejemplo\n\nSi una persona inicia el movimiento y recibe ayuda para completarlo, se describe como activo asistido. No se clasifica como totalmente pasivo por la mera presencia de ayuda. Registra amplitud, asistencia y síntomas para comparar.\n\n### Revisión de decisiones\n\nSi aparece una respuesta no esperada durante una técnica, se revisa seguridad y pertinencia. No se aumenta automáticamente intensidad. Se relaciona el procedimiento con un objetivo funcional y se reevalúa, integrando educación y participación.\n\n### Método de revisión\n\nResponde sin consultar la ficha. Anota el dato utilizado, la inferencia y su límite. En cada error distingue concepto, lectura o cálculo. Explica por qué una alternativa no encaja y vuelve a practicar en otra sesión. Completar un cuestionario no demuestra competencia práctica.\n\nMaterial original complementario al plan UVic 2026–2027. Ejemplos y cifras didácticos, no datos de pacientes ni resultados de estudios reales. No son preguntas oficiales. La práctica clínica exige supervisión y protocolos del centro.",
+    "urls": [
+      "https://www.uvic.cat/es/assignatura/4416",
+      "https://openstax.org/books/anatomy-and-physiology-2e/pages/10-4-nervous-system-control-of-muscle-tension",
+      "https://www.nice.org.uk/guidance/ng211/chapter/Recommendations"
+    ],
+    "questions": [
+      {
+        "question_text": "¿Qué caracteriza movimiento activo asistido?",
+        "answer": "Participación muscular con ayuda",
+        "distractors": [
+          "Ausencia total de participación",
+          "Solo contracción sin movimiento",
+          "Solo medición angular"
+        ],
+        "explanation": "La ayuda complementa la participación de la persona.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Puede una contracción generar tensión sin acortamiento global apreciable?",
+        "answer": "Sí, en una isométrica",
+        "distractors": [
+          "No, nunca",
+          "Solo si no hay activación",
+          "Solo en tendones"
+        ],
+        "explanation": "La tensión no exige siempre movimiento visible.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué orienta la elección de procedimiento?",
+        "answer": "Objetivo, valoración y restricciones",
+        "distractors": [
+          "Solo disponibilidad del aparato",
+          "Solo costumbre",
+          "Solo nombre del diagnóstico"
+        ],
+        "explanation": "La indicación se individualiza y se revisa.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué no demuestra un cambio inmediato?",
+        "answer": "Beneficio duradero por sí solo",
+        "distractors": [
+          "Que hubo una respuesta",
+          "Que se midió algo",
+          "Que conviene registrar"
+        ],
+        "explanation": "La evolución necesita seguimiento y contexto.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Caso: inicia una elevación y se le ayuda al final. ¿Cómo describirla?",
+        "answer": "Activa asistida",
+        "distractors": [
+          "Puramente pasiva",
+          "Isométrica necesariamente",
+          "Sin actividad"
+        ],
+        "explanation": "Hay participación y asistencia.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: cambia amplitud tras aplicar masaje. ¿Qué falta?",
+        "answer": "Valorar función y mantenimiento",
+        "distractors": [
+          "Afirmar curación",
+          "Eliminar seguimiento",
+          "Confirmar causa única"
+        ],
+        "explanation": "Un resultado inmediato no agota la evaluación.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: sensibilidad alterada antes de usar un agente físico. ¿Qué procede?",
+        "answer": "Revisar precauciones y supervisión",
+        "distractors": [
+          "Usar parámetros universales",
+          "Ignorar el hallazgo",
+          "Aumentar energía"
+        ],
+        "explanation": "La alteración puede cambiar riesgos y elección.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: una técnica provoca respuesta inesperada. ¿Qué enfoque es adecuado?",
+        "answer": "Detener y reevaluar según contexto",
+        "distractors": [
+          "Aumentar siempre intensidad",
+          "Completar por rutina",
+          "Omitir registro"
+        ],
+        "explanation": "La seguridad y la interpretación guían el ajuste.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "El movimiento producido solo por fuerza externa se denomina ___.",
+        "accepted_answers": [
+          "pasivo"
+        ],
+        "explanation": "La participación muscular distingue categorías de movimiento.",
+        "question_type": "fill_blank",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Una contracción sin cambio global de longitud apreciable es ___.",
+        "accepted_answers": [
+          "isométrica",
+          "isometrica"
+        ],
+        "explanation": "Isométrica describe la relación entre tensión y longitud global.",
+        "question_type": "fill_blank",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Relaciona modalidad y rasgo.",
+        "pairs": [
+          {
+            "left": "Activa",
+            "right": "Participación muscular"
+          },
+          {
+            "left": "Activa asistida",
+            "right": "Participación con ayuda"
+          },
+          {
+            "left": "Pasiva",
+            "right": "Fuerza externa produce movimiento"
+          }
+        ],
+        "explanation": "Las categorías no sustituyen indicaciones individuales.",
+        "question_type": "matching",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Relaciona decisión y dato.",
+        "pairs": [
+          {
+            "left": "Elegir intervención",
+            "right": "Objetivo funcional"
+          },
+          {
+            "left": "Vigilar seguridad",
+            "right": "Precauciones y respuesta"
+          },
+          {
+            "left": "Reevaluar",
+            "right": "Comparación con referencia"
+          }
+        ],
+        "explanation": "Cada decisión necesita información pertinente.",
+        "question_type": "matching",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "key": "UVIC12147_ES2",
+    "title": "Medir función y razonar con instrumentos",
+    "aim": "Estandarizar medidas y distinguir prueba, puntuación e interpretación clínica.",
+    "concepts": "### Objetivos\n\nEstandarizar medidas y distinguir prueba, puntuación e interpretación clínica.\n\n### Medición\n\nUna medida necesita procedimiento, unidad y condiciones. La goniometría expresa ángulos y no fuerza; un test muscular y una prueba funcional no son equivalentes. La fiabilidad se refiere a consistencia; la validez, a medir el constructo pretendido. No se interpreta una puntuación sin conocer población y finalidad.\n\n### CIF e integración\n\nCombina funciones, actividad, participación y entorno. TUG incluye levantarse, caminar, girar y volver a sentarse; además del tiempo importa cómo se ejecuta. Una escala o prueba especial no establece por sí sola toda la causa del problema. Los puntos de corte dependen de instrumento y población.\n\n### Puntos que debes poder justificar\n\n- La medida angular no equivale a esos otros dominios.\n- Un instrumento consistente no es automáticamente válido para todo uso.\n- El significado depende de cómo y para quién se validó.\n- La clasificación estructura información complementaria.\n\nMaterial original complementario al plan UVic 2026–2027. Ejemplos y cifras didácticos, no datos de pacientes ni resultados de estudios reales. No son preguntas oficiales. La práctica clínica exige supervisión y protocolos del centro.",
+    "workshop": "### Taller de aplicación\n\n### Comparación\n\nUn tiempo cambia entre sesiones, pero también cambia ayuda técnica. Antes de atribuir mejora real, revisa condiciones. Puede haber progreso, pero la comparación no es equivalente si cambió procedimiento.\n\n### Caso funcional\n\nUna persona mejora fuerza aislada y sigue evitando salir por barreras del entorno. El resultado corporal no asegura mejor participación. El diagnóstico funcional integra la información y selecciona medidas relacionadas con la meta.\n\n### Método de revisión\n\nResponde sin consultar la ficha. Anota el dato utilizado, la inferencia y su límite. En cada error distingue concepto, lectura o cálculo. Explica por qué una alternativa no encaja y vuelve a practicar en otra sesión. Completar un cuestionario no demuestra competencia práctica.\n\nMaterial original complementario al plan UVic 2026–2027. Ejemplos y cifras didácticos, no datos de pacientes ni resultados de estudios reales. No son preguntas oficiales. La práctica clínica exige supervisión y protocolos del centro.",
+    "urls": [
+      "https://www.uvic.cat/es/assignatura/4415",
+      "https://www.who.int/standards/classifications/international-classification-of-functioning-disability-and-health",
+      "https://www.nice.org.uk/guidance/ng211/chapter/Recommendations",
+      "https://www.cdc.gov/steadi/media/pdfs/STEADI-Assessment-TUG-508.pdf"
+    ],
+    "questions": [
+      {
+        "question_text": "¿Qué mide directamente goniometría?",
+        "answer": "Ángulo",
+        "distractors": [
+          "Fuerza",
+          "Participación social",
+          "Diagnóstico tisular"
+        ],
+        "explanation": "La medida angular no equivale a esos otros dominios.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué significa fiabilidad?",
+        "answer": "Consistencia de una medida",
+        "distractors": [
+          "Validez garantizada",
+          "Ausencia de error universal",
+          "Efecto terapéutico"
+        ],
+        "explanation": "Un instrumento consistente no es automáticamente válido para todo uso.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué debe conocerse antes de interpretar una puntuación?",
+        "answer": "Instrumento, finalidad y población",
+        "distractors": [
+          "Solo valor numérico",
+          "Solo nombre del paciente",
+          "Solo tamaño de pantalla"
+        ],
+        "explanation": "El significado depende de cómo y para quién se validó.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué aporta CIF a valoración?",
+        "answer": "Organizar dimensiones de funcionamiento",
+        "distractors": [
+          "Sustituir toda exploración",
+          "Diagnosticar una lesión única",
+          "Eliminar el entorno"
+        ],
+        "explanation": "La clasificación estructura información complementaria.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Caso: se cambia ayuda técnica entre dos mediciones. ¿Qué revisar?",
+        "answer": "Comparabilidad del procedimiento",
+        "distractors": [
+          "Solo redondeo",
+          "Declarar igualdad de condiciones",
+          "Eliminar el dato inicial"
+        ],
+        "explanation": "Las condiciones pueden explicar parte del cambio.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: más fuerza pero mismo aislamiento por escaleras. ¿Qué falta valorar?",
+        "answer": "Entorno y participación",
+        "distractors": [
+          "Solo repetir fuerza",
+          "Solo nombre muscular",
+          "Solo edad"
+        ],
+        "explanation": "Mejorar una función no asegura participación.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: test especial positivo aislado. ¿Qué conclusión es prudente?",
+        "answer": "Integrarlo con el resto de datos",
+        "distractors": [
+          "Lesión confirmada siempre",
+          "Tratamiento universal",
+          "Excluir toda alternativa"
+        ],
+        "explanation": "Una prueba aislada tiene límites diagnósticos.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: se registra TUG solo como rápido. ¿Qué mejora el registro?",
+        "answer": "Tiempo, condiciones y ejecución",
+        "distractors": [
+          "Solo adjetivo más intenso",
+          "Solo marca de silla",
+          "Solo iniciales del evaluador"
+        ],
+        "explanation": "La estandarización mejora interpretación.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "La consistencia de una medición se denomina ___.",
+        "accepted_answers": [
+          "fiabilidad",
+          "confiabilidad"
+        ],
+        "explanation": "La validez responde a una pregunta diferente.",
+        "question_type": "fill_blank",
+        "difficulty": 2
+      },
+      {
+        "question_text": "La goniometría expresa una amplitud mediante un ___.",
+        "accepted_answers": [
+          "ángulo",
+          "angulo"
+        ],
+        "explanation": "Ángulo y fuerza son magnitudes distintas.",
+        "question_type": "fill_blank",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Relaciona medida y dominio.",
+        "pairs": [
+          {
+            "left": "Goniometría",
+            "right": "Amplitud angular"
+          },
+          {
+            "left": "Test muscular",
+            "right": "Función muscular"
+          },
+          {
+            "left": "Tarea de marcha",
+            "right": "Actividad funcional"
+          }
+        ],
+        "explanation": "Las medidas no son intercambiables.",
+        "question_type": "matching",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Relaciona registro y utilidad.",
+        "pairs": [
+          {
+            "left": "Unidad",
+            "right": "Interpretar magnitud"
+          },
+          {
+            "left": "Condiciones",
+            "right": "Comparar sesiones"
+          },
+          {
+            "left": "Objetivo",
+            "right": "Elegir resultado pertinente"
+          }
+        ],
+        "explanation": "El contexto convierte una cifra en información útil.",
+        "question_type": "matching",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "key": "UVIC12143_ES2",
+    "title": "Autonomía, confidencialidad y deliberación",
+    "aim": "Distinguir consentimiento como proceso, protección de información y análisis de un conflicto ético.",
+    "concepts": "### Objetivos\n\nDistinguir consentimiento como proceso, protección de información y análisis de un conflicto ético.\n\n### Información y decisión\n\nLa Ley 41/2002 reconoce información y autonomía. Consentir requiere información adecuada y decisión libre; la firma no demuestra comprensión. No se afirma que toda actuación necesite la misma forma escrita: hay supuestos legales específicos. Capacidad, apoyos y excepciones exigen valoración y marco normativo.\n\n### Confidencialidad\n\nLos datos de salud tienen protección. Compartir con el equipo no significa difusión ilimitada: finalidad, autorización y acceso permitido importan. Un caso docente debe minimizar datos identificables. Ética y derecho se relacionan, pero una pregunta ética no se resuelve siempre solo citando una norma.\n\n### Puntos que debes poder justificar\n\n- La documentación acompaña un proceso, no lo sustituye.\n- El acceso a datos clínicos exige base y finalidad.\n- Se analizan varios elementos del conflicto.\n- Las obligaciones legales no agotan el análisis ético.\n\nMaterial original complementario al plan UVic 2026–2027. Ejemplos y cifras didácticos, no datos de pacientes ni resultados de estudios reales. No son preguntas oficiales. La práctica clínica exige supervisión y protocolos del centro.",
+    "workshop": "### Taller de aplicación\n\n### Caso resuelto\n\nLa persona firma y luego manifiesta no haber entendido. Se revisa explicación y comprensión antes de continuar, según situación y deberes. El formulario no reemplaza el proceso.\n\n### Deliberar\n\nAnte un conflicto, identifica hechos, personas afectadas, valores, opciones y consecuencias. Consulta supervisión o comité cuando proceda. Documenta razones sin atribuir incapacidad por desacuerdo. No se detallan aquí excepciones legales como recetas automáticas.\n\n### Método de revisión\n\nResponde sin consultar la ficha. Anota el dato utilizado, la inferencia y su límite. En cada error distingue concepto, lectura o cálculo. Explica por qué una alternativa no encaja y vuelve a practicar en otra sesión. Completar un cuestionario no demuestra competencia práctica.\n\nMaterial original complementario al plan UVic 2026–2027. Ejemplos y cifras didácticos, no datos de pacientes ni resultados de estudios reales. No son preguntas oficiales. La práctica clínica exige supervisión y protocolos del centro.",
+    "urls": [
+      "https://www.uvic.cat/es/assignatura/4411",
+      "https://www.boe.es/buscar/act.php?id=BOE-A-2002-22188",
+      "https://www.nice.org.uk/guidance/ng197/chapter/Recommendations"
+    ],
+    "questions": [
+      {
+        "question_text": "¿Qué caracteriza consentimiento informado?",
+        "answer": "Proceso de información y decisión libre",
+        "distractors": [
+          "Solo una firma",
+          "Obediencia sin preguntas",
+          "Una prueba muscular"
+        ],
+        "explanation": "La documentación acompaña un proceso, no lo sustituye.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué dato protege especialmente la confidencialidad?",
+        "answer": "Información de salud",
+        "distractors": [
+          "Solo horarios públicos",
+          "Solo nombres de asignaturas",
+          "Solo material sin datos"
+        ],
+        "explanation": "El acceso a datos clínicos exige base y finalidad.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué integra deliberación ética?",
+        "answer": "Hechos, valores, opciones y consecuencias",
+        "distractors": [
+          "Solo preferencia profesional",
+          "Solo rapidez",
+          "Solo un formulario"
+        ],
+        "explanation": "Se analizan varios elementos del conflicto.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué relación ética-derecho es correcta?",
+        "answer": "Se relacionan sin ser idénticos",
+        "distractors": [
+          "Son sinónimos perfectos",
+          "No tienen relación",
+          "Toda duda se resuelve por costumbre"
+        ],
+        "explanation": "Las obligaciones legales no agotan el análisis ético.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Caso: firma sin comprender. ¿Qué se revisa?",
+        "answer": "Información y comprensión",
+        "distractors": [
+          "Solo tinta",
+          "Solo archivo",
+          "Nada más"
+        ],
+        "explanation": "La firma no garantiza que el proceso sea adecuado.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: un compañero pide datos sin finalidad asistencial o base clara. ¿Qué hacer?",
+        "answer": "Verificar legitimidad antes de compartir",
+        "distractors": [
+          "Enviar todo",
+          "Publicar el caso",
+          "Suponer permiso universal"
+        ],
+        "explanation": "La pertenencia profesional no concede acceso ilimitado.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: se usa un caso en clase. ¿Qué es pertinente?",
+        "answer": "Minimizar identificación y respetar requisitos",
+        "distractors": [
+          "Añadir dirección real",
+          "Incluir todo por interés",
+          "Difundir imágenes sin revisión"
+        ],
+        "explanation": "La finalidad docente no elimina confidencialidad.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: una persona discrepa. ¿Qué no se deduce?",
+        "answer": "Incapacidad por el mero desacuerdo",
+        "distractors": [
+          "Que existe una preferencia",
+          "Que conviene dialogar",
+          "Que hay una decisión a revisar"
+        ],
+        "explanation": "Discrepar no demuestra incapacidad.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "La protección de la información clínica se relaciona con la ___.",
+        "accepted_answers": [
+          "confidencialidad"
+        ],
+        "explanation": "Se limita acceso y difusión según finalidad y marco aplicable.",
+        "question_type": "fill_blank",
+        "difficulty": 2
+      },
+      {
+        "question_text": "El consentimiento requiere una decisión libre y ___.",
+        "accepted_answers": [
+          "informada"
+        ],
+        "explanation": "La información adecuada precede a la decisión.",
+        "question_type": "fill_blank",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Relaciona concepto y foco.",
+        "pairs": [
+          {
+            "left": "Autonomía",
+            "right": "Decisión de la persona"
+          },
+          {
+            "left": "Confidencialidad",
+            "right": "Protección de información"
+          },
+          {
+            "left": "Deliberación",
+            "right": "Análisis de opciones y valores"
+          }
+        ],
+        "explanation": "Son dimensiones relacionadas.",
+        "question_type": "matching",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Relaciona acción y propósito.",
+        "pairs": [
+          {
+            "left": "Explicar",
+            "right": "Facilitar comprensión"
+          },
+          {
+            "left": "Documentar razones",
+            "right": "Dar trazabilidad"
+          },
+          {
+            "left": "Consultar comité",
+            "right": "Apoyar análisis complejo"
+          }
+        ],
+        "explanation": "Ninguna acción sustituye todo el proceso.",
+        "question_type": "matching",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "key": "UVIC12157_ES2",
+    "title": "Frecuencia de enfermedad y prevención",
+    "aim": "Calcular medidas simples y distinguir población, riesgo y nivel de prevención.",
+    "concepts": "### Objetivos\n\nCalcular medidas simples y distinguir población, riesgo y nivel de prevención.\n\n### Incidencia y prevalencia\n\nIncidencia se refiere a casos nuevos en una población y período definidos; la proporción de incidencia usa personas inicialmente en riesgo. Prevalencia considera casos existentes en la población definida en un momento o período. Son medidas diferentes: una prevalencia alta puede reflejar incidencia y duración.\n\n### Intervenir en población\n\nPrevención primaria busca evitar aparición; secundaria, detección temprana; terciaria, reducir consecuencias de enfermedad establecida. Promoción de salud también aborda condiciones y participación. Una asociación poblacional no demuestra por sí sola causalidad individual.\n\n### Puntos que debes poder justificar\n\n- La definición necesita población y tiempo.\n- No equivale a incidencia.\n- Los niveles se distinguen por momento y propósito.\n- Un indicador de proceso no demuestra resultado sanitario.\n\nMaterial original complementario al plan UVic 2026–2027. Ejemplos y cifras didácticos, no datos de pacientes ni resultados de estudios reales. No son preguntas oficiales. La práctica clínica exige supervisión y protocolos del centro.",
+    "workshop": "### Taller de aplicación\n\n### Cálculo resuelto\n\nEn una cohorte ficticia de 200 personas inicialmente en riesgo aparecen 10 casos nuevos: proporción de incidencia=10/200=5 % durante ese seguimiento. No se denomina tasa por persona-tiempo porque no se ha usado ese denominador.\n\n### Evaluar\n\nUn programa necesita población objetivo, medida inicial, acciones y resultados. Contar asistentes describe alcance, pero no prueba mejora de salud. Revisa desigualdades de acceso y calidad de la fuente de datos.\n\n### Método de revisión\n\nResponde sin consultar la ficha. Anota el dato utilizado, la inferencia y su límite. En cada error distingue concepto, lectura o cálculo. Explica por qué una alternativa no encaja y vuelve a practicar en otra sesión. Completar un cuestionario no demuestra competencia práctica.\n\nMaterial original complementario al plan UVic 2026–2027. Ejemplos y cifras didácticos, no datos de pacientes ni resultados de estudios reales. No son preguntas oficiales. La práctica clínica exige supervisión y protocolos del centro.",
+    "urls": [
+      "https://www.uvic.cat/es/assignatura/4425",
+      "https://archive.cdc.gov/www_cdc_gov/csels/dsepd/ss1978/lesson3/section2.html",
+      "https://www.who.int/news-room/fact-sheets/detail/social-determinants-of-health"
+    ],
+    "questions": [
+      {
+        "question_text": "¿Qué cuenta la incidencia?",
+        "answer": "Casos nuevos en período definido",
+        "distractors": [
+          "Solo casos existentes",
+          "Solo duración",
+          "Solo número de consultas"
+        ],
+        "explanation": "La definición necesita población y tiempo.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué considera prevalencia?",
+        "answer": "Casos existentes en población definida",
+        "distractors": [
+          "Solo casos recién diagnosticados",
+          "Solo personas-tiempo",
+          "Solo mortalidad"
+        ],
+        "explanation": "No equivale a incidencia.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué busca prevención secundaria?",
+        "answer": "Detección temprana",
+        "distractors": [
+          "Evitar siempre toda exposición",
+          "Solo rehabilitación de secuelas",
+          "Solo financiación"
+        ],
+        "explanation": "Los niveles se distinguen por momento y propósito.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué prueba por sí solo contar asistentes?",
+        "answer": "Alcance de una actividad",
+        "distractors": [
+          "Eficacia clínica",
+          "Causalidad",
+          "Equidad completa"
+        ],
+        "explanation": "Un indicador de proceso no demuestra resultado sanitario.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Caso: 10 casos nuevos entre 200 en riesgo. ¿Qué proporción resulta?",
+        "answer": "5 %",
+        "distractors": [
+          "20 %",
+          "0,5 %",
+          "50 %"
+        ],
+        "explanation": "10/200=0,05=5 % en el período descrito.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: se mide toda enfermedad existente en una fecha. ¿Qué medida es?",
+        "answer": "Prevalencia puntual",
+        "distractors": [
+          "Incidencia acumulada",
+          "Tasa por persona-tiempo",
+          "Riesgo relativo"
+        ],
+        "explanation": "La fotografía temporal cuenta casos existentes.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: una exposición se asocia a enfermedad. ¿Qué falta para afirmar causalidad?",
+        "answer": "Analizar diseño, sesgos y alternativas",
+        "distractors": [
+          "Solo repetir porcentaje",
+          "Solo título",
+          "Nada más"
+        ],
+        "explanation": "Una asociación no elimina explicaciones alternativas.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: el programa llega menos a un barrio. ¿Qué revisar?",
+        "answer": "Barreras y distribución del acceso",
+        "distractors": [
+          "Solo asistencia total",
+          "Eliminar el barrio",
+          "Atribuir desinterés"
+        ],
+        "explanation": "La evaluación incluye equidad y contexto.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "La medida que cuenta casos existentes se denomina ___.",
+        "accepted_answers": [
+          "prevalencia"
+        ],
+        "explanation": "La incidencia cuenta nuevos casos.",
+        "question_type": "fill_blank",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Con 4 casos nuevos en 100 personas en riesgo, escribe solo el porcentaje.",
+        "accepted_answers": [
+          "4"
+        ],
+        "explanation": "4/100 equivale al 4 %.",
+        "question_type": "fill_blank",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Relaciona prevención y propósito.",
+        "pairs": [
+          {
+            "left": "Primaria",
+            "right": "Evitar aparición"
+          },
+          {
+            "left": "Secundaria",
+            "right": "Detectar temprano"
+          },
+          {
+            "left": "Terciaria",
+            "right": "Reducir consecuencias"
+          }
+        ],
+        "explanation": "El propósito define el nivel.",
+        "question_type": "matching",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Relaciona elemento y función.",
+        "pairs": [
+          {
+            "left": "Población en riesgo",
+            "right": "Denominador pertinente"
+          },
+          {
+            "left": "Período",
+            "right": "Ventana temporal"
+          },
+          {
+            "left": "Casos nuevos",
+            "right": "Numerador de incidencia"
+          }
+        ],
+        "explanation": "La medida requiere definición completa.",
+        "question_type": "matching",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "key": "UVIC12145_ES2",
+    "title": "ADME, efectos e información sobre medicamentos",
+    "aim": "Distinguir farmacocinética y farmacodinámica y recoger riesgos relevantes para rehabilitación.",
+    "concepts": "### Objetivos\n\nDistinguir farmacocinética y farmacodinámica y recoger riesgos relevantes para rehabilitación.\n\n### Destino y acción\n\nFarmacocinética describe absorción, distribución, metabolismo y excreción; farmacodinámica, acción y efectos. Semivida es tiempo para reducir a la mitad la cantidad o concentración en el modelo correspondiente, no tiempo hasta ausencia absoluta. Vía, función orgánica y otros fármacos pueden modificar exposición.\n\n### Seguridad\n\nUn medicamento puede tener beneficios y efectos adversos. La conciliación contrasta información para obtener una lista precisa y resolver discrepancias. El estudiante registra fármaco, uso y síntomas relevantes y consulta al equipo; no cambia dosis por una ficha ni atribuye automáticamente cada síntoma a medicación.\n\n### Puntos que debes poder justificar\n\n- ADME describe procesos de exposición.\n- No se confunde acción con destino.\n- Depende del proceso y condiciones.\n- Se contrasta información relevante.\n\nMaterial original complementario al plan UVic 2026–2027. Ejemplos y cifras didácticos, no datos de pacientes ni resultados de estudios reales. No son preguntas oficiales. La práctica clínica exige supervisión y protocolos del centro.",
+    "workshop": "### Taller de aplicación\n\n### Ejemplo\n\nEn un modelo de eliminación de primer orden, tras una semivida queda 50 % y tras dos, 25 %. Es un cálculo teórico, no una regla universal para suspender o reiniciar tratamientos.\n\n### Caso\n\nHay diferencia entre la lista de alta y lo que la persona refiere tomar. Se comunica y verifica con profesionales responsables. No se resuelve eligiendo arbitrariamente una lista. Mareo durante actividad necesita valoración de seguridad y causas posibles.\n\n### Método de revisión\n\nResponde sin consultar la ficha. Anota el dato utilizado, la inferencia y su límite. En cada error distingue concepto, lectura o cálculo. Explica por qué una alternativa no encaja y vuelve a practicar en otra sesión. Completar un cuestionario no demuestra competencia práctica.\n\nMaterial original complementario al plan UVic 2026–2027. Ejemplos y cifras didácticos, no datos de pacientes ni resultados de estudios reales. No son preguntas oficiales. La práctica clínica exige supervisión y protocolos del centro.",
+    "urls": [
+      "https://www.uvic.cat/es/assignatura/4413",
+      "https://openstax.org/books/pharmacology/pages/2-2-pharmacokinetics-and-pharmacodynamics",
+      "https://www.nice.org.uk/guidance/ng5/chapter/Recommendations"
+    ],
+    "questions": [
+      {
+        "question_text": "¿Qué estudia farmacocinética?",
+        "answer": "Destino del fármaco en el organismo",
+        "distractors": [
+          "Solo efecto receptor",
+          "Solo ética",
+          "Solo precio"
+        ],
+        "explanation": "ADME describe procesos de exposición.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué estudia farmacodinámica?",
+        "answer": "Acción y efectos del fármaco",
+        "distractors": [
+          "Solo eliminación renal",
+          "Solo distribución",
+          "Solo almacenamiento"
+        ],
+        "explanation": "No se confunde acción con destino.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué significa semivida?",
+        "answer": "Tiempo para reducir a la mitad en el modelo",
+        "distractors": [
+          "Tiempo hasta cero obligatorio",
+          "Duración fija de todo efecto",
+          "Intervalo universal de dosis"
+        ],
+        "explanation": "Depende del proceso y condiciones.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué busca conciliación de medicamentos?",
+        "answer": "Lista precisa y resolución de discrepancias",
+        "distractors": [
+          "Duplicar tratamientos",
+          "Eliminar toda consulta",
+          "Elegir la lista más corta"
+        ],
+        "explanation": "Se contrasta información relevante.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Caso: dos semividas en modelo de primer orden. ¿Qué fracción queda?",
+        "answer": "25 %",
+        "distractors": [
+          "50 %",
+          "0 %",
+          "75 %"
+        ],
+        "explanation": "Se aplica mitad de la mitad.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: lista de alta y relato difieren. ¿Qué procede?",
+        "answer": "Verificar y comunicar discrepancia",
+        "distractors": [
+          "Cambiar dosis autónomamente",
+          "Ignorar el relato",
+          "Elegir al azar"
+        ],
+        "explanation": "La discrepancia necesita resolución profesional.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: aparece mareo. ¿Qué no está demostrado?",
+        "answer": "Que lo cause un fármaco concreto",
+        "distractors": [
+          "Que hay un síntoma",
+          "Que importa la seguridad",
+          "Que se requiere contexto"
+        ],
+        "explanation": "La atribución causal necesita información.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: mejora un síntoma y se quiere suspender medicamento. ¿Qué enfoque es adecuado?",
+        "answer": "Consultar al responsable",
+        "distractors": [
+          "Suspender por el cuestionario",
+          "Duplicar dosis",
+          "Aplicar semivida como única regla"
+        ],
+        "explanation": "Estas nociones no sustituyen prescripción.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Completa ADME: absorción, distribución, metabolismo y ___.",
+        "accepted_answers": [
+          "excreción",
+          "excrecion"
+        ],
+        "explanation": "La excreción elimina fármaco o metabolitos.",
+        "question_type": "fill_blank",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Tras una semivida, en el modelo descrito queda qué porcentaje? Escribe solo el número.",
+        "accepted_answers": [
+          "50"
+        ],
+        "explanation": "Semivida indica reducción a la mitad.",
+        "question_type": "fill_blank",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Relaciona proceso y descripción.",
+        "pairs": [
+          {
+            "left": "Absorción",
+            "right": "Entrada a circulación desde administración"
+          },
+          {
+            "left": "Distribución",
+            "right": "Paso entre sangre y tejidos"
+          },
+          {
+            "left": "Excreción",
+            "right": "Salida del organismo"
+          }
+        ],
+        "explanation": "Son procesos farmacocinéticos.",
+        "question_type": "matching",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Relaciona concepto y foco.",
+        "pairs": [
+          {
+            "left": "Farmacodinámica",
+            "right": "Efectos"
+          },
+          {
+            "left": "Farmacocinética",
+            "right": "ADME"
+          },
+          {
+            "left": "Conciliación",
+            "right": "Discrepancias de información"
+          }
+        ],
+        "explanation": "Cada concepto responde a una pregunta.",
+        "question_type": "matching",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "key": "UVIC12149_ES2",
+    "title": "Fractura, reparación y progresión funcional",
+    "aim": "Relacionar fases de reparación y restricciones con decisiones de rehabilitación, evitando calendarios universales.",
+    "concepts": "### Objetivos\n\nRelacionar fases de reparación y restricciones con decisiones de rehabilitación, evitando calendarios universales.\n\n### Reparación\n\nTras fractura se producen hematoma, formación de callo y remodelación, con tiempos y condiciones variables. El callo inicial no implica recuperar toda resistencia. Localización, estabilidad, tratamiento y factores personales modifican evolución. Luxación, fractura y lesión tendinosa son conceptos diferentes.\n\n### Progresar\n\nLa carga y movilización se ajustan a indicaciones, estado del tejido y objetivos. Menos dolor no demuestra por sí solo consolidación suficiente ni permite retirar restricciones. La terapia manual y el ejercicio se eligen tras valoración; una regla biomecánica no sustituye seguridad clínica.\n\n### Puntos que debes poder justificar\n\n- El tejido óseo se reorganiza durante remodelación.\n- Dolor y resistencia mecánica no son equivalentes.\n- La decisión integra varios factores.\n- Describen lesiones distintas.\n\nMaterial original complementario al plan UVic 2026–2027. Ejemplos y cifras didácticos, no datos de pacientes ni resultados de estudios reales. No son preguntas oficiales. La práctica clínica exige supervisión y protocolos del centro.",
+    "workshop": "### Taller de aplicación\n\n### Caso\n\nUna persona con fractura tratada dice que ya no duele y quiere apoyar sin límite. Se revisan las indicaciones de carga y evolución con el equipo. El síntoma favorable no equivale a autorización.\n\n### Seguimiento\n\nRegistra tarea, apoyo, ayuda y respuesta. Si cambia dolor, sensibilidad o estado neurovascular, se requiere valoración apropiada. El ejemplo no enseña reducción, manipulación o aplicación de carga sobre una fractura.\n\n### Método de revisión\n\nResponde sin consultar la ficha. Anota el dato utilizado, la inferencia y su límite. En cada error distingue concepto, lectura o cálculo. Explica por qué una alternativa no encaja y vuelve a practicar en otra sesión. Completar un cuestionario no demuestra competencia práctica.\n\nMaterial original complementario al plan UVic 2026–2027. Ejemplos y cifras didácticos, no datos de pacientes ni resultados de estudios reales. No son preguntas oficiales. La práctica clínica exige supervisión y protocolos del centro.",
+    "urls": [
+      "https://www.uvic.cat/es/assignatura/4417",
+      "https://www.nice.org.uk/guidance/ng211/chapter/Recommendations",
+      "https://openstax.org/books/anatomy-and-physiology-2e/pages/6-5-fractures-bone-repair"
+    ],
+    "questions": [
+      {
+        "question_text": "¿Qué fase forma parte de reparación ósea?",
+        "answer": "Remodelación",
+        "distractors": [
+          "Filtración",
+          "Ovulación",
+          "Hemólisis como fase necesaria"
+        ],
+        "explanation": "El tejido óseo se reorganiza durante remodelación.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué no demuestra ausencia de dolor?",
+        "answer": "Resistencia ósea completa",
+        "distractors": [
+          "Cambio sintomático",
+          "Un dato de evolución",
+          "Necesidad de contexto"
+        ],
+        "explanation": "Dolor y resistencia mecánica no son equivalentes.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué orienta progresión de carga?",
+        "answer": "Restricciones, evolución y valoración",
+        "distractors": [
+          "Solo días transcurridos",
+          "Solo motivación",
+          "Solo tipo de calzado"
+        ],
+        "explanation": "La decisión integra varios factores.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué diferencia luxación de fractura?",
+        "answer": "Pérdida de relación articular frente a rotura ósea",
+        "distractors": [
+          "Son sinónimos",
+          "Ambas son siempre tendinosas",
+          "Ninguna requiere valoración"
+        ],
+        "explanation": "Describen lesiones distintas.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Caso: deja de doler una fractura y hay restricción de apoyo. ¿Qué procede?",
+        "answer": "Consultar indicaciones antes de cambiar carga",
+        "distractors": [
+          "Apoyo completo inmediato",
+          "Retirar toda protección",
+          "Usar el cuestionario como permiso"
+        ],
+        "explanation": "La restricción no se modifica solo por síntoma.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: dos fracturas evolucionan a distinto ritmo. ¿Es posible?",
+        "answer": "Sí, influyen localización y contexto",
+        "distractors": [
+          "No, todo tiempo es idéntico",
+          "Solo cambia la edad del libro",
+          "Nunca influye tratamiento"
+        ],
+        "explanation": "Los procesos no siguen un calendario universal.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: aparece alteración sensitiva nueva. ¿Qué se hace?",
+        "answer": "Comunicar y valorar seguridad",
+        "distractors": [
+          "Ignorar por ser esperable siempre",
+          "Aumentar carga",
+          "Ocultar el dato"
+        ],
+        "explanation": "Un cambio nuevo puede requerir reevaluación.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: mejora amplitud y no la tarea objetivo. ¿Qué falta revisar?",
+        "answer": "Transferencia funcional y plan",
+        "distractors": [
+          "Solo repetir el mismo ángulo",
+          "Declarar éxito total",
+          "Eliminar objetivo"
+        ],
+        "explanation": "Resultado corporal y actividad no equivalen.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "La fase de reorganización del hueso reparado se denomina ___.",
+        "accepted_answers": [
+          "remodelación",
+          "remodelacion"
+        ],
+        "explanation": "No debe confundirse con resistencia completa inmediata.",
+        "question_type": "fill_blank",
+        "difficulty": 2
+      },
+      {
+        "question_text": "La pérdida de relación normal entre superficies articulares se denomina ___.",
+        "accepted_answers": [
+          "luxación",
+          "luxacion"
+        ],
+        "explanation": "Una fractura afecta continuidad ósea.",
+        "question_type": "fill_blank",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Relaciona lesión y descripción.",
+        "pairs": [
+          {
+            "left": "Fractura",
+            "right": "Discontinuidad ósea"
+          },
+          {
+            "left": "Luxación",
+            "right": "Pérdida de relación articular"
+          },
+          {
+            "left": "Lesión tendinosa",
+            "right": "Afectación de tendón"
+          }
+        ],
+        "explanation": "Los términos describen estructuras distintas.",
+        "question_type": "matching",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Relaciona registro y utilidad.",
+        "pairs": [
+          {
+            "left": "Restricción de carga",
+            "right": "Límite clínico acordado"
+          },
+          {
+            "left": "Respuesta posterior",
+            "right": "Tolerancia"
+          },
+          {
+            "left": "Tarea objetivo",
+            "right": "Resultado funcional"
+          }
+        ],
+        "explanation": "La progresión combina seguridad y función.",
+        "question_type": "matching",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "key": "UVIC12155_ES2",
+    "title": "Déficits neurológicos, fatiga y valoración funcional",
+    "aim": "Distinguir tono, fuerza, coordinación y fatiga, adaptando la evaluación a comunicación y contexto.",
+    "concepts": "### Objetivos\n\nDistinguir tono, fuerza, coordinación y fatiga, adaptando la evaluación a comunicación y contexto.\n\n### Dominios\n\nTono y fuerza no son sinónimos. El tono se valora en relación con actividad y resistencia basal; fuerza es capacidad de generar tensión. La coordinación organiza movimiento. Una alteración de marcha puede combinar componentes motores, sensitivos y cognitivos. La etiqueta diagnóstica no describe toda función individual.\n\n### Enfermedades y contexto\n\nParkinson puede implicar lentitud, rigidez, temblor y problemas de equilibrio. En esclerosis múltiple, fatiga y otras alteraciones requieren valoración específica. No toda dificultad representa falta de esfuerzo. Adapta tiempo, comunicación y tareas, sin convertir un síntoma aislado en diagnóstico.\n\n### Puntos que debes poder justificar\n\n- No deben intercambiarse en la valoración.\n- La interpretación integra varios dominios.\n- La fatiga puede influir en función y planificación.\n- La enfermedad no predice toda capacidad.\n\nMaterial original complementario al plan UVic 2026–2027. Ejemplos y cifras didácticos, no datos de pacientes ni resultados de estudios reales. No son preguntas oficiales. La práctica clínica exige supervisión y protocolos del centro.",
+    "workshop": "### Taller de aplicación\n\n### Caso\n\nLa persona completa mejor una tarea tras descanso. Registra condiciones y fatiga en lugar de concluir que antes no colaboraba. La comparación de rendimiento necesita contexto y seguimiento.\n\n### Priorizar\n\nExplora qué limita la actividad importante, recoge sensibilidad, motricidad, equilibrio y ayudas, y coordina derivación o valoración cuando haya cambios. Las transferencias y manejo postural requieren práctica supervisada.\n\n### Método de revisión\n\nResponde sin consultar la ficha. Anota el dato utilizado, la inferencia y su límite. En cada error distingue concepto, lectura o cálculo. Explica por qué una alternativa no encaja y vuelve a practicar en otra sesión. Completar un cuestionario no demuestra competencia práctica.\n\nMaterial original complementario al plan UVic 2026–2027. Ejemplos y cifras didácticos, no datos de pacientes ni resultados de estudios reales. No son preguntas oficiales. La práctica clínica exige supervisión y protocolos del centro.",
+    "urls": [
+      "https://www.uvic.cat/es/assignatura/4423",
+      "https://www.nice.org.uk/guidance/ng71/chapter/Recommendations",
+      "https://www.nice.org.uk/guidance/ng220/chapter/Recommendations"
+    ],
+    "questions": [
+      {
+        "question_text": "¿Qué diferencia fuerza y tono?",
+        "answer": "Son dimensiones distintas",
+        "distractors": [
+          "Son siempre la misma medida",
+          "Tono equivale a potencia máxima",
+          "Fuerza solo existe al descansar"
+        ],
+        "explanation": "No deben intercambiarse en la valoración.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué puede combinar una alteración de marcha?",
+        "answer": "Factores motores, sensitivos y cognitivos",
+        "distractors": [
+          "Solo una causa obligatoria",
+          "Solo edad",
+          "Solo longitud de paso"
+        ],
+        "explanation": "La interpretación integra varios dominios.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué síntoma merece valoración en esclerosis múltiple?",
+        "answer": "Fatiga",
+        "distractors": [
+          "Solo cambio de ropa",
+          "Solo preferencia de sala",
+          "Solo número de consultas"
+        ],
+        "explanation": "La fatiga puede influir en función y planificación.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué caracteriza evaluación individual?",
+        "answer": "Relacionar déficits y actividades",
+        "distractors": [
+          "Inferir todo por diagnóstico",
+          "Omitir comunicación",
+          "Usar idéntica tarea sin adaptación"
+        ],
+        "explanation": "La enfermedad no predice toda capacidad.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Caso: mejora tras descanso. ¿Qué registrar?",
+        "answer": "Fatiga y condiciones de tarea",
+        "distractors": [
+          "Falta de voluntad demostrada",
+          "Curación confirmada",
+          "Simulación demostrada"
+        ],
+        "explanation": "El cambio puede reflejar condiciones de ejecución.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: rigidez y lentitud aisladas. ¿Qué no puede concluirse automáticamente?",
+        "answer": "Diagnóstico definitivo de Parkinson",
+        "distractors": [
+          "Que hay observaciones",
+          "Que se necesita historia",
+          "Que importa valorar"
+        ],
+        "explanation": "Los hallazgos necesitan evaluación diagnóstica.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: dificultad para comprender una consigna. ¿Qué ajustar?",
+        "answer": "Comunicación y verificación",
+        "distractors": [
+          "Aumentar complejidad",
+          "Suponer incapacidad total",
+          "Excluir toda actividad"
+        ],
+        "explanation": "La adaptación facilita participación.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: nuevo deterioro funcional. ¿Qué enfoque procede?",
+        "answer": "Revisar y coordinar valoración",
+        "distractors": [
+          "Mantener rutina sin registro",
+          "Atribuir siempre edad",
+          "Duplicar esfuerzo"
+        ],
+        "explanation": "La evolución puede cambiar prioridades y seguridad.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "La organización temporal y espacial del movimiento se relaciona con la ___.",
+        "accepted_answers": [
+          "coordinación",
+          "coordinacion"
+        ],
+        "explanation": "Es un dominio distinto de fuerza aislada.",
+        "question_type": "fill_blank",
+        "difficulty": 2
+      },
+      {
+        "question_text": "El cansancio que limita actividad en el contexto descrito debe valorarse como ___.",
+        "accepted_answers": [
+          "fatiga"
+        ],
+        "explanation": "No se atribuye automáticamente a desinterés.",
+        "question_type": "fill_blank",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Relaciona dominio y foco.",
+        "pairs": [
+          {
+            "left": "Fuerza",
+            "right": "Generación de tensión"
+          },
+          {
+            "left": "Sensibilidad",
+            "right": "Información percibida"
+          },
+          {
+            "left": "Coordinación",
+            "right": "Organización del movimiento"
+          }
+        ],
+        "explanation": "La evaluación integra dominios.",
+        "question_type": "matching",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Relaciona adaptación y propósito.",
+        "pairs": [
+          {
+            "left": "Descanso",
+            "right": "Considerar fatiga"
+          },
+          {
+            "left": "Consigna clara",
+            "right": "Facilitar comprensión"
+          },
+          {
+            "left": "Registro de ayudas",
+            "right": "Interpretar desempeño"
+          }
+        ],
+        "explanation": "Las condiciones afectan la tarea.",
+        "question_type": "matching",
+        "difficulty": 2
+      }
+    ]
+  },
+  {
+    "key": "UVIC12164_ES2",
+    "title": "Seguridad inicial, higiene y transferencias",
+    "aim": "Preparar una estancia supervisada identificando persona, entorno, límites y comunicación.",
+    "concepts": "### Objetivos\n\nPreparar una estancia supervisada identificando persona, entorno, límites y comunicación.\n\n### Antes de actuar\n\nConfirma identidad según protocolo, tarea, consentimiento y supervisión. Revisa espacio, apoyos, ayudas y estado de la persona. Una transferencia segura no se reduce a fuerza del estudiante. El aprendizaje preclínico y la ayuda disponible condicionan lo que puede realizar.\n\n### Higiene y comunicación\n\nLa higiene de manos responde a momentos de riesgo asistencial, antes y después de contactos pertinentes. Los guantes no sustituyen higiene. Comunica dudas y cambios al tutor; reconoce límites de competencia. Esta ficha no enseña técnicas invasivas ni sustituye formación presencial en emergencias.\n\n### Puntos que debes poder justificar\n\n- La seguridad integra contexto y condiciones.\n- Los guantes no reemplazan las indicaciones de higiene.\n- La formación requiere límites y supervisión.\n- El registro permite seguir aprendizaje y seguridad.\n\nMaterial original complementario al plan UVic 2026–2027. Ejemplos y cifras didácticos, no datos de pacientes ni resultados de estudios reales. No son preguntas oficiales. La práctica clínica exige supervisión y protocolos del centro.",
+    "workshop": "### Taller de aplicación\n\n### Caso\n\nSe pide ayudar a levantarse y no se conoce la indicación de apoyo. Antes de iniciar se consulta la restricción y el nivel de ayuda. No se improvisa una transferencia por urgencia de terminar la tarea.\n\n### Reflexión\n\nTras una actividad, registra qué se hizo, ayuda recibida, respuesta y duda. En una situación de riesgo, prioriza seguridad y activa ayuda conforme al protocolo del centro. El tutor participa en progresión de responsabilidad.\n\n### Método de revisión\n\nResponde sin consultar la ficha. Anota el dato utilizado, la inferencia y su límite. En cada error distingue concepto, lectura o cálculo. Explica por qué una alternativa no encaja y vuelve a practicar en otra sesión. Completar un cuestionario no demuestra competencia práctica.\n\nMaterial original complementario al plan UVic 2026–2027. Ejemplos y cifras didácticos, no datos de pacientes ni resultados de estudios reales. No son preguntas oficiales. La práctica clínica exige supervisión y protocolos del centro.",
+    "urls": [
+      "https://www.uvic.cat/es/assignatura/4432",
+      "https://www.ncbi.nlm.nih.gov/books/NBK144032/",
+      "https://www.who.int/news-room/fact-sheets/detail/patient-safety"
+    ],
+    "questions": [
+      {
+        "question_text": "¿Qué debe comprobarse antes de una transferencia?",
+        "answer": "Persona, entorno, indicaciones y ayuda",
+        "distractors": [
+          "Solo fuerza propia",
+          "Solo hora",
+          "Solo rapidez"
+        ],
+        "explanation": "La seguridad integra contexto y condiciones.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué relación guantes-higiene de manos es correcta?",
+        "answer": "Los guantes no la sustituyen",
+        "distractors": [
+          "Siempre la eliminan",
+          "Solo importa al final del día",
+          "Nunca se combinan"
+        ],
+        "explanation": "Los guantes no reemplazan las indicaciones de higiene.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué caracteriza práctica del estudiante?",
+        "answer": "Responsabilidad progresiva supervisada",
+        "distractors": [
+          "Autonomía ilimitada inicial",
+          "Ausencia de tutor",
+          "Aplicación de toda técnica leída"
+        ],
+        "explanation": "La formación requiere límites y supervisión.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "¿Qué se registra tras una tarea?",
+        "answer": "Respuesta y ayuda utilizada",
+        "distractors": [
+          "Solo asistencia",
+          "Solo opinión general",
+          "Solo nota final"
+        ],
+        "explanation": "El registro permite seguir aprendizaje y seguridad.",
+        "question_type": "mcq",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Caso: no se conoce apoyo permitido. ¿Qué hacer?",
+        "answer": "Consultar antes de transferir",
+        "distractors": [
+          "Probar carga completa",
+          "Suponer apoyo libre",
+          "Copiar otro paciente"
+        ],
+        "explanation": "La restricción debe conocerse.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: el entorno tiene obstáculos. ¿Qué acción procede?",
+        "answer": "Prepararlo antes de mover",
+        "distractors": [
+          "Ignorarlo por prisa",
+          "Pedir más fuerza",
+          "Quitar supervisión"
+        ],
+        "explanation": "La preparación reduce riesgos evitables.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: surge una duda de seguridad. ¿Qué es profesional?",
+        "answer": "Solicitar ayuda al tutor",
+        "distractors": [
+          "Ocultarla",
+          "Continuar siempre",
+          "Anotarla solo al final"
+        ],
+        "explanation": "Pedir apoyo forma parte de práctica segura.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "Caso: se lee una técnica invasiva en un curso. ¿Autoriza realizarla?",
+        "answer": "No, requiere competencias y autorización",
+        "distractors": [
+          "Sí, por leerla",
+          "Sí, si se recuerda",
+          "Sí, sin protocolo"
+        ],
+        "explanation": "Conocimiento teórico no equivale a competencia habilitada.",
+        "question_type": "clinical_case",
+        "difficulty": 3
+      },
+      {
+        "question_text": "La progresión del estudiante debe realizarse con ___.",
+        "accepted_answers": [
+          "supervisión",
+          "supervision"
+        ],
+        "explanation": "La responsabilidad se ajusta a competencia y contexto.",
+        "question_type": "fill_blank",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Los guantes no sustituyen la higiene de ___.",
+        "accepted_answers": [
+          "manos"
+        ],
+        "explanation": "Se mantienen los momentos indicados de higiene.",
+        "question_type": "fill_blank",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Relaciona paso y finalidad.",
+        "pairs": [
+          {
+            "left": "Verificar identidad",
+            "right": "Atender a la persona correcta"
+          },
+          {
+            "left": "Preparar entorno",
+            "right": "Reducir riesgos"
+          },
+          {
+            "left": "Consultar tutor",
+            "right": "Resolver límites o dudas"
+          }
+        ],
+        "explanation": "La seguridad combina varias barreras.",
+        "question_type": "matching",
+        "difficulty": 2
+      },
+      {
+        "question_text": "Relaciona registro y componente.",
+        "pairs": [
+          {
+            "left": "Qué ocurrió",
+            "right": "Hecho"
+          },
+          {
+            "left": "Cómo se interpretó",
+            "right": "Análisis"
+          },
+          {
+            "left": "Qué se cambiará",
+            "right": "Acción de mejora"
+          }
+        ],
+        "explanation": "La reflexión útil termina en una acción.",
+        "question_type": "matching",
+        "difficulty": 2
+      }
+    ]
+  }
+]
