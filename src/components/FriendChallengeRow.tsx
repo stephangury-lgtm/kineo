@@ -13,7 +13,7 @@ export default function FriendChallengeRow({item,isSpain,isKineoFrance,busy,bloc
   {awaitingMe?<><button className="primary-button compact-button" onClick={()=>onRespond(item.id,true)} disabled={blocked}>{isSpain?'Aceptar':'Accepter'}</button><button className="secondary-button compact-button" onClick={()=>onRespond(item.id,false)} disabled={blocked}>{isSpain?'Rechazar':'Refuser'}</button></>:<>
    {playable&&<button className="primary-button compact-button" onClick={()=>onPlay(item.id)} disabled={blocked}>{busy?(isSpain?'Preparando…':'Préparation…'):sentPending?(isSpain?'Jugar ahora':'Jouer maintenant'):(isSpain?'Jugar':'Jouer')}</button>}
    {waiting&&<span className="pending-chip">{isSpain?'Resultado pendiente':'Résultat en attente'}</span>}
-   {sentPending&&<button className="text-link" onClick={()=>onCancel(item.id)} disabled={blocked}>{isSpain?'Cancelar':'Annuler'}</button>}
+   {sentPending&&<button className="secondary-button compact-button" onClick={()=>onCancel(item.id)} disabled={blocked}>{isSpain?'Cancelar':'Annuler'}</button>}
   </>}
  </div></article>
 }
