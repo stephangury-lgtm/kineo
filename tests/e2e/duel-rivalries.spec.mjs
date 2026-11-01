@@ -161,3 +161,27 @@ test('a sudden-death win counts once in the rivalry without altering the origina
  await expect(page.locator('.duel-result').filter({hasText:'Victoire · départage'})).toContainText('100%')
 })
 
+for(const program of ['kineo-fr','kineo-es','ifsi-fr'])for(const width of [320,390])test(`cancel controls ${program} ${width}px`,async({page})=>{
+ await page.setViewportSize({width,height:844})
+ await v5Student(page,{program})
+ const friend={id:'friend',friendship_id:'invitation',first_name:'Alex',username:'alex',same_level:true}
+ let duel=true,invitation=true
+ const calls=[]
+ await page.route('**/rest/v1/rpc/*',async route=>{
+  const rpc=new URL(route.request().url()).pathname.split('/').pop()
+  if(rpc==='get_friendships_v3')return route.fulfill({json:{friends:[],incoming:[],outgoing:invitation?[friend]:[]}})
+  if(['get_friend_challenges_v3','get_curriculum_friend_challenges_v1'].includes(rpc))return route.fulfill({json:duel?[{id:'duel',status:'pending',direction:'sent',has_played:false,opponent:friend}]:[]})
+  if(['cancel_friend_challenge_v1','cancel_curriculum_friend_challenge_v1'].includes(rpc)){calls.push(rpc);duel=false;return route.fulfill({json:true})}
+  if(rpc==='remove_friendship_v1'){calls.push(rpc);invitation=false;return route.fulfill({json:true})}
+  return route.fallback()
+ })
+ const cancel=page.getByRole('button',{name:program==='kineo-es'?'Cancelar':'Annuler',exact:true})
+ for(const tab of ['challenges','requests']){
+  await page.goto(`${base}/amis?tab=${tab}&ui=v5`)
+  await expect(cancel).toHaveClass(/secondary-button/)
+  const box=await cancel.boundingBox();expect(box.height).toBeGreaterThanOrEqual(44)
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true)
+  await cancel.click();await expect(cancel).toHaveCount(0)
+ }
+ expect(calls).toEqual([program==='kineo-fr'?'cancel_friend_challenge_v1':'cancel_curriculum_friend_challenge_v1','remove_friendship_v1'])
+})
